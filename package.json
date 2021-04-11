@@ -1,0 +1,69 @@
+{
+  "name": "mmf-blog-vite-vue3-ssr",
+  "version": "1.0.0",
+  "author": "lincenying <lincenying@qq.com>",
+  "private": true,
+  "scripts": {
+    "postinstall": "husky install && husky set .husky/pre-commit 'npx lint-staged'",
+    "serve": "node server",
+    "build": "yarn build:client && yarn build:server",
+    "build:client": "vite build --ssrManifest --outDir dist/client",
+    "build:server": "cross-env NODE_SSR=true vite build --ssr src/entry-server.js --outDir dist/server",
+    "generate": "vite build --ssrManifest --outDir dist/static && yarn build:server && node prerender",
+    "start": "cross-env NODE_ENV=production node server",
+    "debug": "node --inspect-brk server",
+    "lint": "eslint './src/**/*.{js,ts,tsx,vue,md}'",
+    "lint:fix": "eslint './src/**/*.{js,ts,tsx,vue,md}' --fix"
+  },
+  "dependencies": {
+    "@kangc/v-md-editor": "^2.2.2",
+    "@vueuse/core": "^4.8.1",
+    "@vueuse/head": "^0.5.1",
+    "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "js-cookie": "^2.2.1",
+    "lodash": "^4.17.21",
+    "md5": "^2.3.0",
+    "qs": "^6.10.1",
+    "store2": "^2.12.0",
+    "toastr": "^2.1.4",
+    "vite-plugin-pwa": "^0.7.0",
+    "vue": "^3.0.5",
+    "vue-content-loader": "^2.0.0",
+    "vue-router": "^4.0.5",
+    "vuex": "4.0.0",
+    "vuex-router-sync": "^5.0.0",
+    "windicss": "2.5.10"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.15",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/preset-env": "^7.13.15",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@vitejs/plugin-legacy": "^1.3.2",
+    "@vitejs/plugin-vue": "^1.2.0",
+    "@vue/compiler-sfc": "^3.0.10",
+    "@vue/server-renderer": "^3.0.9",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.5",
+    "cross-env": "^7.0.3",
+    "eslint-config-lcy-vue": "^3.1.1",
+    "http-proxy-middleware": "^1.1.1",
+    "husky": "^6.0.0",
+    "lint-staged": "^10.5.4",
+    "lru-cache": "^6.0.0",
+    "postcss": "^8.2.8",
+    "postcss-pxtorem": "^6.0.0",
+    "prettier": "^2.2.1",
+    "sass": "^1.32.8",
+    "tailwindcss": "^2.0.4",
+    "vite": "^2.1.4",
+    "vite-plugin-style-import": "^0.9.2",
+    "vite-plugin-windicss": "0.12.2"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,vue}": [
+      "eslint --fix"
+    ]
+  }
+}
