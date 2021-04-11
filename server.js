@@ -71,7 +71,6 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
     app.use('*', async (req, res) => {
         try {
             const url = req.originalUrl
-            console.log(url)
             let template, render
             if (!isProd) {
                 // always read fresh template in dev
