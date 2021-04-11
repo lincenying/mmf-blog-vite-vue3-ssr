@@ -6,11 +6,11 @@ demo: [http://vue3.mmxiaowu.com](http://vue3.mmxiaowu.com)
 
 本站采用 Vue 3, Vue-Router 4, Vuex 4 搭建
 
-网站分成前台和后台, 采用 SPA 模式构建
+网站分成前台和后台, 采用 SSR 模式构建
 
 主要功能包括: 管理员, 用户, 分类, 文章, 评论, 文章点赞
 
-主要技术栈: vue3, vue-router4, vuex4, vitejs, eslint
+主要技术栈: vue3, vue-router4, vuex4, vitejs, eslint, pwa, ssr
 
 ---
 
@@ -22,6 +22,10 @@ vue2 spa版本: [https://github.com/lincenying/mmf-blog-vue2](https://github.com
 
 vue2 pwa ssr版本: [https://github.com/lincenying/mmf-blog-vue2-pwa-ssr](https://github.com/lincenying/mmf-blog-vue2-pwa-ssr)
 
+vue3 spa版本: [https://github.com/lincenying/mmf-blog-vite-vue3](https://github.com/lincenying/mmf-blog-vite-vue3)
+
+vue3 pwa ssr版本: [https://github.com/lincenying/mmf-blog-vite-vue3-ssr](https://github.com/lincenying/mmf-blog-vite-vue3-ssr)
+
 ---
 
 先安装 api server:
@@ -31,6 +35,10 @@ koa2版: https://github.com/lincenying/mmf-blog-api-koa2-v2
 express版: https://github.com/lincenying/mmf-blog-api-v2
 
 ```bash
+
+# 安装 workbox-cli
+yarn global add workbox-cli
+
 # 安装依赖
 yarn  #or  npm install
 # 注意: 不要用 cnpm 安装依赖
@@ -43,10 +51,10 @@ yarn serve
 ```
 
 首页
-http://localhost:7776
+http://localhost:7777
 
 登录
-http://localhost:7776/backend
+http://localhost:7777/backend
 
 # LICENSE
 

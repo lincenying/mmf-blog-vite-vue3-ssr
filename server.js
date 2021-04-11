@@ -104,8 +104,8 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
 if (!isTest) {
     createServer().then(({ app }) =>
         // @ts-ignore
-        app.listen(7799, () => {
-            console.log('http://localhost:7799')
+        app.listen(7777, () => {
+            console.log('http://localhost:7777')
         })
     )
 }

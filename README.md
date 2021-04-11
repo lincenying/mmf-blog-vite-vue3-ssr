@@ -2,7 +2,7 @@
 
 demo: [http://vue3.mmxiaowu.com](http://vue3.mmxiaowu.com)
 
-The main technical stack: vue 3, vue-router 4, vuex 4, vitejs 2, eslint
+The main technical stack: vue 3, vue-router 4, vuex 4, vitejs 2, eslint, pwa, ssr
 
 ---
 
@@ -14,6 +14,10 @@ vue2(spa): [https://github.com/lincenying/mmf-blog-vue2](https://github.com/linc
 
 vue2(pwa ssr): [https://github.com/lincenying/mmf-blog-vue2-pwa-ssr](https://github.com/lincenying/mmf-blog-vue2-pwa-ssr)
 
+vue3(spa): [https://github.com/lincenying/mmf-blog-vite-vue3](https://github.com/lincenying/mmf-blog-vite-vue3)
+
+vue3(pwa ssr): [https://github.com/lincenying/mmf-blog-vite-vue3-ssr](https://github.com/lincenying/mmf-blog-vite-vue3-ssr)
+
 ---
 
 First installation `api server`:
@@ -23,6 +27,10 @@ koa2: https://github.com/lincenying/mmf-blog-api-koa2-v2
 express: https://github.com/lincenying/mmf-blog-api-v2
 
 ```bash
+
+#Install workbox-cli
+yarn global add workbox-cli
+
 # Install dependencies
 yarn  #or  npm install
 # Note: do not install with CNPM dependency
@@ -35,10 +43,10 @@ yarn serve
 ```
 
 Home Site
-http://localhost:7776
+http://localhost:7777
 
 Login
-http://localhost:7776/backend
+http://localhost:7777/backend
 
 # LICENSE
 
