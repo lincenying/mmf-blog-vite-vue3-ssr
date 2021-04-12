@@ -75,7 +75,6 @@ export default {
         const topics = computed(() => {
             return store.getters['frontend/article/getArticleList']
         })
-
         const category = computed(() => {
             return store.getters['global/category/getCategoryList']
         })
@@ -90,7 +89,6 @@ export default {
         }
         onActivated(() => {
             console.log('onActivated')
-            console.log(topics.value)
             if (!topics.value.path) loadMore(1)
         })
 

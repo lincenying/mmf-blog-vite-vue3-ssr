@@ -1,7 +1,7 @@
 module.exports = {
     cacheId: 'mmf-blog-vite-vue3-ssr',
     globDirectory: 'dist/client/',
-    globPatterns: ['**/*.{js,png,css,woff2,psd,svg}'],
+    globPatterns: ['**/*.{js,png,jpg,jpeg,css,woff2,ttf,svg}'],
     swDest: 'dist/client/sw.js',
     skipWaiting: true,
     runtimeCaching: [

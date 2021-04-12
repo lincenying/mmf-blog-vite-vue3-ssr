@@ -20,14 +20,11 @@ const articleList = () => import('./pages/backend-article-list.vue')
 const articleInsert = () => import('./pages/backend-article-insert.vue')
 const articleModify = () => import('./pages/backend-article-modify.vue')
 const articleComment = () => import('./pages/backend-article-comment.vue')
-
 const categoryList = () => import('./pages/backend-category-list.vue')
 const categoryInsert = () => import('./pages/backend-category-insert.vue')
 const categoryModify = () => import('./pages/backend-category-modify.vue')
-
 const adminList = () => import('./pages/backend-admin-list.vue')
 const adminModify = () => import('./pages/backend-admin-modify.vue')
-
 const userList = () => import('./pages/backend-user-list.vue')
 const userModify = () => import('./pages/backend-user-modify.vue')
 
@@ -64,98 +61,33 @@ const scrollBehavior = (/*to*/) => {
     return position
 }
 
+const backendConfig = {
+    meta: { index: 1 },
+    beforeEnter: guardRouteBackend
+}
+
 const routes = [
     { name: 'index', path: '/', component: index, meta: { index: 1 } },
     { name: 'trending', path: '/trending/:by', component: index, meta: { index: 1 } },
     { name: 'category', path: '/category/:id', component: index, meta: { index: 1 } },
     { name: 'search', path: '/search/:key', component: index, meta: { index: 1 } },
-    { name: 'article', path: '/article/:id', component: article, meta: { notKeepAlive: true, index: 2 } },
+    { name: 'article', path: '/article/:id', component: article, meta: { index: 2 } },
     { name: 'about', path: '/about', component: about, meta: { index: 1 } },
     { name: 'account', path: '/user/account', component: account, meta: { index: 2 }, beforeEnter: guardRoute },
     { name: 'password', path: '/user/password', component: password, meta: { index: 2 }, beforeEnter: guardRoute },
 
     { name: 'login', path: '/backend', component: login },
-
-    {
-        name: 'admin_list',
-        path: '/backend/admin/list',
-        component: adminList,
-        meta: { index: 1 },
-        beforeEnter: guardRouteBackend
-    },
-    {
-        name: 'admin_modify',
-        path: '/backend/admin/modify/:id',
-        component: adminModify,
-        meta: { index: 1 },
-        beforeEnter: guardRouteBackend
-    },
-
-    {
-        name: 'article_list',
-        path: '/backend/article/list',
-        component: articleList,
-        meta: { index: 1 },
-        beforeEnter: guardRouteBackend
-    },
-    {
-        name: 'article_insert',
-        path: '/backend/article/insert',
-        component: articleInsert,
-        meta: { index: 1 },
-        beforeEnter: guardRouteBackend
-    },
-    {
-        name: 'article_modify',
-        path: '/backend/article/modify/:id',
-        component: articleModify,
-        meta: { index: 1 },
-        beforeEnter: guardRouteBackend
-    },
-    {
-        name: 'article_comment',
-        path: '/backend/article/comment/:id',
-        component: articleComment,
-        meta: { notKeepAlive: true, index: 2 },
-        beforeEnter: guardRouteBackend
-    },
-
-    {
-        name: 'category_list',
-        path: '/backend/category/list',
-        component: categoryList,
-        meta: { index: 1 },
-        beforeEnter: guardRouteBackend
-    },
-    {
-        name: 'category_insert',
-        path: '/backend/category/insert',
-        component: categoryInsert,
-        meta: { index: 1 },
-        beforeEnter: guardRouteBackend
-    },
-    {
-        name: 'category_modify',
-        path: '/backend/category/modify/:id',
-        component: categoryModify,
-        meta: { index: 1 },
-        beforeEnter: guardRouteBackend
-    },
-
-    {
-        name: 'user_list',
-        path: '/backend/user/list',
-        component: userList,
-        meta: { index: 1 },
-        beforeEnter: guardRouteBackend
-    },
-    {
-        name: 'user_modify',
-        path: '/backend/user/modify/:id',
-        component: userModify,
-        meta: { index: 1 },
-        beforeEnter: guardRouteBackend
-    }
+    { name: 'admin_list', path: '/backend/admin/list', component: adminList, ...backendConfig },
+    { name: 'admin_modify', path: '/backend/admin/modify/:id', component: adminModify, ...backendConfig },
+    { name: 'article_list', path: '/backend/article/list', component: articleList, ...backendConfig },
+    { name: 'article_insert', path: '/backend/article/insert', component: articleInsert, ...backendConfig },
+    { name: 'article_modify', path: '/backend/article/modify/:id', component: articleModify, ...backendConfig },
+    { name: 'article_comment', path: '/backend/article/comment/:id', component: articleComment, meta: { index: 2 }, beforeEnter: guardRouteBackend },
+    { name: 'category_list', path: '/backend/category/list', component: categoryList, ...backendConfig },
+    { name: 'category_insert', path: '/backend/category/insert', component: categoryInsert, ...backendConfig },
+    { name: 'category_modify', path: '/backend/category/modify/:id', component: categoryModify, ...backendConfig },
+    { name: 'user_list', path: '/backend/user/list', component: userList, ...backendConfig },
+    { name: 'user_modify', path: '/backend/user/modify/:id', component: userModify, ...backendConfig }
 ]
 
 export function createRouter(store) {

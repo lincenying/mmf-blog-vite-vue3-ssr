@@ -12,8 +12,8 @@
     "generate": "vite build --ssrManifest --outDir dist/static && yarn build:server && node prerender",
     "start": "cross-env NODE_ENV=production node server",
     "debug": "node --inspect-brk server",
-    "lint": "eslint './src/**/*.{js,ts,tsx,vue,md}'",
-    "lint:fix": "eslint './src/**/*.{js,ts,tsx,vue,md}' --fix"
+    "lint": "eslint './src/**/*.{js,ts,tsx,vue}'",
+    "lint:fix": "eslint './src/**/*.{js,ts,tsx,vue}' --fix"
   },
   "dependencies": {
     "@kangc/v-md-editor": "^2.2.2",
