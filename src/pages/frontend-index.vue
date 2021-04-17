@@ -88,8 +88,8 @@ export default {
             toggleLoading(false)
         }
         onActivated(() => {
-            console.log('onActivated')
-            if (!topics.value.path) loadMore(1)
+            console.log('frontend-index onActivated:' + route.path)
+            if (topics.value.path !== route.path) loadMore(1)
         })
 
         // onMounted(() => {

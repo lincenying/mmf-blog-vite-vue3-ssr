@@ -4,7 +4,7 @@ import { register } from 'register-service-worker'
 
 if (process.env.NODE_ENV === 'production') {
     register(`/sw.js`, {
-        registrationOptions: { scope: './' },
+        registrationOptions: { scope: '.' },
         ready() {
             console.log('应用由 “Service Worker” 从缓存中提供\n 有关更多详细信息，请访问 https://goo.gl/AFskqB')
         },
