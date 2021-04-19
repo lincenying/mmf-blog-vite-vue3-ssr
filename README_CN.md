@@ -38,18 +38,17 @@ express版: https://github.com/lincenying/mmf-blog-api-v2
 
 ```bash
 
-# 安装 workbox-cli
-yarn global add workbox-cli
-
 # 安装依赖
-yarn  #or  npm install
+$ yarn
+# or
+$ npm install
 # 注意: 不要用 cnpm 安装依赖
 
 # 生产模式
-yarn build
+$ yarn build
 
 # 开发模式
-yarn serve
+$ yarn serve
 ```
 
 首页

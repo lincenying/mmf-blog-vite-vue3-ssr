@@ -28,18 +28,17 @@ express: https://github.com/lincenying/mmf-blog-api-v2
 
 ```bash
 
-#Install workbox-cli
-yarn global add workbox-cli
-
 # Install dependencies
-yarn  #or  npm install
+$ yarn
+# or
+$ npm install
 # Note: do not install with CNPM dependency
 
 # Product
-yarn build
+$ yarn build
 
 # Develop
-yarn serve
+$ yarn serve
 ```
 
 Home Site
