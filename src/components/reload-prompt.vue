@@ -9,14 +9,24 @@
     </div>
 </template>
 
-<script setup>
-/* eslint-disable no-unused-vars */
+<script>
 import { useRegisterSW } from 'virtual:pwa-register/vue'
 
-const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW()
+export default {
+    setup() {
+        const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW()
 
-const close = async () => {
-    offlineReady.value = false
-    needRefresh.value = false
+        const close = async () => {
+            offlineReady.value = false
+            needRefresh.value = false
+        }
+
+        return {
+            offlineReady,
+            needRefresh,
+            updateServiceWorker,
+            close
+        }
+    }
 }
 </script>
