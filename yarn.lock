@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-"@antfu/utils@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.nlark.com/@antfu/utils/download/@antfu/utils-0.1.0.tgz#c707a6dc8ed31c89981c4b00de69be76a53acf87"
-  integrity sha1-xwem3I7THImYHEsA3mm+dqU6z4c=
-
 "@babel/code-frame@7.12.11":
   version "7.12.11"
   resolved "https://registry.npm.taobao.org/@babel/code-frame/download/@babel/code-frame-7.12.11.tgz#f4ad435aa263db935b8f10f2c552d23fb716a63f"
@@ -1299,12 +1294,12 @@
     toml "^3.0.0"
     upath "^1.1.0"
 
-"@vueuse/core@^4.8.3":
-  version "4.8.3"
-  resolved "https://registry.nlark.com/@vueuse/core/download/@vueuse/core-4.8.3.tgz#437b73bb48580aab3a444f30ae39fac16691b9b9"
-  integrity sha1-Q3tzu0hYCqs6RE8wrjn6wWaRubk=
+"@vueuse/core@^4.8.4":
+  version "4.8.4"
+  resolved "https://registry.nlark.com/@vueuse/core/download/@vueuse/core-4.8.4.tgz#aed42b1d4e058869ff403be64a06e1b31dc3758d"
+  integrity sha1-rtQrHU4FiGn/QDvmSgbhsx3DdY0=
   dependencies:
-    "@vueuse/shared" "4.8.3"
+    "@vueuse/shared" "4.8.4"
     vue-demi latest
 
 "@vueuse/head@^0.5.1":
@@ -1312,10 +1307,10 @@
   resolved "https://registry.npm.taobao.org/@vueuse/head/download/@vueuse/head-0.5.1.tgz#7d8a31ba4d214fff75c1d0845148d7f0bdf5b68f"
   integrity sha1-fYoxuk0hT/91wdCEUUjX8L31to8=
 
-"@vueuse/shared@4.8.3":
-  version "4.8.3"
-  resolved "https://registry.nlark.com/@vueuse/shared/download/@vueuse/shared-4.8.3.tgz#c5a7897d3a78a1cb5a36827cf470a00cb8cce270"
-  integrity sha1-xaeJfTp4octaNoJ89HCgDLjM4nA=
+"@vueuse/shared@4.8.4":
+  version "4.8.4"
+  resolved "https://registry.nlark.com/@vueuse/shared/download/@vueuse/shared-4.8.4.tgz#bc2b034dcf9805b620f9ff304a6d3728cea93b2b"
+  integrity sha1-vCsDTc+YBbYg+f8wSm03KM6pOys=
   dependencies:
     vue-demi latest
 

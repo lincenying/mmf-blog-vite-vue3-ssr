@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@kangc/v-md-editor": "^2.2.2",
-    "@vueuse/core": "^4.8.3",
+    "@vueuse/core": "^4.8.4",
     "@vueuse/head": "^0.5.1",
     "axios": "^0.21.1",
     "express": "^4.17.1",
@@ -37,7 +37,6 @@
     "windicss": "2.5.14"
   },
   "devDependencies": {
-    "@antfu/utils": "^0.1.0",
     "@babel/core": "^7.13.16",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/preset-env": "^7.13.15",
