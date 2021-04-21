@@ -4,6 +4,8 @@ import { renderHeadToString } from '@vueuse/head'
 import { createApp } from './main'
 import { api } from './api/index-server'
 
+import reloadPrompt from './components/reload-prompt-ssr.vue'
+
 function renderPreloadLink(file) {
     if (file.endsWith('.js')) {
         return `<link rel="modulepreload" crossorigin href="${file}">`
@@ -33,6 +35,8 @@ function renderPreloadLinks(modules, manifest) {
 
 export async function render(url, manifest, req) {
     const { app, router, store, head } = createApp()
+
+    app.component('reload-prompt', reloadPrompt)
 
     // set the router to the desired URL before rendering
     router.push(url)

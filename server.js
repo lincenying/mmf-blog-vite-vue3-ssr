@@ -2,9 +2,11 @@
 const fs = require('fs')
 const path = require('path')
 const express = require('express')
+const logger = require('morgan')
 const cookieParser = require('cookie-parser')
-const proxy = require('express-http-proxy')
-const queryString = require('query-string')
+const { createProxyMiddleware } = require('http-proxy-middleware')
+// const proxy = require('express-http-proxy')
+// const queryString = require('query-string')
 
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
 
@@ -14,11 +16,16 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
     const manifest = isProd ? require('./dist/client/ssr-manifest.json') : {}
     const app = express()
 
-    // parse application/json
-    app.use(express.json())
-    // parse application/x-www-form-urlencoded
-    app.use(express.urlencoded({ extended: true }))
-    app.use(cookieParser())
+    app.use(
+        logger('[:remote-addr] ":method :url" :status :res[content-length] ":referrer" ":date[web]"', {
+            skip(req) {
+                const skipExt = ['.map', '.js', '.css', '.png', 'jpg', '.jpeg', '.gif', '.ttf', '.woff2', '.ico']
+                return skipExt.some(ext => {
+                    return req.url.indexOf(ext) !== -1
+                })
+            }
+        })
+    )
 
     /**
      * @type {import('vite').ViteDevServer}
@@ -36,19 +43,29 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
         app.use(vite.middlewares)
     } else {
         app.use(require('compression')())
+        // app.use(
+        //     '/api',
+        //     proxy('http://localhost:4000', {
+        //         preserveHostHdr: true,
+        //         reqAsBuffer: true,
+        //         proxyReqBodyDecorator(bodyContent) {
+        //             return queryString.stringify(bodyContent)
+        //         },
+        //         //转发之前触发该方法
+        //         proxyReqPathResolver(req) {
+        //             //这个代理会把匹配到的url（下面的 ‘/api’等）去掉，转发过去直接404，这里手动加回来，
+        //             req.url = req.baseUrl + req.url
+        //             return req.originalUrl
+        //         }
+        //     })
+        // )
         app.use(
             '/api',
-            proxy('http://localhost:4000', {
-                preserveHostHdr: true,
-                reqAsBuffer: true,
-                proxyReqBodyDecorator(bodyContent) {
-                    return queryString.stringify(bodyContent)
-                },
-                //转发之前触发该方法
-                proxyReqPathResolver(req) {
-                    //这个代理会把匹配到的url（下面的 ‘/api’等）去掉，转发过去直接404，这里手动加回来，
-                    req.url = req.baseUrl + req.url
-                    return require('url').parse(req.url).path
+            createProxyMiddleware({
+                target: 'http://localhost:4000',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/api': '/api'
                 }
             })
         )
@@ -58,6 +75,13 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
             })
         )
     }
+
+    // 要在代理之后, 不然post请求会出问题
+    // parse application/json
+    app.use(express.json())
+    // parse application/x-www-form-urlencoded
+    app.use(express.urlencoded({ extended: true }))
+    app.use(cookieParser())
 
     app.use('*', async (req, res) => {
         try {
@@ -89,10 +113,15 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
     return { app, vite }
 }
 
+let port = 7777
+if (process.env.NODE_ENV !== 'production') {
+    port = 17777
+}
+
 if (!isTest) {
     createServer().then(({ app }) =>
-        app.listen(7777, () => {
-            console.log('http://localhost:7777')
+        app.listen(port, () => {
+            console.log('http://localhost:' + port)
         })
     )
 }

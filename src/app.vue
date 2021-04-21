@@ -36,7 +36,7 @@
             </div>
             <backend-menu v-if="!isLogin"></backend-menu>
         </div>
-        <reload-prompt></reload-prompt>
+        <reload-prompt v-if="!isSSR"></reload-prompt>
     </div>
 </template>
 
@@ -50,7 +50,7 @@ import signUp from './components/signup.vue'
 import signIn from './components/signin.vue'
 import backTop from './components/backtop.vue'
 import backendMenu from './components/backend-menu.vue'
-import reloadPrompt from './components/reload-prompt.vue'
+// import reloadPrompt from './components/reload-prompt.vue'
 
 export default {
     name: 'app',
@@ -59,8 +59,8 @@ export default {
         signUp,
         signIn,
         backTop,
-        backendMenu,
-        reloadPrompt
+        backendMenu
+        // reloadPrompt
     },
     setup() {
         // eslint-disable-next-line no-unused-vars
