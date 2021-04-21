@@ -3,7 +3,8 @@ const fs = require('fs')
 const path = require('path')
 const express = require('express')
 const cookieParser = require('cookie-parser')
-const { createProxyMiddleware } = require('http-proxy-middleware')
+const proxy = require('express-http-proxy')
+const queryString = require('query-string')
 
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
 
@@ -12,6 +13,12 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
     const indexProd = isProd ? fs.readFileSync(resolve('dist/client/index.html'), 'utf-8') : ''
     const manifest = isProd ? require('./dist/client/ssr-manifest.json') : {}
     const app = express()
+
+    // parse application/json
+    app.use(express.json())
+    // parse application/x-www-form-urlencoded
+    app.use(express.urlencoded({ extended: true }))
+    app.use(cookieParser())
 
     /**
      * @type {import('vite').ViteDevServer}
@@ -30,27 +37,28 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
     } else {
         app.use(require('compression')())
         app.use(
+            '/api',
+            proxy('http://localhost:4000', {
+                preserveHostHdr: true,
+                reqAsBuffer: true,
+                proxyReqBodyDecorator(bodyContent) {
+                    return queryString.stringify(bodyContent)
+                },
+                //转发之前触发该方法
+                proxyReqPathResolver(req) {
+                    //这个代理会把匹配到的url（下面的 ‘/api’等）去掉，转发过去直接404，这里手动加回来，
+                    req.url = req.baseUrl + req.url
+                    return require('url').parse(req.url).path
+                }
+            })
+        )
+        app.use(
             require('serve-static')(resolve('dist/client'), {
                 index: false
             })
         )
     }
 
-    // parse application/json
-    app.use(express.json())
-    // parse application/x-www-form-urlencoded
-    app.use(express.urlencoded({ extended: true }))
-    app.use(cookieParser())
-    app.use(
-        '/api',
-        createProxyMiddleware({
-            target: 'http://localhost:4000',
-            changeOrigin: true,
-            pathRewrite: {
-                '^/api': '/api'
-            }
-        })
-    )
     app.use('*', async (req, res) => {
         try {
             const url = req.originalUrl
