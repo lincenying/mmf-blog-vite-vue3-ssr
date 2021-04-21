@@ -21,7 +21,7 @@
   resolved "https://registry.npm.taobao.org/@babel/compat-data/download/@babel/compat-data-7.13.15.tgz#7e8eea42d0b64fda2b375b22d06c605222e848f4"
   integrity sha1-fo7qQtC2T9orN1si0GxgUiLoSPQ=
 
-"@babel/core@^7.11.1", "@babel/core@^7.13.15":
+"@babel/core@^7.11.1":
   version "7.13.15"
   resolved "https://registry.npm.taobao.org/@babel/core/download/@babel/core-7.13.15.tgz#a6d40917df027487b54312202a06812c4f7792d0"
   integrity sha1-ptQJF98CdIe1QxIgKgaBLE93ktA=
@@ -40,6 +40,36 @@
     gensync "^1.0.0-beta.2"
     json5 "^2.1.2"
     semver "^6.3.0"
+    source-map "^0.5.0"
+
+"@babel/core@^7.13.16":
+  version "7.13.16"
+  resolved "https://registry.nlark.com/@babel/core/download/@babel/core-7.13.16.tgz#7756ab24396cc9675f1c3fcd5b79fcce192ea96a"
+  integrity sha1-d1arJDlsyWdfHD/NW3n8zhkuqWo=
+  dependencies:
+    "@babel/code-frame" "^7.12.13"
+    "@babel/generator" "^7.13.16"
+    "@babel/helper-compilation-targets" "^7.13.16"
+    "@babel/helper-module-transforms" "^7.13.14"
+    "@babel/helpers" "^7.13.16"
+    "@babel/parser" "^7.13.16"
+    "@babel/template" "^7.12.13"
+    "@babel/traverse" "^7.13.15"
+    "@babel/types" "^7.13.16"
+    convert-source-map "^1.7.0"
+    debug "^4.1.0"
+    gensync "^1.0.0-beta.2"
+    json5 "^2.1.2"
+    semver "^6.3.0"
+    source-map "^0.5.0"
+
+"@babel/generator@^7.13.16":
+  version "7.13.16"
+  resolved "https://registry.nlark.com/@babel/generator/download/@babel/generator-7.13.16.tgz?cache=0&sync_timestamp=1618917779874&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40babel%2Fgenerator%2Fdownload%2F%40babel%2Fgenerator-7.13.16.tgz#0befc287031a201d84cdfc173b46b320ae472d14"
+  integrity sha1-C+/ChwMaIB2EzfwXO0azIK5HLRQ=
+  dependencies:
+    "@babel/types" "^7.13.16"
+    jsesc "^2.5.1"
     source-map "^0.5.0"
 
 "@babel/generator@^7.13.9":
@@ -72,6 +102,16 @@
   integrity sha1-KylyoJJkdIU/QeStvGkzj1IGAOU=
   dependencies:
     "@babel/compat-data" "^7.13.12"
+    "@babel/helper-validator-option" "^7.12.17"
+    browserslist "^4.14.5"
+    semver "^6.3.0"
+
+"@babel/helper-compilation-targets@^7.13.16":
+  version "7.13.16"
+  resolved "https://registry.nlark.com/@babel/helper-compilation-targets/download/@babel/helper-compilation-targets-7.13.16.tgz#6e91dccf15e3f43e5556dffe32d860109887563c"
+  integrity sha1-bpHczxXj9D5VVt/+MthgEJiHVjw=
+  dependencies:
+    "@babel/compat-data" "^7.13.15"
     "@babel/helper-validator-option" "^7.12.17"
     browserslist "^4.14.5"
     semver "^6.3.0"
@@ -249,6 +289,15 @@
     "@babel/traverse" "^7.13.0"
     "@babel/types" "^7.13.0"
 
+"@babel/helpers@^7.13.16":
+  version "7.13.17"
+  resolved "https://registry.nlark.com/@babel/helpers/download/@babel/helpers-7.13.17.tgz#b497c7a00e9719d5b613b8982bda6ed3ee94caf6"
+  integrity sha1-tJfHoA6XGdW2E7iYK9pu0+6UyvY=
+  dependencies:
+    "@babel/template" "^7.12.13"
+    "@babel/traverse" "^7.13.17"
+    "@babel/types" "^7.13.17"
+
 "@babel/highlight@^7.10.4", "@babel/highlight@^7.12.13":
   version "7.13.10"
   resolved "https://registry.npm.taobao.org/@babel/highlight/download/@babel/highlight-7.13.10.tgz#a8b2a66148f5b27d666b15d81774347a731d52d1"
@@ -262,6 +311,11 @@
   version "7.13.15"
   resolved "https://registry.npm.taobao.org/@babel/parser/download/@babel/parser-7.13.15.tgz#8e66775fb523599acb6a289e12929fa5ab0954d8"
   integrity sha1-jmZ3X7UjWZrLaiieEpKfpasJVNg=
+
+"@babel/parser@^7.13.16":
+  version "7.13.16"
+  resolved "https://registry.nlark.com/@babel/parser/download/@babel/parser-7.13.16.tgz#0f18179b0448e6939b1f3f5c4c355a3a9bcdfd37"
+  integrity sha1-DxgXmwRI5pObHz9cTDVaOpvN/Tc=
 
 "@babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining@^7.13.12":
   version "7.13.12"
@@ -834,6 +888,20 @@
     debug "^4.1.0"
     globals "^11.1.0"
 
+"@babel/traverse@^7.13.17":
+  version "7.13.17"
+  resolved "https://registry.nlark.com/@babel/traverse/download/@babel/traverse-7.13.17.tgz?cache=0&sync_timestamp=1618961099723&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40babel%2Ftraverse%2Fdownload%2F%40babel%2Ftraverse-7.13.17.tgz#c85415e0c7d50ac053d758baec98b28b2ecfeea3"
+  integrity sha1-yFQV4MfVCsBT11i67Jiyiy7P7qM=
+  dependencies:
+    "@babel/code-frame" "^7.12.13"
+    "@babel/generator" "^7.13.16"
+    "@babel/helper-function-name" "^7.12.13"
+    "@babel/helper-split-export-declaration" "^7.12.13"
+    "@babel/parser" "^7.13.16"
+    "@babel/types" "^7.13.17"
+    debug "^4.1.0"
+    globals "^11.1.0"
+
 "@babel/types@^7.12.0", "@babel/types@^7.12.1", "@babel/types@^7.12.13", "@babel/types@^7.13.0", "@babel/types@^7.13.12", "@babel/types@^7.13.14", "@babel/types@^7.4.4", "@babel/types@^7.7.0":
   version "7.13.14"
   resolved "https://registry.npm.taobao.org/@babel/types/download/@babel/types-7.13.14.tgz?cache=0&sync_timestamp=1617027492729&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Ftypes%2Fdownload%2F%40babel%2Ftypes-7.13.14.tgz#c35a4abb15c7cd45a2746d78ab328e362cbace0d"
@@ -841,6 +909,14 @@
   dependencies:
     "@babel/helper-validator-identifier" "^7.12.11"
     lodash "^4.17.19"
+    to-fast-properties "^2.0.0"
+
+"@babel/types@^7.13.16", "@babel/types@^7.13.17":
+  version "7.13.17"
+  resolved "https://registry.nlark.com/@babel/types/download/@babel/types-7.13.17.tgz?cache=0&sync_timestamp=1618961099146&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40babel%2Ftypes%2Fdownload%2F%40babel%2Ftypes-7.13.17.tgz#48010a115c9fba7588b4437dd68c9469012b38b4"
+  integrity sha1-SAEKEVyfunWItEN91oyUaQErOLQ=
+  dependencies:
+    "@babel/helper-validator-identifier" "^7.12.11"
     to-fast-properties "^2.0.0"
 
 "@braintree/sanitize-url@^3.1.0":
@@ -1218,12 +1294,12 @@
     toml "^3.0.0"
     upath "^1.1.0"
 
-"@vueuse/core@^4.8.2":
-  version "4.8.2"
-  resolved "https://registry.npm.taobao.org/@vueuse/core/download/@vueuse/core-4.8.2.tgz#b14e43ae640c38f59591db146d6e15c551368414"
-  integrity sha1-sU5DrmQMOPWVkdsUbW4VxVE2hBQ=
+"@vueuse/core@^4.8.3":
+  version "4.8.3"
+  resolved "https://registry.nlark.com/@vueuse/core/download/@vueuse/core-4.8.3.tgz#437b73bb48580aab3a444f30ae39fac16691b9b9"
+  integrity sha1-Q3tzu0hYCqs6RE8wrjn6wWaRubk=
   dependencies:
-    "@vueuse/shared" "4.8.2"
+    "@vueuse/shared" "4.8.3"
     vue-demi latest
 
 "@vueuse/head@^0.5.1":
@@ -1231,10 +1307,10 @@
   resolved "https://registry.npm.taobao.org/@vueuse/head/download/@vueuse/head-0.5.1.tgz#7d8a31ba4d214fff75c1d0845148d7f0bdf5b68f"
   integrity sha1-fYoxuk0hT/91wdCEUUjX8L31to8=
 
-"@vueuse/shared@4.8.2":
-  version "4.8.2"
-  resolved "https://registry.npm.taobao.org/@vueuse/shared/download/@vueuse/shared-4.8.2.tgz#7c9a738ddba9b60b3eb2e6702d657c2b4c94651c"
-  integrity sha1-fJpzjduptgs+suZwLWV8K0yUZRw=
+"@vueuse/shared@4.8.3":
+  version "4.8.3"
+  resolved "https://registry.nlark.com/@vueuse/shared/download/@vueuse/shared-4.8.3.tgz#c5a7897d3a78a1cb5a36827cf470a00cb8cce270"
+  integrity sha1-xaeJfTp4octaNoJ89HCgDLjM4nA=
   dependencies:
     vue-demi latest
 
@@ -5964,10 +6040,10 @@ safe-regex@^1.1.0:
   resolved "https://registry.npm.taobao.org/safer-buffer/download/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha1-RPoWGwGHuVSd2Eu5GAL5vYOFzWo=
 
-sass@^1.32.10:
-  version "1.32.10"
-  resolved "https://registry.npm.taobao.org/sass/download/sass-1.32.10.tgz#d40da4e20031b450359ee1c7e69bc8cc89569241"
-  integrity sha1-1A2k4gAxtFA1nuHH5pvIzIlWkkE=
+sass@^1.32.11:
+  version "1.32.11"
+  resolved "https://registry.nlark.com/sass/download/sass-1.32.11.tgz#b236b3ea55c76602c2ef2bd0445f0db581baa218"
+  integrity sha1-sjaz6lXHZgLC7yvQRF8NtYG6ohg=
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
 
@@ -6943,10 +7019,10 @@ vite-plugin-windicss@0.12.2:
     debug "^4.3.2"
     windicss "^2.5.9"
 
-vite@^2.1.4:
-  version "2.1.5"
-  resolved "https://registry.npm.taobao.org/vite/download/vite-2.1.5.tgz#4857da441c62f7982c83cbd5f42a00330f20c9c1"
-  integrity sha1-SFfaRBxi95gsg8vV9CoAMw8gycE=
+vite@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.nlark.com/vite/download/vite-2.2.1.tgz#90c481f69371f32867d86a6a623bb064b876ad3d"
+  integrity sha1-kMSB9pNx8yhn2GpqYjuwZLh2rT0=
   dependencies:
     esbuild "^0.9.3"
     postcss "^8.2.1"
