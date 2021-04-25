@@ -36,7 +36,9 @@
             </div>
             <backend-menu v-if="!isLogin"></backend-menu>
         </div>
-        <reload-prompt v-if="!isSSR"></reload-prompt>
+        <client-only>
+            <reload-prompt></reload-prompt>
+        </client-only>
     </div>
 </template>
 

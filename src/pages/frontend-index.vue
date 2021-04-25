@@ -70,8 +70,6 @@ export default {
 
         saveScroll()
 
-        const [loading, toggleLoading] = useToggle(false)
-
         const topics = computed(() => {
             return store.getters['frontend/article/getArticleList']
         })
@@ -81,12 +79,15 @@ export default {
         const trending = computed(() => {
             return store.getters['frontend/article/getTrending']
         })
+
+        const [loading, toggleLoading] = useToggle(false)
         const loadMore = async (page = topics.value.page + 1) => {
             if (loading.value) return
             toggleLoading(true)
             await options.asyncData({ store, route }, { page })
             toggleLoading(false)
         }
+
         onActivated(() => {
             console.log('frontend-index onActivated:' + route.path)
             if (topics.value.path !== route.path) loadMore(1)

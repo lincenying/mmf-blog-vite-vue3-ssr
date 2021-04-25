@@ -11,6 +11,10 @@
                 <div class="list-time">{{ item.cate_order }}</div>
                 <div class="list-action">
                     <router-link :to="'/backend/category/modify/' + item._id" class="badge badge-success">编辑</router-link>
+                    <template v-if="!item.cate_num">
+                        <a v-if="item.is_delete" @click="handleRecover(item._id)" href="javascript:;">恢复</a>
+                        <a v-else @click="handleDelete(item._id)" href="javascript:;">删除</a>
+                    </template>
                 </div>
             </div>
         </div>
@@ -21,6 +25,7 @@
 import { computed, onMounted } from 'vue'
 
 import useGlobal from '@/mixins/global'
+import { showMsg } from '@/utils'
 
 export default {
     name: 'backend-category-list',
@@ -52,6 +57,27 @@ export default {
             loadMore()
         })
 
+        const handleRecover = async id => {
+            const { code, message } = await store.$api.get('backend/category/recover', { id })
+            if (code === 200) {
+                showMsg({
+                    type: 'success',
+                    content: message
+                })
+                store.commit('backend/category/recoverCategory', id)
+            }
+        }
+        const handleDelete = async id => {
+            const { code, message } = await store.$api.get('backend/category/delete', { id })
+            if (code === 200) {
+                showMsg({
+                    type: 'success',
+                    content: message
+                })
+                store.commit('backend/category/deleteCategory', id)
+            }
+        }
+
         const headTitle = computed(() => {
             return '分类列表 - M.M.F 小屋'
         })
@@ -69,7 +95,9 @@ export default {
         return {
             category,
             loading,
-            loadMore
+            loadMore,
+            handleRecover,
+            handleDelete
         }
     }
 }

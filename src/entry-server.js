@@ -4,8 +4,6 @@ import { renderHeadToString } from '@vueuse/head'
 import { createApp } from './main'
 import { api } from './api/index-server'
 
-import reloadPrompt from './components/reload-prompt-ssr.vue'
-
 function renderPreloadLink(file) {
     if (file.endsWith('.js')) {
         return `<link rel="modulepreload" crossorigin href="${file}">`
@@ -34,9 +32,10 @@ function renderPreloadLinks(modules, manifest) {
 }
 
 export async function render(url, manifest, req) {
-    const { app, router, store, head } = createApp()
+    const { app, router, store, head } = createApp(false)
 
-    app.component('reload-prompt', reloadPrompt)
+    app.component('reload-prompt', { render: () => null })
+    app.component('v-md-editor', { render: () => null })
 
     // set the router to the desired URL before rendering
     router.push(url)

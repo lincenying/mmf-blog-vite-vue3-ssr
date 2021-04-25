@@ -3,7 +3,7 @@
  * @author lincenying(lincenying@qq.com)
  */
 
-import { createApp as _createApp } from 'vue'
+import { createSSRApp, createApp as createClientApp } from 'vue'
 import { sync } from 'vuex-router-sync'
 import { createHead } from '@vueuse/head'
 
@@ -13,11 +13,14 @@ import { oc } from './utils'
 import filters from '@/filters'
 
 import App from './app.vue'
+import { ClientOnly } from './components/client-only'
 
 /* eslint-disable no-new */
 
-export function createApp() {
-    const app = _createApp(App)
+console.log('当前环境: ' + import.meta.env.VITE_APP_ENV)
+
+export function createApp(isClient = true) {
+    const app = isClient ? createClientApp(App) : createSSRApp(App)
 
     const store = createStore()
     const router = createRouter(store)
@@ -29,6 +32,8 @@ export function createApp() {
     app.config.globalProperties.$oc = oc
 
     app.use(store).use(router).use(head)
+
+    app.component('client-only', isClient ? ClientOnly : { render: () => null })
 
     router.app = app
 

@@ -90,21 +90,21 @@ export default {
         const trending = computed(() => {
             return store.getters['frontend/article/getTrending']
         })
+
         const addTarget = content => {
             if (!content) return ''
             return content.replace(/<a(.*?)href="http/g, '<a$1target="_blank" href="http')
         }
+
+        onMounted(() => {
+            options.asyncData({ route, store })
+        })
 
         const headTitle = computed(() => {
             let title = 'M.M.F 小屋'
             title = article.value.data.title ? article.value.data.title + ' - M.M.F 小屋' : 'M.M.F 小屋'
             return title
         })
-
-        onMounted(() => {
-            options.asyncData({ route, store })
-        })
-
         useHead({
             // Can be static or computed
             title: headTitle,

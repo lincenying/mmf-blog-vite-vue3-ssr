@@ -1,4 +1,6 @@
 const path = require('path')
+
+import { loadEnv } from 'vite'
 // import styleImport from 'vite-plugin-style-import'
 import vue from '@vitejs/plugin-vue'
 import WindiCSS from 'vite-plugin-windicss'
@@ -13,7 +15,9 @@ export const ssrTransformCustomDir = () => {
 }
 
 // https://vitejs.dev/config/
-export default () => {
+export default ({ mode }) => {
+    process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
+
     const config = {
         server: {
             port: 7777,
@@ -91,7 +95,7 @@ export default () => {
             WindiCSS({
                 scan: {
                     dirs: ['.'], // all files in the cwd
-                    fileExtensions: ['vue', 'js', 'ts'] // also enabled scanning for vue/js/ts
+                    fileExtensions: ['vue'] // also enabled scanning for vue/js/ts
                 }
             }),
             VitePWA({

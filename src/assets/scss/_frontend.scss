@@ -121,6 +121,15 @@
     width: 30px;
     height: 65px;
     margin-left: 520px;
+    @media (min-width: 1440px) and (max-width: 1920px) {
+        margin-left: 720px;
+    }
+    @media (min-width: 1280px) and (max-width: 1439px) {
+        margin-left: 620px;
+    }
+    @media (min-width: 1001px) and (max-width: 1279px) {
+        margin-left: 520px;
+    }
     a {
         display: block;
         width: 100%;

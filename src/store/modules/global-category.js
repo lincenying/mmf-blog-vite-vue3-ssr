@@ -38,6 +38,14 @@ const mutations = {
         if (index > -1) {
             state.lists.splice(index, 1, payload)
         }
+    },
+    ['deleteCategory'](state, id) {
+        const obj = state.lists.find(ii => ii._id === id)
+        if (obj) obj.is_delete = 1
+    },
+    ['recoverCategory'](state, id) {
+        const obj = state.lists.find(ii => ii._id === id)
+        if (obj) obj.is_delete = 0
     }
 }
 

@@ -61,6 +61,10 @@ export default {
             }
         }
 
+        onMounted(() => {
+            getUser()
+        })
+
         const handleSubmit = useLockFn(async () => {
             const reg = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)$/i
             if (!email) {
@@ -85,10 +89,6 @@ export default {
                     content: data
                 })
             }
-        })
-
-        onMounted(() => {
-            getUser()
         })
 
         const headTitle = computed(() => {

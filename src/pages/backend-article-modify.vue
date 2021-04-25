@@ -15,13 +15,15 @@
             </a-input>
             <div class="settings-section">
                 <div id="modify-content" class="settings-item-content">
-                    <v-md-editor
-                        v-model="form.content"
-                        @upload-image="handleUploadImage"
-                        :disabled-menus="[]"
-                        mode="edit"
-                        height="500px"
-                    ></v-md-editor>
+                    <client-only>
+                        <v-md-editor
+                            v-model="form.content"
+                            @upload-image="handleUploadImage"
+                            :disabled-menus="[]"
+                            mode="edit"
+                            height="500px"
+                        ></v-md-editor>
+                    </client-only>
                 </div>
             </div>
         </div>

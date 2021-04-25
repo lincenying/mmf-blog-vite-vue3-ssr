@@ -9,6 +9,8 @@ import { createMemoryHistory, createRouter as _createRouter, createWebHistory } 
 import { inBrowser } from '@/utils'
 
 // 定义切割点，异步加载路由组件
+const notFound = () => import('./pages/404.vue')
+
 const index = () => import('./pages/frontend-index.vue')
 const article = () => import('./pages/frontend-article.vue')
 const about = () => import('./pages/frontend-about.vue')
@@ -87,7 +89,9 @@ const routes = [
     { name: 'category_insert', path: '/backend/category/insert', component: categoryInsert, ...backendConfig },
     { name: 'category_modify', path: '/backend/category/modify/:id', component: categoryModify, ...backendConfig },
     { name: 'user_list', path: '/backend/user/list', component: userList, ...backendConfig },
-    { name: 'user_modify', path: '/backend/user/modify/:id', component: userModify, ...backendConfig }
+    { name: 'user_modify', path: '/backend/user/modify/:id', component: userModify, ...backendConfig },
+
+    { name: '404', path: '/:catchAll(.*)', component: notFound }
 ]
 
 export function createRouter(store) {

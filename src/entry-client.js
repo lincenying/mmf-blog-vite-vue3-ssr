@@ -14,12 +14,10 @@ import 'toastr/build/toastr.css'
 import './assets/css/hljs/googlecode.css'
 import './assets/css/github-markdown.css'
 import './assets/scss/style.scss'
-import '@kangc/v-md-editor/lib/style/base-editor.css'
-import '@kangc/v-md-editor/lib/theme/style/vuepress.css'
 
 VueMarkdownEditor.use(vuepressTheme)
 
-const { app, router, store } = createApp()
+const { app, router, store } = createApp(true)
 
 // wait until router is ready before mounting to ensure hydration match
 router.isReady().then(() => {
