@@ -53,12 +53,9 @@ export default {
             } else if (form.password !== form.re_password) {
                 return showMsg('两次密码输入不一致!')
             }
-            const { code, data } = await store.$api.post('frontend/user/password', form)
+            const { code, message } = await store.$api.post('frontend/user/password', form)
             if (code === 200) {
-                showMsg({
-                    type: 'success',
-                    content: data
-                })
+                showMsg({ type: 'success', content: message })
                 form.old_password = ''
                 form.password = ''
                 form.re_password = ''

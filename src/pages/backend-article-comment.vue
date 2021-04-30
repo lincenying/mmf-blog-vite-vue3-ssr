@@ -13,14 +13,16 @@
                         <div class="comment-content">{{ item.content }}</div>
                         <div class="comment-footer">
                             <span class="comment-time">{{ $filters.timeAgo(item.timestamp) }}</span>
-                            <a v-if="item.is_delete" @click="recover(item._id)" href="javascript:;" class="comment-action-item comment-reply">恢复</a>
-                            <a v-else @click="deletes(item._id)" href="javascript:;" class="comment-action-item comment-reply">删除</a>
+                            <a v-if="item.is_delete" @click="handleRecover(item._id)" href="javascript:;" class="comment-action-item comment-reply"
+                                >恢复</a
+                            >
+                            <a v-else @click="handleDelete(item._id)" href="javascript:;" class="comment-action-item comment-reply">删除</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div v-if="comments.hasNext" class="load-more-wrap">
-                <a v-if="!loading" @click="loadMore()" href="javascript:;" class="comments-load-more">加载更多</a>
+                <a v-if="!loading" @click="loadMore" href="javascript:;" class="comments-load-more">加载更多</a>
                 <a v-else href="javascript:;" class="comments-load-more">加载中...</a>
             </div>
         </div>
@@ -62,20 +64,14 @@ export default {
         const handleRecover = async id => {
             const { code, message } = await store.$api.get('frontend/comment/recover', { id })
             if (code === 200) {
-                showMsg({
-                    type: 'success',
-                    content: message
-                })
+                showMsg({ type: 'success', content: message })
                 store.commit('frontend/comment/recoverComment', id)
             }
         }
         const handleDelete = async id => {
             const { code, message } = await store.$api.get('frontend/comment/delete', { id })
             if (code === 200) {
-                showMsg({
-                    type: 'success',
-                    content: message
-                })
+                showMsg({ type: 'success', content: message })
                 store.commit('frontend/comment/deleteComment', id)
             }
         }

@@ -51,10 +51,7 @@ export default {
             }
             const { code, message } = await store.$api.post('frontend/user/login', form)
             if (code === 200) {
-                showMsg({
-                    type: 'success',
-                    content: message
-                })
+                showMsg({ type: 'success', content: message })
                 window.location.reload()
             }
         })

@@ -43,10 +43,7 @@ export default {
             if (props.item.like_status) url = 'frontend/unlike'
             const { code, message } = await store.$api.get(url, { id: props.item._id })
             if (code === 200) {
-                showMsg({
-                    content: message,
-                    type: 'success'
-                })
+                showMsg({ type: 'success', content: message })
                 store.commit('frontend/article/modifyLikeStatus', {
                     id: props.item._id,
                     status: !props.item.like_status

@@ -6,7 +6,7 @@
                 <div class="comment-post-input-wrap base-textarea-wrap">
                     <textarea v-model="form.content" id="content" class="textarea-input base-input" cols="30" rows="4"></textarea>
                 </div>
-                <div class="comment-post-actions"><a @click="postComment" href="javascript:;" class="btn btn-blue">发表评论</a></div>
+                <div class="comment-post-actions"><a @click="handlePostComment" href="javascript:;" class="btn btn-blue">发表评论</a></div>
             </div>
             <div class="comment-items-wrap">
                 <div v-for="item in comments.data" :key="item._id" class="comment-item">
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div v-if="comments.hasNext" class="load-more-wrap">
-                <a v-if="!loading" @click="loadcomment()" href="javascript:;" class="comments-load-more">加载更多</a>
+                <a v-if="!loading" @click="handleLoadcomment" href="javascript:;" class="comments-load-more">加载更多</a>
                 <a v-else href="javascript:;" class="comments-load-more">加载中...</a>
             </div>
         </div>
@@ -60,7 +60,7 @@ export default {
             return ctx.$oc(store.state, 'global.cookies.useremail')
         })
 
-        const loadcomment = async () => {
+        const handleLoadcomment = async () => {
             toggleLoading(true)
             await store.dispatch(`global/comment/getCommentList`, {
                 id: route.params.id,
@@ -69,7 +69,7 @@ export default {
             })
             toggleLoading(false)
         }
-        const postComment = useLockFn(async () => {
+        const handlePostComment = useLockFn(async () => {
             if (!user.value) {
                 showMsg('请先登录!')
                 store.commit('global/showLoginModal', true)
@@ -79,10 +79,7 @@ export default {
                 const { code, data } = await store.$api.post('frontend/comment/insert', form)
                 if (code === 200) {
                     form.content = ''
-                    showMsg({
-                        content: '评论发布成功!',
-                        type: 'success'
-                    })
+                    showMsg({ type: 'success', content: '评论发布成功!' })
                     store.commit('global/comment/insertCommentItem', data)
                 }
             }
@@ -97,8 +94,8 @@ export default {
             form,
             loading,
             userEmail,
-            loadcomment,
-            postComment,
+            handleLoadcomment,
+            handlePostComment,
             handleReply
         }
     }

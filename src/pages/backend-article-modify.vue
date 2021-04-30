@@ -103,10 +103,7 @@ export default {
             const { code, data, message } = await store.$api.post('backend/article/modify', form)
             toggleLoading(false)
             if (code === 200) {
-                showMsg({
-                    type: 'success',
-                    content: message
-                })
+                showMsg({ type: 'success', content: message })
                 store.commit('backend/article/updateArticleItem', data)
                 router.push('/backend/article/list')
             }

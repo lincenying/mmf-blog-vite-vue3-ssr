@@ -74,7 +74,7 @@ export default {
                 showMsg('邮箱格式错误!')
                 return
             }
-            const { code, data } = await store.$api.post('frontend/user/account', {
+            const { code, message } = await store.$api.post('frontend/user/account', {
                 email,
                 username,
                 id: ctx.$oc(store.state, 'global.cookies.userid')
@@ -84,10 +84,7 @@ export default {
                     ...ctx.$oc(store.state, 'global.cookies'),
                     useremail: email
                 })
-                showMsg({
-                    type: 'success',
-                    content: data
-                })
+                showMsg({ type: 'success', content: message })
             }
         })
 

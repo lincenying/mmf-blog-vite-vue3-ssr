@@ -22,7 +22,7 @@
             </div>
         </div>
         <div v-if="topics.hasNext" class="settings-footer">
-            <a v-if="!loading" @click="loadMore()" class="admin-load-more" href="javascript:;">加载更多</a>
+            <a v-if="!loading" @click="loadMore" class="admin-load-more" href="javascript:;">加载更多</a>
             <a v-else class="admin-load-more" href="javascript:;">加载中...</a>
         </div>
     </div>
@@ -61,20 +61,14 @@ export default {
         const handleRecover = async id => {
             const { code, message } = await store.$api.get('backend/article/recover', { id })
             if (code === 200) {
-                showMsg({
-                    type: 'success',
-                    content: message
-                })
+                showMsg({ type: 'success', content: message })
                 store.commit('backend/article/recoverArticle', id)
             }
         }
         const handleDelete = async id => {
             const { code, message } = await store.$api.get('backend/article/delete', { id })
             if (code === 200) {
-                showMsg({
-                    type: 'success',
-                    content: message
-                })
+                showMsg({ type: 'success', content: message })
                 store.commit('backend/article/deleteArticle', id)
             }
         }

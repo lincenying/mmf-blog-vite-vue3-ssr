@@ -19,13 +19,14 @@
             </div>
             <div v-if="!backend" class="right-part">
                 <span class="nav-search"
-                    ><i class="icon icon-search-white"></i><input @keyup.enter="search($event)" placeholder="记得按回车哦" class="nav-search-input"
+                    ><i class="icon icon-search-white"></i><input @keyup.enter="onSearch($event)" placeholder="记得按回车哦" class="nav-search-input"
                 /></span>
                 <span v-if="isLogin" class="nav-me"
                     ><router-link to="/user/account" class="nav-me-link"><img :src="$filters.avatar(userEmail)" class="nav-avatar-img" /></router-link
                 ></span>
                 <span v-else class="nav-me"
-                    ><a @click="login" href="javascript:;" class="nav-me-link"><img :src="$filters.avatar('noavatar')" class="nav-avatar-img" /></a
+                    ><a @click="handleLogin" href="javascript:;" class="nav-me-link"
+                        ><img :src="$filters.avatar('noavatar')" class="nav-avatar-img" /></a
                 ></span>
             </div>
         </div>
@@ -51,10 +52,10 @@ export default {
             return ctx.$oc(store.state, 'global.cookies.user')
         })
 
-        const login = () => {
+        const handleLogin = () => {
             store.commit('global/showLoginModal', true)
         }
-        const search = e => {
+        const onSearch = e => {
             var qs = e.target.value
             if (qs === '') {
                 return false
@@ -62,7 +63,7 @@ export default {
             router.replace('/search/' + qs)
         }
 
-        return { userEmail, isLogin, login, search }
+        return { userEmail, isLogin, handleLogin, onSearch }
     }
 }
 </script>

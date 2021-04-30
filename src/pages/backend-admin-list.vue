@@ -19,7 +19,7 @@
             </div>
         </div>
         <div v-if="admin.hasNext" class="settings-footer">
-            <a v-if="!loading" @click="loadMore()" class="admin-load-more" href="javascript:;">加载更多</a>
+            <a v-if="!loading" @click="loadMore" class="admin-load-more" href="javascript:;">加载更多</a>
             <a v-else class="admin-load-more" href="javascript:;">加载中...</a>
         </div>
     </div>
@@ -58,20 +58,14 @@ export default {
         const handleRecover = async id => {
             const { code, message } = await store.$api.get('backend/admin/recover', { id })
             if (code === 200) {
-                showMsg({
-                    type: 'success',
-                    content: message
-                })
+                showMsg({ type: 'success', content: message })
                 store.commit('backend/admin/recoverAdmin', id)
             }
         }
         const handleDelete = async id => {
             const { code, message } = await store.$api.get('backend/admin/delete', { id })
             if (code === 200) {
-                showMsg({
-                    type: 'success',
-                    content: message
-                })
+                showMsg({ type: 'success', content: message })
                 store.commit('backend/admin/deleteAdmin', id)
             }
         }

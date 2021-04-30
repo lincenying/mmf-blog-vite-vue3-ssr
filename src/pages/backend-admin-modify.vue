@@ -81,10 +81,7 @@ export default {
             const { code, data, message } = await store.$api.post('backend/admin/modify', form)
             toggleLoading(false)
             if (code === 200) {
-                showMsg({
-                    type: 'success',
-                    content: message
-                })
+                showMsg({ type: 'success', content: message })
                 store.commit('backend/admin/updateAdminItem', data)
                 router.push('/backend/admin/list')
             }

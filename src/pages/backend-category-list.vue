@@ -60,20 +60,14 @@ export default {
         const handleRecover = async id => {
             const { code, message } = await store.$api.get('backend/category/recover', { id })
             if (code === 200) {
-                showMsg({
-                    type: 'success',
-                    content: message
-                })
+                showMsg({ type: 'success', content: message })
                 store.commit('backend/category/recoverCategory', id)
             }
         }
         const handleDelete = async id => {
             const { code, message } = await store.$api.get('backend/category/delete', { id })
             if (code === 200) {
-                showMsg({
-                    type: 'success',
-                    content: message
-                })
+                showMsg({ type: 'success', content: message })
                 store.commit('backend/category/deleteCategory', id)
             }
         }

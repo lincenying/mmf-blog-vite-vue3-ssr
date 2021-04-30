@@ -65,10 +65,7 @@ export default {
             const { code, data, message } = await store.$api.post('backend/category/insert', form)
             toggleLoading(false)
             if (code === 200) {
-                showMsg({
-                    type: 'success',
-                    content: message
-                })
+                showMsg({ type: 'success', content: message })
                 store.commit('global/category/insertCategoryItem', {
                     ...form,
                     _id: data
