@@ -18,7 +18,7 @@ export default () => {
     )
 
     onBeforeRouteUpdate(async (to, from, next) => {
-        await options.asyncData({ route: to, store })
+        if (options.asyncData) await options.asyncData({ route: to, store })
         next()
     })
 

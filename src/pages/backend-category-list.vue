@@ -7,7 +7,7 @@
                 <div class="list-action">操作</div>
             </div>
             <div v-for="item in category" :key="item._id" class="list-section">
-                <div class="list-title">{{ item.cate_name }}</div>
+                <div class="list-title" :class="item.is_delete ? 'text-red-500 line-through' : ''">{{ item.cate_name }}</div>
                 <div class="list-time">{{ item.cate_order }}</div>
                 <div class="list-action">
                     <router-link :to="'/backend/category/modify/' + item._id" class="badge badge-success">编辑</router-link>
@@ -25,6 +25,7 @@
 import { computed, onMounted } from 'vue'
 
 import useGlobal from '@/mixins/global'
+import saveScroll from '@/mixins/save-scroll'
 import { showMsg } from '@/utils'
 
 export default {
@@ -40,6 +41,8 @@ export default {
         // eslint-disable-next-line no-unused-vars
         const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
 
+        saveScroll()
+
         const category = computed(() => {
             return store.getters['global/category/getCategoryList']
         })
@@ -54,6 +57,8 @@ export default {
         }
 
         onMounted(() => {
+            const scrollTop = store.state.appShell.historyPageScrollTop[route.path] || 0
+            window.scrollTo(0, scrollTop)
             loadMore()
         })
 

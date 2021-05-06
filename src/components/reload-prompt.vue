@@ -3,7 +3,7 @@
         <div class="app-refresh-wrap">
             <label>新内容可用，单击刷新按钮更新</label>
             <span @click="updateServiceWorker()">刷新</span>
-            <span @click="hanndleClose">关闭</span>
+            <span @click="handleClose">关闭</span>
         </div>
     </div>
 </template>
@@ -15,7 +15,7 @@ export default {
     setup() {
         const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW()
 
-        const hanndleClose = async () => {
+        const handleClose = async () => {
             offlineReady.value = false
             needRefresh.value = false
         }
@@ -24,7 +24,7 @@ export default {
             offlineReady,
             needRefresh,
             updateServiceWorker,
-            hanndleClose
+            handleClose
         }
     }
 }

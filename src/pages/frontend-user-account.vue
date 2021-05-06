@@ -1,25 +1,22 @@
 <template>
-    <div class="main wrap">
-        <div class="main-left">
-            <div class="home-feeds cards-wrap">
-                <div class="settings-main card">
-                    <div class="settings-main-content">
-                        <a-input title="昵称">
-                            <input type="text" :value="username" placeholder="昵称" class="base-input" name="username" readonly />
-                            <span class="input-info error">请输入昵称</span>
-                        </a-input>
-                        <a-input title="邮箱">
-                            <input type="text" v-model="email" placeholder="邮箱" class="base-input" name="email" />
-                            <span class="input-info error">请输入邮箱</span>
-                        </a-input>
-                    </div>
-                    <div class="settings-footer">
-                        <a @click="handleSubmit" href="javascript:;" class="btn btn-yellow">保存设置</a>
-                    </div>
-                </div>
+    <div class="home-feeds cards-wrap">
+        <div class="settings-main card">
+            <div class="settings-main-content">
+                <form>
+                    <a-input title="昵称">
+                        <input type="text" :value="username" placeholder="昵称" class="base-input" name="username" readonly />
+                        <span class="input-info error">请输入昵称</span>
+                    </a-input>
+                    <a-input title="邮箱">
+                        <input type="text" v-model="email" placeholder="邮箱" class="base-input" name="email" />
+                        <span class="input-info error">请输入邮箱</span>
+                    </a-input>
+                </form>
+            </div>
+            <div class="settings-footer">
+                <a @click="handleSubmit" href="javascript:;" class="btn btn-yellow">保存设置</a>
             </div>
         </div>
-        <div class="main-right"><account></account></div>
     </div>
 </template>
 
@@ -29,22 +26,12 @@ import { onMounted, computed } from 'vue'
 import useGlobal from '@/mixins/global'
 import { showMsg } from '@/utils'
 
-import account from '../components/aside-account.vue'
 import aInput from '../components/_input.vue'
 
 export default {
     name: 'frontend-user-account',
     components: {
-        account,
         aInput
-    },
-    data() {
-        return {
-            username: '',
-            form: {
-                email: ''
-            }
-        }
     },
     setup() {
         // eslint-disable-next-line no-unused-vars

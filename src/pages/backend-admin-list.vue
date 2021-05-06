@@ -8,7 +8,7 @@
                 <div class="list-action">操作</div>
             </div>
             <div v-for="item in admin.data" :key="item._id" class="list-section">
-                <div class="list-username">{{ item.username }}</div>
+                <div class="list-username" :class="item.is_delete ? 'text-red-500 line-through' : ''">{{ item.username }}</div>
                 <div class="list-email">{{ item.email }}</div>
                 <div class="list-date">{{ $filters.timeYmd(item.update_date) }}</div>
                 <div class="list-action">
@@ -27,7 +27,9 @@
 
 <script>
 import { computed, onMounted } from 'vue'
+
 import useGlobal from '@/mixins/global'
+import saveScroll from '@/mixins/save-scroll'
 
 import { showMsg } from '@/utils'
 
@@ -42,6 +44,8 @@ export default {
     setup() {
         // eslint-disable-next-line no-unused-vars
         const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
+
+        saveScroll()
 
         const admin = computed(() => {
             return store.getters['backend/admin/getAdminList']
@@ -71,6 +75,8 @@ export default {
         }
 
         onMounted(() => {
+            const scrollTop = store.state.appShell.historyPageScrollTop[route.path] || 0
+            window.scrollTo(0, scrollTop)
             loadMore(1)
         })
 

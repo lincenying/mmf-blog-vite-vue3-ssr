@@ -1,6 +1,9 @@
 <template>
     <div class="card">
         <div class="comments">
+            <div class="comment-back">
+                <router-link to="/backend/article/list" class="btn btn-blue">返回</router-link>
+            </div>
             <div class="comment-items-wrap">
                 <div v-for="item in comments.data" :key="item._id" class="comment-item">
                     <a href="javascript:;" class="comment-author-avatar-link">

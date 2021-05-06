@@ -10,6 +10,8 @@ The main technical stack: vue 3, vue-router 4, vuex 4, vitejs 2, eslint, pwa, ss
 
 react(spa): [https://github.com/lincenying/mmf-blog-react-v2](https://github.com/lincenying/mmf-blog-react-v2)
 
+react(hooks spa): [https://github.com/lincenying/mmf-blog-vite-react](https://github.com/lincenying/mmf-blog-vite-react)
+
 vue2(spa): [https://github.com/lincenying/mmf-blog-vue2](https://github.com/lincenying/mmf-blog-vue2)
 
 vue2(pwa ssr): [https://github.com/lincenying/mmf-blog-vue2-pwa-ssr](https://github.com/lincenying/mmf-blog-vue2-pwa-ssr)
@@ -45,7 +47,7 @@ Home Site
 http://localhost:7777
 
 Login
-http://localhost:7777/backend
+http://localhost:7777/backend-login
 
 # LICENSE
 

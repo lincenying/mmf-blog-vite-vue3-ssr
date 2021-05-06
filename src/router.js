@@ -14,10 +14,12 @@ const notFound = () => import('./pages/404.vue')
 const index = () => import('./pages/frontend-index.vue')
 const article = () => import('./pages/frontend-article.vue')
 const about = () => import('./pages/frontend-about.vue')
+const user = () => import('./pages/frontend-user.vue')
 const account = () => import('./pages/frontend-user-account.vue')
 const password = () => import('./pages/frontend-user-password.vue')
 
 const login = () => import('./pages/backend-login.vue')
+const backend = () => import('./pages/backend-index.vue')
 const articleList = () => import('./pages/backend-article-list.vue')
 const articleInsert = () => import('./pages/backend-article-insert.vue')
 const articleModify = () => import('./pages/backend-article-modify.vue')
@@ -43,7 +45,7 @@ const guardRoute = (to, from, next) => {
 const guardRouteBackend = (to, from, next) => {
     const token = cookies.get('b_user')
     if (inBrowser && !token) {
-        next('/backend')
+        next('/backend-login')
     } else {
         next()
     }
@@ -64,7 +66,7 @@ const scrollBehavior = (/*to*/) => {
 }
 
 const backendConfig = {
-    meta: { index: 1 },
+    meta: { index: 1, path: '/backend' },
     beforeEnter: guardRouteBackend
 }
 
@@ -75,21 +77,45 @@ const routes = [
     { name: 'search', path: '/search/:key', component: index, meta: { index: 1 } },
     { name: 'article', path: '/article/:id', component: article, meta: { index: 2 } },
     { name: 'about', path: '/about', component: about, meta: { index: 1 } },
-    { name: 'account', path: '/user/account', component: account, meta: { index: 2 }, beforeEnter: guardRoute },
-    { name: 'password', path: '/user/password', component: password, meta: { index: 2 }, beforeEnter: guardRoute },
+    {
+        name: 'account',
+        path: '/user',
+        component: user,
+        meta: { index: 1 },
+        beforeEnter: guardRoute,
+        children: [
+            {
+                path: 'account',
+                component: account,
+                meta: { path: '/user' }
+            },
+            {
+                path: 'password',
+                component: password,
+                meta: { path: '/user' }
+            }
+        ]
+    },
 
-    { name: 'login', path: '/backend', component: login },
-    { name: 'admin_list', path: '/backend/admin/list', component: adminList, ...backendConfig },
-    { name: 'admin_modify', path: '/backend/admin/modify/:id', component: adminModify, ...backendConfig },
-    { name: 'article_list', path: '/backend/article/list', component: articleList, ...backendConfig },
-    { name: 'article_insert', path: '/backend/article/insert', component: articleInsert, ...backendConfig },
-    { name: 'article_modify', path: '/backend/article/modify/:id', component: articleModify, ...backendConfig },
-    { name: 'article_comment', path: '/backend/article/comment/:id', component: articleComment, meta: { index: 2 }, beforeEnter: guardRouteBackend },
-    { name: 'category_list', path: '/backend/category/list', component: categoryList, ...backendConfig },
-    { name: 'category_insert', path: '/backend/category/insert', component: categoryInsert, ...backendConfig },
-    { name: 'category_modify', path: '/backend/category/modify/:id', component: categoryModify, ...backendConfig },
-    { name: 'user_list', path: '/backend/user/list', component: userList, ...backendConfig },
-    { name: 'user_modify', path: '/backend/user/modify/:id', component: userModify, ...backendConfig },
+    { name: 'login', path: '/backend-login', component: login },
+    {
+        name: 'backend',
+        path: '/backend',
+        component: backend,
+        children: [
+            { name: 'admin_list', path: 'admin/list', component: adminList, ...backendConfig },
+            { name: 'admin_modify', path: 'admin/modify/:id', component: adminModify, ...backendConfig },
+            { name: 'article_list', path: 'article/list', component: articleList, ...backendConfig },
+            { name: 'article_insert', path: 'article/insert', component: articleInsert, ...backendConfig },
+            { name: 'article_modify', path: 'article/modify/:id', component: articleModify, ...backendConfig },
+            { name: 'article_comment', path: 'article/comment/:id', component: articleComment, ...backendConfig },
+            { name: 'category_list', path: 'category/list', component: categoryList, ...backendConfig },
+            { name: 'category_insert', path: 'category/insert', component: categoryInsert, ...backendConfig },
+            { name: 'category_modify', path: 'category/modify/:id', component: categoryModify, ...backendConfig },
+            { name: 'user_list', path: 'user/list', component: userList, ...backendConfig },
+            { name: 'user_modify', path: 'user/modify/:id', component: userModify, ...backendConfig }
+        ]
+    },
 
     { name: '404', path: '/:catchAll(.*)', component: notFound }
 ]

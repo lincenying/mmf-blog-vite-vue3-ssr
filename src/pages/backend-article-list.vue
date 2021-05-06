@@ -8,7 +8,7 @@
                 <div class="list-action">操作</div>
             </div>
             <div v-for="item in topics.data" :key="item._id" class="list-section">
-                <div class="list-title">{{ item.title }}</div>
+                <div class="list-title" :class="item.is_delete ? 'text-red-500 line-through' : ''">{{ item.title }}</div>
                 <div class="list-category">{{ item.category_name }}</div>
                 <div class="list-date">{{ $filters.timeAgo(item.update_date) }}</div>
                 <div class="list-action">
@@ -32,6 +32,7 @@
 import { computed, onMounted } from 'vue'
 
 import useGlobal from '@/mixins/global'
+import saveScroll from '@/mixins/save-scroll'
 import { showMsg } from '@/utils'
 
 export default {
@@ -45,6 +46,8 @@ export default {
     setup() {
         // eslint-disable-next-line no-unused-vars
         const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
+
+        saveScroll()
 
         const topics = computed(() => {
             return store.getters['backend/article/getArticleList']
@@ -74,6 +77,8 @@ export default {
         }
 
         onMounted(() => {
+            const scrollTop = store.state.appShell.historyPageScrollTop[route.path] || 0
+            window.scrollTo(0, scrollTop)
             loadMore(1)
         })
 

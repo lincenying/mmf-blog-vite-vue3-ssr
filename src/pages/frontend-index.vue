@@ -64,6 +64,10 @@ export default {
             store.dispatch('frontend/article/getArticleList', { ...config, limit: 10, id, path, key, by })
         ])
     },
+    beforeRouteUpdate(to, form, next) {
+        console.log(to)
+        next()
+    },
     setup() {
         // eslint-disable-next-line no-unused-vars
         const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
