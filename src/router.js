@@ -102,6 +102,7 @@ const routes = [
         name: 'backend',
         path: '/backend',
         component: backend,
+        redirect: '/backend/article/list',
         children: [
             { name: 'admin_list', path: 'admin/list', component: adminList, ...backendConfig },
             { name: 'admin_modify', path: 'admin/modify/:id', component: adminModify, ...backendConfig },
