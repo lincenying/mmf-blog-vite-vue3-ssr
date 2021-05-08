@@ -2,8 +2,6 @@ import VueMarkdownEditor from '@kangc/v-md-editor'
 import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js'
 import cookies from 'js-cookie'
 
-// import './registerServiceWorker'
-
 import { createApp } from './main'
 import api from './api/index-client'
 

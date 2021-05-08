@@ -5,8 +5,6 @@ const express = require('express')
 const logger = require('morgan')
 const cookieParser = require('cookie-parser')
 const { createProxyMiddleware } = require('http-proxy-middleware')
-// const proxy = require('express-http-proxy')
-// const queryString = require('query-string')
 
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
 
@@ -43,22 +41,6 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
         app.use(vite.middlewares)
     } else {
         app.use(require('compression')())
-        // app.use(
-        //     '/api',
-        //     proxy('http://localhost:4000', {
-        //         preserveHostHdr: true,
-        //         reqAsBuffer: true,
-        //         proxyReqBodyDecorator(bodyContent) {
-        //             return queryString.stringify(bodyContent)
-        //         },
-        //         //转发之前触发该方法
-        //         proxyReqPathResolver(req) {
-        //             //这个代理会把匹配到的url（下面的 ‘/api’等）去掉，转发过去直接404，这里手动加回来，
-        //             req.url = req.baseUrl + req.url
-        //             return req.originalUrl
-        //         }
-        //     })
-        // )
         app.use(
             '/api',
             createProxyMiddleware({
