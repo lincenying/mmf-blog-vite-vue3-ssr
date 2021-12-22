@@ -53,17 +53,6 @@ export default {
         trending,
         other
     },
-    async asyncData({ store, route }, config = { page: 1 }) {
-        const {
-            params: { id, key, by },
-            path
-        } = route
-        await Promise.all([
-            store.dispatch('global/category/getCategoryList'),
-            store.dispatch('frontend/article/getTrending'),
-            store.dispatch('frontend/article/getArticleList', { ...config, limit: 10, id, path, key, by })
-        ])
-    },
     beforeRouteUpdate(to, form, next) {
         console.log(to)
         next()
@@ -134,6 +123,17 @@ export default {
             trending,
             loadMore
         }
+    },
+    async asyncData({ store, route }, config = { page: 1 }) {
+        const {
+            params: { id, key, by },
+            path
+        } = route
+        await Promise.all([
+            store.dispatch('global/category/getCategoryList'),
+            store.dispatch('frontend/article/getTrending'),
+            store.dispatch('frontend/article/getArticleList', { ...config, limit: 10, id, path, key, by })
+        ])
     }
 }
 </script>

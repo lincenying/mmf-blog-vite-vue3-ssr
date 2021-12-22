@@ -36,13 +36,6 @@ export default {
     components: {
         aInput
     },
-    async asyncData({ store, route }) {
-        await store.dispatch('backend/user/getUserItem', {
-            id: route.params.id,
-            path: route.path,
-            from: 'backend'
-        })
-    },
     setup() {
         // eslint-disable-next-line no-unused-vars
         const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
@@ -107,6 +100,13 @@ export default {
             form,
             handleModify
         }
+    },
+    async asyncData({ store, route }) {
+        await store.dispatch('backend/user/getUserItem', {
+            id: route.params.id,
+            path: route.path,
+            from: 'backend'
+        })
     }
 }
 </script>

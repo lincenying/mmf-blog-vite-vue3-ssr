@@ -34,12 +34,6 @@ import { showMsg } from '@/utils'
 
 export default {
     name: 'backend-user-list',
-    async asyncData({ store, route }, config = { page: 1 }) {
-        await store.dispatch('backend/user/getUserList', {
-            ...config,
-            path: route.path
-        })
-    },
     setup() {
         // eslint-disable-next-line no-unused-vars
         const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
@@ -100,6 +94,12 @@ export default {
             handleRecover,
             handleDelete
         }
+    },
+    async asyncData({ store, route }, config = { page: 1 }) {
+        await store.dispatch('backend/user/getUserList', {
+            ...config,
+            path: route.path
+        })
     }
 }
 </script>

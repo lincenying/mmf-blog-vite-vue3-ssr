@@ -60,18 +60,6 @@ export default {
         trending,
         other
     },
-    async asyncData({ store, route }) {
-        const {
-            path,
-            params: { id }
-        } = route
-        await Promise.all([
-            store.dispatch('global/category/getCategoryList'),
-            store.dispatch('frontend/article/getTrending'),
-            store.dispatch(`global/comment/getCommentList`, { id, path, page: 1, limit: 10 }),
-            store.dispatch(`frontend/article/getArticleItem`, { id, path })
-        ])
-    },
     setup() {
         // eslint-disable-next-line no-unused-vars
         const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
@@ -123,6 +111,18 @@ export default {
             trending,
             addTarget
         }
+    },
+    async asyncData({ store, route }) {
+        const {
+            path,
+            params: { id }
+        } = route
+        await Promise.all([
+            store.dispatch('global/category/getCategoryList'),
+            store.dispatch('frontend/article/getTrending'),
+            store.dispatch(`global/comment/getCommentList`, { id, path, page: 1, limit: 10 }),
+            store.dispatch(`frontend/article/getArticleItem`, { id, path })
+        ])
     }
 }
 </script>

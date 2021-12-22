@@ -64,9 +64,6 @@ export default {
     components: {
         trending
     },
-    async asyncData({ store }) {
-        await store.dispatch('frontend/article/getTrending')
-    },
     setup() {
         // eslint-disable-next-line no-unused-vars
         const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
@@ -96,6 +93,9 @@ export default {
         return {
             trending
         }
+    },
+    async asyncData({ store }) {
+        await store.dispatch('frontend/article/getTrending')
     }
 }
 </script>

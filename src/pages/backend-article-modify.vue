@@ -48,13 +48,6 @@ export default {
     components: {
         aInput
     },
-    async asyncData({ store, route }, config = { limit: 99 }) {
-        config.all = 1
-        await store.dispatch('global/category/getCategoryList', {
-            ...config,
-            path: route.path
-        })
-    },
     setup() {
         // eslint-disable-next-line no-unused-vars
         const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
@@ -143,6 +136,13 @@ export default {
             handleModify,
             handleUploadImage
         }
+    },
+    async asyncData({ store, route }, config = { limit: 99 }) {
+        config.all = 1
+        await store.dispatch('global/category/getCategoryList', {
+            ...config,
+            path: route.path
+        })
     }
 }
 </script>

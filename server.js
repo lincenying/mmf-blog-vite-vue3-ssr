@@ -1,6 +1,7 @@
 // @ts-check
 const fs = require('fs')
 const path = require('path')
+const { createServer: createViteServer } = require('vite')
 const express = require('express')
 const logger = require('morgan')
 const cookieParser = require('cookie-parser')
@@ -30,11 +31,17 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
      */
     let vite
     if (!isProd) {
-        vite = await require('vite').createServer({
+        vite = await createViteServer({
             root,
             logLevel: isTest ? 'error' : 'info',
             server: {
-                middlewareMode: true
+                middlewareMode: 'ssr',
+                watch: {
+                    // During tests we edit the files too fast and sometimes chokidar
+                    // misses change events, so enforce polling for consistency
+                    usePolling: true,
+                    interval: 100
+                }
             }
         })
         // use vite's connect instance as middleware

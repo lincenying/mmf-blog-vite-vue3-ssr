@@ -37,12 +37,6 @@ export default {
         aInput
         // backendMenu
     },
-    async asyncData({ store, route }) {
-        await store.dispatch('backend/admin/getAdminItem', {
-            id: route.params.id,
-            path: route.path
-        })
-    },
     setup() {
         // eslint-disable-next-line no-unused-vars
         const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
@@ -107,6 +101,12 @@ export default {
             form,
             handleModify
         }
+    },
+    async asyncData({ store, route }) {
+        await store.dispatch('backend/admin/getAdminItem', {
+            id: route.params.id,
+            path: route.path
+        })
     }
 }
 </script>

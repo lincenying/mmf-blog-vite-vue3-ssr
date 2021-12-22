@@ -40,14 +40,6 @@ import { showMsg } from '@/utils'
 
 export default {
     name: 'backend-article-comment',
-    async asyncData({ store, route }, config = { page: 1 }) {
-        config.all = 1
-        config.id = route.params.id
-        await store.dispatch('global/comment/getCommentList', {
-            ...config,
-            path: route.path
-        })
-    },
     setup() {
         // eslint-disable-next-line no-unused-vars
         const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
@@ -104,6 +96,14 @@ export default {
             handleRecover,
             handleDelete
         }
+    },
+    async asyncData({ store, route }, config = { page: 1 }) {
+        config.all = 1
+        config.id = route.params.id
+        await store.dispatch('global/comment/getCommentList', {
+            ...config,
+            path: route.path
+        })
     }
 }
 </script>

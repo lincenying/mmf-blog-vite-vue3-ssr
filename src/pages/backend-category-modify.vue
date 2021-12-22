@@ -30,12 +30,6 @@ export default {
     components: {
         aInput
     },
-    async asyncData({ store, route }) {
-        await store.dispatch('global/category/getCategoryItem', {
-            path: route.path,
-            id: route.params.id
-        })
-    },
     setup() {
         // eslint-disable-next-line no-unused-vars
         const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
@@ -100,6 +94,12 @@ export default {
             form,
             handleModify
         }
+    },
+    async asyncData({ store, route }) {
+        await store.dispatch('global/category/getCategoryItem', {
+            path: route.path,
+            id: route.params.id
+        })
     }
 }
 </script>
