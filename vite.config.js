@@ -35,7 +35,8 @@ export default ({ mode }) => {
             }
         },
         build: {
-            target: 'es2015'
+            target: 'es2015',
+            chunkSizeWarningLimit: 1024
         },
         css: {
             preprocessorOptions: {
@@ -151,8 +152,9 @@ export default ({ mode }) => {
                     cacheId: 'mmf-blog-vite-vue3',
                     runtimeCaching: [
                         {
-                            urlPattern: /api/,
+                            urlPattern: /api\/.*/i,
                             handler: 'NetworkFirst',
+                            method: 'GET',
                             options: {
                                 networkTimeoutSeconds: 1,
                                 cacheName: 'api-cache',
@@ -162,8 +164,9 @@ export default ({ mode }) => {
                             }
                         },
                         {
-                            urlPattern: /^https:\/\/cdn\.jsdelivr\.net/,
+                            urlPattern: /^https:\/\/cdn\.jsdelivr\.net\/.*/i,
                             handler: 'NetworkFirst',
+                            method: 'GET',
                             options: {
                                 networkTimeoutSeconds: 1,
                                 cacheName: 'cdn-cache',
@@ -173,8 +176,9 @@ export default ({ mode }) => {
                             }
                         },
                         {
-                            urlPattern: /^https:\/\/fdn\.geekzu\.org/,
+                            urlPattern: /^https:\/\/fdn\.geekzu\.org\/.*/i,
                             handler: 'NetworkFirst',
+                            method: 'GET',
                             options: {
                                 networkTimeoutSeconds: 1,
                                 cacheName: 'avatar-cache',

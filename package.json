@@ -58,8 +58,7 @@
     "vite": "2.7.10",
     "vite-plugin-pwa": "^0.11.12",
     "vite-plugin-style-import": "^1.4.1",
-    "vite-plugin-windicss": "^1.6.1",
-    "workbox-cli": "^6.4.2"
+    "vite-plugin-windicss": "^1.6.1"
   },
   "lint-staged": {
     "*.{js,ts,tsx,vue}": [
