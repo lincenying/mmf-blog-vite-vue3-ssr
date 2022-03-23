@@ -153,10 +153,10 @@ export default ({ mode }) => {
                     runtimeCaching: [
                         {
                             urlPattern: /api\/.*/i,
-                            handler: 'NetworkFirst',
+                            handler: 'CacheFirst',
                             method: 'GET',
                             options: {
-                                networkTimeoutSeconds: 1,
+                                // networkTimeoutSeconds: 1,
                                 cacheName: 'api-cache',
                                 cacheableResponse: {
                                     statuses: [0, 200]
@@ -165,10 +165,10 @@ export default ({ mode }) => {
                         },
                         {
                             urlPattern: /^https:\/\/cdn\.jsdelivr\.net\/.*/i,
-                            handler: 'NetworkFirst',
+                            handler: 'CacheFirst',
                             method: 'GET',
                             options: {
-                                networkTimeoutSeconds: 1,
+                                // networkTimeoutSeconds: 1,
                                 cacheName: 'cdn-cache',
                                 cacheableResponse: {
                                     statuses: [0, 200]
@@ -177,10 +177,10 @@ export default ({ mode }) => {
                         },
                         {
                             urlPattern: /^https:\/\/fdn\.geekzu\.org\/.*/i,
-                            handler: 'NetworkFirst',
+                            handler: 'CacheFirst',
                             method: 'GET',
                             options: {
-                                networkTimeoutSeconds: 1,
+                                // networkTimeoutSeconds: 1,
                                 cacheName: 'avatar-cache',
                                 cacheableResponse: {
                                     statuses: [0, 200]

@@ -3,7 +3,7 @@
         <Navigation :backend="backend"></Navigation>
         <router-view v-slot="{ Component }" class="app-view relative">
             <transition :name="appShell.pageTransitionName" @before-enter="handleBeforeEnter" @after-enter="handleAfterEnter" mode="out-in">
-                <keep-alive :include="cacheFronentComponents">
+                <keep-alive :include="cacheFronentComponents" :key="key">
                     <Suspense>
                         <component :is="Component" :key="key" />
                     </Suspense>
