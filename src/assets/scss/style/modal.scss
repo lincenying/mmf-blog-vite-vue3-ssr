@@ -4,59 +4,66 @@
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 1000;
     width: 100%;
     height: 100%;
-    z-index: 1000;
-    font-size: 0;
-    padding-left: 1px;
     padding-right: 1px;
-    text-align: center;
+    padding-left: 1px;
+    font-size: 0;
     font-size: 0.1px;
+    text-align: center;
+    pointer-events: none;
     background: black;
     background: rgba(0, 0, 0, 0.72);
-    visibility: hidden;
     opacity: 0;
-    pointer-events: none;
+    visibility: hidden;
+
     &.active {
-        visibility: visible;
-        opacity: 1;
         overflow: auto;
         pointer-events: auto;
+        opacity: 1;
+        visibility: visible;
+
         .modal {
-            visibility: visible;
             opacity: 1;
+            visibility: visible;
         }
     }
+
     .center-helper {
         display: inline-block;
         height: 100%;
-        vertical-align: middle;
         margin-left: -1px;
-    }
-    .modal {
-        display: inline-block;
         vertical-align: middle;
+    }
+
+    .modal {
+        position: relative;
+        display: inline-block;
+        width: 360px;
+        padding: 25px;
+        margin: auto;
         font-size: 16px;
         text-align: left;
-        visibility: hidden;
-        opacity: 0;
+        vertical-align: middle;
         background: white;
-        margin: auto;
-        width: 360px;
         border-radius: 12px;
-        padding: 25px;
+        opacity: 0;
+        visibility: hidden;
         box-sizing: border-box;
-        position: relative;
+
         .modal-prev {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 78px;
             height: 78px;
-            position: absolute;
-            left: 0;
-            top: 0;
             opacity: 0.25;
+
             &:hover {
                 opacity: 1;
             }
+
             .icon {
                 position: absolute;
                 top: 50%;
@@ -65,16 +72,19 @@
                 margin-left: -10px;
             }
         }
+
         .modal-close {
+            position: absolute;
+            top: 0;
+            right: 0;
             width: 78px;
             height: 78px;
-            position: absolute;
-            right: 0;
-            top: 0;
             opacity: 0.25;
+
             &:hover {
                 opacity: 1;
             }
+
             .icon {
                 position: absolute;
                 top: 50%;
@@ -83,47 +93,56 @@
                 margin-left: -8px;
             }
         }
+
         .modal-title {
-            text-align: center;
             font-size: 20px;
-            text-align: center;
             font-weight: normal;
             letter-spacing: 0.2em;
+            text-align: center;
             text-indent: 0.2em;
         }
+
         .signup-form {
             display: block;
             width: 280px;
             margin: 20px auto 10px;
             text-align: center;
+
             .input-wrap {
                 position: relative;
+
                 & + .input-wrap {
                     margin-top: 18px;
                 }
             }
+
             .input-info {
-                color: #bac1c2;
-                font-size: 12px;
                 margin-top: 10px;
                 margin-left: 14px;
+                font-size: 12px;
+                color: #bac1c2;
                 text-align: left;
+
                 &.centered {
-                    text-align: center;
                     margin-left: 0;
+                    text-align: center;
                 }
             }
+
             .error-info {
                 color: #ed4656;
             }
+
             .base-input {
                 width: 100%;
             }
+
             .textarea-input {
-                padding: 10px 14px;
                 height: 88px;
+                padding: 10px 14px;
                 resize: none;
             }
+
             .signup-btn {
                 width: 100%;
                 padding: 0;
@@ -138,22 +157,24 @@
     position: fixed;
     right: 0;
     bottom: 0;
-    margin: 16px;
+    z-index: 1;
     padding: 12px;
+    margin: 16px;
+    text-align: left;
+    background: #fff;
     border: 1px solid #8885;
     border-radius: 4px;
-    z-index: 1;
-    text-align: left;
-    box-shadow: 3px 4px 5px 0px #8885;
-    background: #fff;
+    box-shadow: 3px 4px 5px 0 #8885;
+
     .message {
         margin-bottom: 8px;
     }
+
     button {
-        border: 1px solid #8885;
-        outline: none;
-        margin-right: 5px;
-        border-radius: 2px;
         padding: 3px 10px;
+        margin-right: 5px;
+        border: 1px solid #8885;
+        border-radius: 2px;
+        outline: none;
     }
 }

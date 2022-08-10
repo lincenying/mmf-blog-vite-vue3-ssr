@@ -1,33 +1,59 @@
 html {
     overflow-x: hidden;
     overflow-y: scroll;
+
     // overflow-anchor: none;
     background: #ebf0f0;
 }
+
 /* 清除内外边距 */
 
-body, h1, h2, h3, h4, h5, h6, hr, p, blockquote,
-/* structural elements 结构元素 */
-
-dl, dt, dd, ul, ol, li,
-/* list elements 列表元素 */
-
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
 pre,
-/* text formatting elements 文本格式元素 */
-
-fieldset, button, input, textarea, th, td {
-    margin: 0;
+fieldset,
+button,
+input,
+textarea,
+th,
+td {
     padding: 0;
+    margin: 0;
 }
 
 /* 设置默认字体 */
 
 @font-face {
-    font-family: 'Play';
+    font-family: Play;
     font-style: normal;
     font-weight: 400;
-    src: url('../fonts/Play.woff2') format('woff2');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+    src: url("../fonts/Play.woff2") format("woff2");
+    unicode-range:
+        U+0000-00FF,
+        U+0131,
+        U+0152-0153,
+        U+02C6,
+        U+02DA,
+        U+02DC,
+        U+2000-206F,
+        U+2074,
+        U+20AC,
+        U+2212,
+        U+2215;
     font-display: fallback;
 }
 
@@ -36,16 +62,24 @@ button,
 input,
 select,
 textarea {
+    font-family:
+        -apple-system-font,
+        "Helvetica Neue",
+        Tahoma,
+        "PingFang SC",
+        "lantinghei sc",
+        "Microsoft Yahei",
+        sans-serif;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
     color: #333;
     outline: none;
-    font-family: -apple-system-font, 'Helvetica Neue', Tahoma, 'PingFang SC', 'lantinghei sc', 'Microsoft Yahei', sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
 }
 
 h1 {
     font-size: 20px;
+
     /* 18px / 12px = 1.5 */
 }
 
@@ -86,8 +120,8 @@ ol {
 
 /* 重置文本格式元素 */
 a {
-    text-decoration: none;
     color: #3aced5;
+    text-decoration: none;
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
@@ -102,9 +136,9 @@ acronym[title] {
     cursor: help;
 }
 
-q:before,
-q:after {
-    content: '';
+q::before,
+q::after {
+    content: "";
 }
 
 /* 重置表单元素 */
@@ -124,6 +158,7 @@ input,
 select,
 textarea {
     font-size: 100%;
+
     /* 使得表单元素在 ie 下能继承字体大小 */
 }
 
@@ -136,8 +171,8 @@ table {
 
 /* 重置 hr */
 hr {
-    border: none;
     height: 1px;
+    border: none;
 }
 
 article,
