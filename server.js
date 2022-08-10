@@ -35,7 +35,7 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
             root,
             logLevel: isTest ? 'error' : 'info',
             server: {
-                middlewareMode: 'ssr',
+                middlewareMode: true,
                 watch: {
                     // During tests we edit the files too fast and sometimes chokidar
                     // misses change events, so enforce polling for consistency
@@ -84,7 +84,7 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
             } else {
                 template = indexProd
 
-                render = require('./dist/server/entry-server.js').render
+                render = (await import('./dist/server/entry-server.mjs')).render
             }
             const [appHtml, preloadLinks, headTags] = await render(url, manifest, req)
             const html = template
@@ -99,6 +99,7 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
             res.status(500).end(e.stack)
         }
     })
+    // @ts-ignore
     return { app, vite }
 }
 
