@@ -42,7 +42,8 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
                     usePolling: true,
                     interval: 100
                 }
-            }
+            },
+            appType: 'custom'
         })
         // use vite's connect instance as middleware
         app.use(vite.middlewares)
@@ -88,9 +89,9 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
             }
             const [appHtml, preloadLinks, headTags] = await render(url, manifest, req)
             const html = template
-                .replace(`<!--preload-links-->`, preloadLinks)
-                .replace(`<!--app-html-->`, appHtml)
-                .replace(`<!--head-tags-->`, headTags)
+                .replace(`<!--preload-links-->`, preloadLinks || '')
+                .replace(`<!--app-html-->`, appHtml || '')
+                .replace(`<!--head-tags-->`, headTags || '')
 
             res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
         } catch (e) {
@@ -111,7 +112,7 @@ if (process.env.NODE_ENV !== 'production') {
 if (!isTest) {
     createServer().then(({ app }) =>
         app.listen(port, () => {
-            console.log('http://localhost:' + port)
+            console.log('监听: http://localhost:' + port)
         })
     )
 }

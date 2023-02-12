@@ -28,7 +28,7 @@ export const api = cookies => {
         getCookes() {
             return this.cookies
         },
-        async post(url, data) {
+        async post(url, data = {}, headers = {}) {
             const cookies = this.getCookes() || {}
             const username = cookies.username || ''
             const key = md5(url + JSON.stringify(data) + username)
@@ -41,13 +41,14 @@ export const api = cookies => {
                 url,
                 data: qs.stringify(data),
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                    ...headers
                 }
             })
             if (config.cached && data.cache) config.cached.set(key, res_1)
             return res_1 && res_1.data
         },
-        async get(url, params) {
+        async get(url, params = {}, headers = {}) {
             const cookies = this.getCookes() || {}
             const username = cookies.username || ''
             const key = md5(url + JSON.stringify(params) + username)
@@ -58,7 +59,10 @@ export const api = cookies => {
             return this.api({
                 method: 'get',
                 url,
-                params
+                params,
+                headers: {
+                    ...headers
+                }
             }).then(res => {
                 if (config.cached && params.cache) config.cached.set(key, res)
                 return res && res.data

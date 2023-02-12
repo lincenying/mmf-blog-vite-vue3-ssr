@@ -28,10 +28,10 @@ export function createApp(isClient = true) {
     sync(store, router)
 
     const head = createHead()
-    filters(app)
+
     app.config.globalProperties.$oc = oc
 
-    app.use(store).use(router).use(head)
+    filters(app).use(store).use(router).use(head)
 
     app.component('client-only', isClient ? ClientOnly : { render: () => null })
 

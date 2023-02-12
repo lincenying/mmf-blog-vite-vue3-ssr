@@ -53,4 +53,5 @@ export default app => {
         timeYmd,
         avatar
     }
+    return app
 }
