@@ -1,4 +1,5 @@
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 import { loadEnv } from 'vite'
 // import styleImport from 'vite-plugin-style-import'
@@ -189,7 +190,7 @@ export default ({ mode }) => {
         ],
         resolve: {
             alias: {
-                '@': path.join(__dirname, './src')
+                '@': path.join(path.dirname(fileURLToPath(import.meta.url)), './src')
             }
         }
     }
