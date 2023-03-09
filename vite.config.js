@@ -17,6 +17,8 @@ export const ssrTransformCustomDir = () => {
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {
+    const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
     process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
 
     const config = {
@@ -190,7 +192,7 @@ export default ({ mode }) => {
         ],
         resolve: {
             alias: {
-                '@': path.join(path.dirname(fileURLToPath(import.meta.url)), './src')
+                '@': path.join(__dirname, './src')
             }
         }
     }
