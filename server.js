@@ -1,18 +1,24 @@
 // @ts-check
-const fs = require('fs')
-const path = require('path')
-const { createServer: createViteServer } = require('vite')
-const express = require('express')
-const logger = require('morgan')
-const cookieParser = require('cookie-parser')
-const { createProxyMiddleware } = require('http-proxy-middleware')
+import fs from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { createServer as viteCreateServer } from 'vite'
+import express from 'express'
+import logger from 'morgan'
+import cookieParser from 'cookie-parser'
+import { createProxyMiddleware } from 'http-proxy-middleware'
 
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
 
-async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV === 'production') {
+export async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV === 'production', hmrPort) {
+    const __dirname = path.dirname(fileURLToPath(import.meta.url))
     const resolve = p => path.resolve(__dirname, p)
+
     const indexProd = isProd ? fs.readFileSync(resolve('dist/client/index.html'), 'utf-8') : ''
-    const manifest = isProd ? require('./dist/client/ssr-manifest.json') : {}
+
+    // @ts-ignore
+    const manifest = isProd ? JSON.parse(fs.readFileSync(resolve('dist/client/ssr-manifest.json'), 'utf-8')) : {}
+
     const app = express()
 
     app.use(
@@ -31,7 +37,8 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
      */
     let vite
     if (!isProd) {
-        vite = await createViteServer({
+        vite = await viteCreateServer({
+            base: '/',
             root,
             logLevel: isTest ? 'error' : 'info',
             server: {
@@ -41,6 +48,9 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
                     // misses change events, so enforce polling for consistency
                     usePolling: true,
                     interval: 100
+                },
+                hmr: {
+                    port: hmrPort
                 }
             },
             appType: 'custom'
@@ -48,7 +58,7 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
         // use vite's connect instance as middleware
         app.use(vite.middlewares)
     } else {
-        app.use(require('compression')())
+        app.use((await import('compression')).default())
         app.use(
             '/api',
             createProxyMiddleware({
@@ -60,13 +70,12 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
             })
         )
         app.use(
-            require('serve-static')(resolve('dist/client'), {
+            (await import('serve-static')).default(resolve('dist/client'), {
                 index: false
             })
         )
     }
 
-    // 要在代理之后, 不然post请求会出问题
     // parse application/json
     app.use(express.json())
     // parse application/x-www-form-urlencoded
@@ -75,7 +84,9 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
 
     app.use('*', async (req, res) => {
         try {
+            // const url = req.originalUrl.replace('/test/', '/')
             const url = req.originalUrl
+
             let template, render
             if (!isProd) {
                 // always read fresh template in dev
@@ -84,22 +95,26 @@ async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV 
                 render = (await vite.ssrLoadModule('/src/entry-server.js')).render
             } else {
                 template = indexProd
-
-                render = (await import('./dist/server/entry-server.mjs')).render
+                // @ts-ignore
+                render = (await import('./dist/server/entry-server.js')).render
             }
+
             const [appHtml, preloadLinks, headTags] = await render(url, manifest, req)
+
             const html = template
-                .replace(`<!--preload-links-->`, preloadLinks || '')
-                .replace(`<!--app-html-->`, appHtml || '')
-                .replace(`<!--head-tags-->`, headTags || '')
+                .replace(`<!--preload-links-->`, preloadLinks)
+                .replace(`<!--app-html-->`, appHtml)
+                .replace(`<!--head-tags-->`, headTags)
 
             res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
         } catch (e) {
-            console.log(e)
-            if (vite) vite.ssrFixStacktrace(e)
+            // eslint-disable-next-line no-unused-expressions
+            vite && vite.ssrFixStacktrace(e)
+            console.log(e.stack)
             res.status(500).end(e.stack)
         }
     })
+
     // @ts-ignore
     return { app, vite }
 }
@@ -116,6 +131,3 @@ if (!isTest) {
         })
     )
 }
-
-// for test use
-exports.createServer = createServer

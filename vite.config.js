@@ -1,4 +1,4 @@
-const path = require('path')
+import path from 'node:path'
 
 import { loadEnv } from 'vite'
 // import styleImport from 'vite-plugin-style-import'
@@ -33,10 +33,6 @@ export default ({ mode }) => {
                     }
                 }
             }
-        },
-        build: {
-            target: 'es2015',
-            chunkSizeWarningLimit: 1024
         },
         css: {
             preprocessorOptions: {
