@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "author": "lincenying <lincenying@qq.com>",
   "private": true,
+  "type": "module",
   "scripts": {
     "prepare": "husky install",
     "serve": "node server",
