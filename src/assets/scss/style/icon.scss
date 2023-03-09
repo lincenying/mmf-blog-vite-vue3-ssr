@@ -30,6 +30,12 @@
     background-image: url("../images/@1x/nav-features.png");
 }
 
+.icon-nav-game {
+    width: 23px;
+    height: 23px;
+    background-image: url("../images/@1x/nav-game.png");
+}
+
 .icon-search-white {
     width: 15px;
     height: 15px;
@@ -154,6 +160,10 @@
 
     .icon-nav-features {
         background-image: url("../images/@2x/nav-features.png");
+    }
+
+    .icon-nav-game {
+        background-image: url("../images/@2x/nav-game.png");
     }
 
     .icon-search-white {
