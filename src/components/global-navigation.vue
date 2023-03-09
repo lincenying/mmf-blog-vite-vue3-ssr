@@ -39,7 +39,7 @@ import { computed } from 'vue'
 import useGlobal from '@/mixins/global'
 
 export default {
-    name: 'navigation',
+    name: 'global-navigation',
     props: ['backend'],
     setup() {
         // eslint-disable-next-line no-unused-vars

@@ -3,7 +3,7 @@
         <Navigation :backend="backend"></Navigation>
         <router-view v-slot="{ Component }" class="app-view relative">
             <transition :name="appShell.pageTransitionName" @before-enter="handleBeforeEnter" @after-enter="handleAfterEnter" mode="out-in">
-                <keep-alive :include="cacheFronentComponents" :key="key">
+                <keep-alive :include="cacheFrontendComponents" :key="key">
                     <Suspense>
                         <component :is="Component" :key="key" />
                     </Suspense>
@@ -24,10 +24,10 @@ import { computed } from 'vue'
 
 import useGlobal from '@/mixins/global'
 
-import Navigation from './components/navigation.vue'
-import signUp from './components/signup.vue'
-import signIn from './components/signin.vue'
-import backTop from './components/backtop.vue'
+import Navigation from './components/global-navigation.vue'
+import signUp from './components/sign-up.vue'
+import signIn from './components/sign-in.vue'
+import backTop from './components/back-top.vue'
 // import reloadPrompt from './components/reload-prompt.vue'
 
 export default {
@@ -46,7 +46,7 @@ export default {
         const isSSR = ref(!!import.meta.env.SSR)
         const isPROD = ref(!!import.meta.env.PROD)
 
-        const cacheFronentComponents = ref('frontend-index,frontend-about')
+        const cacheFrontendComponents = ref('frontend-index,frontend-about')
         const cacheBackendComponents = ref('backend-admin-list,backend-article-list,backend-user-list')
 
         const global = computed(() => {
@@ -74,7 +74,7 @@ export default {
         return {
             isSSR,
             isPROD,
-            cacheFronentComponents,
+            cacheFrontendComponents,
             cacheBackendComponents,
             global,
             appShell,
