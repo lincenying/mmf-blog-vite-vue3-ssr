@@ -1,6 +1,6 @@
 # mmf-blog vuejs 3.0 v3         [中文说明](https://github.com/lincenying/mmf-blog-vite-vue3/blob/main/README_CN.md)
 
-demo: [http://vue3.mmxiaowu.com](http://vue3.mmxiaowu.com)
+demo: [http://www.mmxiaowu.com](http://www.mmxiaowu.com)
 
 The main technical stack: vue 3, vue-router 4, pinia, vitejs 4, unocss, eslint, pwa, ssr
 

@@ -1,6 +1,6 @@
 # mmf-blog vuejs 3.0 v3版
 
-demo: [http://vue3.mmxiaowu.com](http://vue3.mmxiaowu.com)
+demo: [http://www.mmxiaowu.com](http://www.mmxiaowu.com)
 
 #### 说明
 
