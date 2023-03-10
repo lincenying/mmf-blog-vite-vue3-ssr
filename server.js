@@ -70,11 +70,11 @@ export async function createServer(root = process.cwd(), isProd = process.env.NO
                 }
             })
         )
-        // app.use(
-        //     (await import('serve-static')).default(resolve('dist/client'), {
-        //         index: false
-        //     })
-        // )
+        app.use(
+            (await import('serve-static')).default(resolve('dist/client'), {
+                index: false
+            })
+        )
     }
 
     // parse application/json
