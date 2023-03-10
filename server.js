@@ -102,8 +102,6 @@ export async function createServer(root = process.cwd(), isProd = process.env.NO
 
             const [appHtml, preloadLinks, headTags] = await render(url, manifest, req)
 
-            console.log(appHtml, preloadLinks, headTags)
-
             const html = template
                 .replace(`<!--preload-links-->`, preloadLinks)
                 .replace(`<!--app-html-->`, appHtml)
