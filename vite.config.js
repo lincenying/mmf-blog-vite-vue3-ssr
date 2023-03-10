@@ -123,7 +123,10 @@ export default ({ mode }) => {
             VitePWA({
                 // mode: 'development',
                 base: '/',
-                injectRegister: null,
+                registerType: 'autoUpdate',
+                workbox: {
+                    globPatterns: ['**/*.{js,css}']
+                },
                 manifest: {
                     name: 'M.M.F小屋',
                     short_name: 'M.M.F小屋',

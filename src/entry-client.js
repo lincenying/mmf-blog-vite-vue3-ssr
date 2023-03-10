@@ -3,7 +3,7 @@ import vuePressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js'
 
 import { createApp } from './main'
 
-// import reloadPrompt from './components/reload-prompt.vue'
+import reloadPrompt from './components/reload-prompt.vue'
 
 VueMarkdownEditor.use(vuePressTheme)
 
@@ -27,7 +27,7 @@ router.isReady().then(() => {
             })
         )
     })
-    // app.component('reload-prompt', reloadPrompt)
+    app.component('reload-prompt', reloadPrompt)
     app.use(VueMarkdownEditor).mount('#app')
     console.log('client router ready')
 })
