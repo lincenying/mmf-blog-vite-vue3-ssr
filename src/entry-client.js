@@ -7,7 +7,7 @@ import api from './api/index-client'
 
 import reloadPrompt from './components/reload-prompt.vue'
 
-import 'virtual:windi.css'
+import 'uno.css'
 import 'toastr/build/toastr.css'
 import './assets/css/hljs/googlecode.css'
 import './assets/css/github-markdown.css'

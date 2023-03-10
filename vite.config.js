@@ -2,10 +2,18 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { loadEnv } from 'vite'
-// import styleImport from 'vite-plugin-style-import'
-import vue from '@vitejs/plugin-vue'
-import WindiCSS from 'vite-plugin-windicss'
-// import legacy from '@vitejs/plugin-legacy'
+
+import vuePlugin from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+
+import UnoCSS from 'unocss/vite'
+import { createHtmlPlugin } from 'vite-plugin-html'
+
+import VueMacros from 'unplugin-vue-macros/vite'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+
 import { VitePWA } from 'vite-plugin-pwa'
 
 export const ssrTransformCustomDir = () => {
@@ -45,24 +53,71 @@ export default ({ mode }) => {
             }
         },
         plugins: [
-            // legacy({
-            //     targets: ['defaults', 'not IE 11']
-            // }),
-            vue({
-                template: {
-                    ssr: true,
-                    compilerOptions: {
-                        directiveTransforms: {
-                            loading: ssrTransformCustomDir
-                        }
+            createHtmlPlugin({
+                inject: {
+                    data: {
+                        VITE_APP_ENV: process.env.VITE_APP_ENV,
+                        VITE_APP_API_DOMAIN: process.env.VITE_APP_API_DOMAIN,
+                        VITE_APP_API: process.env.VITE_APP_API,
+                        MODE: mode
                     }
                 }
             }),
-            WindiCSS({
-                scan: {
-                    dirs: ['.'], // all files in the cwd
-                    fileExtensions: ['vue'] // also enabled scanning for vue/js/ts
+            VueMacros({
+                plugins: {
+                    vue: vuePlugin({
+                        template: {
+                            compilerOptions: {
+                                isCustomElement: tag => ['def'].includes(tag)
+                            },
+                            directiveTransforms: {
+                                loading: ssrTransformCustomDir
+                            }
+                        }
+                    }),
+                    vueJsx: vueJsx()
                 }
+            }),
+            AutoImport({
+                eslintrc: {
+                    enabled: true
+                },
+                include: [
+                    /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+                    /\.vue$/,
+                    /\.vue\?vue/, // .vue
+                    /\.md$/ // .md
+                ],
+                imports: [
+                    'vue',
+                    'vue-router',
+                    '@vueuse/core',
+                    '@vueuse/head',
+                    {
+                        pinia: ['defineStore', 'storeToRefs'],
+                        'vue-router': ['createRouter', 'createWebHashHistory'],
+                        '@/utils': ['UTC2Date', 'deepClone']
+                    }
+                ],
+                dts: 'src/auto-imports.d.ts',
+                dirs: ['src/components', 'src/pinia', 'src/mixins'],
+
+                resolvers: [ElementPlusResolver()],
+                vueTemplate: true,
+                cache: false
+            }),
+            Components({
+                include: [
+                    /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+                    /\.vue$/,
+                    /\.vue\?vue/, // .vue
+                    /\.md$/ // .md
+                ],
+                resolvers: [ElementPlusResolver()],
+                dts: 'src/components.d.ts'
+            }),
+            UnoCSS({
+                /* options */
             }),
             VitePWA({
                 // mode: 'development',

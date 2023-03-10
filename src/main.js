@@ -4,7 +4,6 @@
  */
 
 import { createSSRApp, createApp as createClientApp } from 'vue'
-import { sync } from 'vuex-router-sync'
 import { createHead } from '@vueuse/head'
 
 import { createRouter } from './router'
@@ -24,8 +23,6 @@ export function createApp(isClient = true) {
 
     const store = createStore()
     const router = createRouter(store)
-
-    sync(store, router)
 
     const head = createHead()
 
