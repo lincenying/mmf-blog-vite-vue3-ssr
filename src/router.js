@@ -71,6 +71,10 @@ const backendConfig = {
 }
 
 const routes = [
+    {
+        path: '/index.html',
+        redirect: '/'
+    },
     { name: 'index', path: '/', component: index, meta: { index: 1 } },
     { name: 'trending', path: '/trending/:by', component: index, meta: { index: 1 } },
     { name: 'category', path: '/category/:id', component: index, meta: { index: 1 } },
