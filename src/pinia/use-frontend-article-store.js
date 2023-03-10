@@ -61,6 +61,7 @@ const useStore = defineStore('frontendArticleStore', {
             }
         },
         async getTrending(_, $api) {
+            if (!import.meta.env.SSR) $api = api
             if (this.trending.length) return
             const { code, data } = await $api.get('frontend/trending', { cache: true })
             if (data && code === 200) {
