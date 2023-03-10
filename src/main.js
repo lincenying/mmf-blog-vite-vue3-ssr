@@ -6,7 +6,7 @@ import { createRouter } from './router'
 
 import globalPlugin from '@/plugin/global'
 
-import App from './App.vue'
+import App from './app.vue'
 
 console.log('当前环境: ' + import.meta.env.VITE_APP_ENV)
 
