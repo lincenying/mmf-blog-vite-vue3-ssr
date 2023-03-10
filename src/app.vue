@@ -13,9 +13,9 @@
         <sign-up :show="showRegisterModal"></sign-up>
         <sign-in :show="showLoginModal"></sign-in>
         <back-top></back-top>
-        <client-only>
+        <!-- <client-only>
             <reload-prompt></reload-prompt>
-        </client-only>
+        </client-only> -->
     </div>
 </template>
 

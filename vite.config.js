@@ -123,6 +123,7 @@ export default ({ mode }) => {
             VitePWA({
                 // mode: 'development',
                 base: '/',
+                injectRegister: null,
                 manifest: {
                     name: 'M.M.F小屋',
                     short_name: 'M.M.F小屋',
@@ -168,47 +169,6 @@ export default ({ mode }) => {
                     start_url: '/',
                     display: 'standalone',
                     lang: 'zh-CN'
-                },
-                workbox: {
-                    cacheId: 'mmf-blog-vite-vue3',
-                    runtimeCaching: [
-                        {
-                            urlPattern: /api\/.*/i,
-                            handler: 'CacheFirst',
-                            method: 'GET',
-                            options: {
-                                // networkTimeoutSeconds: 1,
-                                cacheName: 'api-cache',
-                                cacheableResponse: {
-                                    statuses: [0, 200]
-                                }
-                            }
-                        },
-                        {
-                            urlPattern: /^https:\/\/cdn\.jsdelivr\.net\/.*/i,
-                            handler: 'CacheFirst',
-                            method: 'GET',
-                            options: {
-                                // networkTimeoutSeconds: 1,
-                                cacheName: 'cdn-cache',
-                                cacheableResponse: {
-                                    statuses: [0, 200]
-                                }
-                            }
-                        },
-                        {
-                            urlPattern: /^https:\/\/fdn\.geekzu\.org\/.*/i,
-                            handler: 'CacheFirst',
-                            method: 'GET',
-                            options: {
-                                // networkTimeoutSeconds: 1,
-                                cacheName: 'avatar-cache',
-                                cacheableResponse: {
-                                    statuses: [0, 200]
-                                }
-                            }
-                        }
-                    ]
                 }
             })
         ],
