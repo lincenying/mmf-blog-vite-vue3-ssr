@@ -4,13 +4,13 @@ demo: [http://vue3.mmxiaowu.com](http://vue3.mmxiaowu.com)
 
 #### 说明
 
-本站采用 Vue 3, Vue-Router 4, Vuex 4 搭建
+本站采用 Vue 3, Vue-Router 4, Pinia 搭建
 
 网站分成前台和后台, 采用 SSR 模式构建
 
 主要功能包括: 管理员, 用户, 分类, 文章, 评论, 文章点赞
 
-主要技术栈: vue3, vue-router4, vuex4, vitejs, eslint, pwa, ssr
+主要技术栈: vue 3, vue-router 4, pinia, vitejs 4, unocss, eslint, pwa, ssr
 
 ---
 
