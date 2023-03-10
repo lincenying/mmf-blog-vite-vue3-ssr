@@ -70,11 +70,11 @@ export async function createServer(root = process.cwd(), isProd = process.env.NO
                 }
             })
         )
-        app.use(
-            (await import('serve-static')).default(resolve('dist/client'), {
-                index: false
-            })
-        )
+        // app.use(
+        //     (await import('serve-static')).default(resolve('dist/client'), {
+        //         index: false
+        //     })
+        // )
     }
 
     // parse application/json
@@ -101,6 +101,8 @@ export async function createServer(root = process.cwd(), isProd = process.env.NO
             }
 
             const [appHtml, preloadLinks, headTags] = await render(url, manifest, req)
+
+            console.log(appHtml, preloadLinks, headTags)
 
             const html = template
                 .replace(`<!--preload-links-->`, preloadLinks)
