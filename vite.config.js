@@ -54,6 +54,7 @@ export default ({ mode }) => {
         },
         plugins: [
             createHtmlPlugin({
+                minify: false,
                 inject: {
                     data: {
                         VITE_APP_ENV: process.env.VITE_APP_ENV,
