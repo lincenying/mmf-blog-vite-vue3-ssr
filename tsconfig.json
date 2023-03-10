@@ -9,14 +9,17 @@
         "skipLibCheck": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
+        "allowJs": true,
         "sourceMap": true,
         "baseUrl": ".",
         "paths": {
             "@/*": ["src/*"]
         },
-        "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+        "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+        "outDir": "build",
+        "types": ["unplugin-vue-macros/macros-global"]
     },
-    "include": ["src/**/*.js", "src/**/*.vue"],
-    "exclude": ["node_modules"],
+    "include": ["src/**/*.js", "src/**/*.vue", "src/auto-imports.d.ts"],
+    "exclude": ["node_modules", "build/**/*"],
     "files": ["main.ts"]
 }

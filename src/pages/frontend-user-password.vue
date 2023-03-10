@@ -33,63 +33,49 @@
     </div>
 </template>
 
-<script>
-import { computed } from 'vue'
+<script setup>
+import api from '@/api/index-client'
 
-import useGlobal from '@/mixins/global'
-import { showMsg } from '@/utils'
+defineOptions({
+    name: 'frontend-user-password'
+})
 
-import aInput from '@/components/_input.vue'
+// eslint-disable-next-line no-unused-vars
+const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('frontend-user-password')
 
-export default {
-    name: 'frontend-user-password',
-    components: {
-        aInput
-    },
-    setup() {
-        // eslint-disable-next-line no-unused-vars
-        const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
+const form = reactive({
+    old_password: '',
+    password: '',
+    re_password: ''
+})
 
-        const form = reactive({
-            old_password: '',
-            password: '',
-            re_password: ''
-        })
-
-        const handleSubmit = useLockFn(async () => {
-            if (!form.password || !form.old_password || !form.re_password) {
-                return showMsg('请将表单填写完整!')
-            } else if (form.password !== form.re_password) {
-                return showMsg('两次密码输入不一致!')
-            }
-            const { code, message } = await store.$api.post('frontend/user/password', form)
-            if (code === 200) {
-                showMsg({ type: 'success', content: message })
-                form.old_password = ''
-                form.password = ''
-                form.re_password = ''
-            }
-        })
-
-        const headTitle = computed(() => {
-            return '密码 - M.M.F 小屋'
-        })
-
-        useHead({
-            // Can be static or computed
-            title: headTitle,
-            meta: [
-                {
-                    name: `description`,
-                    content: headTitle
-                }
-            ]
-        })
-
-        return {
-            form,
-            handleSubmit
-        }
+const handleSubmit = useLockFn(async () => {
+    if (!form.password || !form.old_password || !form.re_password) {
+        return showMsg('请将表单填写完整!')
+    } else if (form.password !== form.re_password) {
+        return showMsg('两次密码输入不一致!')
     }
-}
+    const { code, message } = await api.post('frontend/user/password', form)
+    if (code === 200) {
+        showMsg({ type: 'success', content: message })
+        form.old_password = ''
+        form.password = ''
+        form.re_password = ''
+    }
+})
+
+const headTitle = computed(() => {
+    return '密码 - M.M.F 小屋'
+})
+
+useHead({
+    // Can be static or computed
+    title: headTitle,
+    meta: [
+        {
+            name: `description`,
+            content: headTitle
+        }
+    ]
+})
 </script>

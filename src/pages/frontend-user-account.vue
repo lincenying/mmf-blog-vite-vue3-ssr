@@ -20,81 +20,69 @@
     </div>
 </template>
 
-<script>
-import { onMounted, computed } from 'vue'
+<script setup>
+import api from '@/api/index-client'
 
-import useGlobal from '@/mixins/global'
-import { showMsg } from '@/utils'
+defineOptions({
+    name: 'frontend-user-account'
+})
 
-import aInput from '../components/_input.vue'
+// eslint-disable-next-line no-unused-vars
+const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('frontend-user-account')
 
-export default {
-    name: 'frontend-user-account',
-    components: {
-        aInput
-    },
-    setup() {
-        // eslint-disable-next-line no-unused-vars
-        const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
+// pinia 状态管理 ===>
+const { cookies } = $(storeToRefs(globalStore))
 
-        const username = ref('')
-        const email = ref('')
+let username = $ref('')
+let email = $ref('')
 
-        const getUser = async () => {
-            const { code, data } = await store.$api.get('frontend/user/account')
-            if (code === 200) {
-                username.value = data.username
-                email.value = data.email
-            }
-        }
-
-        onMounted(() => {
-            getUser()
-        })
-
-        const handleSubmit = useLockFn(async () => {
-            const reg = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)$/i
-            if (!email) {
-                showMsg('请填写邮箱地址!')
-                return
-            } else if (!reg.test(email)) {
-                showMsg('邮箱格式错误!')
-                return
-            }
-            const { code, message } = await store.$api.post('frontend/user/account', {
-                email,
-                username,
-                id: ctx.$oc(store.state, 'global.cookies.userid')
-            })
-            if (code === 200) {
-                store.commit('global/setCookies', {
-                    ...ctx.$oc(store.state, 'global.cookies'),
-                    useremail: email
-                })
-                showMsg({ type: 'success', content: message })
-            }
-        })
-
-        const headTitle = computed(() => {
-            return '帐号 - M.M.F 小屋'
-        })
-
-        useHead({
-            // Can be static or computed
-            title: headTitle,
-            meta: [
-                {
-                    name: `description`,
-                    content: headTitle
-                }
-            ]
-        })
-
-        return {
-            username,
-            email,
-            handleSubmit
-        }
+const getUser = async () => {
+    const { code, data } = await api.get('frontend/user/account')
+    if (code === 200) {
+        username = data.username
+        email = data.email
     }
 }
+
+onMounted(() => {
+    getUser()
+})
+
+const handleSubmit = useLockFn(async () => {
+    const reg = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)$/i
+    if (!email) {
+        showMsg('请填写邮箱地址!')
+        return
+    } else if (!reg.test(email)) {
+        showMsg('邮箱格式错误!')
+        return
+    }
+    const { code, message } = await api.post('frontend/user/account', {
+        email,
+        username,
+        id: cookies.userid
+    })
+    if (code === 200) {
+        globalStore.setCookies({
+            ...cookies,
+            useremail: email
+        })
+        showMsg({ type: 'success', content: message })
+    }
+})
+
+const headTitle = computed(() => {
+    return '帐号 - M.M.F 小屋'
+})
+
+useHead({
+    // Can be static or computed
+    title: headTitle,
+    meta: [
+        {
+            name: `description`,
+            content: headTitle
+        }
+    ]
+})
 </script>

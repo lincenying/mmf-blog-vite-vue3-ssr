@@ -7,8 +7,8 @@
         </div>
     </div>
 </template>
-<script>
-export default {
+<script setup>
+defineOptions({
     name: 'topics-item-none'
-}
+})
 </script>

@@ -97,13 +97,13 @@ const routes = [
         ]
     },
 
-    { name: 'login', path: '/backend-login', component: login },
     {
         name: 'backend',
         path: '/backend',
         component: backend,
         redirect: '/backend/article/list',
         children: [
+            { name: 'login', path: 'login', component: login },
             { name: 'admin_list', path: 'admin/list', component: adminList, ...backendConfig },
             { name: 'admin_modify', path: 'admin/modify/:id', component: adminModify, ...backendConfig },
             { name: 'article_list', path: 'article/list', component: articleList, ...backendConfig },
@@ -121,7 +121,7 @@ const routes = [
     { name: '404', path: '/:catchAll(.*)', component: notFound }
 ]
 
-export function createRouter(store) {
+export function createRouter() {
     const router = _createRouter({
         // use appropriate history implementation for server/client
         // import.meta.env.SSR is injected by Vite.
@@ -134,24 +134,24 @@ export function createRouter(store) {
     const slideRight = 'slide-right'
 
     router.beforeEach((to, from, next) => {
-        if (store) {
-            // 如果不需要切换动画，直接返回
-            if (store.state.appShell.needPageTransition) {
-                // 根据 alwaysBackPage, alwaysForwardPage 来判断切换动画
-                // 判断当前是前进还是后退，添加不同的动画效果
-                // const pageTransitionName = isForward(to, from) ? slideLeft : slideRight
-                // =================== //
-                // 根据路由中的 meta.index 来判断切换动画
-                let pageTransitionName
-                if (!from.meta.index || to.meta.index === from.meta.index) {
-                    pageTransitionName = 'fade'
-                } else if (to.meta.index > from.meta.index) {
-                    pageTransitionName = slideLeft
-                } else {
-                    pageTransitionName = slideRight
-                }
-                store.commit(`appShell/setPageTransitionName`, { pageTransitionName })
+        const appShellStore = useAppShellStore()
+        const { needPageTransition } = $(storeToRefs(appShellStore))
+        // 如果不需要切换动画，直接返回
+        if (needPageTransition) {
+            // 根据 alwaysBackPage, alwaysForwardPage 来判断切换动画
+            // 判断当前是前进还是后退，添加不同的动画效果
+            // const pageTransitionName = isForward(to, from) ? slideLeft : slideRight
+            // =================== //
+            // 根据路由中的 meta.index 来判断切换动画
+            let pageTransitionName
+            if (!from.meta.index || to.meta.index === from.meta.index) {
+                pageTransitionName = 'fade'
+            } else if (to.meta.index > from.meta.index) {
+                pageTransitionName = slideLeft
+            } else {
+                pageTransitionName = slideRight
             }
+            appShellStore.setPageTransitionName({ pageTransitionName })
         }
         next()
     })

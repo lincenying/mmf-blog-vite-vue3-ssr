@@ -25,11 +25,11 @@ export const api = cookies => {
             },
             timeout: config.timeout
         }),
-        getCookes() {
+        getCookies() {
             return this.cookies
         },
         async post(url, data = {}, headers = {}) {
-            const cookies = this.getCookes() || {}
+            const cookies = this.getCookies() || {}
             const username = cookies.username || ''
             const key = md5(url + JSON.stringify(data) + username)
             if (config.cached && data.cache && config.cached.has(key)) {
@@ -49,7 +49,7 @@ export const api = cookies => {
             return res_1 && res_1.data
         },
         async get(url, params = {}, headers = {}) {
-            const cookies = this.getCookes() || {}
+            const cookies = this.getCookies() || {}
             const username = cookies.username || ''
             const key = md5(url + JSON.stringify(params) + username)
             if (config.cached && params.cache && config.cached.has(key)) {

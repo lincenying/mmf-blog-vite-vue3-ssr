@@ -9,13 +9,14 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    _input: typeof import('./components/_input.vue')['default']
+    AInput: typeof import('./components/a-input.vue')['default']
     AsideAccount: typeof import('./components/aside-account.vue')['default']
     AsideCategory: typeof import('./components/aside-category.vue')['default']
     AsideOther: typeof import('./components/aside-other.vue')['default']
     AsideTrending: typeof import('./components/aside-trending.vue')['default']
     BackendMenu: typeof import('./components/backend-menu.vue')['default']
     BackTop: typeof import('./components/back-top.vue')['default']
+    ClientOnly: typeof import('./components/client-only.vue')['default']
     FrontendComment: typeof import('./components/frontend-comment.vue')['default']
     GlobalNavigation: typeof import('./components/global-navigation.vue')['default']
     ItemActions: typeof import('./components/item-actions.vue')['default']

@@ -45,57 +45,43 @@
                         <p>本站服务端采用 express + mongoDB 搭建, 客户端采用 Vue3 渲染搭建</p>
                         <p>网站分成前台和后台, 前台采用 SSR 模式渲染, 后台采用 SPA 模式</p>
                         <p>主要功能包括: 管理员, 用户, 分类, 文章, 评论, 文章点赞</p>
-                        <p>主要技术栈: pwa, vitejs2, babel, eslint, express, mongoose, vue3, vue-router4, vuex4</p>
+                        <p>主要技术栈: pwa, vite4, unocss, eslint, express, mongoose, vue3, vue-router4, pinia</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="main-right"><trending :trending="trending"></trending></div>
+        <div class="main-right"><aside-trending :trending="trending"></aside-trending></div>
     </div>
 </template>
-<script>
-import { onMounted, computed } from 'vue'
-
-import useGlobal from '@/mixins/global'
-import trending from '../components/aside-trending.vue'
-
-export default {
+<script setup>
+defineOptions({
     name: 'frontend-about',
-    components: {
-        trending
-    },
-    setup() {
-        // eslint-disable-next-line no-unused-vars
-        const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
-
-        const trending = computed(() => {
-            return store.getters['frontend/article/getTrending']
-        })
-
-        onMounted(() => {
-            options.asyncData({ route, store })
-        })
-
-        const headTitle = computed(() => {
-            return '关于 - M.M.F 小屋'
-        })
-        useHead({
-            // Can be static or computed
-            title: headTitle,
-            meta: [
-                {
-                    name: `description`,
-                    content: headTitle
-                }
-            ]
-        })
-
-        return {
-            trending
-        }
-    },
-    async asyncData({ store }) {
-        await store.dispatch('frontend/article/getTrending')
+    asyncData({ store, route, api }) {
+        const frontendArticleStore = useFrontendArticleStore(store)
+        return frontendArticleStore.getTrending({ id: route.query.id }, api)
     }
-}
+})
+
+// eslint-disable-next-line no-unused-vars
+const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('frontend-about')
+
+// pinia 状态管理 ===>
+const frontendArticleStore = useFrontendArticleStore()
+const { trending } = $(storeToRefs(frontendArticleStore))
+
+onMounted(() => {})
+
+const headTitle = computed(() => {
+    return '关于 - M.M.F 小屋'
+})
+useHead({
+    // Can be static or computed
+    title: headTitle,
+    meta: [
+        {
+            name: `description`,
+            content: headTitle
+        }
+    ]
+})
 </script>

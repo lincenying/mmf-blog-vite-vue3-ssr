@@ -23,90 +23,72 @@
     </div>
 </template>
 
-<script>
-import { computed, onMounted, watch } from 'vue'
+<script setup>
+import api from '@/api/index-client'
 
-import useGlobal from '@/mixins/global'
-import { showMsg } from '@/utils'
-
-import aInput from '@/components/_input.vue'
-
-export default {
+defineOptions({
     name: 'backend-user-modify',
-    components: {
-        aInput
-    },
-    setup() {
-        // eslint-disable-next-line no-unused-vars
-        const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
+    asyncData({ store, route, api }) {
+        const backendUserStore = useBackendUserStore(store)
+        return backendUserStore.getUserItem({ id: route.params.id, path: route.path, from: 'backend' }, api)
+    }
+})
 
-        const item = computed(() => {
-            return store.getters['backend/user/getUserItem']
-        })
+// eslint-disable-next-line no-unused-vars
+const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('backend-user-modify')
 
-        const [loading, toggleLoading] = useToggle(false)
+// pinia 状态管理 ===>
+const backendUserStore = useBackendUserStore()
+const { item } = $(storeToRefs(backendUserStore))
 
-        const form = reactive({
-            id: route.params.id,
-            username: '',
-            email: '',
-            password: ''
-        })
+const [loading, toggleLoading] = useToggle(false)
 
-        watch(item, val => {
-            form.username = val.data.username
-            form.email = val.data.email
-        })
+const form = reactive({
+    id: route.params.id,
+    username: '',
+    email: '',
+    password: ''
+})
 
-        onMounted(async () => {
-            await options.asyncData({ route, store })
-            if (item && item.data) {
-                form.username = item.data.username
-                form.email = item.data.email
-            }
-        })
+watch(item, val => {
+    form.username = val.data.username
+    form.email = val.data.email
+})
 
-        const handleModify = async () => {
-            if (!form.username || !form.email) {
-                showMsg('请将表单填写完整!')
-                return
-            }
-            if (loading.value) return
-            toggleLoading(true)
-            const { code, data, message } = await store.$api.post('backend/user/modify', form)
-            toggleLoading(false)
-            if (code === 200) {
-                showMsg({ type: 'success', content: message })
-                store.commit('backend/user/updateUserItem', data)
-                router.push('/backend/user/list')
-            }
-        }
+onMounted(async () => {
+    if (item && item.data) {
+        form.username = item.data.username
+        form.email = item.data.email
+    }
+})
 
-        const headTitle = computed(() => {
-            return '用户编辑 - M.M.F 小屋'
-        })
-        useHead({
-            // Can be static or computed
-            title: headTitle,
-            meta: [
-                {
-                    name: `description`,
-                    content: headTitle
-                }
-            ]
-        })
-
-        return {
-            form,
-            handleModify
-        }
-    },
-    async asyncData({ store, route }) {
-        await store.dispatch('backend/user/getUserItem', {
-            id: route.params.id,
-            path: route.path,
-            from: 'backend'
-        })
+const handleModify = async () => {
+    if (!form.username || !form.email) {
+        showMsg('请将表单填写完整!')
+        return
+    }
+    if (loading.value) return
+    toggleLoading(true)
+    const { code, data, message } = await api.post('backend/user/modify', form)
+    toggleLoading(false)
+    if (code === 200) {
+        showMsg({ type: 'success', content: message })
+        backendUserStore.updateUserItem(data)
+        router.push('/backend/user/list')
     }
 }
+
+const headTitle = computed(() => {
+    return '用户编辑 - M.M.F 小屋'
+})
+useHead({
+    // Can be static or computed
+    title: headTitle,
+    meta: [
+        {
+            name: `description`,
+            content: headTitle
+        }
+    ]
+})
 </script>

@@ -17,89 +17,66 @@
     </div>
 </template>
 
-<script>
-import { computed, onMounted, watch } from 'vue'
+<script setup>
+import api from '@/api/index-client'
 
-import useGlobal from '@/mixins/global'
-import { showMsg } from '@/utils'
-
-import aInput from '../components/_input.vue'
-
-export default {
+defineOptions({
     name: 'backend-category-modify',
-    components: {
-        aInput
-    },
-    setup() {
-        // eslint-disable-next-line no-unused-vars
-        const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
+    asyncData({ store, route, api }) {
+        const globalCategoryStore = useGlobalCategoryStore(store)
+        return globalCategoryStore.getCategoryItem({ path: route.path, id: route.params.id }, api)
+    }
+})
 
-        const item = computed(() => {
-            return store.getters['global/category/getCategoryItem']
-        })
+// eslint-disable-next-line no-unused-vars
+const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('backend-category-modify')
 
-        const [loading, toggleLoading] = useToggle(false)
+// pinia 状态管理 ===>
+const globalCategoryStore = useGlobalCategoryStore()
+const { item } = $(storeToRefs(globalCategoryStore))
 
-        const form = reactive({
-            id: route.params.id,
-            cate_name: '',
-            cate_order: ''
-        })
+const [loading, toggleLoading] = useToggle(false)
 
-        watch(item, val => {
-            console.log(val)
-            form.cate_name = val.data.cate_name
-            form.cate_order = val.data.cate_order
-        })
+const form = reactive({
+    id: route.params.id,
+    cate_name: '',
+    cate_order: ''
+})
 
-        onMounted(async () => {
-            await options.asyncData({ route, store })
-            if (item && item.data) {
-                form.cate_name = item.data.cate_name
-                form.cate_order = item.data.cate_order
-            }
-        })
+watch(item, val => {
+    form.cate_name = val.data.cate_name
+    form.cate_order = val.data.cate_order
+})
 
-        const handleModify = async () => {
-            if (!form.cate_name || !form.cate_order) {
-                showMsg('请将表单填写完整!')
-                return
-            }
-            if (loading.value) return
-            toggleLoading(true)
-            const { code, data, message } = await store.$api.post('backend/category/modify', form)
-            toggleLoading(false)
-            if (code === 200) {
-                showMsg({ type: 'success', content: message })
-                store.commit('global/category/updateCategoryItem', data)
-                router.push('/backend/category/list')
-            }
-        }
+onMounted(async () => {})
 
-        const headTitle = computed(() => {
-            return '编辑分类 - M.M.F 小屋'
-        })
-        useHead({
-            // Can be static or computed
-            title: headTitle,
-            meta: [
-                {
-                    name: `description`,
-                    content: headTitle
-                }
-            ]
-        })
-
-        return {
-            form,
-            handleModify
-        }
-    },
-    async asyncData({ store, route }) {
-        await store.dispatch('global/category/getCategoryItem', {
-            path: route.path,
-            id: route.params.id
-        })
+const handleModify = async () => {
+    if (!form.cate_name || !form.cate_order) {
+        showMsg('请将表单填写完整!')
+        return
+    }
+    if (loading.value) return
+    toggleLoading(true)
+    const { code, data, message } = await api.post('backend/category/modify', form)
+    toggleLoading(false)
+    if (code === 200) {
+        showMsg({ type: 'success', content: message })
+        globalCategoryStore.updateCategoryItem(data)
+        router.push('/backend/category/list')
     }
 }
+
+const headTitle = computed(() => {
+    return '编辑分类 - M.M.F 小屋'
+})
+useHead({
+    // Can be static or computed
+    title: headTitle,
+    meta: [
+        {
+            name: `description`,
+            content: headTitle
+        }
+    ]
+})
 </script>

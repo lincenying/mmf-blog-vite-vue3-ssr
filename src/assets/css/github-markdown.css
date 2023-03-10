@@ -1,22 +1,24 @@
 /*! github-markdown-css | The MIT License (MIT) | Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com) | https://github.com/sindresorhus/github-markdown-css */
 .markdown-body {
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-    color: #333;
     overflow: hidden;
-    font-family: 'Microsoft YaHei', Helvetica, 'Meiryo UI', 'Malgun Gothic', 'Segoe UI', 'Trebuchet MS', 'Monaco', monospace, Tahoma, STXihei,
+    font-family: 'Microsoft YaHei', Helvetica, 'Meiryo UI', 'Malgun Gothic', 'Segoe UI', 'Trebuchet MS', Monaco, monospace, Tahoma, STXihei,
         '华文细黑', STHeiti, 'Helvetica Neue', 'Droid Sans', 'wenquanyi micro hei', FreeSans, Arimo, Arial, SimSun, '宋体', Heiti, '黑体', sans-serif;
     font-size: 16px;
     line-height: 1.6;
+    color: #333;
+    text-size-adjust: 100%;
     word-wrap: break-word;
 }
 
 .markdown-body a {
+    color: #4183c4;
+    text-decoration: none;
     background: transparent;
 }
 
 .markdown-body a:active,
 .markdown-body a:hover {
+    text-decoration: underline;
     outline: 0;
 }
 
@@ -24,47 +26,50 @@
     font-weight: bold;
 }
 
-.markdown-body h1 {
-    margin: 0.67em 0;
-}
+
 
 .markdown-body img {
     border: 0;
 }
 
 .markdown-body hr {
-    -moz-box-sizing: content-box;
     box-sizing: content-box;
     height: 0;
+    margin: 15px 0;
+    overflow: hidden;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid #ddd;
 }
 
 .markdown-body pre {
+    margin-top: 0;
+    margin-bottom: 0;
     overflow: auto;
+    font: 12px Consolas, 'Liberation Mono', Menlo, Courier, monospace;
 }
 
 .markdown-body code,
 .markdown-body kbd,
 .markdown-body pre {
-    font-family: 'Meiryo UI', 'YaHei Consolas Hybrid', Consolas, 'Malgun Gothic', 'Segoe UI', 'Trebuchet MS', Helvetica, monospace, monospace;
+    font-family: 'Meiryo UI', 'YaHei Consolas Hybrid', Consolas, 'Malgun Gothic', 'Segoe UI', 'Trebuchet MS', Helvetica, monospace;
     font-size: 1em;
 }
 
 .markdown-body input {
-    color: inherit;
-    font: inherit;
     margin: 0;
+    font: inherit;
+    font: 13px/1.4 Helvetica, arial, freesans, clean, sans-serif, 'Segoe UI Emoji', 'Segoe UI Symbol';
+    line-height: normal;
+    color: inherit;
 }
 
 .markdown-body html input[disabled] {
     cursor: default;
 }
 
-.markdown-body input {
-    line-height: normal;
-}
 
 .markdown-body input[type='checkbox'] {
-    -moz-box-sizing: border-box;
     box-sizing: border-box;
     padding: 0;
 }
@@ -80,39 +85,15 @@
 }
 
 .markdown-body * {
-    -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 
-.markdown-body input {
-    font: 13px/1.4 Helvetica, arial, freesans, clean, sans-serif, 'Segoe UI Emoji', 'Segoe UI Symbol';
-}
-
-.markdown-body a {
-    color: #4183c4;
-    text-decoration: none;
-}
-
-.markdown-body a:hover,
-.markdown-body a:active {
-    text-decoration: underline;
-}
-
-.markdown-body hr {
-    height: 0;
-    margin: 15px 0;
-    overflow: hidden;
-    background: transparent;
-    border: 0;
-    border-bottom: 1px solid #ddd;
-}
-
-.markdown-body hr:before {
+.markdown-body hr::before {
     display: table;
     content: '';
 }
 
-.markdown-body hr:after {
+.markdown-body hr::after {
     display: table;
     clear: both;
     content: '';
@@ -130,6 +111,7 @@
 }
 
 .markdown-body h1 {
+    margin: 0.67em 0;
     font-size: 22px;
 }
 
@@ -185,26 +167,18 @@
     font-size: 12px;
 }
 
-.markdown-body pre {
-    margin-top: 0;
-    margin-bottom: 0;
-    font: 12px Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-}
 
 .markdown-body .octicon {
-    font: normal normal 16px octicons-anchor;
-    line-height: 1;
     display: inline-block;
-    text-decoration: none;
+    font: normal normal 16px octicons-anchor;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+    line-height: 1;
+    text-decoration: none;
     user-select: none;
 }
 
-.markdown-body .octicon-link:before {
+.markdown-body .octicon-link::before {
     content: '\f05c';
 }
 
@@ -238,9 +212,9 @@
 .markdown-body h6 {
     position: relative;
     margin-bottom: 16px;
-    pointer-events: none;
     font-weight: bold;
     line-height: 1.4;
+    pointer-events: none;
 }
 
 .markdown-body h1 .octicon-link,
@@ -331,7 +305,7 @@
     margin: 16px 0;
     background-color: #e7e7e7;
     border: 0 none;
-  }*/
+  } */
 .markdown-body ul,
 .markdown-body ol {
     padding-left: 2em;
@@ -409,7 +383,6 @@
 
 .markdown-body img {
     max-width: 100%;
-    -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -423,8 +396,8 @@
     border-radius: 3px;
 }
 
-.markdown-body code:before,
-.markdown-body code:after {
+.markdown-body code::before,
+.markdown-body code::after {
     letter-spacing: -0.2em;
     content: '\00a0';
 }
@@ -474,8 +447,8 @@
     border: 0;
 }
 
-.markdown-body pre code:before,
-.markdown-body pre code:after {
+.markdown-body pre code::before,
+.markdown-body pre code::after {
     content: normal;
 }
 
@@ -554,13 +527,13 @@
 }
 
 .markdown-body .pl-ii {
-    background-color: #b52a1d;
     color: #f8f8f8;
+    background-color: #b52a1d;
 }
 
 .markdown-body .pl-sr .pl-cce {
-    color: #63a35c;
     font-weight: bold;
+    color: #63a35c;
 }
 
 .markdown-body .pl-ml {
@@ -570,8 +543,8 @@
 .markdown-body .pl-mh,
 .markdown-body .pl-mh .pl-en,
 .markdown-body .pl-ms {
-    color: #1d3e81;
     font-weight: bold;
+    color: #1d3e81;
 }
 
 .markdown-body .pl-mq {
@@ -579,30 +552,30 @@
 }
 
 .markdown-body .pl-mi {
-    color: #333;
     font-style: italic;
+    color: #333;
 }
 
 .markdown-body .pl-mb {
-    color: #333;
     font-weight: bold;
+    color: #333;
 }
 
 .markdown-body .pl-md,
 .markdown-body .pl-mdhf {
-    background-color: #ffecec;
     color: #bd2c00;
+    background-color: #ffecec;
 }
 
 .markdown-body .pl-mdht,
 .markdown-body .pl-mi1 {
-    background-color: #eaffea;
     color: #55a532;
+    background-color: #eaffea;
 }
 
 .markdown-body .pl-mdr {
-    color: #795da3;
     font-weight: bold;
+    color: #795da3;
 }
 
 .markdown-body kbd {
@@ -634,7 +607,7 @@
 }
 
 .markdown-body :checked + .radio-label {
-    z-index: 1;
     position: relative;
+    z-index: 1;
     border-color: #4183c4;
 }

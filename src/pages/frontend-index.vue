@@ -23,117 +23,94 @@
             </div>
         </div>
         <div class="main-right">
-            <category :category="category"></category>
-            <trending :trending="trending"></trending>
-            <other></other>
+            <aside-category :category="category"></aside-category>
+            <aside-trending :trending="trending"></aside-trending>
+            <aside-other></aside-other>
         </div>
     </div>
 </template>
-<script>
-import { onActivated, computed } from 'vue'
 
+<script setup>
 import { ContentLoader } from 'vue-content-loader'
 
-import saveScroll from '@/mixins/save-scroll'
-import useGlobal from '@/mixins/global'
-
-import topicsItem from '../components/topics-item.vue'
-import topicsItemNone from '../components/topics-item-none.vue'
-import category from '../components/aside-category.vue'
-import trending from '../components/aside-trending.vue'
-import other from '../components/aside-other.vue'
-
-export default {
+defineOptions({
     name: 'frontend-index',
-    components: {
-        ContentLoader,
-        topicsItem,
-        topicsItemNone,
-        category,
-        trending,
-        other
-    },
-    beforeRouteUpdate(to, form, next) {
-        console.log(to)
-        next()
-    },
-    setup() {
-        // eslint-disable-next-line no-unused-vars
-        const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
-
-        saveScroll()
-
-        const topics = computed(() => {
-            return store.getters['frontend/article/getArticleList']
-        })
-        const category = computed(() => {
-            return store.getters['global/category/getCategoryList']
-        })
-        const trending = computed(() => {
-            return store.getters['frontend/article/getTrending']
-        })
-
-        const [loading, toggleLoading] = useToggle(false)
-        const loadMore = async (page = topics.value.page + 1) => {
-            if (loading.value) return
-            toggleLoading(true)
-            await options.asyncData({ store, route }, { page })
-            toggleLoading(false)
-        }
-
-        onActivated(() => {
-            console.log('frontend-index onActivated:' + route.path)
-            if (topics.value.path !== route.path) loadMore(1)
-        })
-
-        // onMounted(() => {
-        //     loadMore(1)
-        // })
-
-        const headTitle = computed(() => {
-            let title = 'M.M.F 小屋'
-            const { id, key, by } = route.params
-            if (id) {
-                const obj = category.value.find(item => item._id === id)
-                if (obj) {
-                    title = obj.cate_name + ' - ' + title
-                }
-            } else if (key) {
-                title = '搜索: ' + key + ' - ' + title
-            } else if (by) {
-                title = '热门 - ' + title
-            }
-            return title
-        })
-
-        useHead({
-            // Can be static or computed
-            title: headTitle,
-            meta: [
-                {
-                    name: `description`,
-                    content: headTitle
-                }
-            ]
-        })
-        return {
-            loading,
-            topics,
-            category,
-            trending,
-            loadMore
-        }
-    },
-    async asyncData({ store, route }, config = { page: 1 }) {
+    asyncData({ store, route, api }) {
         const {
             params: { id, key, by },
             path
         } = route
-        await Promise.all([
-            store.dispatch('global/category/getCategoryList'),
-            store.dispatch('frontend/article/getTrending'),
-            store.dispatch('frontend/article/getArticleList', { ...config, limit: 10, id, path, key, by })
+        const globalCategoryStore = useGlobalCategoryStore(store)
+        const frontendArticleStore = useFrontendArticleStore(store)
+        return Promise.all([
+            globalCategoryStore.getCategoryList({}, api),
+            frontendArticleStore.getTrending({}, api),
+            frontendArticleStore.getArticleList({ page: 1, limit: 10, id, path, key, by }, api)
         ])
+    },
+    beforeRouteUpdate(to, form, next) {
+        next()
     }
+})
+
+// eslint-disable-next-line no-unused-vars
+const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('frontend-index')
+
+// pinia 状态管理 ===>
+const globalCategoryStore = useGlobalCategoryStore()
+const { lists: category } = $(storeToRefs(globalCategoryStore))
+
+const frontendArticleStore = useFrontendArticleStore()
+const { lists: topics, trending } = $(storeToRefs(frontendArticleStore))
+
+useSaveScroll()
+
+const {
+    params: { id, key, by },
+    path
+} = route
+
+const [loading, toggleLoading] = useToggle(false)
+const loadMore = async (page = topics.page + 1) => {
+    if (loading.value) return
+    toggleLoading(true)
+    await frontendArticleStore.getArticleList({ page, limit: 10, id, path, key, by })
+    toggleLoading(false)
 }
+
+onActivated(() => {
+    console.log('frontend-index onActivated:' + route.path)
+    if (topics.path !== route.path) loadMore(1)
+})
+
+// onMounted(() => {
+//     loadMore(1)
+// })
+
+const headTitle = computed(() => {
+    let title = 'M.M.F 小屋'
+    const { id, key, by } = route.params
+    if (id) {
+        const obj = category.find(item => item._id === id)
+        if (obj) {
+            title = obj.cate_name + ' - ' + title
+        }
+    } else if (key) {
+        title = '搜索: ' + key + ' - ' + title
+    } else if (by) {
+        title = '热门 - ' + title
+    }
+    return title
+})
+
+useHead({
+    // Can be static or computed
+    title: headTitle,
+    meta: [
+        {
+            name: `description`,
+            content: headTitle
+        }
+    ]
+})
 </script>

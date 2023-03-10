@@ -18,7 +18,7 @@
     "lint:fix": "eslint './src/**/*.{js,ts,tsx,vue}' --fix"
   },
   "dependencies": {
-    "@kangc/v-md-editor": "next",
+    "@kangc/v-md-editor": "^2.2.3",
     "@vueuse/core": "^9.13.0",
     "@vueuse/head": "^1.1.19",
     "axios": "^1.3.4",

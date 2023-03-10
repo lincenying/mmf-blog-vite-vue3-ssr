@@ -21,83 +21,72 @@
     </div>
 </template>
 
-<script>
-import { computed, onMounted } from 'vue'
+<script setup>
+import api from '@/api/index-client'
 
-import useGlobal from '@/mixins/global'
-import saveScroll from '@/mixins/save-scroll'
-import { showMsg } from '@/utils'
-
-export default {
+defineOptions({
     name: 'backend-category-list',
-    setup() {
-        // eslint-disable-next-line no-unused-vars
-        const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
+    asyncData({ store, route, api }) {
+        const globalCategoryStore = useGlobalCategoryStore(store)
+        return globalCategoryStore.getCategoryList({ limit: 99, path: route.path }, api)
+    }
+})
 
-        saveScroll()
+// eslint-disable-next-line no-unused-vars
+const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('backend-category-list')
 
-        const category = computed(() => {
-            return store.getters['global/category/getCategoryList']
-        })
+// pinia 状态管理 ===>
+const globalCategoryStore = useGlobalCategoryStore()
+const { lists: category } = $(storeToRefs(globalCategoryStore))
 
-        const [loading, toggleLoading] = useToggle(false)
+const { historyPageScrollTop } = $(storeToRefs(appShellStore))
 
-        const loadMore = async () => {
-            if (loading.value) return
-            toggleLoading(true)
-            await options.asyncData({ store, route })
-            toggleLoading(false)
-        }
+useSaveScroll()
 
-        onMounted(() => {
-            const scrollTop = store.state.appShell.historyPageScrollTop[route.path] || 0
-            window.scrollTo(0, scrollTop)
-            loadMore()
-        })
+const [loading, toggleLoading] = useToggle(false)
 
-        const handleRecover = async id => {
-            const { code, message } = await store.$api.get('backend/category/recover', { id })
-            if (code === 200) {
-                showMsg({ type: 'success', content: message })
-                store.commit('backend/category/recoverCategory', id)
-            }
-        }
-        const handleDelete = async id => {
-            const { code, message } = await store.$api.get('backend/category/delete', { id })
-            if (code === 200) {
-                showMsg({ type: 'success', content: message })
-                store.commit('backend/category/deleteCategory', id)
-            }
-        }
+const loadMore = async () => {
+    if (loading.value) return
+    toggleLoading(true)
+    await globalCategoryStore.getCategoryList({ limit: 99, path: route.path }, api)
+    toggleLoading(false)
+}
 
-        const headTitle = computed(() => {
-            return '分类列表 - M.M.F 小屋'
-        })
-        useHead({
-            // Can be static or computed
-            title: headTitle,
-            meta: [
-                {
-                    name: `description`,
-                    content: headTitle
-                }
-            ]
-        })
+onMounted(() => {
+    if (category.path === '') {
+        loadMore(1)
+    } else {
+        const scrollTop = historyPageScrollTop[route.path] || 0
+        window.scrollTo(0, scrollTop)
+    }
+})
 
-        return {
-            category,
-            loading,
-            loadMore,
-            handleRecover,
-            handleDelete
-        }
-    },
-    async asyncData({ store, route }, config = { limit: 99 }) {
-        config.all = 1
-        await store.dispatch('global/category/getCategoryList', {
-            ...config,
-            path: route.path
-        })
+const handleRecover = async id => {
+    const { code, message } = await api.get('backend/category/recover', { id })
+    if (code === 200) {
+        showMsg({ type: 'success', content: message })
+        globalCategoryStore.recoverCategory(id)
     }
 }
+const handleDelete = async id => {
+    const { code, message } = await api.get('backend/category/delete', { id })
+    if (code === 200) {
+        showMsg({ type: 'success', content: message })
+        globalCategoryStore.deleteCategory(id)
+    }
+}
+
+const headTitle = computed(() => {
+    return '分类列表 - M.M.F 小屋'
+})
+useHead({
+    // Can be static or computed
+    title: headTitle,
+    meta: [
+        {
+            name: `description`,
+            content: headTitle
+        }
+    ]
+})
 </script>

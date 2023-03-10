@@ -7,33 +7,19 @@
                 </Suspense>
             </router-view>
         </div>
-        <div class="main-right"><account></account></div>
+        <div class="main-right"><aside-account></aside-account></div>
     </div>
 </template>
 
-<script>
-import { computed } from 'vue'
+<script setup>
+defineOptions({
+    name: 'frontend-user'
+})
 
-import useGlobal from '@/mixins/global'
+// eslint-disable-next-line no-unused-vars
+const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('frontend-user')
 
-import account from '../components/aside-account.vue'
-
-export default {
-    name: 'frontend-user',
-    components: {
-        account
-    },
-    setup() {
-        // eslint-disable-next-line no-unused-vars
-        const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
-
-        const key = computed(() => {
-            return route.path.replace(/\//g, '_')
-        })
-
-        return {
-            key
-        }
-    }
-}
+const key = computed(() => {
+    return route.path.replace(/\//g, '_')
+})
 </script>

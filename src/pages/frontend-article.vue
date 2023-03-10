@@ -20,109 +20,79 @@
                 </div>
                 <div class="card card-answer">
                     <div class="answer-content"><div class="article-content markdown-body" v-html="addTarget(article.data.html)"></div></div>
-                    <actions :item="article.data"></actions>
+                    <item-actions :item="article.data"></item-actions>
                 </div>
-                <comment :comments="comments"></comment>
+                <frontend-comment :comments="comments"></frontend-comment>
             </template>
             <template v-else>
                 <div class="card card-answer"><div class="answer-content">该文章不存在, 或者该文章已经被删除</div></div>
             </template>
         </div>
         <div class="main-right">
-            <category :category="category"></category>
-            <trending :trending="trending"></trending>
-            <other></other>
+            <aside-category :category="category"></aside-category>
+            <aside-trending :trending="trending"></aside-trending>
+            <aside-other></aside-other>
         </div>
     </div>
 </template>
 
-<script>
-import { onMounted, computed } from 'vue'
-
+<script setup>
 import { ContentLoader } from 'vue-content-loader'
 
-import useGlobal from '@/mixins/global'
-import saveScroll from '@/mixins/save-scroll'
-
-import actions from '../components/item-actions.vue'
-import category from '../components/aside-category.vue'
-import trending from '../components/aside-trending.vue'
-import other from '../components/aside-other.vue'
-import comment from '../components/frontend-comment.vue'
-
-export default {
+defineOptions({
     name: 'frontend-article',
-    components: {
-        ContentLoader,
-        actions,
-        comment,
-        category,
-        trending,
-        other
-    },
-    setup() {
-        // eslint-disable-next-line no-unused-vars
-        const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
-
-        saveScroll()
-
-        const article = computed(() => {
-            return store.getters['frontend/article/getArticleItem']
-        })
-        const comments = computed(() => {
-            return store.getters['global/comment/getCommentList']
-        })
-        const category = computed(() => {
-            return store.getters['global/category/getCategoryList']
-        })
-        const trending = computed(() => {
-            return store.getters['frontend/article/getTrending']
-        })
-
-        const addTarget = content => {
-            if (!content) return ''
-            return content.replace(/<a(.*?)href="http/g, '<a$1target="_blank" href="http')
-        }
-
-        onMounted(() => {
-            options.asyncData({ route, store })
-        })
-
-        const headTitle = computed(() => {
-            let title = 'M.M.F 小屋'
-            title = article.value.data.title ? article.value.data.title + ' - M.M.F 小屋' : 'M.M.F 小屋'
-            return title
-        })
-        useHead({
-            // Can be static or computed
-            title: headTitle,
-            meta: [
-                {
-                    name: `description`,
-                    content: headTitle
-                }
-            ]
-        })
-
-        return {
-            article,
-            comments,
-            category,
-            trending,
-            addTarget
-        }
-    },
-    async asyncData({ store, route }) {
+    asyncData({ store, route, api }) {
         const {
             path,
             params: { id }
         } = route
-        await Promise.all([
-            store.dispatch('global/category/getCategoryList'),
-            store.dispatch('frontend/article/getTrending'),
-            store.dispatch(`global/comment/getCommentList`, { id, path, page: 1, limit: 10 }),
-            store.dispatch(`frontend/article/getArticleItem`, { id, path })
+        const globalCategoryStore = useGlobalCategoryStore(store)
+        const frontendArticleStore = useFrontendArticleStore(store)
+        const globalCommentStore = useGlobalCommentStore(store)
+        return Promise.all([
+            globalCategoryStore.getCategoryList({}, api),
+            frontendArticleStore.getTrending({}, api),
+            globalCommentStore.getCommentList({ id, path, page: 1, limit: 10 }, api),
+            frontendArticleStore.getArticleItem({ id, path }, api)
         ])
     }
+})
+
+// eslint-disable-next-line no-unused-vars
+const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('frontend-article')
+
+// pinia 状态管理 ===>
+const globalCategoryStore = useGlobalCategoryStore()
+const { lists: category } = $(storeToRefs(globalCategoryStore))
+
+const frontendArticleStore = useFrontendArticleStore()
+const { item: article, trending } = $(storeToRefs(frontendArticleStore))
+
+const globalCommentStore = useGlobalCommentStore()
+const { lists: comments } = $(storeToRefs(globalCommentStore))
+
+useSaveScroll()
+
+const addTarget = content => {
+    if (!content) return ''
+    return content.replace(/<a(.*?)href="http/g, '<a$1target="_blank" href="http')
 }
+
+onMounted(() => {})
+
+const headTitle = computed(() => {
+    let title = 'M.M.F 小屋'
+    title = article.data.title ? article.data.title + ' - M.M.F 小屋' : 'M.M.F 小屋'
+    return title
+})
+useHead({
+    // Can be static or computed
+    title: headTitle,
+    meta: [
+        {
+            name: `description`,
+            content: headTitle
+        }
+    ]
+})
 </script>

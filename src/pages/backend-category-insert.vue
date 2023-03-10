@@ -14,84 +14,69 @@
     </div>
 </template>
 
-<script>
-import { computed, onMounted, watch } from 'vue'
+<script setup>
+import api from '@/api/index-client'
 
-import useGlobal from '@/mixins/global'
-import { showMsg } from '@/utils'
+defineOptions({
+    name: 'backend-category-insert'
+})
 
-import aInput from '../components/_input.vue'
+// eslint-disable-next-line no-unused-vars
+const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('backend-category-insert')
 
-export default {
-    name: 'backend-category-insert',
-    components: {
-        aInput
-    },
+// pinia 状态管理 ===>
+const globalCategoryStore = useGlobalCategoryStore()
+const { item } = $(storeToRefs(globalCategoryStore))
 
-    setup() {
-        // eslint-disable-next-line no-unused-vars
-        const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
+const [loading, toggleLoading] = useToggle(false)
 
-        const item = computed(() => {
-            return store.getters['global/category/getCategoryItem']
+const form = reactive({
+    cate_name: '',
+    cate_order: ''
+})
+
+watch(item, val => {
+    form.cate_name = val.data.cate_name
+    form.cate_order = val.data.cate_order
+})
+
+onMounted(() => {
+    if (item && item.data) {
+        form.cate_name = item.data.cate_name
+        form.cate_order = item.data.cate_order
+    }
+})
+
+const handleInsert = async () => {
+    if (!form.cate_name || !form.cate_order) {
+        showMsg('请将表单填写完整!')
+        return
+    }
+    if (loading.value) return
+    toggleLoading(true)
+    const { code, data, message } = await api.post('backend/category/insert', form)
+    toggleLoading(false)
+    if (code === 200) {
+        showMsg({ type: 'success', content: message })
+        globalCategoryStore.insertCategoryItem({
+            ...form,
+            _id: data
         })
-
-        const [loading, toggleLoading] = useToggle(false)
-
-        const form = reactive({
-            cate_name: '',
-            cate_order: ''
-        })
-
-        watch(item, val => {
-            form.cate_name = val.data.cate_name
-            form.cate_order = val.data.cate_order
-        })
-
-        onMounted(() => {
-            if (item && item.data) {
-                form.cate_name = item.data.cate_name
-                form.cate_order = item.data.cate_order
-            }
-        })
-
-        const handleInsert = async () => {
-            if (!form.cate_name || !form.cate_order) {
-                showMsg('请将表单填写完整!')
-                return
-            }
-            if (loading.value) return
-            toggleLoading(true)
-            const { code, data, message } = await store.$api.post('backend/category/insert', form)
-            toggleLoading(false)
-            if (code === 200) {
-                showMsg({ type: 'success', content: message })
-                store.commit('global/category/insertCategoryItem', {
-                    ...form,
-                    _id: data
-                })
-                router.push('/backend/category/list')
-            }
-        }
-
-        const headTitle = computed(() => {
-            return '添加分类 - M.M.F 小屋'
-        })
-        useHead({
-            // Can be static or computed
-            title: headTitle,
-            meta: [
-                {
-                    name: `description`,
-                    content: headTitle
-                }
-            ]
-        })
-
-        return {
-            form,
-            handleInsert
-        }
+        router.push('/backend/category/list')
     }
 }
+
+const headTitle = computed(() => {
+    return '添加分类 - M.M.F 小屋'
+})
+useHead({
+    // Can be static or computed
+    title: headTitle,
+    meta: [
+        {
+            name: `description`,
+            content: headTitle
+        }
+    ]
+})
 </script>

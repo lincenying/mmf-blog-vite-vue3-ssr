@@ -16,63 +16,50 @@
     </div>
 </template>
 
-<script>
-import { computed } from 'vue'
+<script setup>
 import cookies from 'js-cookie'
 
-import useGlobal from '@/mixins/global'
-import { showMsg } from '@/utils'
+import api from '@/api/index-client'
 
-import aInput from '@/components/_input.vue'
-
-export default {
+defineOptions({
     name: 'backend-login',
-    components: {
-        aInput
-    },
     beforeRouteEnter(to, from, next) {
         if (cookies.get('b_user')) {
             return next('/backend/article/list')
         }
         next()
-    },
-    setup() {
-        // eslint-disable-next-line no-unused-vars
-        const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
-
-        const form = reactive({
-            username: '',
-            password: ''
-        })
-
-        const handleLogin = useLockFn(async () => {
-            if (!form.username || !form.password) {
-                return showMsg('请输入用户名和密码!')
-            }
-            const { code, data } = await store.$api.post('backend/admin/login', form)
-            if (data && code === 200) {
-                router.push('/backend/article/list')
-            }
-        })
-
-        const headTitle = computed(() => {
-            return '管理员登录 - M.M.F 小屋'
-        })
-        useHead({
-            // Can be static or computed
-            title: headTitle,
-            meta: [
-                {
-                    name: `description`,
-                    content: headTitle
-                }
-            ]
-        })
-
-        return {
-            form,
-            handleLogin
-        }
     }
-}
+})
+
+// eslint-disable-next-line no-unused-vars
+const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('backend-login')
+
+const form = reactive({
+    username: '',
+    password: ''
+})
+
+const handleLogin = useLockFn(async () => {
+    if (!form.username || !form.password) {
+        return showMsg('请输入用户名和密码!')
+    }
+    const { code, data } = await api.post('backend/admin/login', form)
+    if (data && code === 200) {
+        router.push('/backend/article/list')
+    }
+})
+
+const headTitle = computed(() => {
+    return '管理员登录 - M.M.F 小屋'
+})
+useHead({
+    // Can be static or computed
+    title: headTitle,
+    meta: [
+        {
+            name: `description`,
+            content: headTitle
+        }
+    ]
+})
 </script>

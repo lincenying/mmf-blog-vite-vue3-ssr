@@ -13,36 +13,19 @@
     </div>
 </template>
 
-<script>
-import { computed } from 'vue'
+<script setup>
+defineOptions({
+    name: 'backend-index'
+})
 
-import useGlobal from '@/mixins/global'
+// eslint-disable-next-line no-unused-vars
+const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('backend-index')
 
-import backendMenu from '../components/backend-menu.vue'
-import account from '../components/aside-account.vue'
+const key = computed(() => {
+    return route.path.replace(/\//g, '_')
+})
 
-export default {
-    name: 'backend-index',
-    components: {
-        backendMenu,
-        account
-    },
-    setup() {
-        // eslint-disable-next-line no-unused-vars
-        const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
-
-        const key = computed(() => {
-            return route.path.replace(/\//g, '_')
-        })
-
-        const isLogin = computed(() => {
-            return ['/backend-login', '/backend-login/'].includes(route.path)
-        })
-
-        return {
-            key,
-            isLogin
-        }
-    }
-}
+const isLogin = computed(() => {
+    return ['/backend/login', '/backend/login/'].includes(route.path)
+})
 </script>

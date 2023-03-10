@@ -5,8 +5,8 @@ function pluralize(time, label) {
 }
 
 function timeAgo(time) {
-    const preg = /^[\d]+$/
-    const timestamp = preg.test(time)
+    const re = /^[\d]+$/
+    const timestamp = re.test(time)
     if (!timestamp) {
         const tmp = Date.parse(time)
         time = tmp / 1000
@@ -23,8 +23,8 @@ function timeAgo(time) {
 }
 
 function timeYmd(timestamp) {
-    const preg = /^[\d]+$/
-    const isTimestamp = preg.test(timestamp)
+    const re = /^[\d]+$/
+    const isTimestamp = re.test(timestamp)
     if (!isTimestamp) {
         let time = Date.parse(timestamp)
         time /= 1000
@@ -48,7 +48,7 @@ function avatar(email, width) {
 }
 
 export default app => {
-    app.config.globalProperties.$filters = {
+    app.config.globalProperties.$f = {
         timeAgo,
         timeYmd,
         avatar

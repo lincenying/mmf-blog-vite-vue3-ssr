@@ -96,7 +96,7 @@ export default ({ mode }) => {
                     {
                         pinia: ['defineStore', 'storeToRefs'],
                         'vue-router': ['createRouter', 'createWebHashHistory'],
-                        '@/utils': ['UTC2Date', 'deepClone']
+                        '@/utils': ['UTC2Date', 'deepClone', 'showMsg']
                     }
                 ],
                 dts: 'src/auto-imports.d.ts',

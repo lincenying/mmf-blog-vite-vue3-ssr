@@ -13,13 +13,13 @@
         </div>
     </div>
 </template>
-<script>
-export default {
-    name: 'aside-trending',
-    components: {},
-    props: ['trending'],
-    serverCacheKey: () => {
-        return `aside::trending`
-    }
-}
+<script setup>
+defineOptions({
+    name: 'aside-trending'
+})
+
+const prop = defineProps({
+    trending: Array
+})
+const { trending } = $(toRefs(prop))
 </script>

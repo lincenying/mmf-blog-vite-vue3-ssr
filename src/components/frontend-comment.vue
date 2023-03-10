@@ -2,7 +2,7 @@
     <div class="card">
         <div class="comments">
             <div class="comment-post-wrap">
-                <img :src="$filters.avatar(userEmail)" alt="" class="avatar-img" />
+                <img :src="$f.avatar(userEmail)" alt="" class="avatar-img" />
                 <div class="comment-post-input-wrap base-textarea-wrap">
                     <textarea v-model="form.content" id="content" class="textarea-input base-input" cols="30" rows="4"></textarea>
                 </div>
@@ -11,7 +11,7 @@
             <div class="comment-items-wrap">
                 <div v-for="item in comments.data" :key="item._id" class="comment-item">
                     <a href="javascript:;" class="comment-author-avatar-link">
-                        <img :src="$filters.avatar(item.userid.email)" alt="" class="avatar-img" />
+                        <img :src="$f.avatar(item.userid.email)" alt="" class="avatar-img" />
                     </a>
                     <div class="comment-content-wrap">
                         <span class="comment-author-wrap">
@@ -26,78 +26,72 @@
                 </div>
             </div>
             <div v-if="comments.hasNext" class="load-more-wrap">
-                <a v-if="!loading" @click="handleLoadcomment" href="javascript:;" class="comments-load-more">加载更多</a>
+                <a v-if="!loading" @click="handleLoadComment" href="javascript:;" class="comments-load-more">加载更多</a>
                 <a v-else href="javascript:;" class="comments-load-more">加载中...</a>
             </div>
         </div>
     </div>
 </template>
 
-<script>
-import { computed } from 'vue'
+<script setup>
+import api from '@/api/index-client'
 
-import useGlobal from '@/mixins/global'
-import { showMsg } from '@/utils'
+defineOptions({
+    name: 'frontend-comment'
+})
 
-export default {
-    name: 'frontend-comment',
-    props: ['comments'],
-    setup(props) {
-        // eslint-disable-next-line no-unused-vars
-        const { ctx, options, route, router, store, useToggle, useHead, useLockFn, ref, reactive } = useGlobal()
+const prop = defineProps({
+    comments: Object
+})
+const { comments } = $(toRefs(prop))
 
-        const [loading, toggleLoading] = useToggle(false)
+// eslint-disable-next-line no-unused-vars
+const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('frontend-comment')
 
-        const form = reactive({
-            id: route.params.id,
-            content: ''
-        })
+const { cookies } = $(storeToRefs(globalStore))
 
-        const user = computed(() => {
-            return ctx.$oc(store.state, 'global.cookies.user')
-        })
-        const userEmail = computed(() => {
-            return ctx.$oc(store.state, 'global.cookies.useremail')
-        })
+const globalCommentStore = useGlobalCommentStore()
 
-        const handleLoadcomment = async () => {
-            toggleLoading(true)
-            await store.dispatch(`global/comment/getCommentList`, {
-                id: route.params.id,
-                page: props.comments.page + 1,
-                limit: 10
-            })
-            toggleLoading(false)
-        }
-        const handlePostComment = useLockFn(async () => {
-            if (!user.value) {
-                showMsg('请先登录!')
-                store.commit('global/showLoginModal', true)
-            } else if (form.content === '') {
-                showMsg('请输入评论内容!')
-            } else {
-                const { code, data } = await store.$api.post('frontend/comment/insert', form)
-                if (code === 200) {
-                    form.content = ''
-                    showMsg({ type: 'success', content: '评论发布成功!' })
-                    store.commit('global/comment/insertCommentItem', data)
-                }
-            }
-        })
-        const handleReply = item => {
-            console.log(item)
-            form.content = '回复 @' + item.userid.username + ': '
-            document.querySelector('#content').focus()
-        }
+const [loading, toggleLoading] = useToggle(false)
 
-        return {
-            form,
-            loading,
-            userEmail,
-            handleLoadcomment,
-            handlePostComment,
-            handleReply
+const form = reactive({
+    id: route.params.id,
+    content: ''
+})
+
+const user = $computed(() => {
+    return cookies.user
+})
+const userEmail = computed(() => {
+    return cookies.useremail
+})
+
+const handleLoadComment = async () => {
+    toggleLoading(true)
+    await globalCommentStore.getCommentList({
+        id: route.params.id,
+        page: comments.page + 1,
+        limit: 10
+    })
+    toggleLoading(false)
+}
+const handlePostComment = useLockFn(async () => {
+    if (!user) {
+        showMsg('请先登录!')
+        globalStore.setLoginModal(true)
+    } else if (form.content === '') {
+        showMsg('请输入评论内容!')
+    } else {
+        const { code, data } = await api.post('frontend/comment/insert', form)
+        if (code === 200) {
+            form.content = ''
+            showMsg({ type: 'success', content: '评论发布成功!' })
+            globalCommentStore.insertCommentItem(data)
         }
     }
+})
+const handleReply = item => {
+    form.content = '回复 @' + item.userid.username + ': '
+    document.querySelector('#content').focus()
 }
 </script>

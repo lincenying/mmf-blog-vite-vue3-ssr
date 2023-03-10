@@ -8,24 +8,17 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import { useRegisterSW } from 'virtual:pwa-register/vue'
 
-export default {
-    setup() {
-        const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW()
+defineOptions({
+    name: 'reload-prompt'
+})
 
-        const handleClose = async () => {
-            offlineReady.value = false
-            needRefresh.value = false
-        }
+const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW()
 
-        return {
-            offlineReady,
-            needRefresh,
-            updateServiceWorker,
-            handleClose
-        }
-    }
+const handleClose = async () => {
+    offlineReady.value = false
+    needRefresh.value = false
 }
 </script>

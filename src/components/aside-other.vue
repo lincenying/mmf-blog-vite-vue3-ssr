@@ -10,11 +10,8 @@
         </div>
     </div>
 </template>
-<script>
-export default {
-    name: 'aside-other',
-    serverCacheKey: () => {
-        return `aside::other`
-    }
-}
+<script setup>
+defineOptions({
+    name: 'aside-other'
+})
 </script>

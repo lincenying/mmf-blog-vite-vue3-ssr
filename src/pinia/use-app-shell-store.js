@@ -1,11 +1,7 @@
-/* eslint-disable valid-jsdoc */
-/**
- * @file app shell store
- * @author lincenying(lincenying@qq.com)
- */
+import { acceptHMRUpdate } from 'pinia'
 
-export function createAppShellState() {
-    const state = {
+const useStore = defineStore('appShellStore', {
+    state: () => ({
         /**
          * 是否需要页面切换动画
          *
@@ -33,16 +29,18 @@ export function createAppShellState() {
          * @type {Object}
          */
         historyPageScrollTop: {}
-    }
-
-    const actions = {
+    }),
+    getters: {
+        getAppShellStore: state => state
+    },
+    actions: {
         /**
          * 开启页面切换动画
          *
          * @param {Function} commit commit
          */
-        enablePageTransition({ commit }) {
-            commit('enablePageTransition', true)
+        enablePageTransition() {
+            this.needPageTransition = true
         },
 
         /**
@@ -50,8 +48,8 @@ export function createAppShellState() {
          *
          * @param {Function} commit commit
          */
-        disablePageTransition({ commit }) {
-            commit('disablePageTransition', false)
+        disablePageTransition() {
+            this.needPageTransition = false
         },
 
         /**
@@ -60,8 +58,8 @@ export function createAppShellState() {
          * @param {Function} commit commit
          * @param {boolean} isPageSwitching isPageSwitching
          */
-        setPageSwitching({ commit }, isPageSwitching) {
-            commit('setPageSwitching', isPageSwitching)
+        setPageSwitching(isPageSwitching) {
+            this.isPageSwitching = isPageSwitching
         },
 
         /**
@@ -71,34 +69,15 @@ export function createAppShellState() {
          * @param {string} options.path path
          * @param {number} options.scrollTop scrollTop
          */
-        saveScrollTop({ commit }, { path, scrollTop }) {
-            commit('saveScrollTop', { path, scrollTop })
-        }
-    }
-
-    const mutations = {
-        ['setPageSwitching'](state, isPageSwitching) {
-            state.isPageSwitching = isPageSwitching
+        saveScrollTop({ path, scrollTop }) {
+            this.historyPageScrollTop[path] = scrollTop
         },
-        ['setPageTransitionName'](state, { pageTransitionName }) {
-            state.pageTransitionName = pageTransitionName
-        },
-        ['saveScrollTop'](state, { path, scrollTop }) {
-            state.historyPageScrollTop[path] = scrollTop
+
+        setPageTransitionName({ pageTransitionName }) {
+            this.pageTransitionName = pageTransitionName
         }
     }
+})
+export default useStore
 
-    const getters = {
-        ['get'](state) {
-            return state
-        }
-    }
-
-    return {
-        namespaced: true,
-        actions,
-        mutations,
-        state,
-        getters
-    }
-}
+if (import.meta.hot) import.meta.hot.accept(acceptHMRUpdate(useStore, import.meta.hot))

@@ -10,12 +10,13 @@
         </router-link>
     </div>
 </template>
-<script>
-export default {
-    name: 'aside-category',
-    props: ['category'],
-    serverCacheKey: () => {
-        return `aside::category`
-    }
-}
+<script setup>
+defineOptions({
+    name: 'aside-category'
+})
+
+const prop = defineProps({
+    category: Array
+})
+const { category } = $(toRefs(prop))
 </script>
