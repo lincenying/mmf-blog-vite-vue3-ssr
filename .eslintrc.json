@@ -1,5 +1,9 @@
 {
     "extends": ["lcy-vue", "./.eslintrc-auto-import.json"],
+    "env": {
+        "node": true,
+        "vue/setup-compiler-macros": true
+    },
     "globals": {
         "echarts": true,
         "$$": "readonly",
