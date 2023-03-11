@@ -16,6 +16,7 @@ declare module '@vue/runtime-core' {
     AsideTrending: typeof import('./components/aside-trending.vue')['default']
     BackendMenu: typeof import('./components/backend-menu.vue')['default']
     BackTop: typeof import('./components/back-top.vue')['default']
+    BgPlum: typeof import('./components/bg-plum.vue')['default']
     ClientOnly: typeof import('./components/client-only.vue')['default']
     FrontendComment: typeof import('./components/frontend-comment.vue')['default']
     GlobalNavigation: typeof import('./components/global-navigation.vue')['default']

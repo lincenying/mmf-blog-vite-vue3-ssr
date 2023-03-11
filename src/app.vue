@@ -14,6 +14,7 @@
         <sign-in :show="showLoginModal"></sign-in>
         <back-top></back-top>
         <client-only>
+            <bg-plum></bg-plum>
             <reload-prompt></reload-prompt>
         </client-only>
     </div>
