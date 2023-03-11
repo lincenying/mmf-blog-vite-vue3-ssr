@@ -1,7 +1,7 @@
 <template>
     <div class="main wrap">
         <div class="main-left">
-            <div class="card card-answer">
+            <div class="card card-answer card-about">
                 <div class="answer-content">
                     <div class="article-content">
                         <h3 class="about-title">关于作者</h3>
