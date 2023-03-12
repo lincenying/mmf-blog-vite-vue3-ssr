@@ -9,6 +9,8 @@ import logger from 'morgan'
 import cookieParser from 'cookie-parser'
 import { createProxyMiddleware } from 'http-proxy-middleware'
 
+import apiDomain from './src/api/url.js'
+
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
 
 export async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV === 'production', hmrPort) {
@@ -63,7 +65,7 @@ export async function createServer(root = process.cwd(), isProd = process.env.NO
         app.use(
             '/api',
             createProxyMiddleware({
-                target: 'http://localhost:4000',
+                target: apiDomain,
                 changeOrigin: true,
                 pathRewrite: {
                     '^/api': '/api'

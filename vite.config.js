@@ -16,6 +16,8 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 import { VitePWA } from 'vite-plugin-pwa'
 
+import apiDomain from './src/api/url.js'
+
 export const ssrTransformCustomDir = () => {
     return {
         props: [],
@@ -37,7 +39,7 @@ export default ({ mode }) => {
             disableHostCheck: true,
             proxy: {
                 '/api': {
-                    target: 'http://localhost:4000',
+                    target: apiDomain,
                     changeOrigin: true,
                     pathRewrite: {
                         '^/api': '/api'
@@ -125,7 +127,35 @@ export default ({ mode }) => {
                 base: '/',
                 registerType: 'autoUpdate',
                 workbox: {
-                    globPatterns: ['**/*.{js,css}']
+                    cacheId: 'mmf-blog-vite-vue3-ssr',
+                    globPatterns: ['**/*.{js,css}'],
+                    navigateFallback: null,
+                    runtimeCaching: [
+                        {
+                            urlPattern: /api\/.*/i,
+                            handler: 'CacheFirst',
+                            method: 'GET',
+                            options: {
+                                // networkTimeoutSeconds: 1,
+                                cacheName: 'api-cache',
+                                cacheableResponse: {
+                                    statuses: [0, 200]
+                                }
+                            }
+                        },
+                        {
+                            urlPattern: /^https:\/\/cdn\.jsdelivr\.net\/.*/i,
+                            handler: 'CacheFirst',
+                            method: 'GET',
+                            options: {
+                                // networkTimeoutSeconds: 1,
+                                cacheName: 'cdn-cache',
+                                cacheableResponse: {
+                                    statuses: [0, 200]
+                                }
+                            }
+                        }
+                    ]
                 },
                 manifest: {
                     name: 'M.M.F小屋',

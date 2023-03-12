@@ -1,9 +1,11 @@
 import lruCache from 'lru-cache'
 
+import apiDomain from './url.js'
+
 const cached = false
 
 export default {
-    api: 'http://localhost:4000/api/',
+    api: apiDomain + '/api/',
     port: 8080,
     timeout: 30000,
     cached:
