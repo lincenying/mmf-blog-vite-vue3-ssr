@@ -14,14 +14,14 @@ const useStore = defineStore('globalCategoryStore', {
         async getCategoryList(config, $api) {
             if (!import.meta.env.SSR) $api = api
             if (this.lists.length) return
-            const { code, data } = await $api.get('backend/category/list', { ...config, cache: true })
+            const { code, data } = await $api.get('backend/category/list', { ...config, path: undefined, cache: true })
             if (data && code === 200) {
                 this.lists = data.list
             }
         },
         async getCategoryItem(config, $api) {
             if (!import.meta.env.SSR) $api = api
-            const { code, data } = await $api.get('backend/category/item', config)
+            const { code, data } = await $api.get('backend/category/item', { ...config, path: undefined })
             if (data && code === 200) {
                 this.item = {
                     data,

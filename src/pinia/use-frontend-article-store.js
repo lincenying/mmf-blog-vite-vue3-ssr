@@ -24,7 +24,7 @@ const useStore = defineStore('frontendArticleStore', {
         async getArticleList(config, $api) {
             if (!import.meta.env.SSR) $api = api
             if (this.lists.data.length > 0 && config.path === this.lists.path && config.page === 1) return
-            const { code, data } = await $api.get('frontend/article/list', { ...config, cache: true })
+            const { code, data } = await $api.get('frontend/article/list', { ...config, path: undefined, cache: true })
             if (data && code === 200) {
                 const { list, path, hasNext, hasPrev, page } = {
                     ...data,
@@ -51,7 +51,7 @@ const useStore = defineStore('frontendArticleStore', {
         },
         async getArticleItem(config, $api) {
             if (!import.meta.env.SSR) $api = api
-            const { code, data } = await $api.get('frontend/article/item', { ...config, markdown: 1, cache: true })
+            const { code, data } = await $api.get('frontend/article/item', { ...config, path: undefined, markdown: 1, cache: true })
             if (data && code === 200) {
                 this.item = {
                     data,
