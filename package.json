@@ -7,10 +7,10 @@
   "scripts": {
     "prepare": "husky install",
     "serve": "node server",
-    "build": "yarn build:client && yarn build:server",
+    "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:server": "cross-env VITE_APP_SSR=true vite build --ssr src/entry-server.js --outDir dist/server",
-    "generate": "vite build --ssrManifest --outDir dist/static && yarn build:server && node prerender",
+    "generate": "vite build --ssrManifest --outDir dist/static && npm run build:server && node prerender",
     "start": "cross-env NODE_ENV=production node server",
     "debug": "node --inspect-brk server",
     "workbox": "workbox generateSW workbox-config.js",
