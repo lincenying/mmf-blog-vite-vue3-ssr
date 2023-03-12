@@ -1,6 +1,6 @@
 {
   "name": "mmf-blog-vite-vue3-ssr",
-  "version": "1.0.0",
+  "version": "2.0.1",
   "author": "lincenying <lincenying@qq.com>",
   "private": true,
   "type": "module",
@@ -74,7 +74,7 @@
     ]
   },
   "engines": {
-    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+    "node": ">=14.18.0"
   },
   "packageManager": "pnpm@7.29.1"
 }
