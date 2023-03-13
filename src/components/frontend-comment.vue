@@ -4,9 +4,9 @@
             <div class="comment-post-wrap">
                 <img :src="$f.avatar(userEmail)" alt="" class="avatar-img" />
                 <div class="comment-post-input-wrap base-textarea-wrap">
-                    <textarea v-model="form.content" id="content" class="textarea-input base-input" cols="30" rows="4"></textarea>
+                    <textarea id="content" v-model="form.content" class="textarea-input base-input" cols="30" rows="4"></textarea>
                 </div>
-                <div class="comment-post-actions"><a @click="handlePostComment" href="javascript:;" class="btn btn-blue">发表评论</a></div>
+                <div class="comment-post-actions"><a href="javascript:;" class="btn btn-blue" @click="handlePostComment">发表评论</a></div>
             </div>
             <div class="comment-items-wrap">
                 <div v-for="item in comments.data" :key="item._id" class="comment-item">
@@ -20,13 +20,13 @@
                         <div class="comment-content">{{ item.content }}</div>
                         <div class="comment-footer">
                             <span class="comment-time">{{ item.creat_date }}</span>
-                            <a @click="handleReply(item)" href="javascript:;" class="comment-action-item comment-reply">回复</a>
+                            <a href="javascript:;" class="comment-action-item comment-reply" @click="handleReply(item)">回复</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div v-if="comments.hasNext" class="load-more-wrap">
-                <a v-if="!loading" @click="handleLoadComment" href="javascript:;" class="comments-load-more">加载更多</a>
+                <a v-if="!loading" href="javascript:;" class="comments-load-more" @click="handleLoadComment">加载更多</a>
                 <a v-else href="javascript:;" class="comments-load-more">加载中...</a>
             </div>
         </div>
@@ -36,13 +36,17 @@
 <script setup>
 import api from '@/api/index-client'
 
+const prop = defineProps({
+    comments: {
+        type: Object,
+        default: () => ({})
+    }
+})
+
 defineOptions({
     name: 'frontend-comment'
 })
 
-const prop = defineProps({
-    comments: Object
-})
 const { comments } = $(toRefs(prop))
 
 // eslint-disable-next-line no-unused-vars
@@ -91,7 +95,7 @@ const handlePostComment = useLockFn(async () => {
     }
 })
 const handleReply = item => {
-    form.content = '回复 @' + item.userid.username + ': '
+    form.content = `回复 @${item.userid.username}: `
     document.querySelector('#content').focus()
 }
 </script>

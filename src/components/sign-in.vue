@@ -3,7 +3,7 @@
         <span class="center-helper"></span>
         <div class="modal modal-signup">
             <h2 class="modal-title">登录</h2>
-            <a @click="handleClose" href="javascript:;" class="modal-close"><i class="icon icon-close-black"></i></a>
+            <a href="javascript:;" class="modal-close" @click="handleClose"><i class="icon icon-close-black"></i></a>
             <div class="modal-content">
                 <form class="sign-up-form">
                     <div class="input-wrap">
@@ -14,8 +14,8 @@
                         <input v-model="form.password" type="password" placeholder="密码" class="base-input" autocomplete="off" />
                         <p class="error-info input-info hidden">长度至少 6 位</p>
                     </div>
-                    <a @click="handleLogin" href="javascript:;" class="btn sign-up-btn btn-yellow">确认登录</a>
-                    <a @click="handleRegister" href="javascript:;" class="btn sign-up-btn btn-blue block">我要注册</a>
+                    <a href="javascript:;" class="btn sign-up-btn btn-yellow" @click="handleLogin">确认登录</a>
+                    <a href="javascript:;" class="btn sign-up-btn btn-blue block" @click="handleRegister">我要注册</a>
                 </form>
             </div>
         </div>
@@ -25,13 +25,14 @@
 <script setup>
 import api from '@/api/index-client'
 
+const prop = defineProps({
+    show: Boolean
+})
+
 defineOptions({
     name: 'sign-in'
 })
 
-const prop = defineProps({
-    show: Boolean
-})
 const { show } = $(toRefs(prop))
 
 // eslint-disable-next-line no-unused-vars

@@ -3,21 +3,21 @@
         <div class="settings-main-content">
             <form>
                 <a-input title="昵称">
-                    <input type="text" v-model="form.username" placeholder="昵称" class="base-input" name="username" />
+                    <input v-model="form.username" type="text" placeholder="昵称" class="base-input" name="username" />
                     <span class="input-info error">请输入昵称</span>
                 </a-input>
                 <a-input title="邮箱">
-                    <input type="text" v-model="form.email" placeholder="邮箱" class="base-input" name="email" />
+                    <input v-model="form.email" type="text" placeholder="邮箱" class="base-input" name="email" />
                     <span class="input-info error">请输入邮箱</span>
                 </a-input>
                 <a-input title="密码">
-                    <input type="password" v-model="form.password" placeholder="密码" class="base-input" name="password" />
+                    <input v-model="form.password" type="password" placeholder="密码" class="base-input" name="password" />
                     <span class="input-info error">请输入密码</span>
                 </a-input>
             </form>
         </div>
         <div class="settings-footer">
-            <a @click="handleModify" href="javascript:;" class="btn btn-yellow">编辑管理员</a>
+            <a href="javascript:;" class="btn btn-yellow" @click="handleModify">编辑管理员</a>
             <router-link to="/backend/admin/list" class="btn btn-blue">返回</router-link>
         </div>
     </div>

@@ -2,8 +2,8 @@
     <div :class="backend ? 'backend' : 'frontend'">
         <global-navigation :is-backend="backend"></global-navigation>
         <router-view v-slot="{ Component }" class="app-view relative">
-            <transition :name="pageTransitionName" @before-enter="handleBeforeEnter" @after-enter="handleAfterEnter" mode="out-in">
-                <keep-alive :include="cacheFrontendComponents" :key="key">
+            <transition :name="pageTransitionName" mode="out-in" @before-enter="handleBeforeEnter" @after-enter="handleAfterEnter">
+                <keep-alive :key="key" :include="cacheFrontendComponents">
                     <Suspense>
                         <component :is="Component" :key="key" />
                     </Suspense>

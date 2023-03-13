@@ -56,8 +56,8 @@ function replaceHtmlTag(html) {
 export async function render(url, manifest, req) {
     const { app, router, store, head } = createApp()
 
-    app.component('reload-prompt', { render: () => null })
-    app.component('v-md-editor', { render: () => null })
+    app.component('ReloadPrompt', { render: () => null })
+    app.component('VMdEditor', { render: () => null })
 
     // set the router to the desired URL before rendering
     router.push(url)

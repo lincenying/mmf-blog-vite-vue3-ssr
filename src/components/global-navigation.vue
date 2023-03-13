@@ -23,7 +23,7 @@
             <div v-if="!isBackend" class="right-part">
                 <span class="nav-search">
                     <i class="icon icon-search-white"></i>
-                    <input @keyup.enter="onSearch($event)" placeholder="记得按回车哦" class="nav-search-input" />
+                    <input placeholder="记得按回车哦" class="nav-search-input" @keyup.enter="onSearch($event)" />
                 </span>
                 <span v-if="isLogin" class="nav-me">
                     <router-link to="/user/account" class="nav-me-link">
@@ -31,7 +31,7 @@
                     </router-link>
                 </span>
                 <span v-else class="nav-me">
-                    <a @click="handleLogin" href="javascript:;" class="nav-me-link">
+                    <a href="javascript:;" class="nav-me-link" @click="handleLogin">
                         <img :src="$f.avatar('noavatar')" class="nav-avatar-img" />
                     </a>
                 </span>
@@ -41,13 +41,17 @@
 </template>
 
 <script setup>
+const prop = defineProps({
+    isBackend: {
+        type: Boolean,
+        default: false
+    }
+})
+
 defineOptions({
     name: 'global-navigation'
 })
 
-const prop = defineProps({
-    'is-backend': Boolean
-})
 const { isBackend } = $(toRefs(prop))
 
 // eslint-disable-next-line no-unused-vars
@@ -67,6 +71,6 @@ const onSearch = e => {
     if (qs === '') {
         return false
     }
-    router.replace('/search/' + qs)
+    router.replace(`/search/${qs}`)
 }
 </script>

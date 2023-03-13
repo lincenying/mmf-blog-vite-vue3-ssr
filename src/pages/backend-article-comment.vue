@@ -16,16 +16,16 @@
                         <div class="comment-content">{{ item.content }}</div>
                         <div class="comment-footer">
                             <span class="comment-time">{{ $f.timeAgo(item.timestamp) }}</span>
-                            <a v-if="item.is_delete" @click="handleRecover(item._id)" href="javascript:;" class="comment-action-item comment-reply"
+                            <a v-if="item.is_delete" href="javascript:;" class="comment-action-item comment-reply" @click="handleRecover(item._id)"
                                 >恢复</a
                             >
-                            <a v-else @click="handleDelete(item._id)" href="javascript:;" class="comment-action-item comment-reply">删除</a>
+                            <a v-else href="javascript:;" class="comment-action-item comment-reply" @click="handleDelete(item._id)">删除</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div v-if="lists.hasNext" class="load-more-wrap">
-                <a v-if="!loading" @click="loadMore()" href="javascript:;" class="comments-load-more">加载更多</a>
+                <a v-if="!loading" href="javascript:;" class="comments-load-more" @click="loadMore()">加载更多</a>
                 <a v-else href="javascript:;" class="comments-load-more">加载中...</a>
             </div>
         </div>

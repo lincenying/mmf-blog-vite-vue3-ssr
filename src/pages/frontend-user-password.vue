@@ -5,8 +5,8 @@
                 <form>
                     <a-input title="当前密码">
                         <input
-                            type="password"
                             v-model="form.old_password"
+                            type="password"
                             placeholder="当前密码"
                             class="base-input"
                             name="old_password"
@@ -14,12 +14,12 @@
                         />
                     </a-input>
                     <a-input title="新的密码">
-                        <input type="password" v-model="form.password" placeholder="新的密码" class="base-input" name="password" autocomplete="off" />
+                        <input v-model="form.password" type="password" placeholder="新的密码" class="base-input" name="password" autocomplete="off" />
                     </a-input>
                     <a-input title="确认密码">
                         <input
-                            type="password"
                             v-model="form.re_password"
+                            type="password"
                             placeholder="确认密码"
                             class="base-input"
                             name="re_password"
@@ -28,7 +28,7 @@
                     </a-input>
                 </form>
             </div>
-            <div class="settings-footer"><a @click="handleSubmit" href="javascript:;" class="btn btn-yellow">保存设置</a></div>
+            <div class="settings-footer"><a href="javascript:;" class="btn btn-yellow" @click="handleSubmit">保存设置</a></div>
         </div>
     </div>
 </template>

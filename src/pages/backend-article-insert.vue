@@ -2,14 +2,14 @@
     <div class="settings-main card">
         <div class="settings-main-content">
             <a-input title="标题">
-                <input type="text" v-model="form.title" placeholder="标题" class="base-input" name="title" />
+                <input v-model="form.title" type="text" placeholder="标题" class="base-input" name="title" />
                 <span class="input-info error">请输入标题</span>
             </a-input>
             <a-input title="分类" :classes="'select-item-wrap'">
                 <i class="icon icon-arrow-down"></i>
                 <select v-model="form.category" class="select-item" name="category">
                     <option value="">请选择分类</option>
-                    <option v-for="item in lists" :key="item._id" :value="item._id + '|' + item.cate_name">{{ item.cate_name }}</option>
+                    <option v-for="item in lists" :key="item._id" :value="`${item._id}|${item.cate_name}`">{{ item.cate_name }}</option>
                 </select>
                 <span class="input-info error">请输入分类</span>
             </a-input>
@@ -19,16 +19,16 @@
                         <v-md-editor
                             v-if="isClient"
                             v-model="form.content"
-                            @upload-image="handleUploadImage"
                             :disabled-menus="[]"
                             mode="edit"
                             height="500px"
+                            @upload-image="handleUploadImage"
                         ></v-md-editor>
                     </client-only>
                 </div>
             </div>
         </div>
-        <div class="settings-footer"><a @click="handleInsert" href="javascript:;" class="btn btn-yellow">添加文章</a></div>
+        <div class="settings-footer"><a href="javascript:;" class="btn btn-yellow" @click="handleInsert">添加文章</a></div>
     </div>
 </template>
 
@@ -88,10 +88,10 @@ const handleInsert = async () => {
 const handleUploadImage = async (event, insertImage, files) => {
     const formData = new FormData()
     formData.append('file', files)
-    const { data } = await api.file(uploadApi + '/ajax.php?action=upload', formData)
+    const { data } = await api.file(`${uploadApi}/ajax.php?action=upload`, formData)
     if (data && data.filepath) {
         insertImage({
-            url: uploadApi + '/' + data.filepath,
+            url: `${uploadApi}/${data.filepath}`,
             desc: ''
             // width: 'auto',
             // height: 'auto',

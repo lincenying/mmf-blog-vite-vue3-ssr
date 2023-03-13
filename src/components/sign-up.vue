@@ -3,7 +3,7 @@
         <span class="center-helper"></span>
         <div class="modal modal-signup">
             <h2 class="modal-title">注册</h2>
-            <a @click="handleClose" href="javascript:;" class="modal-close"><i class="icon icon-close-black"></i></a>
+            <a href="javascript:;" class="modal-close" @click="handleClose"><i class="icon icon-close-black"></i></a>
             <div class="modal-content">
                 <form class="sign-up-form">
                     <div class="input-wrap">
@@ -22,8 +22,8 @@
                         <input v-model="form.re_password" type="password" placeholder="重复密码" class="base-input" autocomplete="off" />
                         <p class="error-info input-info hidden">长度至少 6 位</p>
                     </div>
-                    <a @click="handleRegister" href="javascript:;" class="btn sign-up-btn btn-yellow">确认注册</a>
-                    <a @click="handleLogin" href="javascript:;" class="btn sign-up-btn btn-blue block">直接登录</a>
+                    <a href="javascript:;" class="btn sign-up-btn btn-yellow" @click="handleRegister">确认注册</a>
+                    <a href="javascript:;" class="btn sign-up-btn btn-blue block" @click="handleLogin">直接登录</a>
                 </form>
             </div>
         </div>
@@ -34,13 +34,14 @@
 import api from '@/api/index-client'
 import { strLen } from '@/utils'
 
+const prop = defineProps({
+    show: Boolean
+})
+
 defineOptions({
     name: 'sign-up'
 })
 
-const prop = defineProps({
-    show: Boolean
-})
 const { show } = $(toRefs(prop))
 
 // eslint-disable-next-line no-unused-vars

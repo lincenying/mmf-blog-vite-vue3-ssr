@@ -8,13 +8,13 @@
                         <span class="input-info error">请输入昵称</span>
                     </a-input>
                     <a-input title="邮箱">
-                        <input type="text" v-model="email" placeholder="邮箱" class="base-input" name="email" />
+                        <input v-model="email" type="text" placeholder="邮箱" class="base-input" name="email" />
                         <span class="input-info error">请输入邮箱</span>
                     </a-input>
                 </form>
             </div>
             <div class="settings-footer">
-                <a @click="handleSubmit" href="javascript:;" class="btn btn-yellow">保存设置</a>
+                <a href="javascript:;" class="btn btn-yellow" @click="handleSubmit">保存设置</a>
             </div>
         </div>
     </div>

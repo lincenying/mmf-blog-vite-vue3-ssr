@@ -2,7 +2,7 @@
     <div class="main wrap">
         <div class="main-left">
             <div v-if="!article.isLoad" class="card card-content-loader">
-                <content-loader :height="160" :width="660" :speed="2" primaryColor="#f3f3f3" secondaryColor="#ecebeb">
+                <content-loader :height="160" :width="660" :speed="2" primary-color="#f3f3f3" secondary-color="#ecebeb">
                     <rect x="70" y="15" rx="4" ry="4" width="117" height="6.4" /> <rect x="70" y="35" rx="3" ry="3" width="85" height="6.4" />
                     <rect x="0" y="80" rx="3" ry="3" width="550" height="6.4" /> <rect x="0" y="100" rx="3" ry="3" width="620" height="6.4" />
                     <rect x="0" y="120" rx="3" ry="3" width="401" height="6.4" /> <rect x="0" y="140" rx="3" ry="3" width="501" height="6.4" />
@@ -12,14 +12,17 @@
             <template v-else-if="article.data._id">
                 <div class="card card-question-head">
                     <div class="question-content">
-                        <router-link :to="'/category/' + article.data.category" class="topic-link-item">{{ article.data.category_name }}</router-link>
+                        <router-link :to="`/category/${article.data.category}`" class="topic-link-item">{{ article.data.category_name }}</router-link>
                         <h2 class="question-title">
-                            <router-link :to="'/article/' + article.data._id" class="question-title-link">{{ article.data.title }}</router-link>
+                            <router-link :to="`/article/${article.data._id}`" class="question-title-link">{{ article.data.title }}</router-link>
                         </h2>
                     </div>
                 </div>
                 <div class="card card-answer">
-                    <div class="answer-content"><div class="article-content markdown-body" v-html="addTarget(article.data.html)"></div></div>
+                    <div class="answer-content">
+                        <!-- eslint-disable-next-line vue/no-v-html -->
+                        <div class="article-content markdown-body" v-html="addTarget(article.data.html)"></div>
+                    </div>
                     <item-actions :item="article.data"></item-actions>
                 </div>
                 <frontend-comment :comments="comments"></frontend-comment>
@@ -82,7 +85,7 @@ onMounted(() => {})
 
 const headTitle = computed(() => {
     let title = 'M.M.F 小屋'
-    title = article.data.title ? article.data.title + ' - M.M.F 小屋' : 'M.M.F 小屋'
+    title = article.data.title ? `${article.data.title} - M.M.F 小屋` : 'M.M.F 小屋'
     return title
 })
 useHead({

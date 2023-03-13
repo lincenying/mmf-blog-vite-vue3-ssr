@@ -3,16 +3,16 @@
         <div class="settings-main-content">
             <form>
                 <a-input title="账号">
-                    <input type="text" v-model="form.username" placeholder="请输入管理员账号" class="base-input" name="username" />
+                    <input v-model="form.username" type="text" placeholder="请输入管理员账号" class="base-input" name="username" />
                     <span class="input-info error">请输入昵称</span>
                 </a-input>
                 <a-input title="密码">
-                    <input type="password" v-model="form.password" placeholder="请输入管理员密码" class="base-input" name="password" />
+                    <input v-model="form.password" type="password" placeholder="请输入管理员密码" class="base-input" name="password" />
                     <span class="input-info error">请输入密码</span>
                 </a-input>
             </form>
         </div>
-        <div class="settings-footer"><a @click="handleLogin" href="javascript:;" class="btn btn-yellow">登录</a></div>
+        <div class="settings-footer"><a href="javascript:;" class="btn btn-yellow" @click="handleLogin">登录</a></div>
     </div>
 </template>
 

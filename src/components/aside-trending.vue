@@ -14,12 +14,16 @@
     </div>
 </template>
 <script setup>
+const prop = defineProps({
+    trending: {
+        type: Array,
+        default: () => []
+    }
+})
+
 defineOptions({
     name: 'aside-trending'
 })
 
-const prop = defineProps({
-    trending: Array
-})
 const { trending } = $(toRefs(prop))
 </script>

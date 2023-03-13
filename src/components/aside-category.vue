@@ -11,12 +11,16 @@
     </div>
 </template>
 <script setup>
+const prop = defineProps({
+    category: {
+        type: Array,
+        default: () => []
+    }
+})
+
 defineOptions({
     name: 'aside-category'
 })
 
-const prop = defineProps({
-    category: Array
-})
 const { category } = $(toRefs(prop))
 </script>

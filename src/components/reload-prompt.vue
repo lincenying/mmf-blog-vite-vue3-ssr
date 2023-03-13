@@ -1,5 +1,5 @@
 <template>
-    <div v-if="needRefresh" class="app-refresh" id="app-refresh">
+    <div v-if="needRefresh" id="app-refresh" class="app-refresh">
         <div class="app-refresh-wrap">
             <label>新内容可用，单击刷新按钮更新</label>
             <span @click="updateServiceWorker()">刷新</span>

@@ -6,7 +6,7 @@
         <router-link to="/user/password" active-class="active" class="side-entry">
             <i class="icon icon-arrow-right"></i><i class="icon icon-menu-articles"></i>密码
         </router-link>
-        <a @click="handleLogout" href="javascript:;" class="side-entry">
+        <a href="javascript:;" class="side-entry" @click="handleLogout">
             <i class="icon icon-arrow-right"></i><i class="icon icon-menu-articles"></i>退出
         </a>
     </div>
