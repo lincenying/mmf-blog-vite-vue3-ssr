@@ -39,16 +39,14 @@ express版: https://github.com/lincenying/mmf-blog-api-v2
 ```bash
 
 # 安装依赖
-$ yarn
-# or
-$ npm install
+$ pnpm install
 # 注意: 不要用 cnpm 安装依赖
 
 # 生产模式
-$ yarn build
+$ pnpm build
 
 # 开发模式
-$ yarn serve
+$ pnpm serve
 ```
 
 首页

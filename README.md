@@ -31,16 +31,14 @@ express: https://github.com/lincenying/mmf-blog-api-v2
 ```bash
 
 # Install dependencies
-$ yarn
-# or
-$ npm install
+$ pnpm install
 # Note: do not install with CNPM dependency
 
 # Product
-$ yarn build
+$ pnpm build
 
 # Develop
-$ yarn serve
+$ pnpm serve
 ```
 
 Home Site
