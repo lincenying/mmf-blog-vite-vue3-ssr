@@ -113,10 +113,10 @@ const handleModify = async () => {
 const handleUploadImage = async (event, insertImage, files) => {
     const formData = new FormData()
     formData.append('file', files[0])
-    const { data } = await api.file(`${uploadApi}/ajax.php?action=qiniu`, formData)
-    if (data && data.imgurl) {
+    const { data } = await api.file(`${uploadApi}/ajax.php?action=upload`, formData)
+    if (data && data.filepath) {
         insertImage({
-            url: `${data.imgurl}`,
+            url: `${uploadApi}/${data.filepath}`,
             desc: ''
             // width: 'auto',
             // height: 'auto',
