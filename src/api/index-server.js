@@ -7,7 +7,7 @@ const objToStr = cookies => {
     if (!cookies) return ''
     let cookie = ''
     Object.keys(cookies).forEach(item => {
-        cookie += item + '=' + cookies[item] + '; '
+        cookie += `${item}=${cookies[item]}; `
     })
     return cookie
 }

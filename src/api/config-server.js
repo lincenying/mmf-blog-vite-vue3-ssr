@@ -5,7 +5,7 @@ import apiDomain from './url.js'
 const cached = false
 
 export default {
-    api: apiDomain + '/api/',
+    api: `${apiDomain}/api/`,
     port: 8080,
     timeout: 30000,
     cached:

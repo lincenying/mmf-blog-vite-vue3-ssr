@@ -87,15 +87,19 @@ const handleInsert = async () => {
 
 const handleUploadImage = async (event, insertImage, files) => {
     const formData = new FormData()
-    formData.append('file', files)
-    const { data } = await api.file(`${uploadApi}/ajax.php?action=upload`, formData)
-    if (data && data.filepath) {
-        insertImage({
-            url: `${uploadApi}/${data.filepath}`,
-            desc: ''
-            // width: 'auto',
-            // height: 'auto',
-        })
+    formData.append('file', files[0])
+    try {
+        const { data } = await api.file(`${uploadApi}/ajax.php?action=qiniu`, formData)
+        if (data && data.imgurl) {
+            insertImage({
+                url: `${data.imgurl}`,
+                desc: ''
+                // width: 'auto',
+                // height: 'auto',
+            })
+        }
+    } catch (error) {
+        console.log(error)
     }
 }
 

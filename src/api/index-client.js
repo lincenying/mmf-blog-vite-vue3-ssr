@@ -24,7 +24,7 @@ function checkStatus(response) {
     return {
         data: {
             code: -404,
-            message: response.statusText,
+            message: (response && response.statusText) || '未知错误',
             data: ''
         }
     }
