@@ -53,7 +53,7 @@ $ pnpm serve
 http://localhost:7777
 
 登录
-http://localhost:7777/backend-login
+http://localhost:7777/backend/login
 
 # LICENSE
 

@@ -45,7 +45,7 @@ Home Site
 http://localhost:7777
 
 Login
-http://localhost:7777/backend-login
+http://localhost:7777/backend/login
 
 # LICENSE
 

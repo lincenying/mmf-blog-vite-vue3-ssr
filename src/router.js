@@ -45,7 +45,7 @@ const guardRoute = (to, from, next) => {
 const guardRouteBackend = (to, from, next) => {
     const token = cookies.get('b_user')
     if (inBrowser && !token) {
-        next('/backend-login')
+        next('/backend/login')
     } else {
         next()
     }
