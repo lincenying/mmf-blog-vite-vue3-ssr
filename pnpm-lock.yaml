@@ -47,6 +47,7 @@ specifiers:
   vite-plugin-pwa: ^0.14.4
   vue: 3.2.47
   vue-content-loader: ^2.0.1
+  vue-loading-overlay: ^6.0
   vue-router: ^4.1.6
   vuex: ^4.1.0
 
@@ -65,6 +66,7 @@ dependencies:
   toastr: 2.1.4
   vue: 3.2.47
   vue-content-loader: 2.0.1_vue@3.2.47
+  vue-loading-overlay: 6.0.3_vue@3.2.47
   vue-router: 4.1.6_vue@3.2.47
   vuex: 4.1.0_vue@3.2.47
 
@@ -8493,6 +8495,15 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /vue-loading-overlay/6.0.3_vue@3.2.47:
+    resolution: {integrity: sha512-Ab0hqnVKasVS2mNUo8Wkm95mSbk5fXp/karZmMou5yP0hTUOox/kZuBLNwgzJ4kFP829wFJl7O7FN1Dr0kRaVQ==}
+    engines: {node: '>=12.13.0'}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      vue: 3.2.47
+    dev: false
 
   /vue-router/4.1.6_vue@3.2.47:
     resolution: {integrity: sha512-DYWYwsG6xNPmLq/FmZn8Ip+qrhFEzA14EI12MsMgVxvHFDYvlr4NXpVF5hrRH1wVcDP8fGi5F4rxuJSl8/r+EQ==}

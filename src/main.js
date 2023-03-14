@@ -13,8 +13,8 @@ console.log(`当前环境: ${import.meta.env.VITE_APP_ENV}`)
 // that creates a fresh app instance.
 export function createApp() {
     const app = createSSRApp(App)
-    const router = createRouter()
     const store = createPinia()
+    const router = createRouter(store)
     const head = createHead()
     app.use(store).use(router).use(head).use(globalPlugin)
 

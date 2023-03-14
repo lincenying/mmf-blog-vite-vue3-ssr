@@ -23,6 +23,7 @@
 <script setup>
 import 'uno.css'
 import 'toastr/build/toastr.css'
+import 'vue-loading-overlay/dist/css/index.css'
 import './assets/css/hljs/googlecode.css'
 import './assets/css/github-markdown.css'
 import './assets/scss/style.scss'

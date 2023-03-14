@@ -111,6 +111,8 @@ const handleModify = async () => {
 }
 
 const handleUploadImage = async (event, insertImage, files) => {
+    const loader = ctx.$loading.show()
+
     const formData = new FormData()
     formData.append('file', files[0])
     const { data } = await api.file(`${uploadApi}/ajax.php?action=upload`, formData)
@@ -122,6 +124,8 @@ const handleUploadImage = async (event, insertImage, files) => {
             // height: 'auto',
         })
     }
+
+    loader.hide()
 }
 
 const headTitle = computed(() => {

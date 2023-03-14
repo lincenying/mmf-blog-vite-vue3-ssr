@@ -86,6 +86,8 @@ const handleInsert = async () => {
 }
 
 const handleUploadImage = async (event, insertImage, files) => {
+    const loader = ctx.$loading.show()
+
     const formData = new FormData()
     formData.append('file', files[0])
     try {
@@ -101,6 +103,8 @@ const handleUploadImage = async (event, insertImage, files) => {
     } catch (error) {
         console.log(error)
     }
+
+    loader.hide()
 }
 
 const headTitle = computed(() => {

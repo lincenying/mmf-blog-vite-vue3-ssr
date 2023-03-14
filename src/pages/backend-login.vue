@@ -13,6 +13,9 @@
             </form>
         </div>
         <div class="settings-footer"><a href="javascript:;" class="btn btn-yellow" @click="handleLogin">登录</a></div>
+        <client-only>
+            <cc-ball-clip-rotate v-if="loading" text="登录中..."></cc-ball-clip-rotate>
+        </client-only>
     </div>
 </template>
 
@@ -22,13 +25,7 @@ import cookies from 'js-cookie'
 import api from '@/api/index-client'
 
 defineOptions({
-    name: 'backend-login',
-    beforeRouteEnter(to, from, next) {
-        if (cookies.get('b_user')) {
-            return next('/backend/article/list')
-        }
-        next()
-    }
+    name: 'backend-login'
 })
 
 // eslint-disable-next-line no-unused-vars
@@ -43,8 +40,16 @@ const handleLogin = useLockFn(async () => {
     if (!form.username || !form.password) {
         return showMsg('请输入用户名和密码!')
     }
+    const loader = ctx.$loading.show()
     const { code, data } = await api.post('backend/admin/login', form)
+    loader.hide()
     if (data && code === 200) {
+        router.push('/backend/article/list')
+    }
+})
+
+onMounted(() => {
+    if (cookies.get('b_user')) {
         router.push('/backend/article/list')
     }
 })

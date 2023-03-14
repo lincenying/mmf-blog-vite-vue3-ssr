@@ -1,5 +1,7 @@
 import md5 from 'md5'
 
+import { Sleep } from '@/utils'
+
 function pluralize(time, label) {
     return time + label
 }
@@ -51,7 +53,8 @@ export default app => {
     app.config.globalProperties.$f = {
         timeAgo,
         timeYmd,
-        avatar
+        avatar,
+        Sleep
     }
     return app
 }

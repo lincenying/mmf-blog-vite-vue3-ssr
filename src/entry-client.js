@@ -1,3 +1,4 @@
+import { LoadingPlugin } from 'vue-loading-overlay'
 import VueMarkdownEditor from '@kangc/v-md-editor'
 import vuePressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js'
 
@@ -28,7 +29,13 @@ router.isReady().then(() => {
         )
     })
     app.component('ReloadPrompt', reloadPrompt)
-    app.use(VueMarkdownEditor).mount('#app')
+    app.use(LoadingPlugin, {
+        'can-cancel': false,
+        loader: 'dots',
+        color: '#54d9e0'
+    })
+        .use(VueMarkdownEditor)
+        .mount('#app')
     console.log('client router ready')
 })
 

@@ -125,7 +125,7 @@ const routes = [
     { name: '404', path: '/:catchAll(.*)', component: notFound }
 ]
 
-export function createRouter() {
+export function createRouter(store) {
     const router = _createRouter({
         // use appropriate history implementation for server/client
         // import.meta.env.SSR is injected by Vite.
@@ -138,7 +138,7 @@ export function createRouter() {
     const slideRight = 'slide-right'
 
     router.beforeEach((to, from, next) => {
-        const appShellStore = useAppShellStore()
+        const appShellStore = useAppShellStore(store)
         const { needPageTransition } = $(storeToRefs(appShellStore))
         // 如果不需要切换动画，直接返回
         if (needPageTransition) {
