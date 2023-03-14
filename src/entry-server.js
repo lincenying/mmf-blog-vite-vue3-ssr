@@ -1,3 +1,4 @@
+/* eslint-disable vue/one-component-per-file */
 import { basename } from 'node:path'
 import { renderToString } from '@vue/server-renderer'
 import { renderHeadToString } from '@vueuse/head'

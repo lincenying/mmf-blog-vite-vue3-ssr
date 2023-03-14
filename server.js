@@ -19,7 +19,6 @@ export async function createServer(root = process.cwd(), isProd = process.env.NO
 
     const indexProd = isProd ? fs.readFileSync(resolve('dist/client/index.html'), 'utf-8') : ''
 
-    // @ts-ignore
     const manifest = isProd ? JSON.parse(fs.readFileSync(resolve('dist/client/ssr-manifest.json'), 'utf-8')) : {}
 
     const app = express()
@@ -98,7 +97,6 @@ export async function createServer(root = process.cwd(), isProd = process.env.NO
                 render = (await vite.ssrLoadModule('/src/entry-server.js')).render
             } else {
                 template = indexProd
-                // @ts-ignore
                 render = (await import('./dist/server/entry-server.js')).render
             }
 
@@ -130,7 +128,7 @@ if (process.env.NODE_ENV !== 'production') {
 if (!isTest) {
     createServer().then(({ app }) =>
         app.listen(port, () => {
-            console.log('监听: http://localhost:' + port)
+            console.log(`监听: http://localhost:${port}`)
         })
     )
 }

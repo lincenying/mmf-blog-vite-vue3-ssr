@@ -21,6 +21,7 @@
         "no-unused-expressions": 0,
         "vue/multi-word-component-names": 0,
         "vue/no-v-for-template-key": 0,
-        "vue/no-v-model-argument": 0
+        "vue/no-v-model-argument": 0,
+        "@typescript-eslint/ban-ts-comment": 0
     }
 }

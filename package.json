@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "prepare": "husky install",
-    "serve": "node server",
+    "serve": "nodemon server",
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:server": "cross-env VITE_APP_SSR=true vite build --ssr src/entry-server.js --outDir dist/server",
@@ -54,6 +54,7 @@
     "lint-staged": "^13.2.0",
     "lru-cache": "^8.0.0",
     "morgan": "^1.10.0",
+    "nodemon": "^2.0.21",
     "postcss": "^8.4.21",
     "prettier": "^2.8.4",
     "sass": "^1.59.2",
