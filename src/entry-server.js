@@ -72,7 +72,7 @@ export async function render(url, manifest, req) {
 
     const matchedComponents = router.currentRoute.value.matched.flatMap(record => Object.values(record.components))
 
-    const globalStore = useGlobalStore()
+    const globalStore = useGlobalStore(store)
 
     globalStore.setCookies(req.cookies)
 

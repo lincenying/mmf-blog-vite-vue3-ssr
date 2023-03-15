@@ -28,17 +28,29 @@ koa2: https://github.com/lincenying/mmf-blog-api-koa2-v2
 
 express: https://github.com/lincenying/mmf-blog-api-v2
 
+## Project setup
 ```bash
-
-# Install dependencies
 $ pnpm install
-# Note: do not install with CNPM dependency
+```
 
-# Product
-$ pnpm build
-
-# Develop
+### Compiles and hot-reloads for development
+```bash
 $ pnpm serve
+```
+
+### Compiles and minifies for production
+```bash
+$ pnpm build
+```
+
+### Preview for production
+```bash
+$ pnpm start
+```
+
+### Lints and fixes files
+```bash
+$ pnpm lint
 ```
 
 Home Site

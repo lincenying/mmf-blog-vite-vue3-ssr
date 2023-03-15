@@ -40,13 +40,19 @@ express版: https://github.com/lincenying/mmf-blog-api-v2
 
 # 安装依赖
 $ pnpm install
-# 注意: 不要用 cnpm 安装依赖
 
 # 生产模式
 $ pnpm build
 
 # 开发模式
 $ pnpm serve
+
+### 生产预览
+$ pnpm start
+
+### 检查和修复文件
+$ pnpm lint
+
 ```
 
 首页
