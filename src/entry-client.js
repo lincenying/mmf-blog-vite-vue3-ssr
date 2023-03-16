@@ -8,7 +8,7 @@ import reloadPrompt from '@/components/reload-prompt.vue'
 
 VueMarkdownEditor.use(vuePressTheme)
 
-const { app, router, store } = createApp(true)
+const { app, router, store } = createApp()
 
 router.isReady().then(() => {
     router.beforeResolve(async (to, from) => {

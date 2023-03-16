@@ -47,9 +47,6 @@ defineOptions({
             frontendArticleStore.getTrending({}, api),
             frontendArticleStore.getArticleList({ page: 1, limit: 10, id, path, key, by }, api)
         ])
-    },
-    beforeRouteUpdate(to, form, next) {
-        next()
     }
 })
 

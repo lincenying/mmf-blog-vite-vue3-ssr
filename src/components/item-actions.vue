@@ -38,12 +38,10 @@ const { cookies } = $(storeToRefs(globalStore))
 
 const frontendArticleStore = useFrontendArticleStore()
 
-const user = $computed(() => {
-    return !!cookies.user
-})
+const isLogin = $computed(() => !!cookies.user)
 
 const handleLike = useLockFn(async () => {
-    if (!user) {
+    if (!isLogin) {
         showMsg('请先登录!')
         globalStore.setLoginModal(true)
         return

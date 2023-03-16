@@ -14,7 +14,7 @@ function pxToRemPreset(options = {}) {
                 const value = i[1]
                 // 将px单位转成rem单位
                 if (value && typeof value === 'string' && pxRE.test(value)) i[1] = value.replace(pxRE, (_, p1) => `${p1 / baseFontSize}rem`)
-                // 将无单位生生的rem单位还原成自己需要的rem单位
+                // 将无单位生生的rem单位还原成自己需要的rem单位, 如果你有自己手写的rem单位, 下面的一行需要注释
                 if (value && typeof value === 'string' && remRE.test(value)) i[1] = value.replace(remRE, (_, p1) => `${(p1 * 4) / baseFontSize}rem`)
             })
         }
