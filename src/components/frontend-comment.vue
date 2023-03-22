@@ -2,7 +2,7 @@
     <div class="card">
         <div class="comments">
             <div class="comment-post-wrap">
-                <img :src="$f.avatar(userEmail)" alt="" class="avatar-img" />
+                <img :src="ctx.$f.avatar(userEmail)" alt="" class="avatar-img" />
                 <div class="comment-post-input-wrap base-textarea-wrap">
                     <textarea id="content" v-model="form.content" class="textarea-input base-input" cols="30" rows="4"></textarea>
                 </div>
@@ -11,7 +11,7 @@
             <div class="comment-items-wrap">
                 <div v-for="item in comments.data" :key="item._id" class="comment-item">
                     <a href="javascript:;" class="comment-author-avatar-link">
-                        <img :src="$f.avatar(item.userid.email)" alt="" class="avatar-img" />
+                        <img :src="ctx.$f.avatar(item.userid.email)" alt="" class="avatar-img" />
                     </a>
                     <div class="comment-content-wrap">
                         <span class="comment-author-wrap">
@@ -33,8 +33,9 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import api from '@/api/index-client'
+import type { User } from '@/types'
 
 const prop = defineProps({
     comments: {
@@ -50,7 +51,7 @@ defineOptions({
 const { comments } = $(toRefs(prop))
 
 // eslint-disable-next-line no-unused-vars
-const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('frontend-comment')
+const { ctx, route, globalStore } = useGlobal()
 
 const { cookies } = $(storeToRefs(globalStore))
 
@@ -94,8 +95,9 @@ const handlePostComment = useLockFn(async () => {
         }
     }
 })
-const handleReply = item => {
-    form.content = `回复 @${item.userid.username}: `
-    document.querySelector('#content').focus()
+const handleReply = (item: User) => {
+    form.content = `回复 @${item.userid?.username}: `
+    const content: HTMLTextAreaElement = document.querySelector('#content')!
+    content.focus()
 }
 </script>

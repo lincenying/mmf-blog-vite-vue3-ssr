@@ -1,31 +1,39 @@
 import { acceptHMRUpdate } from 'pinia'
 
+import type { ApiConfig, Article, itemConfig, listConfig } from '@/types'
+
 import api from '@/api/index-client'
 
-const useStore = defineStore('backendAdminStore', {
+const useStore = defineStore('backendArticleStore', {
     state: () => ({
         lists: {
-            hasNext: false,
-            hasPrev: false,
+            data: [],
             path: '',
-            page: 1,
-            data: []
-        },
+            hasNext: 0,
+            hasPrev: 0,
+            page: 1
+        } as listConfig,
         item: {
             data: {},
             path: ''
-        }
+        } as itemConfig
     }),
     getters: {
-        getBackendAdminStore: state => state
+        getBackendArticleStore: state => state
     },
     actions: {
-        async getAdminList(config, $api) {
+        async getArticleList(config: ApiConfig, $api?: any) {
             if (!import.meta.env.SSR) $api = api
             if (this.lists.data.length > 0 && config.path === this.lists.path && config.page === 1) return
-            const { code, data } = await $api.get('backend/admin/list', { ...config, path: undefined, cache: true })
+            const { code, data } = await $api.get('backend/article/list', { ...config, path: undefined, cache: true })
             if (data && code === 200) {
-                const { list, path, hasNext, hasPrev, page } = {
+                const {
+                    list = [],
+                    path,
+                    hasNext = 0,
+                    hasPrev = 0,
+                    page
+                } = {
                     ...data,
                     path: config.path,
                     page: config.page
@@ -48,9 +56,9 @@ const useStore = defineStore('backendAdminStore', {
                 }
             }
         },
-        async getAdminItem(config, $api) {
+        async getArticleItem(config: ApiConfig, $api?: any) {
             if (!import.meta.env.SSR) $api = api
-            const { code, data } = await $api.get('backend/admin/item', { ...config, path: undefined })
+            const { code, data } = await $api.get('backend/article/item', { ...config, path: undefined })
             if (data && code === 200) {
                 this.item = {
                     data,
@@ -58,14 +66,7 @@ const useStore = defineStore('backendAdminStore', {
                 }
             }
         },
-        updateAdminItem(payload) {
-            this.item.data = payload
-            const index = this.lists.data.findIndex(ii => ii._id === payload._id)
-            if (index > -1) {
-                this.lists.data.splice(index, 1, payload)
-            }
-        },
-        deleteAdmin(id) {
+        async deleteArticle(id: string) {
             const index = this.lists.data.findIndex(ii => ii._id === id)
             if (index > -1) {
                 this.lists.data.splice(index, 1, {
@@ -74,13 +75,24 @@ const useStore = defineStore('backendAdminStore', {
                 })
             }
         },
-        recoverAdmin(id) {
+        async recoverArticle(id: string) {
             const index = this.lists.data.findIndex(ii => ii._id === id)
             if (index > -1) {
                 this.lists.data.splice(index, 1, {
                     ...this.lists.data[index],
                     is_delete: 0
                 })
+            }
+        },
+        insertArticleItem(payload: Article) {
+            if (this.lists.path) {
+                this.lists.data = [payload].concat(this.lists.data)
+            }
+        },
+        updateArticleItem(payload: Article) {
+            const index = this.lists.data.findIndex(ii => ii._id === payload._id)
+            if (index > -1) {
+                this.lists.data.splice(index, 1, payload)
             }
         }
     }

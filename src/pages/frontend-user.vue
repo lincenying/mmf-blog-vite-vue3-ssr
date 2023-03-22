@@ -11,13 +11,13 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 defineOptions({
     name: 'frontend-user'
 })
 
 // eslint-disable-next-line no-unused-vars
-const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('frontend-user')
+const { ctx, options, route, router, globalStore, appShellStore } = useGlobal('frontend-user')
 
 const key = computed(() => {
     return route.path.replace(/\//g, '_')

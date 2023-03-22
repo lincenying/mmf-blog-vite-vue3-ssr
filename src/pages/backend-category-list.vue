@@ -21,19 +21,21 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import type { asyncDataConfig } from '@/types'
 import api from '@/api/index-client'
 
 defineOptions({
     name: 'backend-category-list',
-    asyncData({ store, route, api }) {
+    asyncData(payload: asyncDataConfig) {
+        const { store, route, api } = payload
         const globalCategoryStore = useGlobalCategoryStore(store)
         return globalCategoryStore.getCategoryList({ limit: 99, path: route.path }, api)
     }
 })
 
 // eslint-disable-next-line no-unused-vars
-const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('backend-category-list')
+const { route, appShellStore } = useGlobal()
 
 // pinia 状态管理 ===>
 const globalCategoryStore = useGlobalCategoryStore()
@@ -45,30 +47,30 @@ useSaveScroll()
 
 const [loading, toggleLoading] = useToggle(false)
 
-const loadMore = async () => {
+const loadMore = async (page: number) => {
     if (loading.value) return
     toggleLoading(true)
-    await globalCategoryStore.getCategoryList({ limit: 99, path: route.path }, api)
+    await globalCategoryStore.getCategoryList({ page, limit: 99, path: route.path }, api)
     toggleLoading(false)
 }
 
 onMounted(() => {
-    if (category.path === '') {
+    if (category.length === 0) {
         loadMore(1)
     } else {
-        const scrollTop = historyPageScrollTop[route.path] || 0
+        const scrollTop = (historyPageScrollTop as any)[route.path] || 0
         window.scrollTo(0, scrollTop)
     }
 })
 
-const handleRecover = async id => {
+const handleRecover = async (id: string) => {
     const { code, message } = await api.get('backend/category/recover', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         globalCategoryStore.recoverCategory(id)
     }
 }
-const handleDelete = async id => {
+const handleDelete = async (id: string) => {
     const { code, message } = await api.get('backend/category/delete', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })

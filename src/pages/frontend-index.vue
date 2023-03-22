@@ -30,12 +30,14 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ContentLoader } from 'vue-content-loader'
+import type { asyncDataConfig } from '@/types'
 
 defineOptions({
     name: 'frontend-index',
-    asyncData({ store, route, api }) {
+    asyncData(payload: asyncDataConfig) {
+        const { store, route, api } = payload
         const {
             params: { id, key, by },
             path
@@ -51,7 +53,7 @@ defineOptions({
 })
 
 // eslint-disable-next-line no-unused-vars
-const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('frontend-index')
+const { route } = useGlobal()
 
 // pinia 状态管理 ===>
 const globalCategoryStore = useGlobalCategoryStore()

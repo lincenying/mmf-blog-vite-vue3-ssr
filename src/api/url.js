@@ -1,2 +1,2 @@
-const url = 'http://localhost:4000'
+const url = 'https://api.mmxiaowu.com'
 export default url

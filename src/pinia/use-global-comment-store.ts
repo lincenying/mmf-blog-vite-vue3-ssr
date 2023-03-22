@@ -1,5 +1,7 @@
 import { acceptHMRUpdate } from 'pinia'
 
+import type { ApiConfig, Comment, listConfig } from '@/types'
+
 import api from '@/api/index-client'
 
 const useStore = defineStore('globalCommentStore', {
@@ -7,20 +9,27 @@ const useStore = defineStore('globalCommentStore', {
         lists: {
             data: [],
             hasNext: 0,
+            hasPrev: 0,
             page: 1,
             path: ''
-        }
+        } as listConfig
     }),
     getters: {
         getGlobalCommentStore: state => state
     },
     actions: {
-        async getCommentList(config, $api) {
+        async getCommentList(config: ApiConfig, $api?: any) {
             if (!import.meta.env.SSR) $api = api
             if (config.path === this.lists.path && config.page === 1) return
             const { code, data } = await $api.get('frontend/comment/list', { ...config, path: undefined, cache: true })
             if (data && code === 200) {
-                const { list, hasNext, hasPrev, page, path } = {
+                const {
+                    list = [],
+                    path = '',
+                    hasNext = 0,
+                    hasPrev = 0,
+                    page = 1
+                } = {
                     ...config,
                     ...data
                 }
@@ -41,10 +50,10 @@ const useStore = defineStore('globalCommentStore', {
                 }
             }
         },
-        insertCommentItem(payload) {
+        insertCommentItem(payload: Comment) {
             this.lists.data = [payload].concat(this.lists.data)
         },
-        deleteComment(id) {
+        deleteComment(id: string) {
             const index = this.lists.data.findIndex(ii => ii._id === id)
             if (index > -1) {
                 this.lists.data.splice(index, 1, {
@@ -53,7 +62,7 @@ const useStore = defineStore('globalCommentStore', {
                 })
             }
         },
-        recoverComment(id) {
+        recoverComment(id: string) {
             const index = this.lists.data.findIndex(ii => ii._id === id)
             if (index > -1) {
                 this.lists.data.splice(index, 1, {

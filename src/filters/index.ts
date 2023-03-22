@@ -1,12 +1,13 @@
 import md5 from 'md5'
 
+import type { App } from 'vue'
 import { Sleep } from '@/utils'
 
-function pluralize(time, label) {
+function pluralize(time: number, label: string): string {
     return time + label
 }
 
-function timeAgo(time) {
+function timeAgo(time: any) {
     const re = /^[\d]+$/
     const timestamp = re.test(time)
     if (!timestamp) {
@@ -17,29 +18,29 @@ function timeAgo(time) {
     if (between < 60) {
         return '刚刚'
     } else if (between < 3600) {
-        return pluralize(parseInt(between / 60, 10), ' 分钟前')
+        return pluralize(parseInt(`${between / 60}`, 10), ' 分钟前')
     } else if (between < 86400) {
-        return pluralize(parseInt(between / 3600, 10), ' 小时前')
+        return pluralize(parseInt(`${between / 3600}`, 10), ' 小时前')
     }
-    return pluralize(parseInt(between / 86400, 10), ' 天前')
+    return pluralize(parseInt(`${between / 86400}`, 10), ' 天前')
 }
 
-function timeYmd(timestamp) {
+function timeYmd(timestamp: string | number) {
     const re = /^[\d]+$/
-    const isTimestamp = re.test(timestamp)
+    const isTimestamp = re.test(`${timestamp}`)
     if (!isTimestamp) {
-        let time = Date.parse(timestamp)
+        let time = Date.parse(`${timestamp}`)
         time /= 1000
         timestamp = time
     }
-    const tmp = new Date(timestamp * 1000)
-    var year = tmp.getFullYear()
-    var month = tmp.getMonth() + 1
-    var date = tmp.getDate()
+    const tmp = new Date(+timestamp * 1000)
+    const year = tmp.getFullYear()
+    const month = tmp.getMonth() + 1
+    const date = tmp.getDate()
     return `${year}-${month < 10 ? `0${month}` : month}-${date < 10 ? `0${date}` : date}`
 }
 
-function avatar(email, width) {
+function avatar(email: string, width: number) {
     email = email || '123456'
     email = decodeURIComponent(email)
     width = width || 256
@@ -49,7 +50,7 @@ function avatar(email, width) {
     return `https://cravatar.cn/avatar/${md5(email)}?s=${width}&d=identicon&r=g`
 }
 
-export default app => {
+export default (app: App) => {
     app.config.globalProperties.$f = {
         timeAgo,
         timeYmd,

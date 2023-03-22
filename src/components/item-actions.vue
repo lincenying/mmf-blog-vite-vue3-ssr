@@ -15,15 +15,14 @@
         <a href="javascript:;" class="action-item" @click="handleShare"> <i class="icon icon-action-share"></i><span class="text">分享</span> </a>
     </div>
 </template>
-<script setup>
+<script setup lang="ts">
+import type { Article } from '@/types'
+
 import api from '@/api/index-client'
 
-const prop = defineProps({
-    item: {
-        type: Object,
-        default: () => ({})
-    }
-})
+const prop = defineProps<{
+    item: Article
+}>()
 
 defineOptions({
     name: 'item-actions'
@@ -32,7 +31,7 @@ defineOptions({
 const { item } = $(toRefs(prop))
 
 // eslint-disable-next-line no-unused-vars
-const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('item-actions')
+const { globalStore } = useGlobal()
 
 const { cookies } = $(storeToRefs(globalStore))
 

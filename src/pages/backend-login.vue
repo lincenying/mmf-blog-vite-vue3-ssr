@@ -13,13 +13,11 @@
             </form>
         </div>
         <div class="settings-footer"><a href="javascript:;" class="btn btn-yellow" @click="handleLogin">登录</a></div>
-        <client-only>
-            <cc-ball-clip-rotate v-if="loading" text="登录中..."></cc-ball-clip-rotate>
-        </client-only>
+        <client-only> </client-only>
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import cookies from 'js-cookie'
 
 import api from '@/api/index-client'
@@ -29,7 +27,7 @@ defineOptions({
 })
 
 // eslint-disable-next-line no-unused-vars
-const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('backend-login')
+const { ctx, router } = useGlobal()
 
 const form = reactive({
     username: '',

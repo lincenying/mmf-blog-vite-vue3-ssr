@@ -9,17 +9,11 @@
     </div>
 </template>
 
-<script setup>
-const prop = defineProps({
-    title: {
-        type: String,
-        default: ''
-    },
-    classes: {
-        type: String,
-        default: ''
-    }
-})
+<script setup lang="ts">
+const prop = defineProps<{
+    title: string
+    classes?: string
+}>()
 
 defineOptions({
     name: 'a-input'

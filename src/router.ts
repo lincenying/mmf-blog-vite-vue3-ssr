@@ -5,7 +5,9 @@
  */
 
 import cookies from 'js-cookie'
+import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 import { createMemoryHistory, createRouter as _createRouter, createWebHistory } from 'vue-router'
+import type { Pinia } from 'pinia'
 import { inBrowser } from '@/utils'
 
 // 定义切割点，异步加载路由组件
@@ -32,8 +34,8 @@ const adminModify = () => import('./pages/backend-admin-modify.vue')
 const userList = () => import('./pages/backend-user-list.vue')
 const userModify = () => import('./pages/backend-user-modify.vue')
 
-const guardRoute = (to, from, next) => {
-    var token = cookies.get('user')
+const guardRoute = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
+    const token = cookies.get('user')
     if (inBrowser && !token) {
         next('/')
     } else {
@@ -42,27 +44,13 @@ const guardRoute = (to, from, next) => {
 }
 
 // eslint-disable-next-line no-unused-vars
-const guardRouteBackend = (to, from, next) => {
+const guardRouteBackend = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
     const token = cookies.get('b_user')
     if (inBrowser && !token) {
         next('/backend/login')
     } else {
         next()
     }
-}
-
-const scrollBehavior = (/*to*/) => {
-    const position = {}
-    // if (to.hash) {
-    //     position.selector = to.hash
-    // }
-    // if (to.matched.some(mm => mm.meta.scrollToTop)) {
-    //     position.x = 0
-    //     position.y = 0
-    // }
-    position.x = 0
-    position.y = 0
-    return position
 }
 
 const backendConfig = {
@@ -125,12 +113,11 @@ const routes = [
     { name: '404', path: '/:catchAll(.*)', component: notFound }
 ]
 
-export function createRouter(store) {
+export function createRouter(store: Pinia) {
     const router = _createRouter({
         // use appropriate history implementation for server/client
         // import.meta.env.SSR is injected by Vite.
         history: import.meta.env.SSR ? createMemoryHistory() : createWebHistory(),
-        scrollBehavior,
         routes
     })
 
@@ -139,9 +126,9 @@ export function createRouter(store) {
 
     router.beforeEach((to, from, next) => {
         const appShellStore = useAppShellStore(store)
-        const { needPageTransition } = $(storeToRefs(appShellStore))
+        const { needPageTransition } = storeToRefs(appShellStore)
         // 如果不需要切换动画，直接返回
-        if (needPageTransition) {
+        if (needPageTransition.value) {
             // 根据 alwaysBackPage, alwaysForwardPage 来判断切换动画
             // 判断当前是前进还是后退，添加不同的动画效果
             // const pageTransitionName = isForward(to, from) ? slideLeft : slideRight
@@ -150,12 +137,12 @@ export function createRouter(store) {
             let pageTransitionName
             if (!from.meta.index || to.meta.index === from.meta.index) {
                 pageTransitionName = 'fade'
-            } else if (to.meta.index > from.meta.index) {
+            } else if ((to.meta.index as number) > (from.meta.index as number)) {
                 pageTransitionName = slideLeft
             } else {
                 pageTransitionName = slideRight
             }
-            appShellStore.setPageTransitionName({ pageTransitionName })
+            appShellStore.setPageTransitionName(pageTransitionName)
         }
         next()
     })

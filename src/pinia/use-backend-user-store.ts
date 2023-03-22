@@ -1,31 +1,39 @@
 import { acceptHMRUpdate } from 'pinia'
 
+import type { anyObject, ApiConfig, itemConfig, listConfig } from '@/types'
+
 import api from '@/api/index-client'
 
 const useStore = defineStore('backendUserStore', {
     state: () => ({
         lists: {
-            hasNext: false,
-            hasPrev: false,
+            hasNext: 0,
+            hasPrev: 0,
             path: '',
             page: 1,
             data: []
-        },
+        } as listConfig,
         item: {
             data: {},
             path: ''
-        }
+        } as itemConfig
     }),
     getters: {
         getBackendUserStore: state => state
     },
     actions: {
-        async getUserList(config, $api) {
+        async getUserList(config: ApiConfig, $api?: any) {
             if (!import.meta.env.SSR) $api = api
             if (this.lists.data.length > 0 && config.path === this.lists.path && config.page === 1) return
             const { code, data } = await $api.get('backend/user/list', { ...config, path: undefined, cache: true })
             if (data && code === 200) {
-                const { list, path, hasNext, hasPrev, page } = {
+                const {
+                    list = [],
+                    path,
+                    hasNext = 0,
+                    hasPrev = 0,
+                    page
+                } = {
                     ...data,
                     path: config.path,
                     page: config.page
@@ -48,7 +56,7 @@ const useStore = defineStore('backendUserStore', {
                 }
             }
         },
-        async getUserItem(config, $api) {
+        async getUserItem(config: ApiConfig, $api?: any) {
             if (!import.meta.env.SSR) $api = api
             const { code, data } = await $api.get('backend/user/item', { ...config, path: undefined })
             if (data && code === 200) {
@@ -58,14 +66,14 @@ const useStore = defineStore('backendUserStore', {
                 }
             }
         },
-        updateUserItem(payload) {
+        updateUserItem(payload: anyObject) {
             this.item.data = payload
             const index = this.lists.data.findIndex(ii => ii._id === payload._id)
             if (index > -1) {
                 this.lists.data.splice(index, 1, payload)
             }
         },
-        deleteUser(id) {
+        deleteUser(id: string) {
             const index = this.lists.data.findIndex(ii => ii._id === id)
             if (index > -1) {
                 this.lists.data.splice(index, 1, {
@@ -74,7 +82,7 @@ const useStore = defineStore('backendUserStore', {
                 })
             }
         },
-        recoverUser(id) {
+        recoverUser(id: string) {
             const index = this.lists.data.findIndex(ii => ii._id === id)
             if (index > -1) {
                 this.lists.data.splice(index, 1, {

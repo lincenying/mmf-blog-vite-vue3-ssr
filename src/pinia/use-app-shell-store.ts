@@ -1,4 +1,10 @@
 import { acceptHMRUpdate } from 'pinia'
+import type { anyObject } from '@/types'
+
+interface historyType {
+    path: string
+    scrollTop: number
+}
 
 const useStore = defineStore('appShellStore', {
     state: () => ({
@@ -58,7 +64,7 @@ const useStore = defineStore('appShellStore', {
          * @param {Function} commit commit
          * @param {boolean} isPageSwitching isPageSwitching
          */
-        setPageSwitching(isPageSwitching) {
+        setPageSwitching(isPageSwitching: boolean) {
             this.isPageSwitching = isPageSwitching
         },
 
@@ -69,11 +75,12 @@ const useStore = defineStore('appShellStore', {
          * @param {string} options.path path
          * @param {number} options.scrollTop scrollTop
          */
-        saveScrollTop({ path, scrollTop }) {
-            this.historyPageScrollTop[path] = scrollTop
+        saveScrollTop(payload: historyType) {
+            const { path, scrollTop } = payload
+            ;(this.historyPageScrollTop as anyObject)[path] = scrollTop
         },
 
-        setPageTransitionName({ pageTransitionName }) {
+        setPageTransitionName(pageTransitionName: string) {
             this.pageTransitionName = pageTransitionName
         }
     }

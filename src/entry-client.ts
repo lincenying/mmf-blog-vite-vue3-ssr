@@ -6,6 +6,14 @@ import { createApp } from './main'
 
 import reloadPrompt from '@/components/reload-prompt.vue'
 
+import 'uno.css'
+import 'vue-loading-overlay/dist/css/index.css'
+import 'element-plus/es/components/message/style/css'
+import 'element-plus/es/components/message-box/style/css'
+import './assets/css/hljs/googlecode.css'
+import './assets/css/github-markdown.css'
+import './assets/scss/style.scss'
+
 VueMarkdownEditor.use(vuePressTheme)
 
 const { app, router, store } = createApp()
@@ -21,8 +29,8 @@ router.isReady().then(() => {
 
         await Promise.all(
             activated.map(c => {
-                if (c.components.default.asyncData) {
-                    return c.components.default.asyncData({ store, route: to })
+                if ((c.components?.default as any).asyncData) {
+                    return (c.components?.default as any).asyncData({ store, route: to })
                 }
                 return true
             })

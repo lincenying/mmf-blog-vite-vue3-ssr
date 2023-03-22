@@ -7,7 +7,7 @@
         </div>
     </div>
 </template>
-<script setup>
+<script setup lang="ts">
 defineOptions({
     name: 'topics-item-none'
 })

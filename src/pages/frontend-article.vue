@@ -39,12 +39,14 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ContentLoader } from 'vue-content-loader'
+import type { asyncDataConfig } from '@/types'
 
 defineOptions({
     name: 'frontend-article',
-    asyncData({ store, route, api }) {
+    asyncData(payload: asyncDataConfig) {
+        const { store, route, api } = payload
         const {
             path,
             params: { id }
@@ -61,9 +63,6 @@ defineOptions({
     }
 })
 
-// eslint-disable-next-line no-unused-vars
-const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('frontend-article')
-
 // pinia 状态管理 ===>
 const globalCategoryStore = useGlobalCategoryStore()
 const { lists: category } = $(storeToRefs(globalCategoryStore))
@@ -76,7 +75,7 @@ const { lists: comments } = $(storeToRefs(globalCommentStore))
 
 useSaveScroll()
 
-const addTarget = content => {
+const addTarget = (content: string) => {
     if (!content) return ''
     return content.replace(/<a(.*?)href="http/g, '<a$1target="_blank" href="http')
 }

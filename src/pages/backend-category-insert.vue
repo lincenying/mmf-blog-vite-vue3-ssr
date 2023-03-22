@@ -14,7 +14,7 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import api from '@/api/index-client'
 
 defineOptions({
@@ -22,7 +22,7 @@ defineOptions({
 })
 
 // eslint-disable-next-line no-unused-vars
-const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('backend-category-insert')
+const { ctx, options, route, router, globalStore, appShellStore } = useGlobal('backend-category-insert')
 
 // pinia 状态管理 ===>
 const globalCategoryStore = useGlobalCategoryStore()

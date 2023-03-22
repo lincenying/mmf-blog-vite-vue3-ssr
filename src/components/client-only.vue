@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import { ref, onMounted, defineComponent, createElementBlock } from 'vue'
 
 export default defineComponent({
@@ -10,7 +10,7 @@ export default defineComponent({
         onMounted(() => {
             mounted.value = true
         })
-        return props => {
+        return (props: any) => {
             if (mounted.value) {
                 return slots.default?.()
             }

@@ -32,20 +32,22 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import type { asyncDataConfig, Fn } from '@/types'
 import api from '@/api/index-client'
 import { uploadApi } from '@/api/upload-api'
 
 defineOptions({
     name: 'backend-article-insert',
-    asyncData({ store, route, api }) {
+    asyncData(payload: asyncDataConfig) {
+        const { store, route, api } = payload
         const globalCategoryStore = useGlobalCategoryStore(store)
         return globalCategoryStore.getCategoryList({ limit: 99, path: route.path }, api)
     }
 })
 
 // eslint-disable-next-line no-unused-vars
-const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('backend-article-insert')
+const { ctx, router } = useGlobal()
 
 // pinia 状态管理 ===>
 const globalCategoryStore = useGlobalCategoryStore()
@@ -85,7 +87,7 @@ const handleInsert = async () => {
     }
 }
 
-const handleUploadImage = async (event, insertImage, files) => {
+const handleUploadImage = async (event: EventTarget, insertImage: Fn, files: FileList) => {
     const loader = ctx.$loading.show()
 
     const formData = new FormData()

@@ -10,13 +10,12 @@
         </router-link>
     </div>
 </template>
-<script setup>
-const prop = defineProps({
-    category: {
-        type: Array,
-        default: () => []
-    }
-})
+<script setup lang="ts">
+import type { Category } from '@/types'
+
+const prop = defineProps<{
+    category: Category[]
+}>()
 
 defineOptions({
     name: 'aside-category'

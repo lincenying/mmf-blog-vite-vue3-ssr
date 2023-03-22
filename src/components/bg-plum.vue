@@ -8,23 +8,23 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import type { Fn } from '@vueuse/core'
 const r180 = Math.PI
 const r90 = Math.PI / 2
 const r15 = Math.PI / 12
 const color = '#88888825'
-const el = ref(null)
+const el = ref<HTMLCanvasElement | null>(null)
 const { random } = Math
 const size = reactive(useWindowSize())
-const start = ref(() => {})
+const start = ref<Fn>(() => {})
 const init = ref(4)
 const len = ref(6)
-const top = ref(60)
 const stopped = ref(false)
-function initCanvas(canvas, width = 400, height = 400, _dpi) {
-    const ctx = canvas.getContext('2d')
+function initCanvas(canvas: HTMLCanvasElement, width = 400, height = 400, _dpi?: number) {
+    const ctx: any = canvas.getContext('2d')!
     const dpr = window.devicePixelRatio || 1
-    // @ts-expect-error vendor
+    // @ts-ignore
     const bsr =
         ctx.webkitBackingStorePixelRatio ||
         ctx.mozBackingStorePixelRatio ||
@@ -46,13 +46,13 @@ function polar2cart(x = 0, y = 0, r = 0, theta = 0) {
     return [x + dx, y + dy]
 }
 onMounted(async () => {
-    const canvas = el.value
+    const canvas = el.value!
     const { ctx } = initCanvas(canvas, size.width, size.height)
     const { width, height } = canvas
-    let steps = []
-    let prevSteps = []
+    let steps: Fn[] = []
+    let prevSteps: Fn[] = []
     let iterations = 0
-    const step = (x, y, rad) => {
+    const step = (x: number, y: number, rad: number) => {
         const length = random() * len.value
         const [nx, ny] = polar2cart(x, y, length, rad)
         ctx.beginPath()
@@ -67,7 +67,8 @@ onMounted(async () => {
     }
     let lastTime = performance.now()
     const interval = 1000 / 40
-    let controls = null
+    // eslint-disable-next-line prefer-const
+    let controls: ReturnType<typeof useRafFn>
     const frame = () => {
         if (performance.now() - lastTime < interval) return
         iterations += 1
@@ -88,15 +89,11 @@ onMounted(async () => {
         ctx.lineWidth = 1
         ctx.strokeStyle = color
         prevSteps = []
-        let y1 = random() * size.height
-        if (y1 < top.value) y1 = top.value
-        let y2 = random() * size.height
-        if (y2 < top.value) y2 = top.value
         steps = [
-            () => step(random() * size.width, top.value, r90),
+            () => step(random() * size.width, 0, r90),
             () => step(random() * size.width, size.height, -r90),
-            () => step(0, y1, 0),
-            () => step(size.width, y2, r180)
+            () => step(0, random() * size.height, 0),
+            () => step(size.width, random() * size.height, r180)
         ]
         if (size.width < 500) steps = steps.slice(0, 2)
         controls.resume()

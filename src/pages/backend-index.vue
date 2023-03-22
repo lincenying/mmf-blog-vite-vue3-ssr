@@ -13,13 +13,13 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 defineOptions({
     name: 'backend-index'
 })
 
 // eslint-disable-next-line no-unused-vars
-const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('backend-index')
+const { route } = useGlobal()
 
 const key = computed(() => {
     return route.path.replace(/\//g, '_')

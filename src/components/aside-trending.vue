@@ -13,13 +13,12 @@
         </div>
     </div>
 </template>
-<script setup>
-const prop = defineProps({
-    trending: {
-        type: Array,
-        default: () => []
-    }
-})
+<script setup lang="ts">
+import type { Article } from '@/types'
+
+const prop = defineProps<{
+    trending: Article[]
+}>()
 
 defineOptions({
     name: 'aside-trending'

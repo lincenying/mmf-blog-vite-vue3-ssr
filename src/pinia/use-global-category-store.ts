@@ -1,17 +1,20 @@
 import { acceptHMRUpdate } from 'pinia'
 
+import type { anyObject, ApiConfig, Category } from '@/types'
 import api from '@/api/index-client'
 
 const useStore = defineStore('globalCategoryStore', {
     state: () => ({
-        lists: [],
-        item: {}
+        lists: [] as Category[],
+        item: {
+            data: {} as Category
+        } as anyObject
     }),
     getters: {
         getGlobalCategoryStore: state => state
     },
     actions: {
-        async getCategoryList(config, $api) {
+        async getCategoryList(config: ApiConfig, $api?: any) {
             if (!import.meta.env.SSR) $api = api
             if (this.lists.length) return
             const { code, data } = await $api.get('backend/category/list', { ...config, path: undefined, cache: true })
@@ -19,7 +22,7 @@ const useStore = defineStore('globalCategoryStore', {
                 this.lists = data.list
             }
         },
-        async getCategoryItem(config, $api) {
+        async getCategoryItem(config: ApiConfig, $api?: any) {
             if (!import.meta.env.SSR) $api = api
             const { code, data } = await $api.get('backend/category/item', { ...config, path: undefined })
             if (data && code === 200) {
@@ -29,17 +32,17 @@ const useStore = defineStore('globalCategoryStore', {
                 }
             }
         },
-        insertCategoryItem(payload) {
+        insertCategoryItem(payload: Category) {
             this.lists = [payload].concat(this.lists)
         },
-        updateCategoryItem(payload) {
+        updateCategoryItem(payload: Category) {
             this.item.data = payload
             const index = this.lists.findIndex(ii => ii._id === payload._id)
             if (index > -1) {
                 this.lists.splice(index, 1, payload)
             }
         },
-        deleteCategory(id) {
+        deleteCategory(id: string) {
             const index = this.lists.findIndex(ii => ii._id === id)
             if (index > -1) {
                 this.lists.splice(index, 1, {
@@ -48,7 +51,7 @@ const useStore = defineStore('globalCategoryStore', {
                 })
             }
         },
-        recoverCategory(id) {
+        recoverCategory(id: string) {
             const index = this.lists.findIndex(ii => ii._id === id)
             if (index > -1) {
                 this.lists.splice(index, 1, {

@@ -1,5 +1,7 @@
 import { acceptHMRUpdate } from 'pinia'
 
+import type { anyObject, ApiConfig, ArticleItemConfig, listConfig } from '@/types'
+
 import api from '@/api/index-client'
 
 const useStore = defineStore('frontendArticleStore', {
@@ -10,23 +12,29 @@ const useStore = defineStore('frontendArticleStore', {
             hasNext: 0,
             hasPrev: 0,
             page: 1
-        },
+        } as listConfig,
         item: {
             data: {},
             path: ''
-        },
+        } as ArticleItemConfig,
         trending: []
     }),
     getters: {
         getFrontendArticleStore: state => state
     },
     actions: {
-        async getArticleList(config, $api) {
+        async getArticleList(config: ApiConfig, $api?: any) {
             if (!import.meta.env.SSR) $api = api
             if (this.lists.data.length > 0 && config.path === this.lists.path && config.page === 1) return
             const { code, data } = await $api.get('frontend/article/list', { ...config, path: undefined, cache: true })
             if (data && code === 200) {
-                const { list, path, hasNext, hasPrev, page } = {
+                const {
+                    list = [],
+                    path,
+                    hasNext = 0,
+                    hasPrev = 0,
+                    page
+                } = {
                     ...data,
                     path: config.path,
                     page: config.page
@@ -49,7 +57,7 @@ const useStore = defineStore('frontendArticleStore', {
                 }
             }
         },
-        async getArticleItem(config, $api) {
+        async getArticleItem(config: ApiConfig, $api?: any) {
             if (!import.meta.env.SSR) $api = api
             const { code, data } = await $api.get('frontend/article/item', { ...config, path: undefined, markdown: 1, cache: true })
             if (data && code === 200) {
@@ -60,7 +68,7 @@ const useStore = defineStore('frontendArticleStore', {
                 }
             }
         },
-        async getTrending(_, $api) {
+        async getTrending(_: any, $api?: any) {
             if (!import.meta.env.SSR) $api = api
             if (this.trending.length) return
             const { code, data } = await $api.get('frontend/trending', { cache: true })
@@ -68,17 +76,16 @@ const useStore = defineStore('frontendArticleStore', {
                 this.trending = data.list
             }
         },
-        modifyLikeStatus({ id, status }) {
+        modifyLikeStatus(payload: { id: string; status: boolean }) {
+            const { id, status } = payload
             if (this.item.data._id === id) {
                 if (status) this.item.data.like++
                 else this.item.data.like--
                 this.item.data.like_status = status
             }
-            const index = this.lists.data.findIndex(item => item._id === id)
+            const index = this.lists.data.findIndex((item: anyObject) => item._id === id)
             if (index > -1) {
-                const obj = {
-                    ...this.lists.data[index]
-                }
+                const obj: anyObject = Object.assign({}, this.lists.data[index])
                 if (status) obj.like++
                 else obj.like--
                 obj.like_status = status

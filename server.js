@@ -13,8 +13,10 @@ import apiDomain from './src/api/url.js'
 
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD
 
+// @ts-ignore
 export async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV === 'production', hmrPort) {
     const __dirname = path.dirname(fileURLToPath(import.meta.url))
+    // @ts-ignore
     const resolve = p => path.resolve(__dirname, p)
 
     const indexProd = isProd ? fs.readFileSync(resolve('dist/client/index.html'), 'utf-8') : ''
@@ -94,7 +96,7 @@ export async function createServer(root = process.cwd(), isProd = process.env.NO
                 // always read fresh template in dev
                 template = fs.readFileSync(resolve('index.html'), 'utf-8')
                 template = await vite.transformIndexHtml(url, template)
-                render = (await vite.ssrLoadModule('/src/entry-server.js')).render
+                render = (await vite.ssrLoadModule('/src/entry-server.ts')).render
             } else {
                 template = indexProd
                 render = (await import('./dist/server/entry-server.js')).render
@@ -110,8 +112,11 @@ export async function createServer(root = process.cwd(), isProd = process.env.NO
             res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
         } catch (e) {
             // eslint-disable-next-line no-unused-expressions
+            // @ts-ignore
             vite && vite.ssrFixStacktrace(e)
+            // @ts-ignore
             console.log(e.stack)
+            // @ts-ignore
             res.status(500).end(e.stack)
         }
     })

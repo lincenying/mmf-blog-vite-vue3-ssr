@@ -23,19 +23,21 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import type { asyncDataConfig } from '@/types'
 import api from '@/api/index-client'
 
 defineOptions({
     name: 'backend-user-modify',
-    asyncData({ store, route, api }) {
+    asyncData(payload: asyncDataConfig) {
+        const { store, route, api } = payload
         const backendUserStore = useBackendUserStore(store)
         return backendUserStore.getUserItem({ id: route.params.id, path: route.path, from: 'backend' }, api)
     }
 })
 
 // eslint-disable-next-line no-unused-vars
-const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('backend-user-modify')
+const { route, router } = useGlobal()
 
 // pinia 状态管理 ===>
 const backendUserStore = useBackendUserStore()

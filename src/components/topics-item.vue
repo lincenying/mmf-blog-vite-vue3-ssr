@@ -18,13 +18,12 @@
         <item-actions :item="item"></item-actions>
     </div>
 </template>
-<script setup>
-const prop = defineProps({
-    item: {
-        type: Object,
-        default: () => ({})
-    }
-})
+<script setup lang="ts">
+import type { Article } from '@/types'
+
+const prop = defineProps<{
+    item: Article
+}>()
 
 defineOptions({
     name: 'topics-item'

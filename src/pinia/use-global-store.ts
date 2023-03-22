@@ -1,9 +1,17 @@
 import { acceptHMRUpdate } from 'pinia'
+import type { anyObject } from '@/types'
+
+interface UserCookies {
+    user?: string
+    userid?: string
+    username?: string
+    useremail?: string
+}
 
 const useStore = defineStore('globalStore', {
     state: () => ({
         loading: false,
-        cookies: {},
+        cookies: {} as UserCookies,
         showLoginModal: false,
         showRegisterModal: false,
         ISDEV: import.meta.env.VITE_APP_ENV === 'development',
@@ -14,13 +22,13 @@ const useStore = defineStore('globalStore', {
         getGlobalStore: state => state
     },
     actions: {
-        setLoginModal(payload) {
+        setLoginModal(payload: boolean) {
             this.showLoginModal = payload
         },
-        setRegisterModal(payload) {
+        setRegisterModal(payload: boolean) {
             this.showRegisterModal = payload
         },
-        setCookies(cookies) {
+        setCookies(cookies: anyObject) {
             this.cookies = cookies
         }
     }

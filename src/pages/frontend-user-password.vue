@@ -33,7 +33,7 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import api from '@/api/index-client'
 
 defineOptions({
@@ -41,7 +41,7 @@ defineOptions({
 })
 
 // eslint-disable-next-line no-unused-vars
-const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('frontend-user-password')
+const { ctx, options, route, router, globalStore, appShellStore } = useGlobal('frontend-user-password')
 
 const form = reactive({
     old_password: '',

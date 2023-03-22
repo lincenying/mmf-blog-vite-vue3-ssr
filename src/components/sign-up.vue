@@ -30,13 +30,13 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import api from '@/api/index-client'
 import { strLen } from '@/utils'
 
-const prop = defineProps({
-    show: Boolean
-})
+const prop = defineProps<{
+    show: boolean
+}>()
 
 defineOptions({
     name: 'sign-up'
@@ -45,7 +45,7 @@ defineOptions({
 const { show } = $(toRefs(prop))
 
 // eslint-disable-next-line no-unused-vars
-const { ctx, options, route, router, globalStore, appShellStore, useLockFn } = useGlobal('sign-up')
+const { globalStore } = useGlobal()
 
 const form = reactive({
     username: '',

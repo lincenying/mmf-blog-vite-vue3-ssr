@@ -1,10 +1,12 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { loadEnv } from 'vite'
+import { loadEnv, defineConfig } from 'vite'
 
 import vuePlugin from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+
+import { viteMockServe } from 'vite-plugin-mock'
 
 import UnoCSS from 'unocss/vite'
 import { createHtmlPlugin } from 'vite-plugin-html'
@@ -16,7 +18,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 import { VitePWA } from 'vite-plugin-pwa'
 
-import apiDomain from './src/api/url.js'
+import apiDomain from './src/api/url'
 
 export const ssrTransformCustomDir = () => {
     return {
@@ -26,10 +28,13 @@ export const ssrTransformCustomDir = () => {
 }
 
 // https://vitejs.dev/config/
-export default ({ mode }) => {
+export default defineConfig(({ mode, command }) => {
     const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
     process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
+
+    const localMock = true
+    const prodMock = false
 
     const config = {
         server: {
@@ -72,14 +77,21 @@ export default ({ mode }) => {
                         template: {
                             compilerOptions: {
                                 isCustomElement: tag => ['def'].includes(tag)
-                            },
-                            directiveTransforms: {
-                                loading: ssrTransformCustomDir
                             }
                         }
                     }),
                     vueJsx: vueJsx()
                 }
+            }),
+            viteMockServe({
+                mockPath: 'mock',
+                localEnabled: command === 'serve' && localMock,
+                prodEnabled: command !== 'serve' && prodMock,
+                injectCode: `
+                  import { setupProdMockServer } from './mockProdServer';
+                  setupProdMockServer();
+                `,
+                logger: true
             }),
             AutoImport({
                 eslintrc: {
@@ -99,13 +111,14 @@ export default ({ mode }) => {
                     {
                         pinia: ['defineStore', 'storeToRefs'],
                         'vue-router': ['createRouter', 'createWebHashHistory'],
-                        '@/utils': ['UTC2Date', 'deepClone', 'showMsg']
+                        '@/utils': ['deepClone', 'deepMerge', '$is', 'showMsg']
                     }
                 ],
                 dts: 'src/auto-imports.d.ts',
-                dirs: ['src/components', 'src/pinia', 'src/mixins'],
+                dirs: ['src/components', 'src/composables', 'src/pinia'],
 
                 resolvers: [ElementPlusResolver()],
+                defaultExportByFilename: false,
                 vueTemplate: true,
                 cache: false
             }),
@@ -116,6 +129,7 @@ export default ({ mode }) => {
                     /\.vue\?vue/, // .vue
                     /\.md$/ // .md
                 ],
+                extensions: ['vue', 'tsx', 'jsx'],
                 resolvers: [ElementPlusResolver()],
                 dts: 'src/components.d.ts'
             }),
@@ -212,4 +226,4 @@ export default ({ mode }) => {
         }
     }
     return config
-}
+})

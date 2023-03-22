@@ -8,11 +8,9 @@ export default {
     api: `${apiDomain}/api/`,
     port: 8080,
     timeout: 30000,
-    cached:
-        cached &&
+    cached: (cached &&
         new lruCache({
-            max: 1000,
-            maxAge: 1000 * 60 * 15
-        }),
+            max: 1000
+        })) as any,
     cachedItem: {}
 }
