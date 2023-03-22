@@ -251,9 +251,9 @@ export const deepClone = cloneDeep
 
 // 计算字符串长度, 汉字算2
 export const strLen = str => {
-    var len = 0
-    for (var i = 0; i < str.length; i++) {
-        var c = str.charCodeAt(i)
+    let len = 0
+    for (let i = 0; i < str.length; i++) {
+        const c = str.charCodeAt(i)
         //单字节加1
         if ((c >= 0x0001 && c <= 0x007e) || (0xff60 <= c && c <= 0xff9f)) {
             len++
@@ -302,8 +302,8 @@ export const arrayToObject = (arr, key = 'value', val = 'name') => {
 }
 
 export const addStr = (str, num) => {
-    var arr = str ? str.split('') : [] // 要先判断字符串是否有字符 然后将它分割成数组
-    var newStr = ''
+    const arr = str ? str.split('') : [] // 要先判断字符串是否有字符 然后将它分割成数组
+    let newStr = ''
     arr.forEach((item, index) => {
         newStr += item
         if ((index + 1) % num === 0 && index !== arr.length - 1) {
