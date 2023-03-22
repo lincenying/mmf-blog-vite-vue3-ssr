@@ -40,9 +40,6 @@ defineOptions({
     name: 'frontend-user-password'
 })
 
-// eslint-disable-next-line no-unused-vars
-const { ctx, options, route, router, globalStore, appShellStore } = useGlobal('frontend-user-password')
-
 const form = reactive({
     old_password: '',
     password: '',

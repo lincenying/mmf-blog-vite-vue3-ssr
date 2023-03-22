@@ -22,7 +22,7 @@ defineOptions({
 })
 
 // eslint-disable-next-line no-unused-vars
-const { ctx, options, route, router, globalStore, appShellStore } = useGlobal('backend-category-insert')
+const { router } = useGlobal()
 
 // pinia 状态管理 ===>
 const globalCategoryStore = useGlobalCategoryStore()
@@ -36,8 +36,10 @@ const form = reactive({
 })
 
 watch(item, val => {
-    form.cate_name = val.data.cate_name
-    form.cate_order = val.data.cate_order
+    if (val.data) {
+        form.cate_name = val.data.cate_name
+        form.cate_order = val.data.cate_order
+    }
 })
 
 onMounted(() => {

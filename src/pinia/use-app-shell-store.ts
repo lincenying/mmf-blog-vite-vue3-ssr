@@ -1,5 +1,5 @@
 import { acceptHMRUpdate } from 'pinia'
-import type { anyObject } from '@/types'
+import type { anyObject, ShellStore } from '@/types'
 
 interface historyType {
     path: string
@@ -7,7 +7,7 @@ interface historyType {
 }
 
 const useStore = defineStore('appShellStore', {
-    state: () => ({
+    state: (): ShellStore => ({
         /**
          * 是否需要页面切换动画
          *

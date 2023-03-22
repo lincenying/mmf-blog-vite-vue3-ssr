@@ -1,14 +1,14 @@
 import { acceptHMRUpdate } from 'pinia'
 
-import type { anyObject, ApiConfig, Category } from '@/types'
+import type { CategoryStore, ApiConfig, Category } from '@/types'
 import api from '@/api/index-client'
 
 const useStore = defineStore('globalCategoryStore', {
-    state: () => ({
-        lists: [] as Category[],
+    state: (): CategoryStore => ({
+        lists: [],
         item: {
-            data: {} as Category
-        } as anyObject
+            data: null
+        }
     }),
     getters: {
         getGlobalCategoryStore: state => state

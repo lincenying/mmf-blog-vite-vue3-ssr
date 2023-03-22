@@ -1,22 +1,22 @@
 import { acceptHMRUpdate } from 'pinia'
 
-import type { anyObject, ApiConfig, ArticleItemConfig, listConfig } from '@/types'
+import type { anyObject, ApiConfig, Article, FArticleStore } from '@/types'
 
 import api from '@/api/index-client'
 
 const useStore = defineStore('frontendArticleStore', {
-    state: () => ({
+    state: (): FArticleStore => ({
         lists: {
             data: [],
             path: '',
             hasNext: 0,
             hasPrev: 0,
             page: 1
-        } as listConfig,
+        },
         item: {
-            data: {},
+            data: null,
             path: ''
-        } as ArticleItemConfig,
+        },
         trending: []
     }),
     getters: {
@@ -78,14 +78,14 @@ const useStore = defineStore('frontendArticleStore', {
         },
         modifyLikeStatus(payload: { id: string; status: boolean }) {
             const { id, status } = payload
-            if (this.item.data._id === id) {
+            if (this.item.data && this.item.data._id === id) {
                 if (status) this.item.data.like++
                 else this.item.data.like--
                 this.item.data.like_status = status
             }
             const index = this.lists.data.findIndex((item: anyObject) => item._id === id)
             if (index > -1) {
-                const obj: anyObject = Object.assign({}, this.lists.data[index])
+                const obj: Article = Object.assign({}, this.lists.data[index])
                 if (status) obj.like++
                 else obj.like--
                 obj.like_status = status

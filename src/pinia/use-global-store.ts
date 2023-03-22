@@ -1,17 +1,10 @@
 import { acceptHMRUpdate } from 'pinia'
-import type { anyObject } from '@/types'
-
-interface UserCookies {
-    user?: string
-    userid?: string
-    username?: string
-    useremail?: string
-}
+import type { anyObject, GlobalStore } from '@/types'
 
 const useStore = defineStore('globalStore', {
-    state: () => ({
+    state: (): GlobalStore => ({
         loading: false,
-        cookies: {} as UserCookies,
+        cookies: {},
         showLoginModal: false,
         showRegisterModal: false,
         ISDEV: import.meta.env.VITE_APP_ENV === 'development',

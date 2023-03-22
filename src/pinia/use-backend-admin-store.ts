@@ -1,21 +1,21 @@
 import { acceptHMRUpdate } from 'pinia'
 
 import api from '@/api/index-client'
-import type { AdminUser, ApiConfig, itemConfig, listConfig } from '@/types'
+import type { User, ApiConfig, AdminStore } from '@/types'
 
 const useStore = defineStore('backendAdminStore', {
-    state: () => ({
+    state: (): AdminStore => ({
         lists: {
             hasNext: 0,
             hasPrev: 0,
             path: '',
             page: 1,
             data: []
-        } as listConfig,
+        },
         item: {
-            data: {},
+            data: null,
             path: ''
-        } as itemConfig
+        }
     }),
     getters: {
         getBackendAdminStore: state => state
@@ -65,7 +65,7 @@ const useStore = defineStore('backendAdminStore', {
                 }
             }
         },
-        updateAdminItem(payload: AdminUser) {
+        updateAdminItem(payload: User) {
             this.item.data = payload
             const index = this.lists.data.findIndex(ii => ii._id === payload._id)
             if (index > -1) {

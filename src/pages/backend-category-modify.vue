@@ -46,8 +46,10 @@ const form = reactive({
 })
 
 watch(item, val => {
-    form.cate_name = val.data.cate_name
-    form.cate_order = val.data.cate_order
+    if (val.data) {
+        form.cate_name = val.data.cate_name
+        form.cate_order = val.data.cate_order
+    }
 })
 
 onMounted(async () => {})

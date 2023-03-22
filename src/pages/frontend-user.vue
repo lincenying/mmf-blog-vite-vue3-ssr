@@ -17,7 +17,7 @@ defineOptions({
 })
 
 // eslint-disable-next-line no-unused-vars
-const { ctx, options, route, router, globalStore, appShellStore } = useGlobal('frontend-user')
+const { route } = useGlobal()
 
 const key = computed(() => {
     return route.path.replace(/\//g, '_')

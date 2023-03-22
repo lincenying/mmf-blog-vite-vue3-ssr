@@ -1,22 +1,22 @@
 import { acceptHMRUpdate } from 'pinia'
 
-import type { ApiConfig, Article, itemConfig, listConfig } from '@/types'
+import type { ApiConfig, Article, ArticleStore } from '@/types'
 
 import api from '@/api/index-client'
 
 const useStore = defineStore('backendArticleStore', {
-    state: () => ({
+    state: (): ArticleStore => ({
         lists: {
             data: [],
             path: '',
             hasNext: 0,
             hasPrev: 0,
             page: 1
-        } as listConfig,
+        },
         item: {
-            data: {},
+            data: null,
             path: ''
-        } as itemConfig
+        }
     }),
     getters: {
         getBackendArticleStore: state => state

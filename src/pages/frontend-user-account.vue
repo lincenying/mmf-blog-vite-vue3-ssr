@@ -28,7 +28,7 @@ defineOptions({
 })
 
 // eslint-disable-next-line no-unused-vars
-const { ctx, options, route, router, globalStore, appShellStore } = useGlobal('frontend-user-account')
+const { globalStore } = useGlobal()
 
 // pinia 状态管理 ===>
 const { cookies } = $(storeToRefs(globalStore))
@@ -37,7 +37,7 @@ let username = $ref('')
 let email = $ref('')
 
 const getUser = async () => {
-    const { code, data } = await api.get('frontend/user/account')
+    const { code, data } = await api.get('frontend/user/account', {})
     if (code === 200) {
         username = data.username
         email = data.email

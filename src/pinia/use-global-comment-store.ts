@@ -1,18 +1,18 @@
 import { acceptHMRUpdate } from 'pinia'
 
-import type { ApiConfig, Comment, listConfig } from '@/types'
+import type { ApiConfig, Comment, CommentStore } from '@/types'
 
 import api from '@/api/index-client'
 
 const useStore = defineStore('globalCommentStore', {
-    state: () => ({
+    state: (): CommentStore => ({
         lists: {
             data: [],
             hasNext: 0,
             hasPrev: 0,
             page: 1,
             path: ''
-        } as listConfig
+        }
     }),
     getters: {
         getGlobalCommentStore: state => state

@@ -47,7 +47,7 @@ function polar2cart(x = 0, y = 0, r = 0, theta = 0) {
 }
 onMounted(async () => {
     const canvas = el.value!
-    const { ctx } = initCanvas(canvas, size.width, size.height)
+    const { ctx } = initCanvas(canvas as unknown as HTMLCanvasElement, size.width, size.height)
     const { width, height } = canvas
     let steps: Fn[] = []
     let prevSteps: Fn[] = []

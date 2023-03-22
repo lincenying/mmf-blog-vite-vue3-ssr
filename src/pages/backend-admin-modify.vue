@@ -53,8 +53,10 @@ const form = reactive({
 })
 
 watch(item, val => {
-    form.username = val.data.username
-    form.email = val.data.email
+    if (val.data) {
+        form.username = val.data.username
+        form.email = val.data.email
+    }
 })
 
 const handleModify = async () => {

@@ -81,10 +81,12 @@ watch(
 watch(
     () => item,
     val => {
-        form.title = val.data.title
-        form.category_old = val.data.category
-        form.category = val.data.category
-        form.content = val.data.content
+        if (val.data) {
+            form.title = val.data.title
+            form.category_old = val.data.category
+            form.category = val.data.category
+            form.content = val.data.content
+        }
     },
     {
         deep: true
