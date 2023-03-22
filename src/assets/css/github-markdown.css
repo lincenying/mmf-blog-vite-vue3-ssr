@@ -84,9 +84,9 @@
     padding: 0;
 }
 
-.markdown-body * {
+/* .markdown-body 星 {
     box-sizing: border-box;
-}
+} */
 
 .markdown-body hr::before {
     display: table;

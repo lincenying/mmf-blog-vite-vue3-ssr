@@ -19,7 +19,7 @@
         "outDir": "build",
         "types": ["unplugin-vue-macros/macros-global"]
     },
-    "include": ["src/**/*.js", "src/**/*.vue", "src/auto-imports.d.ts", "src/components.d.ts"],
+    "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.vue", "src/**/*.d.ts"],
     "exclude": ["node_modules", "build/**/*"],
     "files": ["main.ts"]
 }
