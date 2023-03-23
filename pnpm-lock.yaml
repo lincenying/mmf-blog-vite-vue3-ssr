@@ -55,7 +55,6 @@ specifiers:
   vue-content-loader: ^2.0.1
   vue-loading-overlay: ^6.0.3
   vue-router: ^4.1.6
-  vuex: ^4.1.0
 
 dependencies:
   '@kangc/v-md-editor': 2.3.15_a2ihsjreowava2sm4iorpgwkom
@@ -74,7 +73,6 @@ dependencies:
   vue-content-loader: 2.0.1_vue@3.2.47
   vue-loading-overlay: 6.0.3_vue@3.2.47
   vue-router: 4.1.6_vue@3.2.47
-  vuex: 4.1.0_vue@3.2.47
 
 devDependencies:
   '@types/compression': 1.7.2
@@ -8822,15 +8820,6 @@ packages:
       '@vue/runtime-dom': 3.2.47
       '@vue/server-renderer': 3.2.47_vue@3.2.47
       '@vue/shared': 3.2.47
-
-  /vuex/4.1.0_vue@3.2.47:
-    resolution: {integrity: sha512-hmV6UerDrPcgbSy9ORAtNXDr9M4wlNP4pEFKye4ujJF8oqgFFuxDCdOLS3eNoRTtq5O3hoBDh9Doj1bQMYHRbQ==}
-    peerDependencies:
-      vue: ^3.2.0
-    dependencies:
-      '@vue/devtools-api': 6.5.0
-      vue: 3.2.47
-    dev: false
 
   /webidl-conversions/4.0.2:
     resolution: {integrity: sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg==}
