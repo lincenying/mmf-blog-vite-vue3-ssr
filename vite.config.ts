@@ -46,9 +46,7 @@ export default defineConfig(({ mode, command }) => {
                 '/api': {
                     target: apiDomain,
                     changeOrigin: true,
-                    pathRewrite: {
-                        '^/api': '/api'
-                    }
+                    rewrite: (path: string) => path.replace(new RegExp(`^/api`), '/api')
                 }
             }
         },
