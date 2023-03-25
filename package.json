@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "prepare": "husky install",
+    "del": "sh delete-ts.sh",
     "serve": "nodemon server",
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --ssrManifest --outDir dist/client",
@@ -59,21 +60,21 @@
     "lru-cache": "^8.0.4",
     "mockjs": "^1.1.0",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.21",
+    "nodemon": "^2.0.22",
     "postcss": "^8.4.21",
-    "prettier": "^2.8.6",
-    "sass": "^1.59.3",
+    "prettier": "^2.8.7",
+    "sass": "^1.60.0",
     "stylelint": "^15.3.0",
     "stylelint-config-lcy": "^1.15.10",
     "typescript": "^5.0.2",
     "unocss": "^0.50.6",
-    "unplugin-auto-import": "^0.15.1",
+    "unplugin-auto-import": "^0.15.2",
     "unplugin-vue-components": "^0.24.1",
-    "unplugin-vue-macros": "^1.10.2",
+    "unplugin-vue-macros": "^1.11.1",
     "vite": "4.2.1",
     "vite-plugin-html": "^3.2.0",
     "vite-plugin-mock": "^2.9.6",
-    "vite-plugin-pwa": "^0.14.4"
+    "vite-plugin-pwa": "^0.14.6"
   },
   "lint-staged": {
     "*.{js,ts,tsx,vue}": [
