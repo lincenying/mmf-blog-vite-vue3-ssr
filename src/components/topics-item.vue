@@ -21,7 +21,7 @@
 <script setup lang="ts">
 import type { Article } from '@/types'
 
-const prop = defineProps<{
+const props = defineProps<{
     item: Article
 }>()
 
@@ -29,5 +29,5 @@ defineOptions({
     name: 'topics-item'
 })
 
-const { item } = $(toRefs(prop))
+const { item } = $(toRefs(props))
 </script>

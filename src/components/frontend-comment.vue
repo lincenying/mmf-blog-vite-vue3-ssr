@@ -35,14 +35,11 @@
 
 <script setup lang="ts">
 import api from '@/api/index-client'
-import type { User } from '@/types'
+import type { CommentStoreList, Comment } from '@/types'
 
-const prop = defineProps({
-    comments: {
-        type: Object,
-        default: () => ({})
-    }
-})
+const props = defineProps<{
+    comments: CommentStoreList
+}>()
 
 defineOptions({
     name: 'frontend-comment'
@@ -50,7 +47,7 @@ defineOptions({
 
 const $f = useFilters()
 
-const { comments } = $(toRefs(prop))
+const { comments } = $(toRefs(props))
 
 // eslint-disable-next-line no-unused-vars
 const { route, globalStore } = useGlobal()
@@ -97,7 +94,7 @@ const handlePostComment = useLockFn(async () => {
         }
     }
 })
-const handleReply = (item: User) => {
+const handleReply = (item: Comment) => {
     form.content = `回复 @${item.userid?.username}: `
     const content: HTMLTextAreaElement = document.querySelector('#content')!
     content.focus()

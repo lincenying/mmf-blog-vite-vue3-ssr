@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-const prop = defineProps<{
+const props = defineProps<{
     title: string
     classes?: string
 }>()
@@ -20,5 +20,5 @@ defineOptions({
 })
 
 // eslint-disable-next-line no-unused-vars
-const { title, classes } = $(toRefs(prop))
+const { title, classes } = $(toRefs(props))
 </script>

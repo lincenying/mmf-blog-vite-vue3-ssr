@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import api from '@/api/index-client'
 
-const prop = defineProps<{
+const props = defineProps<{
     show: boolean
 }>()
 
@@ -33,7 +33,7 @@ defineOptions({
     name: 'sign-in'
 })
 
-const { show } = $(toRefs(prop))
+const { show } = $(toRefs(props))
 
 // eslint-disable-next-line no-unused-vars
 const { globalStore } = useGlobal()

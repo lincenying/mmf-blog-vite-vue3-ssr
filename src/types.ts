@@ -161,7 +161,7 @@ export interface CategoryStore {
     }
 }
 
-interface CommentStoreList extends ListConfig {
+export interface CommentStoreList extends ListConfig {
     data: Comment[]
 }
 export interface CommentStore {

@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-const prop = defineProps<{
+const props = defineProps<{
     isBackend: boolean
 }>()
 
@@ -51,7 +51,7 @@ defineOptions({
 
 const $f = useFilters()
 
-const { isBackend } = $(toRefs(prop))
+const { isBackend } = $(toRefs(props))
 
 // eslint-disable-next-line no-unused-vars
 const { router, globalStore } = useGlobal()

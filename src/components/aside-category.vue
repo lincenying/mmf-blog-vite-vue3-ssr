@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import type { Category } from '@/types'
 
-const prop = defineProps<{
+const props = defineProps<{
     category: Category[]
 }>()
 
@@ -21,5 +21,5 @@ defineOptions({
     name: 'aside-category'
 })
 
-const { category } = $(toRefs(prop))
+const { category } = $(toRefs(props))
 </script>

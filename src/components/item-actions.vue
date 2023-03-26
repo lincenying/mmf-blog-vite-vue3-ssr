@@ -20,7 +20,7 @@ import type { Article } from '@/types'
 
 import api from '@/api/index-client'
 
-const prop = defineProps<{
+const props = defineProps<{
     item: Article
 }>()
 
@@ -28,7 +28,7 @@ defineOptions({
     name: 'item-actions'
 })
 
-const { item } = $(toRefs(prop))
+const { item } = $(toRefs(props))
 
 // eslint-disable-next-line no-unused-vars
 const { globalStore } = useGlobal()
