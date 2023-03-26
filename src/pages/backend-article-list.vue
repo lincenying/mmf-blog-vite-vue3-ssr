@@ -10,7 +10,7 @@
             <div v-for="item in lists.data" :key="item._id" class="list-section">
                 <div class="list-title" :class="item.is_delete ? 'text-red-500 line-through' : ''">{{ item.title }}</div>
                 <div class="list-category">{{ item.category_name }}</div>
-                <div class="list-date">{{ ctx.$f.timeAgo(item.update_date) }}</div>
+                <div class="list-date">{{ $f.timeAgo(item.update_date) }}</div>
                 <div class="list-action">
                     <router-link :to="`/backend/article/modify/${item._id}`" class="badge badge-success">编辑</router-link>
                     <a v-if="item.is_delete" href="javascript:;" @click="handleRecover(item._id)">恢复</a>
@@ -42,7 +42,9 @@ defineOptions({
 })
 
 // eslint-disable-next-line no-unused-vars
-const { ctx, route, appShellStore } = useGlobal()
+const { route, appShellStore } = useGlobal()
+
+const $f = useFilters()
 
 // pinia 状态管理 ===>
 const backendArticleStore = useBackendArticleStore()

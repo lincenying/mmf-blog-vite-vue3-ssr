@@ -114,7 +114,6 @@ declare global {
   const useArrayFilter: typeof import('@vueuse/core')['useArrayFilter']
   const useArrayFind: typeof import('@vueuse/core')['useArrayFind']
   const useArrayFindIndex: typeof import('@vueuse/core')['useArrayFindIndex']
-  const useArrayFindLast: typeof import('@vueuse/core')['useArrayFindLast']
   const useArrayJoin: typeof import('@vueuse/core')['useArrayJoin']
   const useArrayMap: typeof import('@vueuse/core')['useArrayMap']
   const useArrayReduce: typeof import('@vueuse/core')['useArrayReduce']
@@ -169,6 +168,7 @@ declare global {
   const useFetch: typeof import('@vueuse/core')['useFetch']
   const useFileDialog: typeof import('@vueuse/core')['useFileDialog']
   const useFileSystemAccess: typeof import('@vueuse/core')['useFileSystemAccess']
+  const useFilters: typeof import('./composables/filters')['useFilters']
   const useFocus: typeof import('@vueuse/core')['useFocus']
   const useFocusWithin: typeof import('@vueuse/core')['useFocusWithin']
   const useFps: typeof import('@vueuse/core')['useFps']
@@ -409,7 +409,6 @@ declare module 'vue' {
     readonly useArrayFilter: UnwrapRef<typeof import('@vueuse/core')['useArrayFilter']>
     readonly useArrayFind: UnwrapRef<typeof import('@vueuse/core')['useArrayFind']>
     readonly useArrayFindIndex: UnwrapRef<typeof import('@vueuse/core')['useArrayFindIndex']>
-    readonly useArrayFindLast: UnwrapRef<typeof import('@vueuse/core')['useArrayFindLast']>
     readonly useArrayJoin: UnwrapRef<typeof import('@vueuse/core')['useArrayJoin']>
     readonly useArrayMap: UnwrapRef<typeof import('@vueuse/core')['useArrayMap']>
     readonly useArrayReduce: UnwrapRef<typeof import('@vueuse/core')['useArrayReduce']>
@@ -464,6 +463,7 @@ declare module 'vue' {
     readonly useFetch: UnwrapRef<typeof import('@vueuse/core')['useFetch']>
     readonly useFileDialog: UnwrapRef<typeof import('@vueuse/core')['useFileDialog']>
     readonly useFileSystemAccess: UnwrapRef<typeof import('@vueuse/core')['useFileSystemAccess']>
+    readonly useFilters: UnwrapRef<typeof import('./composables/filters')['useFilters']>
     readonly useFocus: UnwrapRef<typeof import('@vueuse/core')['useFocus']>
     readonly useFocusWithin: UnwrapRef<typeof import('@vueuse/core')['useFocusWithin']>
     readonly useFps: UnwrapRef<typeof import('@vueuse/core')['useFps']>

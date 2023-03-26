@@ -1,6 +1,5 @@
 import md5 from 'md5'
 
-import type { App } from 'vue'
 import { Sleep } from '@/utils'
 
 function pluralize(time: number, label: string): string {
@@ -40,7 +39,7 @@ function timeYmd(timestamp: string | number) {
     return `${year}-${month < 10 ? `0${month}` : month}-${date < 10 ? `0${date}` : date}`
 }
 
-function avatar(email: string, width: number) {
+function Avatar(email?: string, width?: number) {
     email = email || '123456'
     email = decodeURIComponent(email)
     width = width || 256
@@ -50,12 +49,9 @@ function avatar(email: string, width: number) {
     return `https://cravatar.cn/avatar/${md5(email)}?s=${width}&d=identicon&r=g`
 }
 
-export default (app: App) => {
-    app.config.globalProperties.$f = {
-        timeAgo,
-        timeYmd,
-        avatar,
-        Sleep
-    }
-    return app
-}
+export const useFilters = () => ({
+    timeAgo,
+    timeYmd,
+    Avatar,
+    Sleep
+})
