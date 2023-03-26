@@ -55,9 +55,9 @@ const useStore = defineStore('backendAdminStore', {
                 }
             }
         },
-        async getAdminItem(config: ApiConfig, $api?: any) {
+        async getAdminItem(config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) {
             if (!import.meta.env.SSR) $api = api
-            const { code, data } = await $api.get('backend/admin/item', { ...config, path: undefined })
+            const { code, data } = await $api!.get('backend/admin/item', { ...config, path: undefined })
             if (data && code === 200) {
                 this.item = {
                     data,

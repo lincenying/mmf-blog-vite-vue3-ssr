@@ -56,9 +56,9 @@ const useStore = defineStore('backendUserStore', {
                 }
             }
         },
-        async getUserItem(config: ApiConfig, $api?: any) {
+        async getUserItem(config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) {
             if (!import.meta.env.SSR) $api = api
-            const { code, data } = await $api.get('backend/user/item', { ...config, path: undefined })
+            const { code, data } = await $api!.get('backend/user/item', { ...config, path: undefined })
             if (data && code === 200) {
                 this.item = {
                     data,

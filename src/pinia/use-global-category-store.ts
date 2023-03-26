@@ -22,9 +22,9 @@ const useStore = defineStore('globalCategoryStore', {
                 this.lists = data.list
             }
         },
-        async getCategoryItem(config: ApiConfig, $api?: any) {
+        async getCategoryItem(config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) {
             if (!import.meta.env.SSR) $api = api
-            const { code, data } = await $api.get('backend/category/item', { ...config, path: undefined })
+            const { code, data } = await $api!.get('backend/category/item', { ...config, path: undefined })
             if (data && code === 200) {
                 this.item = {
                     data,

@@ -57,9 +57,9 @@ const useStore = defineStore('frontendArticleStore', {
                 }
             }
         },
-        async getArticleItem(config: ApiConfig, $api?: any) {
+        async getArticleItem(config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) {
             if (!import.meta.env.SSR) $api = api
-            const { code, data } = await $api.get('frontend/article/item', { ...config, path: undefined, markdown: 1, cache: true })
+            const { code, data } = await $api!.get('frontend/article/item', { ...config, path: undefined, markdown: 1, cache: true })
             if (data && code === 200) {
                 this.item = {
                     data,
@@ -68,10 +68,10 @@ const useStore = defineStore('frontendArticleStore', {
                 }
             }
         },
-        async getTrending(_: any, $api?: any) {
+        async getTrending(_: any, $api?: ApiServerReturn | ApiClientReturn) {
             if (!import.meta.env.SSR) $api = api
             if (this.trending.length) return
-            const { code, data } = await $api.get('frontend/trending', { cache: true })
+            const { code, data } = await $api!.get('frontend/trending', { cache: true })
             if (data && code === 200) {
                 this.trending = data.list
             }
