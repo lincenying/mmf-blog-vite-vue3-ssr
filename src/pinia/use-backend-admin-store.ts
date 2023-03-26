@@ -1,7 +1,7 @@
 import { acceptHMRUpdate } from 'pinia'
 
 import api from '@/api/index-client'
-import type { User, ApiConfig, AdminStore } from '@/types'
+import type { User, ApiConfig, AdminStore, ApiClientReturn, ApiServerReturn } from '@/types'
 
 const useStore = defineStore('backendAdminStore', {
     state: (): AdminStore => ({
@@ -21,10 +21,10 @@ const useStore = defineStore('backendAdminStore', {
         getBackendAdminStore: state => state
     },
     actions: {
-        async getAdminList(config: ApiConfig, $api?: any) {
+        async getAdminList(config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) {
             if (!import.meta.env.SSR) $api = api
             if (this.lists.data.length > 0 && config.path === this.lists.path && config.page === 1) return
-            const { code, data } = await $api.get('backend/admin/list', { ...config, path: undefined, cache: true })
+            const { code, data } = await $api!.get('backend/admin/list', { ...config, path: undefined, cache: true })
             if (data && code === 200) {
                 const {
                     list = [],

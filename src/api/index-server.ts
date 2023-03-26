@@ -2,7 +2,7 @@ import axios from 'axios'
 import qs from 'qs'
 import md5 from 'md5'
 import config from './config-server'
-import type { anyObject } from '@/types'
+import type { anyObject, ApiServerReturn, UserCookies } from '@/types'
 
 const objToStr = (cookies: anyObject) => {
     if (!cookies) return ''
@@ -15,7 +15,7 @@ const objToStr = (cookies: anyObject) => {
 
 export default {}
 
-export const api = (cookies: anyObject) => {
+export const api = (cookies: UserCookies): ApiServerReturn => {
     return {
         cookies,
         api: axios.create({

@@ -1,3 +1,4 @@
+import type { AxiosInstance } from 'axios'
 import type { Pinia } from 'pinia'
 import type { RouteLocationNormalized } from 'vue-router'
 
@@ -172,6 +173,7 @@ export interface UserCookies {
     userid?: string
     username?: string
     useremail?: string
+    [propName: string]: any
 }
 
 export interface GlobalStore {
@@ -189,4 +191,24 @@ export interface ShellStore {
     isPageSwitching: boolean
     pageTransitionName: string
     historyPageScrollTop: anyObject
+}
+
+export interface ApiClientReturn {
+    // eslint-disable-next-line no-unused-vars
+    get(url: string, params: anyObject, headers?: anyObject): Promise<any>
+    // eslint-disable-next-line no-unused-vars
+    post(url: string, data: anyObject, headers?: anyObject): Promise<any>
+    // eslint-disable-next-line no-unused-vars
+    file(url: string, data: anyObject, headers?: anyObject): Promise<any>
+}
+
+export interface ApiServerReturn {
+    // eslint-disable-next-line no-unused-vars
+    post(url: string, data: anyObject, headers?: anyObject): Promise<any>
+    // eslint-disable-next-line no-unused-vars
+    get(url: string, params: anyObject, headers?: anyObject): Promise<any>
+    cookies: UserCookies
+    api: AxiosInstance
+    // eslint-disable-next-line no-unused-vars
+    getCookies: () => UserCookies
 }

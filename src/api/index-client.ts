@@ -3,7 +3,7 @@ import qs from 'qs'
 
 import type { AxiosResponse } from 'axios'
 import config from './config-client'
-import type { anyObject } from '@/types'
+import type { anyObject, ApiClientReturn } from '@/types'
 
 import { showMsg } from '@/utils'
 
@@ -45,7 +45,7 @@ function checkCode(res: any) {
     return res && res.data
 }
 
-export default {
+const _api = (): ApiClientReturn => ({
     async file(url: string, data: anyObject) {
         const response = await axios({
             method: 'post',
@@ -85,4 +85,6 @@ export default {
         const res = checkStatus(response)
         return checkCode(res)
     }
-}
+})
+
+export default _api()

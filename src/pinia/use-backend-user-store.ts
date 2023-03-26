@@ -1,6 +1,6 @@
 import { acceptHMRUpdate } from 'pinia'
 
-import type { ApiConfig, User, UserStore } from '@/types'
+import type { ApiClientReturn, ApiConfig, ApiServerReturn, User, UserStore } from '@/types'
 
 import api from '@/api/index-client'
 
@@ -22,10 +22,10 @@ const useStore = defineStore('backendUserStore', {
         getBackendUserStore: state => state
     },
     actions: {
-        async getUserList(config: ApiConfig, $api?: any) {
+        async getUserList(config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) {
             if (!import.meta.env.SSR) $api = api
             if (this.lists.data.length > 0 && config.path === this.lists.path && config.page === 1) return
-            const { code, data } = await $api.get('backend/user/list', { ...config, path: undefined, cache: true })
+            const { code, data } = await $api!.get('backend/user/list', { ...config, path: undefined, cache: true })
             if (data && code === 200) {
                 const {
                     list = [],

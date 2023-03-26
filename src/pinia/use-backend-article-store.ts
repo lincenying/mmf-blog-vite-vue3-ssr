@@ -1,6 +1,6 @@
 import { acceptHMRUpdate } from 'pinia'
 
-import type { ApiConfig, Article, ArticleStore } from '@/types'
+import type { ApiClientReturn, ApiConfig, ApiServerReturn, Article, ArticleStore } from '@/types'
 
 import api from '@/api/index-client'
 
@@ -22,10 +22,10 @@ const useStore = defineStore('backendArticleStore', {
         getBackendArticleStore: state => state
     },
     actions: {
-        async getArticleList(config: ApiConfig, $api?: any) {
-            if (!import.meta.env.SSR) $api = api
+        async getArticleList(config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) {
+            if (!import.meta.env.SSR) $api = api()
             if (this.lists.data.length > 0 && config.path === this.lists.path && config.page === 1) return
-            const { code, data } = await $api.get('backend/article/list', { ...config, path: undefined, cache: true })
+            const { code, data } = await $api!.get('backend/article/list', { ...config, path: undefined, cache: true })
             if (data && code === 200) {
                 const {
                     list = [],
