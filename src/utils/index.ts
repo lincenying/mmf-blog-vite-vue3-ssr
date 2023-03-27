@@ -12,8 +12,6 @@ import merge from 'lodash/merge'
 
 import { ElMessage } from '@/plugin/element'
 
-import type { anyObject } from '@/types'
-
 export const inBrowser = typeof window !== 'undefined'
 
 // 返回 几xxx前
@@ -260,8 +258,8 @@ export const strLen = (str: string): number => {
     return len
 }
 
-export const paramsToObject = (str: string): anyObject => {
-    const obj = {}
+export const paramsToObject = (str: string) => {
+    const obj: Record<string, any> = {}
     if (!str) return {}
     const strArr = str.split('&')
     strArr.forEach(item => {
@@ -288,7 +286,7 @@ export const Random = (lower: number, upper: number): number => {
     4:"DDD"
 }
 */
-export const arrayToObject = (arr: [], key = 'value', val = 'name'): anyObject => {
+export const arrayToObject = (arr: [], key = 'value', val = 'name'): Record<string, any> => {
     const obj = {}
     arr.forEach(item => {
         obj[item[key]] = item[val]
@@ -373,7 +371,7 @@ export const batchHexToRgba = (arr: any[]) => {
     return arr
 }
 
-export const showMsg = (config: anyObject | string) => {
+export const showMsg = (config: Record<string, any> | string) => {
     let content, type: 'success' | 'warning' | 'info' | 'error'
     if (!config) {
         content = '接口返回数据错误'

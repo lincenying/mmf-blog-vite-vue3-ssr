@@ -2,9 +2,9 @@ import axios from 'axios'
 import qs from 'qs'
 import md5 from 'md5'
 import config from './config-server'
-import type { anyObject, ApiServerReturn, UserCookies } from '@/types'
+import type { ApiServerReturn, UserCookies } from '@/types'
 
-const objToStr = (cookies: anyObject) => {
+const objToStr = (cookies: Record<string, string | number | boolean>) => {
     if (!cookies) return ''
     let cookie = ''
     Object.keys(cookies).forEach(item => {

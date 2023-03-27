@@ -31,7 +31,7 @@ defineOptions({
 const { globalStore } = useGlobal()
 
 // pinia 状态管理 ===>
-const { cookies } = $(storeToRefs(globalStore))
+const { cookies } = $(toRefs(globalStore.store))
 
 let username = $ref('')
 let email = $ref('')

@@ -52,7 +52,7 @@ const { comments } = $(toRefs(props))
 // eslint-disable-next-line no-unused-vars
 const { route, globalStore } = useGlobal()
 
-const { cookies } = $(storeToRefs(globalStore))
+const { cookies } = $(toRefs(globalStore))
 
 const globalCommentStore = useGlobalCommentStore()
 

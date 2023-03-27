@@ -1,13 +1,13 @@
 import { acceptHMRUpdate } from 'pinia'
-import type { anyObject, ShellStore } from '@/types'
+import type { ShellStore } from '@/types'
 
 interface historyType {
     path: string
     scrollTop: number
 }
 
-const useStore = defineStore('appShellStore', {
-    state: (): ShellStore => ({
+const useStore = defineStore('appShellStore', () => {
+    const state = reactive<ShellStore>({
         /**
          * 是否需要页面切换动画
          *
@@ -35,56 +35,62 @@ const useStore = defineStore('appShellStore', {
          * @type {Object}
          */
         historyPageScrollTop: {}
-    }),
-    getters: {
-        getAppShellStore: state => state
-    },
-    actions: {
-        /**
-         * 开启页面切换动画
-         *
-         * @param {Function} commit commit
-         */
-        enablePageTransition() {
-            this.needPageTransition = true
-        },
+    })
 
-        /**
-         * 关闭页面切换动画
-         *
-         * @param {Function} commit commit
-         */
-        disablePageTransition() {
-            this.needPageTransition = false
-        },
+    /**
+     * 开启页面切换动画
+     *
+     * @param {Function} commit commit
+     */
+    const enablePageTransition = () => {
+        state.needPageTransition = true
+    }
 
-        /**
-         * 设置页面是否处于切换中
-         *
-         * @param {Function} commit commit
-         * @param {boolean} isPageSwitching isPageSwitching
-         */
-        setPageSwitching(isPageSwitching: boolean) {
-            this.isPageSwitching = isPageSwitching
-        },
+    /**
+     * 关闭页面切换动画
+     *
+     * @param {Function} commit commit
+     */
+    const disablePageTransition = () => {
+        state.needPageTransition = false
+    }
 
-        /**
-         * 保存页面 scroll 高度
-         *
-         * @param {[type]} options.commit [description]
-         * @param {string} options.path path
-         * @param {number} options.scrollTop scrollTop
-         */
-        saveScrollTop(payload: historyType) {
-            const { path, scrollTop } = payload
-            ;(this.historyPageScrollTop as anyObject)[path] = scrollTop
-        },
+    /**
+     * 设置页面是否处于切换中
+     *
+     * @param {Function} commit commit
+     * @param {boolean} isPageSwitching isPageSwitching
+     */
+    const setPageSwitching = (isPageSwitching: boolean) => {
+        state.isPageSwitching = isPageSwitching
+    }
 
-        setPageTransitionName(pageTransitionName: string) {
-            this.pageTransitionName = pageTransitionName
-        }
+    /**
+     * 保存页面 scroll 高度
+     *
+     * @param {[type]} options.commit [description]
+     * @param {string} options.path path
+     * @param {number} options.scrollTop scrollTop
+     */
+    const saveScrollTop = (payload: historyType) => {
+        const { path, scrollTop } = payload
+        state.historyPageScrollTop[path] = scrollTop
+    }
+
+    const setPageTransitionName = (pageTransitionName: string) => {
+        state.pageTransitionName = pageTransitionName
+    }
+
+    return {
+        ...toRefs(state),
+        enablePageTransition,
+        disablePageTransition,
+        setPageSwitching,
+        saveScrollTop,
+        setPageTransitionName
     }
 })
+
 export default useStore
 
 if (import.meta.hot) import.meta.hot.accept(acceptHMRUpdate(useStore, import.meta.hot))

@@ -4,7 +4,6 @@ import { renderToString } from '@vue/server-renderer'
 import { renderHeadToString } from '@vueuse/head'
 
 import type { Request } from 'express'
-import type { anyObject } from './types'
 
 import { createApp } from './main'
 import { api } from './api/index-server'
@@ -29,7 +28,7 @@ function renderPreloadLink(file: string) {
     return ''
 }
 
-function renderPreloadLinks(modules: any[], manifest: anyObject) {
+function renderPreloadLinks(modules: any[], manifest: Record<string, any>) {
     let links = ''
     const seen = new Set()
     modules.forEach(id => {
@@ -100,7 +99,7 @@ export async function render(url: string, manifest: Record<string, string[]>, re
     // @vitejs/plugin-vue injects code into a component's setup() that registers
     // itself on ctx.modules. After the render, ctx.modules would contain all the
     // components that have been instantiated during this render call.
-    const ctx: anyObject = {}
+    const ctx: Record<string, any> = {}
     let html = await renderToString(app, ctx)
 
     const { headTags } = await renderHeadToString(head)

@@ -29,7 +29,7 @@ defineOptions({
 const { route, globalStore } = useGlobal()
 
 // pinia 状态管理 ===>
-const { showLoginModal, showRegisterModal } = storeToRefs(globalStore)
+const { showLoginModal, showRegisterModal } = toRefs(globalStore)
 
 const appShellStore = useAppShellStore()
 const { pageTransitionName } = storeToRefs(appShellStore)

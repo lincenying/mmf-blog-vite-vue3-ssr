@@ -56,7 +56,7 @@ const { isBackend } = $(toRefs(props))
 // eslint-disable-next-line no-unused-vars
 const { router, globalStore } = useGlobal()
 
-const { cookies } = $(storeToRefs(globalStore))
+const { cookies } = $(toRefs(globalStore))
 
 const isLogin = computed(() => {
     return !!cookies.user

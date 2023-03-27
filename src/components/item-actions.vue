@@ -33,7 +33,7 @@ const { item } = $(toRefs(props))
 // eslint-disable-next-line no-unused-vars
 const { globalStore } = useGlobal()
 
-const { cookies } = $(storeToRefs(globalStore))
+const { cookies } = $(toRefs(globalStore))
 
 const frontendArticleStore = useFrontendArticleStore()
 

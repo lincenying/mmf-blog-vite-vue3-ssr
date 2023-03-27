@@ -1,11 +1,11 @@
 import { acceptHMRUpdate } from 'pinia'
 
-import type { anyObject, ApiClientReturn, ApiConfig, ApiServerReturn, Article, FArticleStore } from '@/types'
+import type { ApiClientReturn, ApiConfig, ApiServerReturn, Article, FArticleStore } from '@/types'
 
 import api from '@/api/index-client'
 
-const useStore = defineStore('frontendArticleStore', {
-    state: (): FArticleStore => ({
+const useStore = defineStore('frontendArticleStore', () => {
+    const state = reactive<FArticleStore>({
         lists: {
             data: [],
             path: '',
@@ -18,82 +18,87 @@ const useStore = defineStore('frontendArticleStore', {
             path: ''
         },
         trending: []
-    }),
-    getters: {
-        getFrontendArticleStore: state => state
-    },
-    actions: {
-        async getArticleList(config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) {
-            if (!import.meta.env.SSR) $api = api
-            if (this.lists.data.length > 0 && config.path === this.lists.path && config.page === 1) return
-            const { code, data } = await $api!.get('frontend/article/list', { ...config, path: undefined, cache: true })
-            if (data && code === 200) {
-                const {
-                    list = [],
-                    path,
-                    hasNext = 0,
-                    hasPrev = 0,
-                    page
-                } = {
-                    ...data,
-                    path: config.path,
-                    page: config.page
-                }
+    })
 
-                let _list
+    const getArticleList = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
+        if (!import.meta.env.SSR) $api = api
+        if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1) return
+        const { code, data } = await $api!.get('frontend/article/list', { ...config, path: undefined, cache: true })
+        if (data && code === 200) {
+            const {
+                list = [],
+                path,
+                hasNext = 0,
+                hasPrev = 0,
+                page
+            } = {
+                ...data,
+                path: config.path,
+                page: config.page
+            }
 
-                if (page === 1) {
-                    _list = [].concat(list)
-                } else {
-                    _list = this.lists.data.concat(list)
-                }
+            let _list
 
-                this.lists = {
-                    data: _list,
-                    hasNext,
-                    hasPrev,
-                    page: page + 1,
-                    path
-                }
+            if (page === 1) {
+                _list = [].concat(list)
+            } else {
+                _list = state.lists.data.concat(list)
             }
-        },
-        async getArticleItem(config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) {
-            if (!import.meta.env.SSR) $api = api
-            const { code, data } = await $api!.get('frontend/article/item', { ...config, path: undefined, markdown: 1, cache: true })
-            if (data && code === 200) {
-                this.item = {
-                    data,
-                    ...config,
-                    isLoad: true
-                }
-            }
-        },
-        async getTrending(_: any, $api?: ApiServerReturn | ApiClientReturn) {
-            if (!import.meta.env.SSR) $api = api
-            if (this.trending.length) return
-            const { code, data } = await $api!.get('frontend/trending', { cache: true })
-            if (data && code === 200) {
-                this.trending = data.list
-            }
-        },
-        modifyLikeStatus(payload: { id: string; status: boolean }) {
-            const { id, status } = payload
-            if (this.item.data && this.item.data._id === id) {
-                if (status) this.item.data.like++
-                else this.item.data.like--
-                this.item.data.like_status = status
-            }
-            const index = this.lists.data.findIndex((item: anyObject) => item._id === id)
-            if (index > -1) {
-                const obj: Article = Object.assign({}, this.lists.data[index])
-                if (status) obj.like++
-                else obj.like--
-                obj.like_status = status
-                this.lists.data.splice(index, 1, obj)
+
+            state.lists = {
+                data: _list,
+                hasNext,
+                hasPrev,
+                page: page + 1,
+                path
             }
         }
     }
+    const getArticleItem = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
+        if (!import.meta.env.SSR) $api = api
+        const { code, data } = await $api!.get('frontend/article/item', { ...config, path: undefined, markdown: 1, cache: true })
+        if (data && code === 200) {
+            state.item = {
+                data,
+                ...config,
+                isLoad: true
+            }
+        }
+    }
+    const getTrending = async (_: any, $api?: ApiServerReturn | ApiClientReturn) => {
+        if (!import.meta.env.SSR) $api = api
+        if (state.trending.length) return
+        const { code, data } = await $api!.get('frontend/trending', { cache: true })
+        if (data && code === 200) {
+            state.trending = data.list
+        }
+    }
+    const modifyLikeStatus = (payload: { id: string; status: boolean }) => {
+        const { id, status } = payload
+        if (state.item.data && state.item.data._id === id) {
+            if (status) state.item.data.like++
+            else state.item.data.like--
+            state.item.data.like_status = status
+        }
+        const index = state.lists.data.findIndex((item: Article) => item._id === id)
+        if (index > -1) {
+            const obj: Article = Object.assign({}, state.lists.data[index])
+            if (status) obj.like++
+            else obj.like--
+            obj.like_status = status
+            state.lists.data.splice(index, 1, obj)
+        }
+    }
+
+    return {
+        ...toRefs(state),
+        getArticleList,
+        getArticleItem,
+        getTrending,
+        modifyLikeStatus
+    }
 })
+
 export default useStore
 
 if (import.meta.hot) import.meta.hot.accept(acceptHMRUpdate(useStore, import.meta.hot))
