@@ -29,7 +29,7 @@ export const api = (cookies: UserCookies): ApiServerReturn => {
         getCookies() {
             return this.cookies
         },
-        async post(url: string, data: anyObject, headers = {}) {
+        async post(url, data, headers = {}) {
             const cookies = this.getCookies() || {}
             const username = cookies.username || ''
             const key = md5(url + JSON.stringify(data) + username)
@@ -49,7 +49,7 @@ export const api = (cookies: UserCookies): ApiServerReturn => {
             if (config.cached && data.cache) config.cached.set(key, res_1)
             return res_1 && res_1.data
         },
-        async get(url: string, params: anyObject, headers = {}) {
+        async get(url, params, headers = {}) {
             const cookies = this.getCookies() || {}
             const username = cookies.username || ''
             const key = md5(url + JSON.stringify(params) + username)

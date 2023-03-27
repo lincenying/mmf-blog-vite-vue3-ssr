@@ -3,7 +3,7 @@ import qs from 'qs'
 
 import type { AxiosResponse } from 'axios'
 import config from './config-client'
-import type { anyObject, ApiClientReturn } from '@/types'
+import type { ApiClientReturn } from '@/types'
 
 import { showMsg } from '@/utils'
 
@@ -45,8 +45,10 @@ function checkCode(res: any) {
     return res && res.data
 }
 
-const _api = (): ApiClientReturn => ({
-    async file(url: string, data: anyObject) {
+type API = () => ApiClientReturn
+
+const _api: API = () => ({
+    async file(url, data) {
         const response = await axios({
             method: 'post',
             url,
@@ -58,7 +60,7 @@ const _api = (): ApiClientReturn => ({
         const res = checkStatus(response)
         return checkCode(res)
     },
-    async post(url: string, data: anyObject) {
+    async post(url, data) {
         const response = await axios({
             method: 'post',
             url: config.api + url,
@@ -72,7 +74,7 @@ const _api = (): ApiClientReturn => ({
         const res = checkStatus(response)
         return checkCode(res)
     },
-    async get(url: string, params: anyObject) {
+    async get(url, params) {
         const response = await axios({
             method: 'get',
             url: config.api + url,
