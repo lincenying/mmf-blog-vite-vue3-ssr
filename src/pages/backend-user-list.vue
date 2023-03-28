@@ -10,7 +10,7 @@
             <div v-for="item in lists.data" :key="item._id" class="list-section">
                 <div class="list-username" :class="item.is_delete ? 'text-red-500 line-through' : ''">{{ item.username }}</div>
                 <div class="list-email">{{ item.email }}</div>
-                <div class="list-date">{{ $f.timeYmd(item.update_date) }}</div>
+                <div class="list-date">{{ UTC2Date(item.update_date) }}</div>
                 <div class="list-action">
                     <router-link :to="`/backend/user/modify/${item._id}`" class="badge badge-success">编辑</router-link>
                     <a v-if="item.is_delete" href="javascript:;" @click="handleRecover(item._id)">恢复</a>
@@ -26,6 +26,7 @@
 </template>
 
 <script setup lang="ts">
+import { UTC2Date } from 'lcy-utils'
 import type { asyncDataConfig } from '@/types'
 import api from '@/api/index-client'
 
@@ -40,8 +41,6 @@ defineOptions({
 
 // eslint-disable-next-line no-unused-vars
 const { route, appShellStore } = useGlobal()
-
-const $f = useFilters()
 
 // pinia 状态管理 ===>
 const backendUserStore = useBackendUserStore()

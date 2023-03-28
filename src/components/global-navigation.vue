@@ -27,12 +27,12 @@
                 </span>
                 <span v-if="isLogin" class="nav-me">
                     <router-link to="/user/account" class="nav-me-link">
-                        <img :src="$f.Avatar(cookies.useremail, 100)" class="nav-avatar-img" />
+                        <img :src="useAvatar(cookies.useremail, 100)" class="nav-avatar-img" />
                     </router-link>
                 </span>
                 <span v-else class="nav-me">
                     <a href="javascript:;" class="nav-me-link" @click="handleLogin">
-                        <img :src="$f.Avatar('noavatar')" class="nav-avatar-img" />
+                        <img :src="useAvatar('noavatar')" class="nav-avatar-img" />
                     </a>
                 </span>
             </div>
@@ -48,8 +48,6 @@ const props = defineProps<{
 defineOptions({
     name: 'global-navigation'
 })
-
-const $f = useFilters()
 
 const { isBackend } = $(toRefs(props))
 

@@ -27,7 +27,7 @@ specifiers:
   http-proxy-middleware: ^2.0.6
   husky: ^8.0.3
   js-cookie: ^3.0.1
-  lcy-utils: ^0.1.5
+  lcy-utils: ^0.1.7
   lint-staged: ^13.2.0
   lodash: ^4.17.21
   lru-cache: ^8.0.4
@@ -65,7 +65,7 @@ dependencies:
   element-plus: 2.3.1_vue@3.2.47
   express: 4.18.2
   js-cookie: 3.0.1
-  lcy-utils: registry.npmjs.org/lcy-utils/0.1.5
+  lcy-utils: registry.npmjs.org/lcy-utils/0.1.7
   lodash: 4.17.21
   md5: 2.3.0
   pinia: 2.0.33_p4srtwdgezcoeovfcc2yxzvaue
@@ -9146,8 +9146,8 @@ packages:
     resolution: {integrity: sha512-V4R94t3ifk9AURym6OskbKcnowzgp5Z88tkoL/NF67vyryNxC62u6mx5F1Ux4oh4+YN7FFmKYEyWy6m5kfPH6g==}
     dev: false
 
-  registry.npmjs.org/lcy-utils/0.1.5:
-    resolution: {integrity: sha512-iz122fPlnqiCSSb+0uHj5qABsYjJ5pAVDMGG5AC+oBmkU7JFL0Ljs/NseCa4ZYZGYVnBEbOpDs6Ba00RwKgi+A==, registry: https://registry.npmmirror.com/, tarball: https://registry.npmjs.org/lcy-utils/-/lcy-utils-0.1.5.tgz}
+  registry.npmjs.org/lcy-utils/0.1.7:
+    resolution: {integrity: sha512-nGozSsNUPIsG0baPGaM5av3+TXFGi7H0Ez2qhMhEr897+3Q0kXkGoFyriogqDzm7PqcqipGrSWqzQnwDGEJnPA==, registry: https://registry.npmmirror.com/, tarball: https://registry.npmjs.org/lcy-utils/-/lcy-utils-0.1.7.tgz}
     name: lcy-utils
-    version: 0.1.5
+    version: 0.1.7
     dev: false

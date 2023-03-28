@@ -17,6 +17,21 @@ export interface anyArray {
 
 export type Fn = (...args: any[]) => void
 
+/**
+ * 请求参数合集
+ * ```
+ * {
+        all?: number
+        by?: string | string[]
+        from?: string
+        id?: string | string[]
+        limit?: number
+        page?: number
+        path?: string
+        key?: string | string[]
+    }
+ * ```
+ */
 export interface ApiConfig {
     all?: number
     by?: string | string[]
@@ -28,6 +43,9 @@ export interface ApiConfig {
     key?: string | string[]
 }
 
+/**
+ * 文章详情
+ */
 export interface Article {
     _id: string
     title: string
@@ -47,6 +65,9 @@ export interface Article {
     like_status?: boolean
 }
 
+/**
+ * 分类
+ */
 export interface Category {
     _id: string
     cate_name: string
@@ -58,6 +79,9 @@ export interface Category {
     timestamp?: number
 }
 
+/**
+ * 评论
+ */
 export interface Comment {
     _id: string
     article_id: string
@@ -69,6 +93,10 @@ export interface Comment {
     email?: string
     username?: string
 }
+
+/**
+ * 用户
+ */
 export interface User {
     _id: string
     username: string

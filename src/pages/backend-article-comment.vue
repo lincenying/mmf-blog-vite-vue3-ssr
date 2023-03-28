@@ -7,7 +7,7 @@
             <div class="comment-items-wrap">
                 <div v-for="item in lists.data" :key="item._id" class="comment-item">
                     <a href="javascript:;" class="comment-author-avatar-link">
-                        <img :src="$f.Avatar(item.email)" alt="" class="avatar-img" />
+                        <img :src="useAvatar(item.email)" alt="" class="avatar-img" />
                     </a>
                     <div class="comment-content-wrap">
                         <span class="comment-author-wrap">
@@ -15,7 +15,7 @@
                         </span>
                         <div class="comment-content">{{ item.content }}</div>
                         <div class="comment-footer">
-                            <span class="comment-time">{{ $f.timeAgo(item.timestamp) }}</span>
+                            <span class="comment-time">{{ getDateDiff(`${item.timestamp}`) }}</span>
                             <a v-if="item.is_delete" href="javascript:;" class="comment-action-item comment-reply" @click="handleRecover(item._id)"
                                 >恢复</a
                             >
@@ -33,6 +33,7 @@
 </template>
 
 <script setup lang="ts">
+import { getDateDiff } from 'lcy-utils'
 import type { asyncDataConfig } from '@/types'
 import api from '@/api/index-client'
 
@@ -47,8 +48,6 @@ defineOptions({
 
 // eslint-disable-next-line no-unused-vars
 const { route } = useGlobal()
-
-const $f = useFilters()
 
 // pinia 状态管理 ===>
 const globalCommentStore = useGlobalCommentStore()

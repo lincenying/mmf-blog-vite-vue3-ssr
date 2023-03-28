@@ -1,6 +1,5 @@
 {
   "globals": {
-    "$is": true,
     "Component": true,
     "ComponentPublicInstance": true,
     "ComputedRef": true,
@@ -30,8 +29,6 @@
     "customRef": true,
     "debouncedRef": true,
     "debouncedWatch": true,
-    "deepClone": true,
-    "deepMerge": true,
     "defineAsyncComponent": true,
     "defineComponent": true,
     "defineStore": true,
@@ -125,6 +122,7 @@
     "useAsyncQueue": true,
     "useAsyncState": true,
     "useAttrs": true,
+    "useAvatar": true,
     "useBackendAdminStore": true,
     "useBackendArticleStore": true,
     "useBackendUserStore": true,
@@ -171,7 +169,6 @@
     "useFetch": true,
     "useFileDialog": true,
     "useFileSystemAccess": true,
-    "useFilters": true,
     "useFocus": true,
     "useFocusWithin": true,
     "useFps": true,

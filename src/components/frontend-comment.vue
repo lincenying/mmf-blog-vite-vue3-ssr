@@ -2,7 +2,7 @@
     <div class="card">
         <div class="comments">
             <div class="comment-post-wrap">
-                <img :src="$f.Avatar(userEmail)" alt="" class="avatar-img" />
+                <img :src="useAvatar(userEmail)" alt="" class="avatar-img" />
                 <div class="comment-post-input-wrap base-textarea-wrap">
                     <textarea id="content" v-model="form.content" class="textarea-input base-input" cols="30" rows="4"></textarea>
                 </div>
@@ -11,7 +11,7 @@
             <div class="comment-items-wrap">
                 <div v-for="item in comments.data" :key="item._id" class="comment-item">
                     <a href="javascript:;" class="comment-author-avatar-link">
-                        <img :src="$f.Avatar(item.userid.email)" alt="" class="avatar-img" />
+                        <img :src="useAvatar(item.userid.email)" alt="" class="avatar-img" />
                     </a>
                     <div class="comment-content-wrap">
                         <span class="comment-author-wrap">
@@ -44,8 +44,6 @@ const props = defineProps<{
 defineOptions({
     name: 'frontend-comment'
 })
-
-const $f = useFilters()
 
 const { comments } = $(toRefs(props))
 
