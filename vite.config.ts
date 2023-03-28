@@ -109,7 +109,7 @@ export default defineConfig(({ mode, command }) => {
                     {
                         pinia: ['defineStore', 'storeToRefs'],
                         'vue-router': ['createRouter', 'createWebHashHistory'],
-                        '@/utils': ['deepClone', 'deepMerge', '$is', 'showMsg']
+                        '@/utils': ['showMsg']
                     }
                 ],
                 dts: 'src/auto-imports.d.ts',

@@ -5,8 +5,6 @@ import type { AxiosResponse } from 'axios'
 import config from './config-client'
 import type { ApiClientReturn } from '@/types'
 
-import { showMsg } from '@/utils'
-
 axios.interceptors.request.use(
     config => {
         return config

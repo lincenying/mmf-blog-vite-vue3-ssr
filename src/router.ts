@@ -8,7 +8,7 @@ import cookies from 'js-cookie'
 import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 import { createMemoryHistory, createRouter as _createRouter, createWebHistory } from 'vue-router'
 import type { Pinia } from 'pinia'
-import { inBrowser } from '@/utils'
+import { isBrowser } from 'lcy-utils'
 
 // 定义切割点，异步加载路由组件
 const notFound = () => import('./pages/404.vue')
@@ -36,7 +36,7 @@ const userModify = () => import('./pages/backend-user-modify.vue')
 
 const guardRoute = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
     const token = cookies.get('user')
-    if (inBrowser && !token) {
+    if (isBrowser && !token) {
         next('/')
     } else {
         next()
@@ -46,7 +46,7 @@ const guardRoute = (to: RouteLocationNormalized, from: RouteLocationNormalized, 
 // eslint-disable-next-line no-unused-vars
 const guardRouteBackend = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
     const token = cookies.get('b_user')
-    if (inBrowser && !token) {
+    if (isBrowser && !token) {
         next('/backend/login')
     } else {
         next()

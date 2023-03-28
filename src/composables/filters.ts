@@ -1,6 +1,6 @@
 import md5 from 'md5'
 
-import { Sleep } from '@/utils'
+import { sleep } from 'lcy-utils'
 
 function pluralize(time: number, label: string): string {
     return time + label
@@ -53,5 +53,5 @@ export const useFilters = () => ({
     timeAgo,
     timeYmd,
     Avatar,
-    Sleep
+    sleep
 })

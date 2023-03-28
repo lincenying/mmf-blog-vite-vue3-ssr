@@ -31,8 +31,8 @@
 </template>
 
 <script setup lang="ts">
+import { strLen } from 'lcy-utils'
 import api from '@/api/index-client'
-import { strLen } from '@/utils'
 
 const props = defineProps<{
     show: boolean
