@@ -649,19 +649,23 @@ a:hover .icon-arrow-right {
             }
 
             .list-title {
-                width: 310px;
+                flex: 1 1 auto;
+                width: 0;
             }
 
             .list-category {
-                width: 100px;
+                flex: none;
+                width: 140px;
             }
 
             .list-date {
-                width: 100px;
+                flex: none;
+                width: 140px;
             }
 
             .list-action {
-                width: 100px;
+                flex: none;
+                width: 140px;
 
                 & > a {
                     display: inline-block;
