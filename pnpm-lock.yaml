@@ -38,6 +38,7 @@ specifiers:
   pinia: ^2.0.33
   postcss: ^8.4.21
   prettier: ^2.8.7
+  prismjs: ^1.29.0
   qs: ^6.11.1
   sass: ^1.60.0
   store2: ^2.14.2
@@ -69,6 +70,7 @@ dependencies:
   lodash: 4.17.21
   md5: 2.3.0
   pinia: 2.0.33_p4srtwdgezcoeovfcc2yxzvaue
+  prismjs: 1.29.0
   qs: 6.11.1
   store2: 2.14.2
   vue: 3.2.47
