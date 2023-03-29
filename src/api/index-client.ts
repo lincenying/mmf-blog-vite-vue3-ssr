@@ -45,6 +45,16 @@ function checkCode(res: any) {
 
 type API = () => ApiClientReturn
 
+/**
+ * axios Api 封装
+ * @returns ApiClientReturn
+ * @example
+ * ```
+ * get(url: '/api/url', params: {}, headers: {})
+ * post(url: '/api/url', data: {}, headers: {})
+ * file(url: '/api/url', data: {}, headers: {})
+ * ```
+ */
 const _api: API = () => ({
     async file(url, data) {
         const response = await axios({

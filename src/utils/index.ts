@@ -1,5 +1,14 @@
 import { ElMessage } from '@/plugin/element'
 
+/**
+ * element-plus弹窗
+ * @param config 弹窗数据
+ * @example
+ * ```
+ * showMsg('content')
+ * showMsg({ type: 'success' | 'warning' | 'info' | 'error', content: 'content'})
+ * ```
+ */
 export const showMsg = (config: Record<string, any> | string) => {
     let content, type: 'success' | 'warning' | 'info' | 'error'
     if (!config) {
