@@ -80,7 +80,7 @@ onMounted(() => {
     if (lists.path === '') {
         loadMore(1)
     } else {
-        const scrollTop = (historyPageScrollTop as any)[route.path] || 0
+        const scrollTop = historyPageScrollTop[route.path] || 0
         window.scrollTo(0, scrollTop)
     }
 })

@@ -19,6 +19,5 @@ defineOptions({
     name: 'a-input'
 })
 
-// eslint-disable-next-line no-unused-vars
 const { title, classes } = $(toRefs(props))
 </script>

@@ -62,7 +62,7 @@ export const useSaveScroll = () => {
     watch(
         () => route.fullPath,
         async currPath => {
-            const scrollTop = (historyPageScrollTop.value as any)[currPath] || 0
+            const scrollTop = historyPageScrollTop.value[currPath] || 0
             setTimeout(() => {
                 window.scrollTo(0, scrollTop)
             }, 350)

@@ -58,7 +58,7 @@ onMounted(() => {
     if (category.length === 0) {
         loadMore(1)
     } else {
-        const scrollTop = (historyPageScrollTop as any)[route.path] || 0
+        const scrollTop = historyPageScrollTop[route.path] || 0
         window.scrollTo(0, scrollTop)
     }
 })
@@ -70,6 +70,7 @@ const handleRecover = async (id: string) => {
         globalCategoryStore.recoverCategory(id)
     }
 }
+
 const handleDelete = async (id: string) => {
     const { code, message } = await api.get('backend/category/delete', { id })
     if (code === 200) {

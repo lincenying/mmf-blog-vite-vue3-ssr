@@ -14,6 +14,7 @@
 </template>
 <script setup lang="ts">
 import type { asyncDataConfig } from '@/types'
+
 defineOptions({
     name: '404-page',
     asyncData(payload: asyncDataConfig) {
