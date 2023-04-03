@@ -1,17 +1,17 @@
 <template>
     <div class="modal-wrap modal-sign-in-wrap" :class="show ? 'active' : ''">
-        <span class="center-helper"></span>
+        <span class="center-helper" />
         <div class="modal modal-signup">
             <h2 class="modal-title">登录</h2>
-            <a href="javascript:;" class="modal-close" @click="handleClose"><i class="icon icon-close-black"></i></a>
+            <a href="javascript:;" class="modal-close" @click="handleClose"><i class="icon icon-close-black" /></a>
             <div class="modal-content">
                 <form class="sign-up-form">
                     <div class="input-wrap">
-                        <input v-model="form.username" type="text" placeholder="昵称" class="base-input" />
+                        <input v-model="form.username" type="text" placeholder="昵称" class="base-input">
                         <p class="error-info input-info hidden">长度至少 6 位</p>
                     </div>
                     <div class="input-wrap">
-                        <input v-model="form.password" type="password" placeholder="密码" class="base-input" autocomplete="off" />
+                        <input v-model="form.password" type="password" placeholder="密码" class="base-input" autocomplete="off">
                         <p class="error-info input-info hidden">长度至少 6 位</p>
                     </div>
                     <a href="javascript:;" class="btn sign-up-btn btn-yellow" @click="handleLogin">确认登录</a>
@@ -30,17 +30,16 @@ const props = defineProps<{
 }>()
 
 defineOptions({
-    name: 'sign-in'
+    name: 'sign-in',
 })
 
 const { show } = $(toRefs(props))
 
-// eslint-disable-next-line no-unused-vars
 const { globalStore } = useGlobal()
 
 const form = reactive({
     username: '',
-    password: ''
+    password: '',
 })
 
 const handleClose = () => {
@@ -51,9 +50,9 @@ const handleRegister = () => {
     globalStore.setRegisterModal(true)
 }
 const handleLogin = useLockFn(async () => {
-    if (!form.username || !form.password) {
+    if (!form.username || !form.password)
         return showMsg('请将表单填写完整!')
-    }
+
     const { code, message } = await api.post('frontend/user/login', form)
     if (code === 200) {
         showMsg({ type: 'success', content: message })

@@ -15,9 +15,9 @@
                     <router-link :to="`/backend/article/modify/${item._id}`" class="badge badge-success">编辑</router-link>
                     <a v-if="item.is_delete" href="javascript:;" @click="handleRecover(item._id)">恢复</a>
                     <a v-else href="javascript:;" @click="handleDelete(item._id)">删除</a>
-                    <router-link v-if="item.comment_count > 0" :to="`/backend/article/comment/${item._id}`" class="badge badge-success"
-                        >评论</router-link
-                    >
+                    <router-link v-if="item.comment_count > 0" :to="`/backend/article/comment/${item._id}`" class="badge badge-success">
+                        评论
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -39,10 +39,9 @@ defineOptions({
         const { store, route, api } = payload
         const backendArticleStore = useBackendArticleStore(store)
         return backendArticleStore.getArticleList({ page: 1, path: route.path }, api)
-    }
+    },
 })
 
-// eslint-disable-next-line no-unused-vars
 const { route, appShellStore } = useGlobal()
 
 // pinia 状态管理 ===>
@@ -79,7 +78,8 @@ const handleDelete = async (id: string) => {
 onMounted(() => {
     if (lists.path === '') {
         loadMore(1)
-    } else {
+    }
+    else {
         const scrollTop = historyPageScrollTop[route.path] || 0
         window.scrollTo(0, scrollTop)
     }
@@ -93,9 +93,9 @@ useHead({
     title: headTitle,
     meta: [
         {
-            name: `description`,
-            content: headTitle
-        }
-    ]
+            name: 'description',
+            content: headTitle,
+        },
+    ],
 })
 </script>

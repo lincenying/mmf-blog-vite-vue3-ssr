@@ -1,6 +1,6 @@
 <template>
     <div :class="backend ? 'backend' : 'frontend'">
-        <global-navigation :is-backend="backend"></global-navigation>
+        <global-navigation :is-backend="backend" />
         <router-view v-slot="{ Component }" class="app-view relative">
             <transition :name="pageTransitionName" mode="out-in" @before-enter="handleBeforeEnter" @after-enter="handleAfterEnter">
                 <keep-alive :key="key" :include="cacheFrontendComponents">
@@ -10,22 +10,21 @@
                 </keep-alive>
             </transition>
         </router-view>
-        <sign-in :show="showLoginModal"></sign-in>
-        <sign-up :show="showRegisterModal"></sign-up>
-        <back-top></back-top>
+        <sign-in :show="showLoginModal" />
+        <sign-up :show="showRegisterModal" />
+        <back-top />
         <client-only>
-            <bg-plum></bg-plum>
-            <reload-prompt></reload-prompt>
+            <bg-plum />
+            <reload-prompt />
         </client-only>
     </div>
 </template>
 
 <script setup lang="ts">
 defineOptions({
-    name: 'app-root'
+    name: 'app-root',
 })
 
-// eslint-disable-next-line no-unused-vars
 const { route, globalStore } = useGlobal()
 
 // pinia 状态管理 ===>
@@ -45,7 +44,7 @@ const key = $computed(() => {
     return path.replace(/\//g, '_')
 })
 const backend = $computed(() => {
-    return route.path.indexOf('backend') >= 0
+    return route.path.includes('backend')
 })
 const handleBeforeEnter = () => {
     appShellStore.setPageSwitching(true)
@@ -53,5 +52,4 @@ const handleBeforeEnter = () => {
 const handleAfterEnter = () => {
     appShellStore.setPageSwitching(false)
 }
-// eslint-disable-next-line no-unused-vars
 </script>

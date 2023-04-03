@@ -6,13 +6,14 @@
                 <span class="trending-rank-num">{{ index + 1 }}</span>
                 <router-link :to="`/article/${item._id}`" class="trending-title">{{ item.title }}</router-link>
                 <div class="trending-meta">
-                    <div class="trending-meta-item"><i class="icon icon-action-voteup"></i>{{ item.like }}</div>
-                    <div class="trending-meta-item"><i class="icon icon-action-comment"></i>{{ item.comment_count }}</div>
+                    <div class="trending-meta-item"><i class="icon icon-action-voteup" />{{ item.like }}</div>
+                    <div class="trending-meta-item"><i class="icon icon-action-comment" />{{ item.comment_count }}</div>
                 </div>
             </div>
         </div>
     </div>
 </template>
+
 <script setup lang="ts">
 import type { Article } from '@/types'
 
@@ -21,7 +22,7 @@ const props = defineProps<{
 }>()
 
 defineOptions({
-    name: 'aside-trending'
+    name: 'aside-trending',
 })
 
 const { trending } = $(toRefs(props))

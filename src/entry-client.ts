@@ -22,7 +22,7 @@ import './assets/css/github-markdown.css'
 import './assets/scss/style.scss'
 
 VueMarkdownEditor.use(vuePressTheme, {
-    Prism
+    Prism,
 })
 
 const { app, router, store } = createApp()
@@ -37,25 +37,24 @@ router.isReady().then(() => {
         if (!activated.length) return false
 
         await Promise.all(
-            activated.map(c => {
-                if ((c.components?.default as any).asyncData) {
+            activated.map((c) => {
+                if ((c.components?.default as any).asyncData)
                     return (c.components?.default as any).asyncData({ store, route: to })
-                }
+
                 return true
-            })
+            }),
         )
     })
     app.component('ReloadPrompt', reloadPrompt)
     app.use(LoadingPlugin, {
         'can-cancel': false,
-        loader: 'dots',
-        color: '#54d9e0'
+        'loader': 'dots',
+        'color': '#54d9e0',
     })
         .use(VueMarkdownEditor)
         .mount('#app')
     console.log('client router ready')
 })
 
-if (window.__INITIAL_STATE__) {
+if (window.__INITIAL_STATE__)
     store.state.value = window.__INITIAL_STATE__
-}

@@ -11,12 +11,12 @@ const useStore = defineStore('backendArticleStore', () => {
             path: '',
             hasNext: 0,
             hasPrev: 0,
-            page: 1
+            page: 1,
         },
         item: {
             data: null,
-            path: ''
-        }
+            path: '',
+        },
     })
 
     const getArticleList = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
@@ -29,27 +29,26 @@ const useStore = defineStore('backendArticleStore', () => {
                 path,
                 hasNext = 0,
                 hasPrev = 0,
-                page
+                page,
             } = {
                 ...data,
                 path: config.path,
-                page: config.page
+                page: config.page,
             }
 
             let _list
 
-            if (page === 1) {
+            if (page === 1)
                 _list = [].concat(list)
-            } else {
+            else
                 _list = state.lists.data.concat(list)
-            }
 
             state.lists = {
                 data: _list,
                 hasNext,
                 hasPrev,
                 page: page + 1,
-                path
+                path,
             }
         }
     }
@@ -59,7 +58,7 @@ const useStore = defineStore('backendArticleStore', () => {
         if (data && code === 200) {
             state.item = {
                 data,
-                ...config
+                ...config,
             }
         }
     }
@@ -68,7 +67,7 @@ const useStore = defineStore('backendArticleStore', () => {
         if (index > -1) {
             state.lists.data.splice(index, 1, {
                 ...state.lists.data[index],
-                is_delete: 1
+                is_delete: 1,
             })
         }
     }
@@ -77,20 +76,18 @@ const useStore = defineStore('backendArticleStore', () => {
         if (index > -1) {
             state.lists.data.splice(index, 1, {
                 ...state.lists.data[index],
-                is_delete: 0
+                is_delete: 0,
             })
         }
     }
     const insertArticleItem = (payload: Article) => {
-        if (state.lists.path) {
+        if (state.lists.path)
             state.lists.data = [payload].concat(state.lists.data)
-        }
     }
     const updateArticleItem = (payload: Article) => {
         const index = state.lists.data.findIndex(ii => ii._id === payload._id)
-        if (index > -1) {
+        if (index > -1)
             state.lists.data.splice(index, 1, payload)
-        }
     }
 
     return {
@@ -100,7 +97,7 @@ const useStore = defineStore('backendArticleStore', () => {
         deleteArticle,
         recoverArticle,
         insertArticleItem,
-        updateArticleItem
+        updateArticleItem,
     }
 })
 

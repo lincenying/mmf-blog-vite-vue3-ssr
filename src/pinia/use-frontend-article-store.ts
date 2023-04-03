@@ -11,13 +11,13 @@ const useStore = defineStore('frontendArticleStore', () => {
             path: '',
             hasNext: 0,
             hasPrev: 0,
-            page: 1
+            page: 1,
         },
         item: {
             data: null,
-            path: ''
+            path: '',
         },
-        trending: []
+        trending: [],
     })
 
     const getArticleList = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
@@ -30,27 +30,26 @@ const useStore = defineStore('frontendArticleStore', () => {
                 path,
                 hasNext = 0,
                 hasPrev = 0,
-                page
+                page,
             } = {
                 ...data,
                 path: config.path,
-                page: config.page
+                page: config.page,
             }
 
             let _list
 
-            if (page === 1) {
+            if (page === 1)
                 _list = [].concat(list)
-            } else {
+            else
                 _list = state.lists.data.concat(list)
-            }
 
             state.lists = {
                 data: _list,
                 hasNext,
                 hasPrev,
                 page: page + 1,
-                path
+                path,
             }
         }
     }
@@ -61,7 +60,7 @@ const useStore = defineStore('frontendArticleStore', () => {
             state.item = {
                 data,
                 ...config,
-                isLoad: true
+                isLoad: true,
             }
         }
     }
@@ -69,9 +68,8 @@ const useStore = defineStore('frontendArticleStore', () => {
         if (!import.meta.env.SSR) $api = api
         if (state.trending.length) return
         const { code, data } = await $api!.get('frontend/trending', { cache: true })
-        if (data && code === 200) {
+        if (data && code === 200)
             state.trending = data.list
-        }
     }
     const modifyLikeStatus = (payload: { id: string; status: boolean }) => {
         const { id, status } = payload
@@ -95,7 +93,7 @@ const useStore = defineStore('frontendArticleStore', () => {
         getArticleList,
         getArticleItem,
         getTrending,
-        modifyLikeStatus
+        modifyLikeStatus,
     }
 })
 

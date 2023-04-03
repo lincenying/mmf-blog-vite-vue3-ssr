@@ -1,7 +1,7 @@
 import { acceptHMRUpdate } from 'pinia'
 
 import api from '@/api/index-client'
-import type { User, ApiConfig, AdminStore, ApiClientReturn, ApiServerReturn } from '@/types'
+import type { AdminStore, ApiClientReturn, ApiConfig, ApiServerReturn, User } from '@/types'
 
 const useStore = defineStore('backendAdminStore', () => {
     const state = reactive<AdminStore>({
@@ -10,12 +10,12 @@ const useStore = defineStore('backendAdminStore', () => {
             hasPrev: 0,
             path: '',
             page: 1,
-            data: []
+            data: [],
         },
         item: {
             data: null,
-            path: ''
-        }
+            path: '',
+        },
     })
 
     const getAdminList = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
@@ -28,27 +28,26 @@ const useStore = defineStore('backendAdminStore', () => {
                 path,
                 hasNext = 0,
                 hasPrev = 0,
-                page
+                page,
             } = {
                 ...data,
                 path: config.path,
-                page: config.page
+                page: config.page,
             }
 
             let _list
 
-            if (page === 1) {
+            if (page === 1)
                 _list = [].concat(list)
-            } else {
+            else
                 _list = state.lists.data.concat(list)
-            }
 
             state.lists = {
                 data: _list,
                 hasNext,
                 hasPrev,
                 page: page + 1,
-                path
+                path,
             }
         }
     }
@@ -58,23 +57,22 @@ const useStore = defineStore('backendAdminStore', () => {
         if (data && code === 200) {
             state.item = {
                 data,
-                ...config
+                ...config,
             }
         }
     }
     const updateAdminItem = (payload: User) => {
         state.item.data = payload
         const index = state.lists.data.findIndex(ii => ii._id === payload._id)
-        if (index > -1) {
+        if (index > -1)
             state.lists.data.splice(index, 1, payload)
-        }
     }
     const deleteAdmin = (id: string) => {
         const index = state.lists.data.findIndex(ii => ii._id === id)
         if (index > -1) {
             state.lists.data.splice(index, 1, {
                 ...state.lists.data[index],
-                is_delete: 1
+                is_delete: 1,
             })
         }
     }
@@ -83,7 +81,7 @@ const useStore = defineStore('backendAdminStore', () => {
         if (index > -1) {
             state.lists.data.splice(index, 1, {
                 ...state.lists.data[index],
-                is_delete: 0
+                is_delete: 0,
             })
         }
     }
@@ -94,7 +92,7 @@ const useStore = defineStore('backendAdminStore', () => {
         getAdminItem,
         updateAdminItem,
         deleteAdmin,
-        recoverAdmin
+        recoverAdmin,
     }
 })
 

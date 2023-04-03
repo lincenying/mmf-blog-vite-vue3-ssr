@@ -1,23 +1,22 @@
 import { acceptHMRUpdate } from 'pinia'
 
-import type { CategoryStore, ApiConfig, Category, ApiClientReturn, ApiServerReturn } from '@/types'
+import type { ApiClientReturn, ApiConfig, ApiServerReturn, Category, CategoryStore } from '@/types'
 import api from '@/api/index-client'
 
 const useStore = defineStore('globalCategoryStore', () => {
     const state = reactive<CategoryStore>({
         lists: [],
         item: {
-            data: null
-        }
+            data: null,
+        },
     })
 
     const getCategoryList = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
         if (!import.meta.env.SSR) $api = api
         if (state.lists.length) return
         const { code, data } = await $api!.get('backend/category/list', { ...config, path: undefined, cache: true })
-        if (data && code === 200) {
+        if (data && code === 200)
             state.lists = data.list
-        }
     }
     const getCategoryItem = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
         if (!import.meta.env.SSR) $api = api
@@ -25,7 +24,7 @@ const useStore = defineStore('globalCategoryStore', () => {
         if (data && code === 200) {
             state.item = {
                 data,
-                ...config
+                ...config,
             }
         }
     }
@@ -35,16 +34,15 @@ const useStore = defineStore('globalCategoryStore', () => {
     const updateCategoryItem = (payload: Category) => {
         state.item.data = payload
         const index = state.lists.findIndex(ii => ii._id === payload._id)
-        if (index > -1) {
+        if (index > -1)
             state.lists.splice(index, 1, payload)
-        }
     }
     const deleteCategory = (id: string) => {
         const index = state.lists.findIndex(ii => ii._id === id)
         if (index > -1) {
             state.lists.splice(index, 1, {
                 ...state.lists[index],
-                is_delete: 1
+                is_delete: 1,
             })
         }
     }
@@ -53,7 +51,7 @@ const useStore = defineStore('globalCategoryStore', () => {
         if (index > -1) {
             state.lists.splice(index, 1, {
                 ...state.lists[index],
-                is_delete: 0
+                is_delete: 0,
             })
         }
     }
@@ -65,7 +63,7 @@ const useStore = defineStore('globalCategoryStore', () => {
         insertCategoryItem,
         updateCategoryItem,
         deleteCategory,
-        recoverCategory
+        recoverCategory,
     }
 })
 

@@ -25,14 +25,13 @@ const stopped = ref(false)
 function initCanvas(canvas: HTMLCanvasElement, width = 400, height = 400, _dpi?: number) {
     const ctx: any = canvas.getContext('2d')!
     const dpr = window.devicePixelRatio || 1
-    // @ts-ignore
-    const bsr =
-        ctx.webkitBackingStorePixelRatio ||
-        ctx.mozBackingStorePixelRatio ||
-        ctx.msBackingStorePixelRatio ||
-        ctx.oBackingStorePixelRatio ||
-        ctx.backingStorePixelRatio ||
-        1
+    const bsr
+        = ctx.webkitBackingStorePixelRatio
+        || ctx.mozBackingStorePixelRatio
+        || ctx.msBackingStorePixelRatio
+        || ctx.oBackingStorePixelRatio
+        || ctx.backingStorePixelRatio
+        || 1
     const dpi = _dpi || dpr / bsr
     canvas.style.width = `${width}px`
     canvas.style.height = `${height}px`
@@ -68,7 +67,7 @@ onMounted(async () => {
     }
     let lastTime = performance.now()
     const interval = 1000 / 40
-    // eslint-disable-next-line prefer-const
+
     let controls: ReturnType<typeof useRafFn>
     const frame = () => {
         if (performance.now() - lastTime < interval) return
@@ -94,7 +93,7 @@ onMounted(async () => {
             () => step(random() * size.width, 0, r90),
             () => step(random() * size.width, size.height, -r90),
             () => step(0, random() * size.height, 0),
-            () => step(size.width, random() * size.height, r180)
+            () => step(size.width, random() * size.height, r180),
         ]
         if (size.width < 500) steps = steps.slice(0, 2)
         controls.resume()

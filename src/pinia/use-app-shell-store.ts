@@ -34,7 +34,7 @@ const useStore = defineStore('appShellStore', () => {
          *
          * @type {Object}
          */
-        historyPageScrollTop: {}
+        historyPageScrollTop: {},
     })
 
     /**
@@ -87,7 +87,7 @@ const useStore = defineStore('appShellStore', () => {
         disablePageTransition,
         setPageSwitching,
         saveScrollTop,
-        setPageTransitionName
+        setPageTransitionName,
     }
 })
 

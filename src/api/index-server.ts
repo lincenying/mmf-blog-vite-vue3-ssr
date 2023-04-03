@@ -7,7 +7,7 @@ import type { ApiServerReturn, UserCookies } from '@/types'
 const objToStr = (cookies: Record<string, string | number | boolean>) => {
     if (!cookies) return ''
     let cookie = ''
-    Object.keys(cookies).forEach(item => {
+    Object.keys(cookies).forEach((item) => {
         cookie += `${item}=${cookies[item]}; `
     })
     return cookie
@@ -22,9 +22,9 @@ export const api = (cookies: UserCookies): ApiServerReturn => {
             baseURL: config.api,
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
-                cookie: objToStr(cookies)
+                'cookie': objToStr(cookies),
             },
-            timeout: config.timeout
+            timeout: config.timeout,
         }),
         getCookies() {
             return this.cookies
@@ -43,8 +43,8 @@ export const api = (cookies: UserCookies): ApiServerReturn => {
                 data: qs.stringify(data),
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                    ...headers
-                }
+                    ...headers,
+                },
             })
             if (config.cached && data.cache) config.cached.set(key, res_1)
             return res_1 && res_1.data
@@ -62,12 +62,12 @@ export const api = (cookies: UserCookies): ApiServerReturn => {
                 url,
                 params,
                 headers: {
-                    ...headers
-                }
-            }).then(res => {
+                    ...headers,
+                },
+            }).then((res) => {
                 if (config.cached && params.cache) config.cached.set(key, res)
                 return res && res.data
             })
-        }
+        },
     }
 }

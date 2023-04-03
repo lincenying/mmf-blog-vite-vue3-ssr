@@ -10,8 +10,9 @@
         </div>
     </div>
 </template>
+
 <script setup lang="ts">
 defineOptions({
-    name: 'aside-other'
+    name: 'aside-other',
 })
 </script>

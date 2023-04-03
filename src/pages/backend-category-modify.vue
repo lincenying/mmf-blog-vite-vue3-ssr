@@ -2,11 +2,11 @@
     <div class="settings-main card">
         <div class="settings-main-content">
             <a-input title="分类名称">
-                <input v-model="form.cate_name" type="text" placeholder="分类名称" class="base-input" name="cate_name" />
+                <input v-model="form.cate_name" type="text" placeholder="分类名称" class="base-input" name="cate_name">
                 <span class="input-info error">请输入分类名称</span>
             </a-input>
             <a-input title="分类排序">
-                <input v-model="form.cate_order" type="text" placeholder="分类排序" class="base-input" name="cate_order" />
+                <input v-model="form.cate_order" type="text" placeholder="分类排序" class="base-input" name="cate_order">
                 <span class="input-info error">请输入分类排序</span>
             </a-input>
         </div>
@@ -27,10 +27,9 @@ defineOptions({
         const { store, route, api } = payload
         const globalCategoryStore = useGlobalCategoryStore(store)
         return globalCategoryStore.getCategoryItem({ path: route.path, id: route.params.id }, api)
-    }
+    },
 })
 
-// eslint-disable-next-line no-unused-vars
 const { route, router } = useGlobal()
 
 // pinia 状态管理 ===>
@@ -42,10 +41,10 @@ const [loading, toggleLoading] = useToggle(false)
 const form = reactive({
     id: route.params.id,
     cate_name: '',
-    cate_order: ''
+    cate_order: '',
 })
 
-watch(item, val => {
+watch(item, (val) => {
     if (val.data) {
         form.cate_name = val.data.cate_name
         form.cate_order = val.data.cate_order
@@ -78,9 +77,9 @@ useHead({
     title: headTitle,
     meta: [
         {
-            name: `description`,
-            content: headTitle
-        }
-    ]
+            name: 'description',
+            content: headTitle,
+        },
+    ],
 })
 </script>

@@ -2,12 +2,12 @@
     <div class="main wrap">
         <div class="main-left">
             <div v-if="!isLoad" class="card card-content-loader">
-                <content-loader :height="160" :width="660" :speed="2" primary-color="#f3f3f3" secondary-color="#ecebeb">
+                <ContentLoader :height="160" :width="660" :speed="2" primary-color="#f3f3f3" secondary-color="#ecebeb">
                     <rect x="70" y="15" rx="4" ry="4" width="117" height="6.4" /> <rect x="70" y="35" rx="3" ry="3" width="85" height="6.4" />
                     <rect x="0" y="80" rx="3" ry="3" width="550" height="6.4" /> <rect x="0" y="100" rx="3" ry="3" width="620" height="6.4" />
                     <rect x="0" y="120" rx="3" ry="3" width="401" height="6.4" /> <rect x="0" y="140" rx="3" ry="3" width="501" height="6.4" />
                     <circle cx="30" cy="30" r="30" />
-                </content-loader>
+                </ContentLoader>
             </div>
             <template v-else-if="articleData">
                 <div class="card card-question-head">
@@ -21,20 +21,20 @@
                 <div class="card card-answer">
                     <div class="answer-content">
                         <!-- eslint-disable-next-line vue/no-v-html -->
-                        <div class="article-content markdown-body" v-html="addTarget(articleData.html)"></div>
+                        <div class="article-content markdown-body" v-html="addTarget(articleData.html)" />
                     </div>
-                    <item-actions :item="articleData"></item-actions>
+                    <item-actions :item="articleData" />
                 </div>
-                <frontend-comment :comments="comments"></frontend-comment>
+                <frontend-comment :comments="comments" />
             </template>
             <template v-else>
                 <div class="card card-answer"><div class="answer-content">该文章不存在, 或者该文章已经被删除</div></div>
             </template>
         </div>
         <div class="main-right">
-            <aside-category :category="category"></aside-category>
-            <aside-trending :trending="trending"></aside-trending>
-            <aside-other></aside-other>
+            <aside-category :category="category" />
+            <aside-trending :trending="trending" />
+            <aside-other />
         </div>
     </div>
 </template>
@@ -49,7 +49,7 @@ defineOptions({
         const { store, route, api } = payload
         const {
             path,
-            params: { id }
+            params: { id },
         } = route
         const globalCategoryStore = useGlobalCategoryStore(store)
         const frontendArticleStore = useFrontendArticleStore(store)
@@ -58,9 +58,9 @@ defineOptions({
             globalCategoryStore.getCategoryList({}, api),
             frontendArticleStore.getTrending({}, api),
             globalCommentStore.getCommentList({ id, path, page: 1, limit: 10 }, api),
-            frontendArticleStore.getArticleItem({ id, path }, api)
+            frontendArticleStore.getArticleItem({ id, path }, api),
         ])
-    }
+    },
 })
 
 // pinia 状态管理 ===>
@@ -95,9 +95,9 @@ useHead({
     title: headTitle,
     meta: [
         {
-            name: `description`,
-            content: headTitle
-        }
-    ]
+            name: 'description',
+            content: headTitle,
+        },
+    ],
 })
 </script>

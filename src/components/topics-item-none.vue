@@ -2,13 +2,14 @@
     <div class="card feed">
         <div class="feed-content">
             <div class="feed-desc-wrap">
-                <div class="feed-article-content markdown-body"><slot></slot></div>
+                <div class="feed-article-content markdown-body"><slot /></div>
             </div>
         </div>
     </div>
 </template>
+
 <script setup lang="ts">
 defineOptions({
-    name: 'topics-item-none'
+    name: 'topics-item-none',
 })
 </script>

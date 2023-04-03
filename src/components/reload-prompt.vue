@@ -12,7 +12,7 @@
 import { useRegisterSW } from 'virtual:pwa-register/vue'
 
 defineOptions({
-    name: 'reload-prompt'
+    name: 'reload-prompt',
 })
 
 const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW()

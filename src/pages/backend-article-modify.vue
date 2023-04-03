@@ -2,11 +2,11 @@
     <div class="settings-main card">
         <div class="settings-main-content">
             <a-input title="标题">
-                <input v-model="form.title" type="text" placeholder="标题" class="base-input" name="title" />
+                <input v-model="form.title" type="text" placeholder="标题" class="base-input" name="title">
                 <span class="input-info error">请输入标题</span>
             </a-input>
-            <a-input title="分类" :classes="'select-item-wrap'">
-                <i class="icon icon-arrow-down"></i>
+            <a-input title="分类" classes="select-item-wrap">
+                <i class="icon icon-arrow-down" />
                 <select v-model="form.category" class="select-item" name="category">
                     <option value="">请选择分类</option>
                     <option v-for="val in lists" :key="val._id" :value="val._id">{{ val.cate_name }}</option>
@@ -22,7 +22,7 @@
                             mode="edit"
                             height="500px"
                             @upload-image="handleUploadImage"
-                        ></v-md-editor>
+                        />
                     </client-only>
                 </div>
             </div>
@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import type { asyncDataConfig, Fn } from '@/types'
+import type { Fn, asyncDataConfig } from '@/types'
 import api from '@/api/index-client'
 import { uploadApi } from '@/api/upload-api'
 
@@ -45,10 +45,9 @@ defineOptions({
         const { store, route, api } = payload
         const globalCategoryStore = useGlobalCategoryStore(store)
         return globalCategoryStore.getCategoryList({ limit: 99, path: route.path }, api)
-    }
+    },
 })
 
-// eslint-disable-next-line no-unused-vars
 const { ctx, route, router } = useGlobal()
 
 // pinia 状态管理 ===>
@@ -67,20 +66,20 @@ const form = reactive({
     category_name: '',
     category_old: '',
     content: '',
-    html: ''
+    html: '',
 })
 
 watch(
     () => form.category,
-    val => {
+    (val) => {
         const obj = lists.find(item => item._id === val)
         if (obj) form.category_name = obj.cate_name
-    }
+    },
 )
 
 watch(
     () => item,
-    val => {
+    (val) => {
         if (val.data) {
             form.title = val.data.title
             form.category_old = val.data.category
@@ -89,8 +88,8 @@ watch(
         }
     },
     {
-        deep: true
-    }
+        deep: true,
+    },
 )
 
 onMounted(async () => {
@@ -123,7 +122,7 @@ const handleUploadImage = async (event: EventTarget, insertImage: Fn, files: Fil
     if (data && data.filepath) {
         insertImage({
             url: `${uploadApi}/${data.filepath}`,
-            desc: ''
+            desc: '',
             // width: 'auto',
             // height: 'auto',
         })
@@ -140,9 +139,9 @@ useHead({
     title: headTitle,
     meta: [
         {
-            name: `description`,
-            content: headTitle
-        }
-    ]
+            name: 'description',
+            content: headTitle,
+        },
+    ],
 })
 </script>

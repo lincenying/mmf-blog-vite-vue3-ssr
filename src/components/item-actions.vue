@@ -1,20 +1,21 @@
 <template>
     <div class="actions-wrap">
         <a v-if="item.like_status" href="javascript:;" class="action-item active" @click="handleLike">
-            <i class="icon icon-action-voteup-active"></i><span class="text">{{ item.like }} 赞</span>
+            <i class="icon icon-action-voteup-active" /><span class="text">{{ item.like }} 赞</span>
         </a>
         <a v-else href="javascript:;" class="action-item" @click="handleLike">
-            <i class="icon icon-action-voteup"></i><span class="text">{{ item.like }} 赞</span>
+            <i class="icon icon-action-voteup" /><span class="text">{{ item.like }} 赞</span>
         </a>
         <a href="javascript:;" class="action-item">
-            <i class="icon icon-action-comment"></i><span class="text">{{ item.comment_count }} 评论</span>
+            <i class="icon icon-action-comment" /><span class="text">{{ item.comment_count }} 评论</span>
         </a>
         <a href="javascript:;" class="action-item action-item-fav">
-            <i class="icon icon-action-fav"></i><span class="text">{{ item.visit }} 浏览</span>
+            <i class="icon icon-action-fav" /><span class="text">{{ item.visit }} 浏览</span>
         </a>
-        <a href="javascript:;" class="action-item" @click="handleShare"> <i class="icon icon-action-share"></i><span class="text">分享</span> </a>
+        <a href="javascript:;" class="action-item" @click="handleShare"> <i class="icon icon-action-share" /><span class="text">分享</span> </a>
     </div>
 </template>
+
 <script setup lang="ts">
 import type { Article } from '@/types'
 
@@ -25,12 +26,11 @@ const props = defineProps<{
 }>()
 
 defineOptions({
-    name: 'item-actions'
+    name: 'item-actions',
 })
 
 const { item } = $(toRefs(props))
 
-// eslint-disable-next-line no-unused-vars
 const { globalStore } = useGlobal()
 
 const { cookies } = $(toRefs(globalStore))
@@ -52,7 +52,7 @@ const handleLike = useLockFn(async () => {
         showMsg({ type: 'success', content: message })
         frontendArticleStore.modifyLikeStatus({
             id: item._id,
-            status: !item.like_status
+            status: !item.like_status,
         })
     }
 })
@@ -63,10 +63,10 @@ const handleShare = () => {
     const url = `https://www.mmxiaowu.com/article/${item._id}`
     window.open(
         `http://service.weibo.com/share/share.php?title=${encodeURIComponent(
-            title.replace(/&nbsp;/g, ' ').replace(/<br \/>/g, ' ')
+            title.replace(/&nbsp;/g, ' ').replace(/<br \/>/g, ' '),
         )}&url=${encodeURIComponent(url)}`,
         '分享至新浪微博',
-        `height=500, width=600, top=${top}, left=${left}, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no`
+        `height=500, width=600, top=${top}, left=${left}, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no`,
     )
 }
 </script>

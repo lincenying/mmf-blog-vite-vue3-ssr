@@ -1,4 +1,3 @@
-/* eslint-disable no-inline-comments */
 /**
  * @file router
  * @author lincenying(lincenying@qq.com)
@@ -6,7 +5,7 @@
 
 import cookies from 'js-cookie'
 import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
-import { createMemoryHistory, createRouter as _createRouter, createWebHistory } from 'vue-router'
+import { createRouter as _createRouter, createMemoryHistory, createWebHistory } from 'vue-router'
 import type { Pinia } from 'pinia'
 import { isBrowser } from 'lcy-utils'
 
@@ -36,32 +35,29 @@ const userModify = () => import('./pages/backend-user-modify.vue')
 
 const guardRoute = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
     const token = cookies.get('user')
-    if (isBrowser && !token) {
+    if (isBrowser && !token)
         next('/')
-    } else {
+    else
         next()
-    }
 }
 
-// eslint-disable-next-line no-unused-vars
 const guardRouteBackend = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
     const token = cookies.get('b_user')
-    if (isBrowser && !token) {
+    if (isBrowser && !token)
         next('/backend/login')
-    } else {
+    else
         next()
-    }
 }
 
 const backendConfig = {
     meta: { index: 1, path: '/backend' },
-    beforeEnter: guardRouteBackend
+    beforeEnter: guardRouteBackend,
 }
 
 const routes = [
     {
         path: '/index.html',
-        redirect: '/'
+        redirect: '/',
     },
     { name: 'index', path: '/', component: index, meta: { index: 1 } },
     { name: 'trending', path: '/trending/:by', component: index, meta: { index: 1 } },
@@ -79,14 +75,14 @@ const routes = [
             {
                 path: 'account',
                 component: account,
-                meta: { path: '/user' }
+                meta: { path: '/user' },
             },
             {
                 path: 'password',
                 component: password,
-                meta: { path: '/user' }
-            }
-        ]
+                meta: { path: '/user' },
+            },
+        ],
     },
 
     {
@@ -106,11 +102,11 @@ const routes = [
             { name: 'category_insert', path: 'category/insert', component: categoryInsert, ...backendConfig },
             { name: 'category_modify', path: 'category/modify/:id', component: categoryModify, ...backendConfig },
             { name: 'user_list', path: 'user/list', component: userList, ...backendConfig },
-            { name: 'user_modify', path: 'user/modify/:id', component: userModify, ...backendConfig }
-        ]
+            { name: 'user_modify', path: 'user/modify/:id', component: userModify, ...backendConfig },
+        ],
     },
 
-    { name: '404', path: '/:catchAll(.*)', component: notFound }
+    { name: '404', path: '/:catchAll(.*)', component: notFound },
 ]
 
 export function createRouter(store: Pinia) {
@@ -118,7 +114,7 @@ export function createRouter(store: Pinia) {
         // use appropriate history implementation for server/client
         // import.meta.env.SSR is injected by Vite.
         history: import.meta.env.SSR ? createMemoryHistory() : createWebHistory(),
-        routes
+        routes,
     })
 
     const slideLeft = 'slide-left'
@@ -135,13 +131,13 @@ export function createRouter(store: Pinia) {
             // =================== //
             // 根据路由中的 meta.index 来判断切换动画
             let pageTransitionName
-            if (!from.meta.index || to.meta.index === from.meta.index) {
+            if (!from.meta.index || to.meta.index === from.meta.index)
                 pageTransitionName = 'fade'
-            } else if ((to.meta.index as number) > (from.meta.index as number)) {
+            else if ((to.meta.index as number) > (from.meta.index as number))
                 pageTransitionName = slideLeft
-            } else {
+            else
                 pageTransitionName = slideRight
-            }
+
             appShellStore.setPageTransitionName(pageTransitionName)
         }
         next()

@@ -9,7 +9,7 @@ const useStore = defineStore('globalStore', () => {
         showRegisterModal: false,
         ISDEV: import.meta.env.VITE_APP_ENV === 'development',
         ISPRE: import.meta.env.VITE_APP_ENV === 'pre-release',
-        ISPROD: import.meta.env.VITE_APP_ENV === 'production'
+        ISPROD: import.meta.env.VITE_APP_ENV === 'production',
     })
 
     const setLoginModal = (payload: boolean) => {
@@ -26,7 +26,7 @@ const useStore = defineStore('globalStore', () => {
         ...toRefs(state),
         setLoginModal,
         setRegisterModal,
-        setCookies
+        setCookies,
     }
 })
 export default useStore

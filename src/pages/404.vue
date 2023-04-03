@@ -4,14 +4,15 @@
             <div class="card card-answer">
                 <div class="answer-content">
                     <div class="flex py-40px justify-center">
-                        <img src="/static/images/error_1.jpg" alt="" />
+                        <img src="/static/images/error_1.jpg" alt="">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="main-right"><aside-trending :trending="trending"></aside-trending></div>
+        <div class="main-right"><aside-trending :trending="trending" /></div>
     </div>
 </template>
+
 <script setup lang="ts">
 import type { asyncDataConfig } from '@/types'
 
@@ -21,7 +22,7 @@ defineOptions({
         const { store, route, api } = payload
         const frontendArticleStore = useFrontendArticleStore(store)
         return frontendArticleStore.getTrending({ id: route.query.id }, api)
-    }
+    },
 })
 
 const frontendArticleStore = useFrontendArticleStore()
@@ -35,9 +36,9 @@ useHead({
     title: headTitle,
     meta: [
         {
-            name: `description`,
-            content: headTitle
-        }
-    ]
+            name: 'description',
+            content: headTitle,
+        },
+    ],
 })
 </script>

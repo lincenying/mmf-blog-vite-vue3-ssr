@@ -50,9 +50,10 @@
                 </div>
             </div>
         </div>
-        <div class="main-right"><aside-trending :trending="trending"></aside-trending></div>
+        <div class="main-right"><aside-trending :trending="trending" /></div>
     </div>
 </template>
+
 <script setup lang="ts">
 import type { asyncDataConfig } from '@/types'
 
@@ -62,7 +63,7 @@ defineOptions({
         const { store, route, api } = payload
         const frontendArticleStore = useFrontendArticleStore(store)
         return frontendArticleStore.getTrending({ id: route.query.id }, api)
-    }
+    },
 })
 
 // pinia 状态管理 ===>
@@ -79,9 +80,9 @@ useHead({
     title: headTitle,
     meta: [
         {
-            name: `description`,
-            content: headTitle
-        }
-    ]
+            name: 'description',
+            content: headTitle,
+        },
+    ],
 })
 </script>

@@ -9,16 +9,15 @@
                 </router-view>
             </div>
         </div>
-        <backend-menu v-if="!isLogin"></backend-menu>
+        <backend-menu v-if="!isLogin" />
     </div>
 </template>
 
 <script setup lang="ts">
 defineOptions({
-    name: 'backend-index'
+    name: 'backend-index',
 })
 
-// eslint-disable-next-line no-unused-vars
 const { route } = useGlobal()
 
 const key = computed(() => {

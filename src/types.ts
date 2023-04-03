@@ -1,11 +1,6 @@
-/* eslint-disable no-unused-vars */
-
 import type { AxiosInstance } from 'axios'
 import type { Pinia } from 'pinia'
 import type { RouteLocationNormalized } from 'vue-router'
-
-declare type Nullable<T> = T | null
-declare type NonNullable<T> = T extends null | undefined ? never : T
 
 export interface anyObject {
     [propName: string]: any

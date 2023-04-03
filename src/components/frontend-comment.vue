@@ -2,16 +2,16 @@
     <div class="card">
         <div class="comments">
             <div class="comment-post-wrap">
-                <img :src="useAvatar(userEmail)" alt="" class="avatar-img" />
+                <img :src="useAvatar(userEmail)" alt="" class="avatar-img">
                 <div class="comment-post-input-wrap base-textarea-wrap">
-                    <textarea id="content" v-model="form.content" class="textarea-input base-input" cols="30" rows="4"></textarea>
+                    <textarea id="content" v-model="form.content" class="textarea-input base-input" cols="30" rows="4" />
                 </div>
                 <div class="comment-post-actions"><a href="javascript:;" class="btn btn-blue" @click="handlePostComment">发表评论</a></div>
             </div>
             <div class="comment-items-wrap">
                 <div v-for="item in comments.data" :key="item._id" class="comment-item">
                     <a href="javascript:;" class="comment-author-avatar-link">
-                        <img :src="useAvatar(item.userid.email)" alt="" class="avatar-img" />
+                        <img :src="useAvatar(item.userid.email)" alt="" class="avatar-img">
                     </a>
                     <div class="comment-content-wrap">
                         <span class="comment-author-wrap">
@@ -35,19 +35,18 @@
 
 <script setup lang="ts">
 import api from '@/api/index-client'
-import type { CommentStoreList, Comment } from '@/types'
+import type { Comment, CommentStoreList } from '@/types'
 
 const props = defineProps<{
     comments: CommentStoreList
 }>()
 
 defineOptions({
-    name: 'frontend-comment'
+    name: 'frontend-comment',
 })
 
 const { comments } = $(toRefs(props))
 
-// eslint-disable-next-line no-unused-vars
 const { route, globalStore } = useGlobal()
 
 const { cookies } = $(toRefs(globalStore))
@@ -58,7 +57,7 @@ const [loading, toggleLoading] = useToggle(false)
 
 const form = reactive({
     id: route.params.id,
-    content: ''
+    content: '',
 })
 
 const user = $computed(() => {
@@ -73,7 +72,7 @@ const handleLoadComment = async () => {
     await globalCommentStore.getCommentList({
         id: route.params.id,
         page: comments.page + 1,
-        limit: 10
+        limit: 10,
     })
     toggleLoading(false)
 }
@@ -81,9 +80,11 @@ const handlePostComment = useLockFn(async () => {
     if (!user) {
         showMsg('请先登录!')
         globalStore.setLoginModal(true)
-    } else if (form.content === '') {
+    }
+    else if (form.content === '') {
         showMsg('请输入评论内容!')
-    } else {
+    }
+    else {
         const { code, data } = await api.post('frontend/comment/insert', form)
         if (code === 200) {
             form.content = ''

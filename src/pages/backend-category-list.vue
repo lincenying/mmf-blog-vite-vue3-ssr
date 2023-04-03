@@ -31,10 +31,9 @@ defineOptions({
         const { store, route, api } = payload
         const globalCategoryStore = useGlobalCategoryStore(store)
         return globalCategoryStore.getCategoryList({ limit: 99, path: route.path }, api)
-    }
+    },
 })
 
-// eslint-disable-next-line no-unused-vars
 const { route, appShellStore } = useGlobal()
 
 // pinia 状态管理 ===>
@@ -57,7 +56,8 @@ const loadMore = async (page: number) => {
 onMounted(() => {
     if (category.length === 0) {
         loadMore(1)
-    } else {
+    }
+    else {
         const scrollTop = historyPageScrollTop[route.path] || 0
         window.scrollTo(0, scrollTop)
     }
@@ -87,9 +87,9 @@ useHead({
     title: headTitle,
     meta: [
         {
-            name: `description`,
-            content: headTitle
-        }
-    ]
+            name: 'description',
+            content: headTitle,
+        },
+    ],
 })
 </script>

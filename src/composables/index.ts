@@ -11,15 +11,13 @@ export const useGlobal = () => {
     const globalStore = useGlobalStore()
     const appShellStore = useAppShellStore()
 
-    // eslint-disable-next-line no-unused-vars
-
     return {
         ctx,
         options,
         route,
         router,
         globalStore,
-        appShellStore
+        appShellStore,
     }
 }
 
@@ -42,7 +40,8 @@ export const useLockFn = (fn: Fn, autoUnlock: boolean | string = 'auto') => {
         try {
             const $return: any = await fn(...args)
             if (autoUnlock === true || (autoUnlock === 'auto' && $return !== false)) toggleLock(false)
-        } catch (e) {
+        }
+        catch (e) {
             toggleLock(false)
             throw e
         }
@@ -53,7 +52,6 @@ export const useLockFn = (fn: Fn, autoUnlock: boolean | string = 'auto') => {
  * 保持滚动条位置
  */
 export const useSaveScroll = () => {
-    // eslint-disable-next-line no-unused-vars
     const route = useRoute()
     const appShellStore = useAppShellStore()
 
@@ -61,18 +59,18 @@ export const useSaveScroll = () => {
 
     watch(
         () => route.fullPath,
-        async currPath => {
+        async (currPath) => {
             const scrollTop = historyPageScrollTop.value[currPath] || 0
             setTimeout(() => {
                 window.scrollTo(0, scrollTop)
             }, 350)
-        }
+        },
     )
 
     onBeforeRouteLeave((to, from, next) => {
         appShellStore.saveScrollTop({
             path: from.fullPath,
-            scrollTop: Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop)
+            scrollTop: Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop),
         })
         next()
     })

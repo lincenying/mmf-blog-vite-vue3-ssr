@@ -11,10 +11,10 @@
                             class="base-input"
                             name="old_password"
                             autocomplete="off"
-                        />
+                        >
                     </a-input>
                     <a-input title="新的密码">
-                        <input v-model="form.password" type="password" placeholder="新的密码" class="base-input" name="password" autocomplete="off" />
+                        <input v-model="form.password" type="password" placeholder="新的密码" class="base-input" name="password" autocomplete="off">
                     </a-input>
                     <a-input title="确认密码">
                         <input
@@ -24,7 +24,7 @@
                             class="base-input"
                             name="re_password"
                             autocomplete="off"
-                        />
+                        >
                     </a-input>
                 </form>
             </div>
@@ -37,21 +37,21 @@
 import api from '@/api/index-client'
 
 defineOptions({
-    name: 'frontend-user-password'
+    name: 'frontend-user-password',
 })
 
 const form = reactive({
     old_password: '',
     password: '',
-    re_password: ''
+    re_password: '',
 })
 
 const handleSubmit = useLockFn(async () => {
-    if (!form.password || !form.old_password || !form.re_password) {
+    if (!form.password || !form.old_password || !form.re_password)
         return showMsg('请将表单填写完整!')
-    } else if (form.password !== form.re_password) {
+    else if (form.password !== form.re_password)
         return showMsg('两次密码输入不一致!')
-    }
+
     const { code, message } = await api.post('frontend/user/password', form)
     if (code === 200) {
         showMsg({ type: 'success', content: message })
@@ -70,9 +70,9 @@ useHead({
     title: headTitle,
     meta: [
         {
-            name: `description`,
-            content: headTitle
-        }
-    ]
+            name: 'description',
+            content: headTitle,
+        },
+    ],
 })
 </script>

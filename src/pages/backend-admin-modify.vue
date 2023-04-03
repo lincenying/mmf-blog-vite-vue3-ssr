@@ -3,15 +3,15 @@
         <div class="settings-main-content">
             <form>
                 <a-input title="昵称">
-                    <input v-model="form.username" type="text" placeholder="昵称" class="base-input" name="username" />
+                    <input v-model="form.username" type="text" placeholder="昵称" class="base-input" name="username">
                     <span class="input-info error">请输入昵称</span>
                 </a-input>
                 <a-input title="邮箱">
-                    <input v-model="form.email" type="text" placeholder="邮箱" class="base-input" name="email" />
+                    <input v-model="form.email" type="text" placeholder="邮箱" class="base-input" name="email">
                     <span class="input-info error">请输入邮箱</span>
                 </a-input>
                 <a-input title="密码">
-                    <input v-model="form.password" type="password" placeholder="密码" class="base-input" name="password" />
+                    <input v-model="form.password" type="password" placeholder="密码" class="base-input" name="password">
                     <span class="input-info error">请输入密码</span>
                 </a-input>
             </form>
@@ -33,10 +33,9 @@ defineOptions({
         const { store, route, api } = payload
         const backendAdminStore = useBackendAdminStore(store)
         return backendAdminStore.getAdminItem({ id: route.params.id, path: route.path }, api)
-    }
+    },
 })
 
-// eslint-disable-next-line no-unused-vars
 const { route, router } = useGlobal()
 
 // pinia 状态管理 ===>
@@ -49,10 +48,10 @@ const form = reactive({
     id: route.params.id,
     username: '',
     email: '',
-    password: ''
+    password: '',
 })
 
-watch(item, val => {
+watch(item, (val) => {
     if (val.data) {
         form.username = val.data.username
         form.email = val.data.email
@@ -83,9 +82,9 @@ useHead({
     title: headTitle,
     meta: [
         {
-            name: `description`,
-            content: headTitle
-        }
-    ]
+            name: 'description',
+            content: headTitle,
+        },
+    ],
 })
 </script>

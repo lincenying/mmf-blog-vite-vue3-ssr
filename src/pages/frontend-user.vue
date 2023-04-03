@@ -7,16 +7,15 @@
                 </Suspense>
             </router-view>
         </div>
-        <div class="main-right"><aside-account></aside-account></div>
+        <div class="main-right"><aside-account /></div>
     </div>
 </template>
 
 <script setup lang="ts">
 defineOptions({
-    name: 'frontend-user'
+    name: 'frontend-user',
 })
 
-// eslint-disable-next-line no-unused-vars
 const { route } = useGlobal()
 
 const key = computed(() => {

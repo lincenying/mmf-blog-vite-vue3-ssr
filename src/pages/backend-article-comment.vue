@@ -7,7 +7,7 @@
             <div class="comment-items-wrap">
                 <div v-for="item in lists.data" :key="item._id" class="comment-item">
                     <a href="javascript:;" class="comment-author-avatar-link">
-                        <img :src="useAvatar(item.email)" alt="" class="avatar-img" />
+                        <img :src="useAvatar(item.email)" alt="" class="avatar-img">
                     </a>
                     <div class="comment-content-wrap">
                         <span class="comment-author-wrap">
@@ -16,9 +16,7 @@
                         <div class="comment-content">{{ item.content }}</div>
                         <div class="comment-footer">
                             <span class="comment-time">{{ getDateDiff(`${item.timestamp}`) }}</span>
-                            <a v-if="item.is_delete" href="javascript:;" class="comment-action-item comment-reply" @click="handleRecover(item._id)"
-                                >恢复</a
-                            >
+                            <a v-if="item.is_delete" href="javascript:;" class="comment-action-item comment-reply" @click="handleRecover(item._id)">恢复</a>
                             <a v-else href="javascript:;" class="comment-action-item comment-reply" @click="handleDelete(item._id)">删除</a>
                         </div>
                     </div>
@@ -43,10 +41,9 @@ defineOptions({
         const { store, route, api } = payload
         const globalCommentStore = useGlobalCommentStore(store)
         return globalCommentStore.getCommentList({ page: 1, path: route.path, all: 1, id: route.params.id }, api)
-    }
+    },
 })
 
-// eslint-disable-next-line no-unused-vars
 const { route } = useGlobal()
 
 // pinia 状态管理 ===>
@@ -77,9 +74,8 @@ const handleDelete = async (id: string) => {
 }
 
 onMounted(() => {
-    if (lists.path === '') {
+    if (lists.path === '')
         loadMore(1)
-    }
 })
 
 const headTitle = computed(() => {
@@ -90,9 +86,9 @@ useHead({
     title: headTitle,
     meta: [
         {
-            name: `description`,
-            content: headTitle
-        }
-    ]
+            name: 'description',
+            content: headTitle,
+        },
+    ],
 })
 </script>

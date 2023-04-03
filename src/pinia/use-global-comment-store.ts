@@ -11,8 +11,8 @@ const useStore = defineStore('globalCommentStore', () => {
             hasNext: 0,
             hasPrev: 0,
             page: 1,
-            path: ''
-        }
+            path: '',
+        },
     })
 
     const getCommentList = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
@@ -25,25 +25,25 @@ const useStore = defineStore('globalCommentStore', () => {
                 path = '',
                 hasNext = 0,
                 hasPrev = 0,
-                page = 1
+                page = 1,
             } = {
                 ...config,
-                ...data
+                ...data,
             }
 
             let _list
 
-            if (page === 1) {
+            if (page === 1)
                 _list = [].concat(list)
-            } else {
+            else
                 _list = state.lists.data.concat(list)
-            }
+
             state.lists = {
                 data: _list,
                 hasNext,
                 hasPrev,
                 page,
-                path
+                path,
             }
         }
     }
@@ -55,7 +55,7 @@ const useStore = defineStore('globalCommentStore', () => {
         if (index > -1) {
             state.lists.data.splice(index, 1, {
                 ...state.lists.data[index],
-                is_delete: 1
+                is_delete: 1,
             })
         }
     }
@@ -64,7 +64,7 @@ const useStore = defineStore('globalCommentStore', () => {
         if (index > -1) {
             state.lists.data.splice(index, 1, {
                 ...state.lists.data[index],
-                is_delete: 0
+                is_delete: 0,
             })
         }
     }
@@ -74,7 +74,7 @@ const useStore = defineStore('globalCommentStore', () => {
         getCommentList,
         insertCommentItem,
         deleteComment,
-        recoverComment
+        recoverComment,
     }
 })
 

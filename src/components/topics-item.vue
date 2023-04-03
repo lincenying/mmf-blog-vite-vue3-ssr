@@ -2,8 +2,7 @@
     <div class="card feed">
         <div class="feed-content">
             <div class="feed-source-time">
-                <span class="feed-source"
-                    >来自分类
+                <span class="feed-source">来自分类
                     <router-link :to="`/category/${item.category}`" class="feed-minor-link">{{ item.category_name }}</router-link>
                 </span>
                 <span class="feed-time">{{ item.update_date }}</span>
@@ -15,9 +14,10 @@
                 <div class="feed-article-content markdown-body">{{ item.content }}</div>
             </div>
         </div>
-        <item-actions :item="item"></item-actions>
+        <item-actions :item="item" />
     </div>
 </template>
+
 <script setup lang="ts">
 import type { Article } from '@/types'
 
@@ -26,7 +26,7 @@ const props = defineProps<{
 }>()
 
 defineOptions({
-    name: 'topics-item'
+    name: 'topics-item',
 })
 
 const { item } = $(toRefs(props))
