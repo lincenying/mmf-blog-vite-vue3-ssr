@@ -2,11 +2,7 @@ import type { AxiosInstance } from 'axios'
 import type { Pinia } from 'pinia'
 import type { RouteLocationNormalized } from 'vue-router'
 
-export interface anyObject {
-    [propName: string]: any
-}
-
-export interface anyArray {
+export interface AnyArray {
     [index: number]: any
 }
 
