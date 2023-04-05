@@ -29,10 +29,10 @@ function checkStatus(response: AxiosResponse) {
             message: (response && response.statusText) || '未知错误',
             data: '',
         },
-    }
+    } as AxiosResponse
 }
 
-function checkCode(res: any) {
+function checkCode(res: AxiosResponse) {
     if (res.data.code === -500)
         window.location.href = '/backend'
     else if (res.data.code === -400)

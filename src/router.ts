@@ -130,7 +130,7 @@ export function createRouter(store: Pinia) {
             // const pageTransitionName = isForward(to, from) ? slideLeft : slideRight
             // =================== //
             // 根据路由中的 meta.index 来判断切换动画
-            let pageTransitionName
+            let pageTransitionName: string
             if (!from.meta.index || to.meta.index === from.meta.index)
                 pageTransitionName = 'fade'
             else if ((to.meta.index as number) > (from.meta.index as number))
