@@ -3,7 +3,17 @@
     "semi": false,
     "tabWidth": 4,
     "singleQuote": true,
-    "trailingComma": "none",
-    "arrowParens": "avoid",
-    "htmlWhitespaceSensitivity": "css"
+    "trailingComma": "all",
+    "arrowParens": "always",
+    "proseWrap": "preserve",
+    "htmlWhitespaceSensitivity": "css",
+    "endOfLine": "lf",
+    "overrides": [
+        {
+            "files": "*.json",
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
 }

@@ -1,5 +1,7 @@
 <template>
-    <div v-show="scrollTop > 500" class="back-top"><a href="javascript:;" @click="handleBackTop" /></div>
+    <div v-show="scrollTop > 500" class="back-top">
+        <a href="javascript:;" @click="handleBackTop" />
+    </div>
 </template>
 
 <script setup lang="ts">

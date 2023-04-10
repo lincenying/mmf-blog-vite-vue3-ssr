@@ -12,7 +12,9 @@
         <a href="javascript:;" class="action-item action-item-fav">
             <i class="icon icon-action-fav" /><span class="text">{{ item.visit }} 浏览</span>
         </a>
-        <a href="javascript:;" class="action-item" @click="handleShare"> <i class="icon icon-action-share" /><span class="text">分享</span> </a>
+        <a href="javascript:;" class="action-item" @click="handleShare">
+            <i class="icon icon-action-share" /><span class="text">分享</span>
+        </a>
     </div>
 </template>
 
