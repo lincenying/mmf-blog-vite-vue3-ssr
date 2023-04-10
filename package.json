@@ -92,6 +92,7 @@
     "peerDependencyRules": {
       "ignoreMissing": [
         "rollup",
+        "postcss",
         "prettier"
       ]
     }
