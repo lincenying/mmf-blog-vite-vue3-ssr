@@ -28,11 +28,11 @@
 <script setup lang="ts">
 import { UTC2Date } from 'lcy-utils'
 import api from '@/api/index-client'
-import type { asyncDataConfig } from '@/types'
+import type { AsyncDataConfig } from '@/types'
 
 defineOptions({
     name: 'backend-admin-list',
-    asyncData(payload: asyncDataConfig) {
+    asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const backendAdminStore = useBackendAdminStore(store)
         return backendAdminStore.getAdminList({ page: 1, path: route.path }, api)

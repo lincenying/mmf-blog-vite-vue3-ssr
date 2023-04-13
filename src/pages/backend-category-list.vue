@@ -22,12 +22,12 @@
 </template>
 
 <script setup lang="ts">
-import type { asyncDataConfig } from '@/types'
+import type { AsyncDataConfig } from '@/types'
 import api from '@/api/index-client'
 
 defineOptions({
     name: 'backend-category-list',
-    asyncData(payload: asyncDataConfig) {
+    asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const globalCategoryStore = useGlobalCategoryStore(store)
         return globalCategoryStore.getCategoryList({ limit: 99, path: route.path }, api)

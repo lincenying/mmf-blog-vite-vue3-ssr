@@ -27,12 +27,12 @@
 
 <script setup lang="ts">
 import { UTC2Date } from 'lcy-utils'
-import type { asyncDataConfig } from '@/types'
+import type { AsyncDataConfig } from '@/types'
 import api from '@/api/index-client'
 
 defineOptions({
     name: 'backend-user-list',
-    asyncData(payload: asyncDataConfig) {
+    asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const backendUserStore = useBackendUserStore(store)
         return backendUserStore.getUserList({ page: 1, path: route.path }, api)

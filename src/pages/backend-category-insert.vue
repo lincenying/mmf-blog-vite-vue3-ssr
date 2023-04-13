@@ -16,6 +16,7 @@
 
 <script setup lang="ts">
 import api from '@/api/index-client'
+import type { Category } from '@/types'
 
 defineOptions({
     name: 'backend-category-insert',
@@ -55,13 +56,13 @@ const handleInsert = async () => {
     }
     if (loading.value) return
     toggleLoading(true)
-    const { code, data, message } = await api.post('backend/category/insert', form)
+    const { code, data, message } = await api.post<Category>('backend/category/insert', form)
     toggleLoading(false)
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         globalCategoryStore.insertCategoryItem({
             ...form,
-            _id: data,
+            ...data,
         })
         router.push('/backend/category/list')
     }

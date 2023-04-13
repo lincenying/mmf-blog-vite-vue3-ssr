@@ -33,13 +33,13 @@
 </template>
 
 <script setup lang="ts">
-import type { Fn, asyncDataConfig } from '@/types'
+import type { Article, AsyncDataConfig, Fn, Upload } from '@/types'
 import api from '@/api/index-client'
 import { uploadApi } from '@/api/upload-api'
 
 defineOptions({
     name: 'backend-article-insert',
-    asyncData(payload: asyncDataConfig) {
+    asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const globalCategoryStore = useGlobalCategoryStore(store)
         return globalCategoryStore.getCategoryList({ limit: 99, path: route.path }, api)
@@ -77,7 +77,7 @@ const handleInsert = async () => {
     if (loading.value) return
     toggleLoading(true)
     // form.html = this.$refs.md.d_render
-    const { code, data, message } = await api.post('backend/article/insert', form)
+    const { code, data, message } = await api.post<Article>('backend/article/insert', form)
     toggleLoading(false)
     if (code === 200) {
         showMsg({ type: 'success', content: message })
@@ -92,7 +92,7 @@ const handleUploadImage = async (event: EventTarget, insertImage: Fn, files: Fil
     const formData = new FormData()
     formData.append('file', files[0])
     try {
-        const { data } = await api.file(`${uploadApi}/ajax.php?action=upload`, formData)
+        const { data } = await api.file<Upload>(`${uploadApi}/ajax.php?action=upload`, formData)
         if (data && data.filepath) {
             insertImage({
                 url: `${uploadApi}/${data.filepath}`,

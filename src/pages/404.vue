@@ -14,11 +14,11 @@
 </template>
 
 <script setup lang="ts">
-import type { asyncDataConfig } from '@/types'
+import type { AsyncDataConfig } from '@/types'
 
 defineOptions({
     name: '404-page',
-    asyncData(payload: asyncDataConfig) {
+    asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const frontendArticleStore = useFrontendArticleStore(store)
         return frontendArticleStore.getTrending({ id: route.query.id }, api)

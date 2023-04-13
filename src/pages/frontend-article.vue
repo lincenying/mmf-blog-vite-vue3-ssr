@@ -41,11 +41,11 @@
 
 <script setup lang="ts">
 import { ContentLoader } from 'vue-content-loader'
-import type { asyncDataConfig } from '@/types'
+import type { AsyncDataConfig } from '@/types'
 
 defineOptions({
     name: 'frontend-article',
-    asyncData(payload: asyncDataConfig) {
+    asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const {
             path,

@@ -23,7 +23,7 @@ const useStore = defineStore('frontendArticleStore', () => {
     const getArticleList = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
         if (!import.meta.env.SSR) $api = api
         if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1) return
-        const { code, data } = await $api!.get('frontend/article/list', { ...config, path: undefined, cache: true })
+        const { code, data } = await $api!.get<ResponseDataLists<Article[]>>('frontend/article/list', { ...config, path: undefined, cache: true })
         if (data && code === 200) {
             const {
                 list = [],
@@ -40,7 +40,7 @@ const useStore = defineStore('frontendArticleStore', () => {
             let _list
 
             if (page === 1)
-                _list = [].concat(list)
+                _list = list
             else
                 _list = state.lists.data.concat(list)
 
@@ -48,14 +48,14 @@ const useStore = defineStore('frontendArticleStore', () => {
                 data: _list,
                 hasNext,
                 hasPrev,
-                page: page + 1,
+                page: (page || 1) + 1,
                 path,
             }
         }
     }
     const getArticleItem = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
         if (!import.meta.env.SSR) $api = api
-        const { code, data } = await $api!.get('frontend/article/item', { ...config, path: undefined, markdown: 1, cache: true })
+        const { code, data } = await $api!.get<Article>('frontend/article/item', { ...config, path: undefined, markdown: 1, cache: true })
         if (data && code === 200) {
             state.item = {
                 data,
@@ -67,7 +67,7 @@ const useStore = defineStore('frontendArticleStore', () => {
     const getTrending = async (_: any, $api?: ApiServerReturn | ApiClientReturn) => {
         if (!import.meta.env.SSR) $api = api
         if (state.trending.length) return
-        const { code, data } = await $api!.get('frontend/trending', { cache: true })
+        const { code, data } = await $api!.get<ResponseDataList<Article[]>>('frontend/trending', { cache: true })
         if (data && code === 200)
             state.trending = data.list
     }

@@ -24,12 +24,12 @@
 </template>
 
 <script setup lang="ts">
-import type { asyncDataConfig } from '@/types'
+import type { AsyncDataConfig, User } from '@/types'
 import api from '@/api/index-client'
 
 defineOptions({
     name: 'backend-admin-modify',
-    asyncData(payload: asyncDataConfig) {
+    asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const backendAdminStore = useBackendAdminStore(store)
         return backendAdminStore.getAdminItem({ id: route.params.id, path: route.path }, api)
@@ -65,7 +65,7 @@ const handleModify = async () => {
     }
     if (loading.value) return
     toggleLoading(true)
-    const { code, data, message } = await api.post('backend/admin/modify', form)
+    const { code, data, message } = await api.post<User>('backend/admin/modify', form)
     toggleLoading(false)
     if (code === 200) {
         showMsg({ type: 'success', content: message })

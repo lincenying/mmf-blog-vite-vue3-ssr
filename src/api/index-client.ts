@@ -19,28 +19,26 @@ axios.interceptors.response.use(
     error => Promise.resolve(error.response),
 )
 
-function checkStatus(response: AxiosResponse) {
+function checkStatus(response: AxiosResponse): ResponseData<any> {
     if (response && (response.status === 200 || response.status === 304))
-        return response
-
+        return response.data
     return {
-        data: {
-            code: -404,
-            message: (response && response.statusText) || '未知错误',
-            data: '',
-        },
-    } as AxiosResponse
+        code: -404,
+        message: (response && response.statusText) || '未知错误',
+        data: '',
+
+    }
 }
 
-function checkCode(res: AxiosResponse) {
-    if (res.data.code === -500)
+function checkCode(res: ResponseData<any>): ResponseData<any> {
+    if (res.code === -500)
         window.location.href = '/backend'
-    else if (res.data.code === -400)
+    else if (res.code === -400)
         window.location.href = '/'
-    else if (res.data.code !== 200)
-        showMsg(res.data.message)
+    else if (res.code !== 200)
+        showMsg(res.message)
 
-    return res && res.data
+    return res
 }
 
 type API = () => ApiClientReturn

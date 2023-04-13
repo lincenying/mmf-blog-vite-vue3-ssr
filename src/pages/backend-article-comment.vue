@@ -32,12 +32,12 @@
 
 <script setup lang="ts">
 import { getDateDiff } from 'lcy-utils'
-import type { asyncDataConfig } from '@/types'
+import type { AsyncDataConfig } from '@/types'
 import api from '@/api/index-client'
 
 defineOptions({
     name: 'backend-article-comment',
-    asyncData(payload: asyncDataConfig) {
+    asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const globalCommentStore = useGlobalCommentStore(store)
         return globalCommentStore.getCommentList({ page: 1, path: route.path, all: 1, id: route.params.id }, api)

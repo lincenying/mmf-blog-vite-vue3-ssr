@@ -35,6 +35,13 @@ export interface ApiConfig {
 }
 
 /**
+ * 上传
+ */
+export interface Upload {
+    filepath: string
+}
+
+/**
  * 文章详情
  */
 export interface Article {
@@ -109,14 +116,14 @@ export interface ArticleItemConfig {
 }
 
 export interface ListConfig {
-    hasNext?: number
-    hasPrev?: number
+    hasNext?: number | boolean
+    hasPrev?: number | boolean
     path?: string
     page: number
     [propName: string]: any
 }
 
-export interface asyncDataConfig {
+export interface AsyncDataConfig {
     store: Pinia
     route: RouteLocationNormalized
     api?: any
@@ -208,14 +215,14 @@ export interface ShellStore {
 }
 
 export interface ApiClientReturn {
-    get(url: string, params: Record<string, any>, headers?: Record<string, any>): Promise<any>
-    post(url: string, data: Record<string, any>, headers?: Record<string, any>): Promise<any>
-    file(url: string, data: Record<string, any>, headers?: Record<string, any>): Promise<any>
+    get<T>(url: string, params: Record<string, any>, headers?: Record<string, any>): Promise<ResponseData<T>>
+    post<T>(url: string, data: Record<string, any>, headers?: Record<string, any>): Promise<ResponseData<T>>
+    file<T>(url: string, data: Record<string, any>, headers?: Record<string, any>): Promise<ResponseData<T>>
 }
 
 export interface ApiServerReturn {
-    post(url: string, data: Record<string, any>, headers?: Record<string, any>): Promise<any>
-    get(url: string, params: Record<string, any>, headers?: Record<string, any>): Promise<any>
+    post<T>(url: string, data: Record<string, any>, headers?: Record<string, any>): Promise<ResponseData<T>>
+    get<T>(url: string, params: Record<string, any>, headers?: Record<string, any>): Promise<ResponseData<T>>
     cookies: UserCookies
     api: AxiosInstance
     getCookies: () => UserCookies

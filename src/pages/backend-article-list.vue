@@ -30,12 +30,12 @@
 
 <script setup lang="ts">
 import { getDateDiff } from 'lcy-utils'
-import type { asyncDataConfig } from '@/types'
+import type { AsyncDataConfig } from '@/types'
 import api from '@/api/index-client'
 
 defineOptions({
     name: 'backend-article-list',
-    asyncData(payload: asyncDataConfig) {
+    asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const backendArticleStore = useBackendArticleStore(store)
         return backendArticleStore.getArticleList({ page: 1, path: route.path }, api)
