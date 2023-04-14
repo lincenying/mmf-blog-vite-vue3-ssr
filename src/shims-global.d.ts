@@ -1,8 +1,10 @@
 /* eslint-disable no-unused-vars */
 
 declare type Nullable<T> = T | null
-
 declare type NonNullable<T> = T extends null | undefined ? never : T
+declare type UnfAble<T> = T | undefined
+declare type Obj = Record<string, any>
+declare type ObjT<T> = Record<string, T>
 
 /**
  * 接口返回模板
@@ -30,6 +32,7 @@ declare interface ResponseDataLists<T> {
 declare interface ResponseDataList<T> {
     list: T
 }
+
 
 declare interface Window {
     $$api: {

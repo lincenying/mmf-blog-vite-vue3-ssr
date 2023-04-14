@@ -1,5 +1,5 @@
 import md5 from 'md5'
-import type { Fn } from '@/types'
+import type { AnyFn } from '@vueuse/core'
 
 export const useGlobal = () => {
     const ins = getCurrentInstance()!
@@ -32,7 +32,7 @@ export const useGlobal = () => {
  * autoUnlock === 'auto' 当 fn 返回 false 时, 不自动解锁, 返回其他值时, 自动解锁
  * ```
  */
-export const useLockFn = (fn: Fn, autoUnlock: boolean | string = 'auto') => {
+export const useLockFn = (fn: AnyFn, autoUnlock: boolean | string = 'auto') => {
     const [lock, toggleLock] = useToggle(false)
     return async (...args: any[]) => {
         if (lock.value) return

@@ -33,7 +33,8 @@
 </template>
 
 <script setup lang="ts">
-import type { Article, AsyncDataConfig, Fn, Upload } from '@/types'
+import type { AnyFn } from '@vueuse/core'
+import type { Article, AsyncDataConfig, Upload } from '@/types'
 import api from '@/api/index-client'
 import { uploadApi } from '@/api/upload-api'
 
@@ -86,7 +87,7 @@ const handleInsert = async () => {
     }
 }
 
-const handleUploadImage = async (event: EventTarget, insertImage: Fn, files: FileList) => {
+const handleUploadImage = async (event: EventTarget, insertImage: AnyFn, files: FileList) => {
     const loader = ctx.$loading.show()
 
     const formData = new FormData()
