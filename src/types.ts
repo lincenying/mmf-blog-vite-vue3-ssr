@@ -158,6 +158,7 @@ export interface FArticleStore {
     item: {
         data: Nullable<Article>
         path?: string
+        isLoad?: boolean
         [propName: string]: any
     }
     trending: Article[]
