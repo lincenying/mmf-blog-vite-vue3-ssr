@@ -20,9 +20,9 @@ const useStore = defineStore('backendUserStore', () => {
     })
 
     const getUserList = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
-        if (!import.meta.env.SSR) $api = api
+        if (!$api) $api = api
         if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1) return
-        const { code, data } = await $api!.get<ResponseDataLists<User[]>>('backend/user/list', { ...config, path: undefined, cache: true })
+        const { code, data } = await $api.get<ResponseDataLists<User[]>>('backend/user/list', { ...config, path: undefined, cache: true })
         if (data && code === 200) {
             const {
                 list = [],
@@ -53,8 +53,8 @@ const useStore = defineStore('backendUserStore', () => {
         }
     }
     const getUserItem = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
-        if (!import.meta.env.SSR) $api = api
-        const { code, data } = await $api!.get<User>('backend/user/item', { ...config, path: undefined })
+        if (!$api) $api = api
+        const { code, data } = await $api.get<User>('backend/user/item', { ...config, path: undefined })
         if (data && code === 200) {
             state.item = {
                 data,

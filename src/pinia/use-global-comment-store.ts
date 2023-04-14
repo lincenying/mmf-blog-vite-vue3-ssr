@@ -16,9 +16,9 @@ const useStore = defineStore('globalCommentStore', () => {
     })
 
     const getCommentList = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
-        if (!import.meta.env.SSR) $api = api
+        if (!$api) $api = api
         if (config.path === state.lists.path && config.page === 1) return
-        const { code, data } = await $api!.get<ResponseDataLists<Comment[]>>('frontend/comment/list', { ...config, path: undefined, cache: true })
+        const { code, data } = await $api.get<ResponseDataLists<Comment[]>>('frontend/comment/list', { ...config, path: undefined, cache: true })
         if (data && code === 200) {
             const {
                 list = [],
