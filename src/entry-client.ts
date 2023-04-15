@@ -4,6 +4,7 @@ import vuePressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js'
 
 // Prism
 import Prism from 'prismjs'
+
 // highlight code
 import 'prismjs/components/prism-json'
 
@@ -34,7 +35,8 @@ router.isReady().then(() => {
             return diffed || (diffed = from.matched[i] !== c)
         })
 
-        if (!activated.length) return false
+        if (!activated.length)
+            return false
 
         await Promise.all(
             activated.map((c) => {

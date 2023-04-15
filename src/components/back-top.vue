@@ -11,7 +11,7 @@ defineOptions({
 
 const { y: scrollTop } = useWindowScroll()
 
-const handleBackTop = () => {
+function handleBackTop() {
     let top = scrollTop.value
     const timer = setInterval(() => {
         top -= Math.abs(top * 0.1)

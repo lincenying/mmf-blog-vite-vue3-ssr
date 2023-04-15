@@ -58,12 +58,13 @@ watch(item, (val) => {
     }
 })
 
-const handleModify = async () => {
+async function handleModify() {
     if (!form.username || !form.email) {
         showMsg('请将表单填写完整!')
         return
     }
-    if (loading.value) return
+    if (loading.value)
+        return
     toggleLoading(true)
     const { code, data, message } = await api.post<User>('backend/admin/modify', form)
     toggleLoading(false)

@@ -67,7 +67,7 @@ const userEmail = computed(() => {
     return cookies.useremail
 })
 
-const handleLoadComment = async () => {
+async function handleLoadComment() {
     toggleLoading(true)
     await globalCommentStore.getCommentList({
         id: route.params.id,
@@ -93,7 +93,7 @@ const handlePostComment = useLockFn(async () => {
         }
     }
 })
-const handleReply = (item: Comment) => {
+function handleReply(item: Comment) {
     form.content = `回复 @${item.userid?.username}: `
     const content: HTMLTextAreaElement = document.querySelector('#content')!
     content.focus()

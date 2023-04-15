@@ -16,8 +16,10 @@ const useStore = defineStore('globalCommentStore', () => {
     })
 
     const getCommentList = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
-        if (!$api) $api = api
-        if (config.path === state.lists.path && config.page === 1) return
+        if (!$api)
+            $api = api
+        if (config.path === state.lists.path && config.page === 1)
+            return
         const { code, data } = await $api.get<ResponseDataLists<Comment[]>>('frontend/comment/list', { ...config, path: undefined, cache: true })
         if (data && code === 200) {
             const {
@@ -80,4 +82,5 @@ const useStore = defineStore('globalCommentStore', () => {
 
 export default useStore
 
-if (import.meta.hot) import.meta.hot.accept(acceptHMRUpdate(useStore as any, import.meta.hot))
+if (import.meta.hot)
+    import.meta.hot.accept(acceptHMRUpdate(useStore as any, import.meta.hot))

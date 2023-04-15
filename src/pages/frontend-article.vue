@@ -78,8 +78,9 @@ const { lists: comments } = $(storeToRefs(globalCommentStore))
 
 useSaveScroll()
 
-const addTarget = (content: string) => {
-    if (!content) return ''
+function addTarget(content: string) {
+    if (!content)
+        return ''
     return content.replace(/<a(.*?)href="http/g, '<a$1target="_blank" href="http')
 }
 

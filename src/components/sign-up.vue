@@ -53,10 +53,10 @@ const form = reactive({
     re_password: '',
 })
 
-const handleClose = () => {
+function handleClose() {
     globalStore.setRegisterModal(false)
 }
-const handleLogin = () => {
+function handleLogin() {
     globalStore.setLoginModal(true)
     globalStore.setRegisterModal(false)
 }

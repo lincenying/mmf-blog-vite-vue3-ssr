@@ -20,8 +20,10 @@ const useStore = defineStore('backendUserStore', () => {
     })
 
     const getUserList = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
-        if (!$api) $api = api
-        if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1) return
+        if (!$api)
+            $api = api
+        if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1)
+            return
         const { code, data } = await $api.get<ResponseDataLists<User[]>>('backend/user/list', { ...config, path: undefined, cache: true })
         if (data && code === 200) {
             const {
@@ -53,7 +55,8 @@ const useStore = defineStore('backendUserStore', () => {
         }
     }
     const getUserItem = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
-        if (!$api) $api = api
+        if (!$api)
+            $api = api
         const { code, data } = await $api.get<User>('backend/user/item', { ...config, path: undefined })
         if (data && code === 200) {
             state.item = {
@@ -99,4 +102,5 @@ const useStore = defineStore('backendUserStore', () => {
 
 export default useStore
 
-if (import.meta.hot) import.meta.hot.accept(acceptHMRUpdate(useStore as any, import.meta.hot))
+if (import.meta.hot)
+    import.meta.hot.accept(acceptHMRUpdate(useStore as any, import.meta.hot))

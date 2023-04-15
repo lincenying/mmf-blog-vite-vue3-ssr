@@ -19,7 +19,7 @@ defineOptions({
     name: 'aside-account',
 })
 
-const handleLogout = async () => {
+async function handleLogout() {
     await api.post('frontend/user/logout', {})
     window.location.href = '/'
 }

@@ -59,10 +59,10 @@ const isLogin = computed(() => {
     return !!cookies.user
 })
 
-const handleLogin = () => {
+function handleLogin() {
     globalStore.setLoginModal(true)
 }
-const onSearch = (e: any) => {
+function onSearch(e: any) {
     const qs = e.target.value
     if (qs === '')
         return false

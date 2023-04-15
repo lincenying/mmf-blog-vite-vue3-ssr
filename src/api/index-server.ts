@@ -4,8 +4,9 @@ import md5 from 'md5'
 import config from './config-server'
 import type { ApiServerReturn, UserCookies } from '@/types'
 
-const objToStr = (cookies: Record<string, string | number | boolean>) => {
-    if (!cookies) return ''
+function objToStr(cookies: Record<string, string | number | boolean>) {
+    if (!cookies)
+        return ''
     let cookie = ''
     Object.keys(cookies).forEach((item) => {
         cookie += `${item}=${cookies[item]}; `
@@ -15,7 +16,7 @@ const objToStr = (cookies: Record<string, string | number | boolean>) => {
 
 export default {}
 
-export const api = (cookies: UserCookies): ApiServerReturn => {
+export function api(cookies: UserCookies): ApiServerReturn {
     return {
         cookies,
         api: axios.create({
@@ -46,7 +47,8 @@ export const api = (cookies: UserCookies): ApiServerReturn => {
                     ...headers,
                 },
             })
-            if (config.cached && data.cache) config.cached.set(key, res_1)
+            if (config.cached && data.cache)
+                config.cached.set(key, res_1)
             return res_1 && res_1.data
         },
         async get(url, params, headers = {}) {
@@ -65,7 +67,8 @@ export const api = (cookies: UserCookies): ApiServerReturn => {
                     ...headers,
                 },
             }).then((res) => {
-                if (config.cached && params.cache) config.cached.set(key, res)
+                if (config.cached && params.cache)
+                    config.cached.set(key, res)
                 return res && res.data
             })
         },

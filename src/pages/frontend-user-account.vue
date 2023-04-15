@@ -36,7 +36,7 @@ const { cookies } = $(toRefs(globalStore))
 let username = $ref('')
 let email = $ref('')
 
-const getUser = async () => {
+async function getUser() {
     const { code, data } = await api.get<User>('frontend/user/account', {})
     if (code === 200) {
         username = data.username

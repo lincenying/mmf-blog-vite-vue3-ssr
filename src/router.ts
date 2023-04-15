@@ -1,3 +1,4 @@
+/* eslint-disable antfu/top-level-function */
 /**
  * @file router
  * @author lincenying(lincenying@qq.com)
@@ -33,7 +34,7 @@ const adminModify = () => import('./pages/backend-admin-modify.vue')
 const userList = () => import('./pages/backend-user-list.vue')
 const userModify = () => import('./pages/backend-user-modify.vue')
 
-const guardRoute = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
+function guardRoute(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
     const token = cookies.get('user')
     if (isBrowser && !token)
         next('/')
@@ -41,7 +42,7 @@ const guardRoute = (to: RouteLocationNormalized, from: RouteLocationNormalized, 
         next()
 }
 
-const guardRouteBackend = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
+function guardRouteBackend(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
     const token = cookies.get('b_user')
     if (isBrowser && !token)
         next('/backend/login')
@@ -55,10 +56,7 @@ const backendConfig = {
 }
 
 const routes = [
-    {
-        path: '/index.html',
-        redirect: '/',
-    },
+    { path: '/index.html', redirect: '/' },
     { name: 'index', path: '/', component: index, meta: { index: 1 } },
     { name: 'trending', path: '/trending/:by', component: index, meta: { index: 1 } },
     { name: 'category', path: '/category/:id', component: index, meta: { index: 1 } },
@@ -72,16 +70,8 @@ const routes = [
         meta: { index: 1 },
         beforeEnter: guardRoute,
         children: [
-            {
-                path: 'account',
-                component: account,
-                meta: { path: '/user' },
-            },
-            {
-                path: 'password',
-                component: password,
-                meta: { path: '/user' },
-            },
+            { path: 'account', component: account, meta: { path: '/user' } },
+            { path: 'password', component: password, meta: { path: '/user' } },
         ],
     },
 

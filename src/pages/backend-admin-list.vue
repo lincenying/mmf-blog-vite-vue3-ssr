@@ -51,20 +51,21 @@ useSaveScroll()
 
 const [loading, toggleLoading] = useToggle(false)
 
-const loadMore = async (page = lists.page + 1) => {
-    if (loading.value) return
+async function loadMore(page = lists.page + 1) {
+    if (loading.value)
+        return
     toggleLoading(true)
     await backendAdminStore.getAdminList({ page, path: route.path })
     toggleLoading(false)
 }
-const handleRecover = async (id: string) => {
+async function handleRecover(id: string) {
     const { code, message } = await api.get('backend/admin/recover', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         backendAdminStore.recoverAdmin(id)
     }
 }
-const handleDelete = async (id: string) => {
+async function handleDelete(id: string) {
     const { code, message } = await api.get('backend/admin/delete', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })

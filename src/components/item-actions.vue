@@ -48,7 +48,8 @@ const handleLike = useLockFn(async () => {
         return
     }
     let url = 'frontend/like'
-    if (item.like_status) url = 'frontend/unlike'
+    if (item.like_status)
+        url = 'frontend/unlike'
     const { code, message } = await api.get(url, { id: item._id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
@@ -58,7 +59,7 @@ const handleLike = useLockFn(async () => {
         })
     }
 })
-const handleShare = () => {
+function handleShare() {
     const top = window.screen.height / 2 - 250
     const left = window.screen.width / 2 - 300
     const title = `${item.title} - M.M.F 小屋`

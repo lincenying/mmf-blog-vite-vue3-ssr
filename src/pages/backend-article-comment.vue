@@ -52,20 +52,21 @@ const { lists } = $(storeToRefs(globalCommentStore))
 
 const [loading, toggleLoading] = useToggle(false)
 
-const loadMore = async (page = lists.page + 1) => {
-    if (loading.value) return
+async function loadMore(page = lists.page + 1) {
+    if (loading.value)
+        return
     toggleLoading(true)
     await globalCommentStore.getCommentList({ page, path: route.path, all: 1, id: route.params.id }, api)
     toggleLoading(false)
 }
-const handleRecover = async (id: string) => {
+async function handleRecover(id: string) {
     const { code, message } = await api.get('frontend/comment/recover', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         globalCommentStore.recoverComment(id)
     }
 }
-const handleDelete = async (id: string) => {
+async function handleDelete(id: string) {
     const { code, message } = await api.get('frontend/comment/delete', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })

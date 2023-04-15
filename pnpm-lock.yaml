@@ -23,7 +23,7 @@ specifiers:
   cross-env: ^7.0.3
   element-plus: ^2.3.3
   eslint: ^8.38.0
-  eslint-config-lcy: ^1.0.9
+  eslint-config-lcy: ^1.1.0
   eslint-plugin-prettier: ^4.2.1
   express: ^4.18.2
   http-proxy-middleware: ^2.0.6
@@ -98,7 +98,7 @@ devDependencies:
   cookie-parser: 1.4.6
   cross-env: 7.0.3
   eslint: 8.38.0
-  eslint-config-lcy: 1.0.9_voubu7prgxjfsfbgx5d4sqnwiy
+  eslint-config-lcy: 1.1.0_voubu7prgxjfsfbgx5d4sqnwiy
   eslint-plugin-prettier: 4.2.1_eslint@8.38.0
   http-proxy-middleware: 2.0.6_@types+express@4.17.17
   husky: 8.0.3
@@ -4832,8 +4832,8 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /eslint-config-lcy/1.0.9_voubu7prgxjfsfbgx5d4sqnwiy:
-    resolution: {integrity: sha512-RbC31CuyX1oBXssqoodXOaDfkNhI5LdsTgxWbrhVjk6T6xsFdfla0E/MiRc5I8d1FIPr0hCdSNE3Vtg18g2oQQ==}
+  /eslint-config-lcy/1.1.0_voubu7prgxjfsfbgx5d4sqnwiy:
+    resolution: {integrity: sha512-pwImza6PEraiMAqWJXMP8Gb6SMbaHDjQOyDtAaDAwwqqDeJTfdOSKe5j+TAh9AJexUTaP37N0Tmtcnh/c88vPg==}
     peerDependencies:
       eslint: '>=7.4.0'
     dependencies:
@@ -4841,6 +4841,7 @@ packages:
       '@typescript-eslint/parser': 5.58.0_voubu7prgxjfsfbgx5d4sqnwiy
       eslint: 8.38.0
       eslint-config-prettier: 8.8.0_eslint@8.38.0
+      eslint-plugin-antfu: 0.38.4_voubu7prgxjfsfbgx5d4sqnwiy
       eslint-plugin-eslint-comments: 3.2.0_eslint@8.38.0
       eslint-plugin-html: 7.1.0
       eslint-plugin-import: 2.27.5_jxoc3dvo7nghy7jji4tzdzgpey
@@ -4913,6 +4914,16 @@ packages:
       eslint-import-resolver-node: 0.3.7
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /eslint-plugin-antfu/0.38.4_voubu7prgxjfsfbgx5d4sqnwiy:
+    resolution: {integrity: sha512-lY7nxZaDwZ45GmSG4xm1arafIu8/DcAIkiLdz27jpMdgzQiHGJlsIgcDastrAyWU7I4o3kv+70q252HDDUAyyw==}
+    dependencies:
+      '@typescript-eslint/utils': 5.58.0_voubu7prgxjfsfbgx5d4sqnwiy
+    transitivePeerDependencies:
+      - eslint
+      - supports-color
+      - typescript
     dev: true
 
   /eslint-plugin-es/4.1.0_eslint@8.38.0:

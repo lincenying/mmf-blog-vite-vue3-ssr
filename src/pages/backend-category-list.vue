@@ -46,8 +46,9 @@ useSaveScroll()
 
 const [loading, toggleLoading] = useToggle(false)
 
-const loadMore = async (page: number) => {
-    if (loading.value) return
+async function loadMore(page: number) {
+    if (loading.value)
+        return
     toggleLoading(true)
     await globalCategoryStore.getCategoryList({ page, limit: 99, path: route.path }, api)
     toggleLoading(false)
@@ -63,7 +64,7 @@ onMounted(() => {
     }
 })
 
-const handleRecover = async (id: string) => {
+async function handleRecover(id: string) {
     const { code, message } = await api.get('backend/category/recover', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
@@ -71,7 +72,7 @@ const handleRecover = async (id: string) => {
     }
 }
 
-const handleDelete = async (id: string) => {
+async function handleDelete(id: string) {
     const { code, message } = await api.get('backend/category/delete', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })

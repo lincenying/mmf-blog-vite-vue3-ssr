@@ -70,12 +70,13 @@ onMounted(async () => {
     isClient = true
 })
 
-const handleInsert = async () => {
+async function handleInsert() {
     if (!form.title || !form.category || !form.content) {
         showMsg('请将表单填写完整!')
         return
     }
-    if (loading.value) return
+    if (loading.value)
+        return
     toggleLoading(true)
     // form.html = this.$refs.md.d_render
     const { code, data, message } = await api.post<Article>('backend/article/insert', form)
@@ -87,7 +88,7 @@ const handleInsert = async () => {
     }
 }
 
-const handleUploadImage = async (event: EventTarget, insertImage: AnyFn, files: FileList) => {
+async function handleUploadImage(event: EventTarget, insertImage: AnyFn, files: FileList) {
     const loader = ctx.$loading.show()
 
     const formData = new FormData()

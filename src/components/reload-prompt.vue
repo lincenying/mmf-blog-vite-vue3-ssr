@@ -17,7 +17,7 @@ defineOptions({
 
 const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW()
 
-const handleClose = async () => {
+async function handleClose() {
     offlineReady.value = false
     needRefresh.value = false
 }

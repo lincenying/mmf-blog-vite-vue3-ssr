@@ -74,7 +74,8 @@ watch(
     () => form.category,
     (val) => {
         const obj = lists.find(item => item._id === val)
-        if (obj) form.category_name = obj.cate_name
+        if (obj)
+            form.category_name = obj.cate_name
     },
 )
 
@@ -97,12 +98,13 @@ onMounted(async () => {
     backendArticleStore.getArticleItem({ id: route.params.id })
 })
 
-const handleModify = async () => {
+async function handleModify() {
     if (!form.title || !form.category || !form.content) {
         showMsg('请将表单填写完整!')
         return
     }
-    if (loading.value) return
+    if (loading.value)
+        return
     toggleLoading(true)
     // form.html = this.$refs.md.d_render
     const { code, data, message } = await api.post<Article>('backend/article/modify', form)
@@ -114,7 +116,7 @@ const handleModify = async () => {
     }
 }
 
-const handleUploadImage = async (event: EventTarget, insertImage: AnyFn, files: FileList) => {
+async function handleUploadImage(event: EventTarget, insertImage: AnyFn, files: FileList) {
     const loader = ctx.$loading.show()
 
     const formData = new FormData()

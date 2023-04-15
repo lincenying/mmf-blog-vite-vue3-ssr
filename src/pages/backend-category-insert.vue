@@ -49,12 +49,13 @@ onMounted(() => {
     }
 })
 
-const handleInsert = async () => {
+async function handleInsert() {
     if (!form.cate_name || !form.cate_order) {
         showMsg('请将表单填写完整!')
         return
     }
-    if (loading.value) return
+    if (loading.value)
+        return
     toggleLoading(true)
     const { code, data, message } = await api.post<Category>('backend/category/insert', form)
     toggleLoading(false)

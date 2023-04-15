@@ -46,10 +46,10 @@ const key = $computed(() => {
 const backend = $computed(() => {
     return route.path.includes('backend')
 })
-const handleBeforeEnter = () => {
+function handleBeforeEnter() {
     appShellStore.setPageSwitching(true)
 }
-const handleAfterEnter = () => {
+function handleAfterEnter() {
     appShellStore.setPageSwitching(false)
 }
 </script>
