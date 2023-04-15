@@ -1,9 +1,13 @@
 {
   "name": "mmf-blog-vite-vue3-ssr",
-  "version": "2.0.1",
-  "author": "lincenying <lincenying@qq.com>",
-  "private": true,
   "type": "module",
+  "version": "2.0.1",
+  "private": true,
+  "packageManager": "pnpm@7.29.1",
+  "author": "lincenying <lincenying@qq.com>",
+  "engines": {
+    "node": ">=14.18.0"
+  },
   "scripts": {
     "prepare": "husky install",
     "del": "sh delete-ts.sh",
@@ -81,15 +85,6 @@
     "vite-plugin-pwa": "^0.14.7",
     "vue-tsc": "^1.2.0"
   },
-  "lint-staged": {
-    "*.{js,ts,tsx,vue}": [
-      "eslint --fix"
-    ]
-  },
-  "engines": {
-    "node": ">=14.18.0"
-  },
-  "packageManager": "pnpm@7.29.1",
   "pnpm": {
     "peerDependencyRules": {
       "ignoreMissing": [
@@ -98,5 +93,10 @@
         "prettier"
       ]
     }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,vue}": [
+      "eslint --fix"
+    ]
   }
 }
