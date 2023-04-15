@@ -1,4 +1,4 @@
-import LruCache from 'lru-cache'
+import { LRUCache } from 'lru-cache'
 
 import apiDomain from './url.js'
 
@@ -9,7 +9,7 @@ const config = {
     port: 8080,
     timeout: 30000,
     cached: (cached
-        && new LruCache({
+        && new LRUCache({
             max: 1000,
         })) as any,
     cachedItem: {},
