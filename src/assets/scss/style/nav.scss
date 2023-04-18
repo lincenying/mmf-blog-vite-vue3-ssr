@@ -44,7 +44,7 @@
     .right-part {
         display: flex;
 
-        @media (max-width: 750px) {
+        @media (width <= 750px) {
             display: none;
         }
     }
@@ -61,7 +61,7 @@
         display: flex;
         margin-left: 48px;
 
-        @media (max-width: 1000px) {
+        @media (width <= 1000px) {
             margin-left: 25px;
         }
 
@@ -69,7 +69,7 @@
             margin-right: 12px;
             vertical-align: -4px;
 
-            @media (max-width: 1000px) {
+            @media (width <= 1000px) {
                 margin-right: 0;
             }
         }
@@ -93,7 +93,7 @@
             content: "";
         }
 
-        @media (max-width: 1000px) {
+        @media (width <= 1000px) {
             font-size: 17px;
 
             .text {
@@ -106,7 +106,7 @@
             }
         }
 
-        @media (max-width: 375px) {
+        @media (width <= 375px) {
             padding: 0 15px;
         }
     }

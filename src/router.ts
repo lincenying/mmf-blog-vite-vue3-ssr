@@ -1,4 +1,3 @@
-/* eslint-disable antfu/top-level-function */
 /**
  * @file router
  * @author lincenying(lincenying@qq.com)
@@ -8,7 +7,7 @@ import cookies from 'js-cookie'
 import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 import { createRouter as _createRouter, createMemoryHistory, createWebHistory } from 'vue-router'
 import type { Pinia } from 'pinia'
-import { isBrowser } from 'lcy-utils'
+import { isBrowser } from '@lincy/utils'
 
 // 定义切割点，异步加载路由组件
 const notFound = () => import('./pages/404.vue')

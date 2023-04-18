@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { getDateDiff } from 'lcy-utils'
+import { getDateDiff } from '@lincy/utils'
 import type { AsyncDataConfig } from '@/types'
 import api from '@/api/index-client'
 

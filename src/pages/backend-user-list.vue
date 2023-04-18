@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { UTC2Date } from 'lcy-utils'
+import { UTC2Date } from '@lincy/utils'
 import type { AsyncDataConfig } from '@/types'
 import api from '@/api/index-client'
 

@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { strLen } from 'lcy-utils'
+import { strLen } from '@lincy/utils'
 import api from '@/api/index-client'
 
 const props = defineProps<{
