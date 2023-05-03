@@ -6,7 +6,7 @@ import { defineConfig, loadEnv } from 'vite'
 import vuePlugin from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
-import { viteMockServe } from 'vite-plugin-mock'
+import { viteMockServe } from '@lincy/vite-plugin-mock'
 
 import UnoCSS from 'unocss/vite'
 import { createHtmlPlugin } from 'vite-plugin-html'
@@ -20,7 +20,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 import apiDomain from './src/api/url'
 
-export const ssrTransformCustomDir = () => {
+export function ssrTransformCustomDir() {
     return {
         props: [],
         needRuntime: true,
@@ -34,7 +34,6 @@ export default defineConfig(({ mode, command }) => {
     process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
 
     const localMock = true
-    const prodMock = false
 
     const config = {
         server: {
@@ -83,12 +82,7 @@ export default defineConfig(({ mode, command }) => {
             }),
             viteMockServe({
                 mockPath: 'mock',
-                localEnabled: command === 'serve' && localMock,
-                prodEnabled: command !== 'serve' && prodMock,
-                injectCode: `
-                    import { setupProdMockServer } from './mockProdServer';
-                    setupProdMockServer();
-                `,
+                enable: command === 'serve' && localMock,
                 logger: true,
             }),
             AutoImport({

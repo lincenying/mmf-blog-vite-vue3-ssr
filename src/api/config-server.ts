@@ -2,17 +2,17 @@ import { LRUCache } from 'lru-cache'
 
 import apiDomain from './url.js'
 
-const cached = false
+const cached = true
+
+const cache: Nullable<LRUCache<string, Obj>> = (cached && new LRUCache({
+    max: 1000,
+})) || null
 
 const config = {
     api: `${apiDomain}/api/`,
     port: 8080,
     timeout: 30000,
-    cached: (cached
-        && new LRUCache({
-            max: 1000,
-        })) as any,
-    cachedItem: {},
+    cached: cache,
 }
 
 export default config

@@ -38,7 +38,7 @@ export function api(cookies: UserCookies): ApiServerReturn {
                 const res = config.cached.get(key)
                 return Promise.resolve(res && res.data)
             }
-            const res_1 = await this.api({
+            const res = await this.api({
                 method: 'post',
                 url,
                 data: qs.stringify(data),
@@ -48,8 +48,8 @@ export function api(cookies: UserCookies): ApiServerReturn {
                 },
             })
             if (config.cached && data.cache)
-                config.cached.set(key, res_1)
-            return res_1 && res_1.data
+                config.cached.set(key, res)
+            return res && res.data
         },
         async get(url, params, headers = {}) {
             const cookies = this.getCookies() || {}
@@ -59,18 +59,17 @@ export function api(cookies: UserCookies): ApiServerReturn {
                 const res = config.cached.get(key)
                 return Promise.resolve(res && res.data)
             }
-            return this.api({
+            const res = await this.api({
                 method: 'get',
                 url,
                 params,
                 headers: {
                     ...headers,
                 },
-            }).then((res) => {
-                if (config.cached && params.cache)
-                    config.cached.set(key, res)
-                return res && res.data
             })
+            if (config.cached && params.cache)
+                config.cached.set(key, res)
+            return res && res.data
         },
     }
 }

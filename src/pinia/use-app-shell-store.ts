@@ -94,4 +94,4 @@ const useStore = defineStore('appShellStore', () => {
 export default useStore
 
 if (import.meta.hot)
-    import.meta.hot.accept(acceptHMRUpdate(useStore as any, import.meta.hot))
+    import.meta.hot.accept(acceptHMRUpdate(useStore, import.meta.hot))

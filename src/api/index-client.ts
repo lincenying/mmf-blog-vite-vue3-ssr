@@ -53,7 +53,7 @@ type API = () => ApiClientReturn
  * file(url: '/api/url', data: {}, headers: {})
  * ```
  */
-const _api: API = () => ({
+const api: API = () => ({
     async file(url, data) {
         const response = await axios({
             method: 'post',
@@ -95,4 +95,4 @@ const _api: API = () => ({
     },
 })
 
-export default _api()
+export default api()

@@ -100,8 +100,7 @@ const routes = [
 
 export function createRouter(store: Pinia) {
     const router = _createRouter({
-        // use appropriate history implementation for server/client
-        // import.meta.env.SSR is injected by Vite.
+        // 为服务器/客户端使用适当的历史实现 import.meta.env.SSR 由 Vite 注入。
         history: import.meta.env.SSR ? createMemoryHistory() : createWebHistory(),
         routes,
     })
