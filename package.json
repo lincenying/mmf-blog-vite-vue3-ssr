@@ -44,7 +44,7 @@
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
-    "@lincy/eslint-config": "^1.1.1",
+    "@lincy/eslint-config": "^1.1.2",
     "@lincy/stylelint-config": "^1.15.10",
     "@lincy/vite-plugin-mock": "^3.0.0",
     "@types/compression": "^1.7.2",
@@ -63,7 +63,7 @@
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "cross-env": "^7.0.3",
-    "eslint": "^8.39.0",
+    "eslint": "^8.40.0",
     "eslint-plugin-prettier": "^4.2.1",
     "http-proxy-middleware": "^2.0.6",
     "husky": "^8.0.3",
