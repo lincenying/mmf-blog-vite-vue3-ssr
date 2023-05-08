@@ -1,5 +1,5 @@
 {
-  "extends": ["@lincy", "./.eslintrc-auto-import.json"],
+  "extends": ["@lincy", "@unocss", "./.eslintrc-auto-import.json"],
   "env": {
     "node": true,
     "vue/setup-compiler-macros": true
