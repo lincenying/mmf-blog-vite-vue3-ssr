@@ -16,7 +16,7 @@ defineOptions({
     name: 'frontend-user',
 })
 
-const { route } = useGlobal()
+const route = useRoute()
 
 const key = computed(() => {
     return route.path.replace(/\//g, '_')

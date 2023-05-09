@@ -47,14 +47,14 @@ defineOptions({
 
 const { comments } = $(toRefs(props))
 
-const { route, globalStore } = useGlobal()
-
+const globalStore = useGlobalStore()
 const { cookies } = $(toRefs(globalStore))
 
 const globalCommentStore = useGlobalCommentStore()
 
 const [loading, toggleLoading] = useToggle(false)
 
+const route = useRoute()
 const form = reactive({
     id: route.params.id,
     content: '',

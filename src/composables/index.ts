@@ -6,18 +6,10 @@ export function useGlobal() {
 
     const ctx = ins.appContext.config.globalProperties
     const options = ins.type
-    const route = useRoute()
-    const router = useRouter()
-    const globalStore = useGlobalStore()
-    const appShellStore = useAppShellStore()
 
     return {
         ctx,
         options,
-        route,
-        router,
-        globalStore,
-        appShellStore,
     }
 }
 

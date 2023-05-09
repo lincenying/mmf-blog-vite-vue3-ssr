@@ -22,7 +22,7 @@ defineOptions({
     name: 'backend-category-insert',
 })
 
-const { router } = useGlobal()
+const router = useRouter()
 
 // pinia 状态管理 ===>
 const globalCategoryStore = useGlobalCategoryStore()

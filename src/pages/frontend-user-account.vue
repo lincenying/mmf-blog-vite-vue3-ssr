@@ -28,7 +28,7 @@ defineOptions({
     name: 'frontend-user-account',
 })
 
-const { globalStore } = useGlobal()
+const globalStore = useGlobalStore()
 
 // pinia 状态管理 ===>
 const { cookies } = $(toRefs(globalStore))

@@ -34,7 +34,8 @@ defineOptions({
     },
 })
 
-const { route, appShellStore } = useGlobal()
+const route = useRoute()
+const appShellStore = useAppShellStore()
 
 // pinia 状态管理 ===>
 const globalCategoryStore = useGlobalCategoryStore()

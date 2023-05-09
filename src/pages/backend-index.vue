@@ -1,7 +1,7 @@
 <template>
-    <div class="main wrap">
+    <div class="wrap main">
         <div class="main-left">
-            <div class="home-feeds cards-wrap">
+            <div class="cards-wrap home-feeds">
                 <router-view v-slot="{ Component }" class="app-view">
                     <Suspense>
                         <component :is="Component" :key="key" />
@@ -18,7 +18,7 @@ defineOptions({
     name: 'backend-index',
 })
 
-const { route } = useGlobal()
+const route = useRoute()
 
 const key = computed(() => {
     return route.path.replace(/\//g, '_')

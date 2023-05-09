@@ -35,7 +35,7 @@ defineOptions({
 
 const { show } = $(toRefs(props))
 
-const { globalStore } = useGlobal()
+const globalStore = useGlobalStore()
 
 const form = reactive({
     username: '',

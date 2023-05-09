@@ -101,7 +101,7 @@ export default defineConfig(({ mode, command }) => {
                     '@vueuse/core',
                     '@vueuse/head',
                     {
-                        'pinia': ['defineStore', 'storeToRefs'],
+                        'pinia': ['storeToRefs'],
                         'vue-router': ['createRouter', 'createWebHashHistory'],
                         '@/utils': ['showMsg'],
                     },

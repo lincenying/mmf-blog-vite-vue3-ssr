@@ -1,5 +1,5 @@
 <template>
-    <div class="settings-main card">
+    <div class="card settings-main">
         <div class="settings-main-content">
             <div class="list-section list-header">
                 <div class="list-username">用户名</div>
@@ -39,7 +39,9 @@ defineOptions({
     },
 })
 
-const { route, appShellStore } = useGlobal()
+const route = useRoute()
+
+const appShellStore = useAppShellStore()
 
 // pinia 状态管理 ===>
 const backendAdminStore = useBackendAdminStore()

@@ -26,7 +26,8 @@ defineOptions({
     name: 'backend-login',
 })
 
-const { ctx, router } = useGlobal()
+const { ctx } = useGlobal()
+const router = useRouter()
 
 const form = reactive({
     username: '',

@@ -25,9 +25,8 @@ defineOptions({
     name: 'app-root',
 })
 
-const { route, globalStore } = useGlobal()
-
 // pinia 状态管理 ===>
+const globalStore = useGlobalStore()
 const { showLoginModal, showRegisterModal } = toRefs(globalStore)
 
 const appShellStore = useAppShellStore()
@@ -39,6 +38,7 @@ const { pageTransitionName } = storeToRefs(appShellStore)
 const cacheFrontendComponents = $ref('frontend-index,frontend-about')
 // const cacheBackendComponents = ref('backend-admin-list,backend-article-list,backend-user-list')
 
+const route = useRoute()
 const key = $computed(() => {
     const path = (route.meta.path as string) || route.path
     return path.replace(/\//g, '_')
@@ -46,9 +46,11 @@ const key = $computed(() => {
 const backend = $computed(() => {
     return route.path.includes('backend')
 })
+
 function handleBeforeEnter() {
     appShellStore.setPageSwitching(true)
 }
+
 function handleAfterEnter() {
     appShellStore.setPageSwitching(false)
 }

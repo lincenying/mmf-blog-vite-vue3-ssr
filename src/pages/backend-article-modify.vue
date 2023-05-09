@@ -49,7 +49,9 @@ defineOptions({
     },
 })
 
-const { ctx, route, router } = useGlobal()
+const { ctx } = useGlobal()
+const route = useRoute()
+const router = useRouter()
 
 // pinia 状态管理 ===>
 const globalCategoryStore = useGlobalCategoryStore()

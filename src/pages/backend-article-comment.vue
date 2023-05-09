@@ -44,7 +44,7 @@ defineOptions({
     },
 })
 
-const { route } = useGlobal()
+const route = useRoute()
 
 // pinia 状态管理 ===>
 const globalCommentStore = useGlobalCommentStore()

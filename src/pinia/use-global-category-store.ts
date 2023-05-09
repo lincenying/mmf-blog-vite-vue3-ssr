@@ -1,4 +1,4 @@
-import { acceptHMRUpdate } from 'pinia'
+import { acceptHMRUpdate, defineStore } from 'pinia'
 
 import type { ApiClientReturn, ApiConfig, ApiServerReturn, Category, CategoryStore } from '@/types'
 import api from '@/api/index-client'

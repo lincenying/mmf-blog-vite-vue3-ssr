@@ -33,8 +33,7 @@ defineOptions({
 
 const { item } = $(toRefs(props))
 
-const { globalStore } = useGlobal()
-
+const globalStore = useGlobalStore()
 const { cookies } = $(toRefs(globalStore))
 
 const frontendArticleStore = useFrontendArticleStore()
