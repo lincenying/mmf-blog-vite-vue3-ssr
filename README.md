@@ -28,6 +28,8 @@ koa2: https://github.com/lincenying/mmf-blog-api-koa2-v2
 
 express: https://github.com/lincenying/mmf-blog-api-v2
 
+express-ts: https://github.com/lincenying/mmf-blog-api-ts
+
 ## Project setup
 ```bash
 $ pnpm install
