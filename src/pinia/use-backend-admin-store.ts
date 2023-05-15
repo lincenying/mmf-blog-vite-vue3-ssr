@@ -100,6 +100,7 @@ const useStore = defineStore('backendAdminStore', () => {
 })
 
 export default useStore
+export const backendAdminStoreWithout = () => useStore(piniaInit)
 
 if (import.meta.hot)
     import.meta.hot.accept(acceptHMRUpdate(useStore, import.meta.hot))

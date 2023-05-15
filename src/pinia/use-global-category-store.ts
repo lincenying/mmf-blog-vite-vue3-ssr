@@ -71,6 +71,7 @@ const useStore = defineStore('globalCategoryStore', () => {
 })
 
 export default useStore
+export const globalCategoryStoreWithout = () => useStore(piniaInit)
 
 if (import.meta.hot)
     import.meta.hot.accept(acceptHMRUpdate(useStore, import.meta.hot))

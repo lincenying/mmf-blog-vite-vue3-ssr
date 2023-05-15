@@ -5,8 +5,12 @@
 export {}
 declare global {
   const EffectScope: typeof import('vue')['EffectScope']
+  const appShellStoreWithout: typeof import('./pinia/use-app-shell-store')['appShellStoreWithout']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
+  const backendAdminStoreWithout: typeof import('./pinia/use-backend-admin-store')['backendAdminStoreWithout']
+  const backendArticleStoreWithout: typeof import('./pinia/use-backend-article-store')['backendArticleStoreWithout']
+  const backendUserStoreWithout: typeof import('./pinia/use-backend-user-store')['backendUserStoreWithout']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']
   const computedEager: typeof import('@vueuse/core')['computedEager']
@@ -33,8 +37,12 @@ declare global {
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const extendRef: typeof import('@vueuse/core')['extendRef']
+  const frontendArticleStoreWithout: typeof import('./pinia/use-frontend-article-store')['frontendArticleStoreWithout']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
+  const globalCategoryStoreWithout: typeof import('./pinia/use-global-category-store')['globalCategoryStoreWithout']
+  const globalCommentStoreWithout: typeof import('./pinia/use-global-comment-store')['globalCommentStoreWithout']
+  const globalStoreWithout: typeof import('./pinia/use-global-store')['globalStoreWithout']
   const h: typeof import('vue')['h']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
   const inject: typeof import('vue')['inject']
@@ -66,6 +74,7 @@ declare global {
   const onUnmounted: typeof import('vue')['onUnmounted']
   const onUpdated: typeof import('vue')['onUpdated']
   const pausableWatch: typeof import('@vueuse/core')['pausableWatch']
+  const piniaInit: typeof import('./pinia/index')['piniaInit']
   const provide: typeof import('vue')['provide']
   const reactify: typeof import('@vueuse/core')['reactify']
   const reactifyObject: typeof import('@vueuse/core')['reactifyObject']
@@ -83,6 +92,7 @@ declare global {
   const resolveComponent: typeof import('vue')['resolveComponent']
   const resolveRef: typeof import('@vueuse/core')['resolveRef']
   const resolveUnref: typeof import('@vueuse/core')['resolveUnref']
+  const setupPinia: typeof import('./pinia/index')['setupPinia']
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
@@ -307,8 +317,12 @@ import { UnwrapRef } from 'vue'
 declare module 'vue' {
   interface ComponentCustomProperties {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly appShellStoreWithout: UnwrapRef<typeof import('./pinia/use-app-shell-store')['appShellStoreWithout']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
+    readonly backendAdminStoreWithout: UnwrapRef<typeof import('./pinia/use-backend-admin-store')['backendAdminStoreWithout']>
+    readonly backendArticleStoreWithout: UnwrapRef<typeof import('./pinia/use-backend-article-store')['backendArticleStoreWithout']>
+    readonly backendUserStoreWithout: UnwrapRef<typeof import('./pinia/use-backend-user-store')['backendUserStoreWithout']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
     readonly computedEager: UnwrapRef<typeof import('@vueuse/core')['computedEager']>
@@ -335,8 +349,12 @@ declare module 'vue' {
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
+    readonly frontendArticleStoreWithout: UnwrapRef<typeof import('./pinia/use-frontend-article-store')['frontendArticleStoreWithout']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
+    readonly globalCategoryStoreWithout: UnwrapRef<typeof import('./pinia/use-global-category-store')['globalCategoryStoreWithout']>
+    readonly globalCommentStoreWithout: UnwrapRef<typeof import('./pinia/use-global-comment-store')['globalCommentStoreWithout']>
+    readonly globalStoreWithout: UnwrapRef<typeof import('./pinia/use-global-store')['globalStoreWithout']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
@@ -368,6 +386,7 @@ declare module 'vue' {
     readonly onUnmounted: UnwrapRef<typeof import('vue')['onUnmounted']>
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>
+    readonly piniaInit: UnwrapRef<typeof import('./pinia/index')['piniaInit']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
     readonly reactify: UnwrapRef<typeof import('@vueuse/core')['reactify']>
     readonly reactifyObject: UnwrapRef<typeof import('@vueuse/core')['reactifyObject']>
@@ -385,6 +404,7 @@ declare module 'vue' {
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly resolveRef: UnwrapRef<typeof import('@vueuse/core')['resolveRef']>
     readonly resolveUnref: UnwrapRef<typeof import('@vueuse/core')['resolveUnref']>
+    readonly setupPinia: UnwrapRef<typeof import('./pinia/index')['setupPinia']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>

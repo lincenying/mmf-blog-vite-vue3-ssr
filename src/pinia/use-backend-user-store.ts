@@ -101,6 +101,7 @@ const useStore = defineStore('backendUserStore', () => {
 })
 
 export default useStore
+export const backendUserStoreWithout = () => useStore(piniaInit)
 
 if (import.meta.hot)
     import.meta.hot.accept(acceptHMRUpdate(useStore, import.meta.hot))
