@@ -4,7 +4,7 @@ import type { ApiClientReturn, ApiConfig, ApiServerReturn, Comment, CommentStore
 
 import api from '@/api/index-client'
 
-const useStore = defineStore('globalCommentStore', () => {
+const usePiniaStore = defineStore('globalCommentStore', () => {
     const state = reactive<CommentStore>({
         lists: {
             data: [],
@@ -80,8 +80,8 @@ const useStore = defineStore('globalCommentStore', () => {
     }
 })
 
-export default useStore
-export const globalCommentStoreWithout = () => useStore(piniaInit)
+export default usePiniaStore
+export const globalCommentStoreWithout = () => usePiniaStore(piniaInit)
 
 if (import.meta.hot)
-    import.meta.hot.accept(acceptHMRUpdate(useStore, import.meta.hot))
+    import.meta.hot.accept(acceptHMRUpdate(usePiniaStore, import.meta.hot))

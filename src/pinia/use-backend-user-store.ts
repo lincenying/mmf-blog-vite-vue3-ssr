@@ -4,7 +4,7 @@ import type { ApiClientReturn, ApiConfig, ApiServerReturn, User, UserStore } fro
 
 import api from '@/api/index-client'
 
-const useStore = defineStore('backendUserStore', () => {
+const usePiniaStore = defineStore('backendUserStore', () => {
     const state = reactive<UserStore>({
         lists: {
             hasNext: 0,
@@ -100,8 +100,8 @@ const useStore = defineStore('backendUserStore', () => {
     }
 })
 
-export default useStore
-export const backendUserStoreWithout = () => useStore(piniaInit)
+export default usePiniaStore
+export const backendUserStoreWithout = () => usePiniaStore(piniaInit)
 
 if (import.meta.hot)
-    import.meta.hot.accept(acceptHMRUpdate(useStore, import.meta.hot))
+    import.meta.hot.accept(acceptHMRUpdate(usePiniaStore, import.meta.hot))

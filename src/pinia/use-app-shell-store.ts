@@ -6,7 +6,7 @@ interface historyType {
     scrollTop: number
 }
 
-const useStore = defineStore('appShellStore', () => {
+const usePiniaStore = defineStore('appShellStore', () => {
     const state = reactive<ShellStore>({
         /**
          * 是否需要页面切换动画
@@ -91,8 +91,8 @@ const useStore = defineStore('appShellStore', () => {
     }
 })
 
-export default useStore
-export const appShellStoreWithout = () => useStore(piniaInit)
+export default usePiniaStore
+export const appShellStoreWithout = () => usePiniaStore(piniaInit)
 
 if (import.meta.hot)
-    import.meta.hot.accept(acceptHMRUpdate(useStore, import.meta.hot))
+    import.meta.hot.accept(acceptHMRUpdate(usePiniaStore, import.meta.hot))
