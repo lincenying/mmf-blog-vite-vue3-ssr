@@ -19,7 +19,7 @@ const props = defineProps<{
 }>()
 
 defineOptions({
-    name: 'aside-category',
+    name: 'AsideCategory',
 })
 
 const { category } = $(toRefs(props))

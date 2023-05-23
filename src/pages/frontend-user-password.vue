@@ -37,7 +37,7 @@
 import api from '@/api/index-client'
 
 defineOptions({
-    name: 'frontend-user-password',
+    name: 'FrontendUserPassword',
 })
 
 const form = reactive({

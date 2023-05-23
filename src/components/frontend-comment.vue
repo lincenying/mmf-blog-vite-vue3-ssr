@@ -42,7 +42,7 @@ const props = defineProps<{
 }>()
 
 defineOptions({
-    name: 'frontend-comment',
+    name: 'FrontendComment',
 })
 
 const { comments } = $(toRefs(props))

@@ -22,7 +22,7 @@ const props = defineProps<{
 }>()
 
 defineOptions({
-    name: 'aside-trending',
+    name: 'AsideTrending',
 })
 
 const { trending } = $(toRefs(props))

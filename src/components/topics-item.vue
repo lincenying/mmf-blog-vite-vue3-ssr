@@ -26,7 +26,7 @@ const props = defineProps<{
 }>()
 
 defineOptions({
-    name: 'topics-item',
+    name: 'TopicsItem',
 })
 
 const { item } = $(toRefs(props))

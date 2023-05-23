@@ -16,7 +16,7 @@ const props = defineProps<{
 }>()
 
 defineOptions({
-    name: 'a-input',
+    name: 'AInput',
 })
 
 const { title, classes } = $(toRefs(props))

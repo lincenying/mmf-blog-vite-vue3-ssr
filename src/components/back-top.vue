@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 defineOptions({
-    name: 'back-top',
+    name: 'BackTop',
 })
 
 const { y: scrollTop } = useWindowScroll()

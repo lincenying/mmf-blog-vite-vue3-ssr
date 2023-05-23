@@ -1,9 +1,9 @@
 <template>
-    <div class="main wrap">
+    <div class="wrap main">
         <div class="main-left">
             <div class="card card-answer">
                 <div class="answer-content">
-                    <div class="flex py-40px justify-center">
+                    <div class="flex justify-center py-40px">
                         <img src="/static/images/error_1.jpg" alt="">
                     </div>
                 </div>
@@ -17,7 +17,7 @@
 import type { AsyncDataConfig } from '@/types'
 
 defineOptions({
-    name: '404-page',
+    name: '404Page',
     asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const frontendArticleStore = useFrontendArticleStore(store)

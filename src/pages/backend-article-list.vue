@@ -34,7 +34,7 @@ import type { AsyncDataConfig } from '@/types'
 import api from '@/api/index-client'
 
 defineOptions({
-    name: 'backend-article-list',
+    name: 'BackendArticleList',
     asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const backendArticleStore = useBackendArticleStore(store)

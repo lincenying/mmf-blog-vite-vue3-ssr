@@ -28,7 +28,7 @@ import type { AsyncDataConfig, User } from '@/types'
 import api from '@/api/index-client'
 
 defineOptions({
-    name: 'backend-admin-modify',
+    name: 'BackendAdminModify',
     asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const backendAdminStore = useBackendAdminStore(store)

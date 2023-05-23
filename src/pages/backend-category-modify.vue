@@ -22,7 +22,7 @@ import type { AsyncDataConfig, Category } from '@/types'
 import api from '@/api/index-client'
 
 defineOptions({
-    name: 'backend-category-modify',
+    name: 'BackendCategoryModify',
     asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const globalCategoryStore = useGlobalCategoryStore(store)

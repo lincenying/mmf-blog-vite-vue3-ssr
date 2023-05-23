@@ -19,7 +19,7 @@ import api from '@/api/index-client'
 import type { Category } from '@/types'
 
 defineOptions({
-    name: 'backend-category-insert',
+    name: 'BackendCategoryInsert',
 })
 
 const router = useRouter()

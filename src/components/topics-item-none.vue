@@ -10,6 +10,6 @@
 
 <script setup lang="ts">
 defineOptions({
-    name: 'topics-item-none',
+    name: 'TopicsItemNone',
 })
 </script>

@@ -28,7 +28,7 @@ import type { AsyncDataConfig, User } from '@/types'
 import api from '@/api/index-client'
 
 defineOptions({
-    name: 'backend-user-modify',
+    name: 'BackendUserModify',
     asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const backendUserStore = useBackendUserStore(store)

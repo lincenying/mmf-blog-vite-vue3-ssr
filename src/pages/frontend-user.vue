@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 defineOptions({
-    name: 'frontend-user',
+    name: 'FrontendUser',
 })
 
 const route = useRoute()

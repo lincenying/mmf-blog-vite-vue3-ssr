@@ -33,6 +33,6 @@
 
 <script setup lang="ts">
 defineOptions({
-    name: 'backend-menu',
+    name: 'BackendMenu',
 })
 </script>

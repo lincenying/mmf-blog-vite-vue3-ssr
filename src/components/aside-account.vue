@@ -16,7 +16,7 @@
 import api from '@/api/index-client'
 
 defineOptions({
-    name: 'aside-account',
+    name: 'AsideAccount',
 })
 
 async function handleLogout() {

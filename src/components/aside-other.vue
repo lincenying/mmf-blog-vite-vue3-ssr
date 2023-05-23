@@ -13,6 +13,6 @@
 
 <script setup lang="ts">
 defineOptions({
-    name: 'aside-other',
+    name: 'AsideOther',
 })
 </script>

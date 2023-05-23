@@ -25,7 +25,7 @@ import api from '@/api/index-client'
 import type { User } from '@/types'
 
 defineOptions({
-    name: 'frontend-user-account',
+    name: 'FrontendUserAccount',
 })
 
 const globalStore = useGlobalStore()

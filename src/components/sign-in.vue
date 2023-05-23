@@ -30,7 +30,7 @@ const props = defineProps<{
 }>()
 
 defineOptions({
-    name: 'sign-in',
+    name: 'SignIn',
 })
 
 const { show } = $(toRefs(props))

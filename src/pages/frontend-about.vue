@@ -58,7 +58,7 @@
 import type { AsyncDataConfig } from '@/types'
 
 defineOptions({
-    name: 'frontend-about',
+    name: 'FrontendAbout',
     asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const frontendArticleStore = useFrontendArticleStore(store)

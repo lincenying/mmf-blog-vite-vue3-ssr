@@ -46,7 +46,7 @@ const props = defineProps<{
 }>()
 
 defineOptions({
-    name: 'global-navigation',
+    name: 'GlobalNavigation',
 })
 
 const { isBackend } = $(toRefs(props))
