@@ -1,4 +1,3 @@
-/* eslint-disable vue/one-component-per-file */
 import { basename } from 'node:path'
 import { renderToString } from '@vue/server-renderer'
 import { renderHeadToString } from '@vueuse/head'
@@ -59,8 +58,7 @@ function replaceHtmlTag(html: string) {
 export async function render(url: string, manifest: Record<string, string[]>, req: Request) {
     const { app, router, store, head } = createApp()
 
-    app.component('ReloadPrompt', { render: () => null })
-    app.component('VMdEditor', { render: () => null })
+    app.component('ReloadPrompt', { render: () => null }).component('VMdEditor', { render: () => null })
 
     // 在渲染之前将路由器设置为所需的 URL
     router.push(url)

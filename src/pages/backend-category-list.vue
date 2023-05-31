@@ -1,5 +1,5 @@
 <template>
-    <div class="settings-main card">
+    <div class="card settings-main">
         <div class="settings-main-content">
             <div class="list-section">
                 <div class="list-title">分类名称</div>
