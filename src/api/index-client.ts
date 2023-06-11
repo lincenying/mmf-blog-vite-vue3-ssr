@@ -41,8 +41,6 @@ function checkCode(res: ResponseData<any>): ResponseData<any> {
     return res
 }
 
-type API = () => ApiClientReturn
-
 /**
  * axios Api 封装
  * @returns ApiClientReturn
@@ -53,46 +51,48 @@ type API = () => ApiClientReturn
  * file(url: '/api/url', data: {}, headers: {})
  * ```
  */
-const api: API = () => ({
-    async file(url, data) {
-        const response = await axios({
-            method: 'post',
-            url,
-            data,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-            },
-        })
-        const res = checkStatus(response)
-        return checkCode(res)
-    },
-    async post(url, data) {
-        const response = await axios({
-            method: 'post',
-            url: config.api + url,
-            data: qs.stringify(data),
-            timeout: config.timeout,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            },
-        })
-        const res = checkStatus(response)
-        return checkCode(res)
-    },
-    async get(url, params) {
-        const response = await axios({
-            method: 'get',
-            url: config.api + url,
-            params,
-            timeout: config.timeout,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-            },
-        })
-        const res = checkStatus(response)
-        return checkCode(res)
-    },
-})
+function api(): ApiClientReturn {
+    return {
+        async file(url, data) {
+            const response = await axios({
+                method: 'post',
+                url,
+                data,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            })
+            const res = checkStatus(response)
+            return checkCode(res)
+        },
+        async post(url, data) {
+            const response = await axios({
+                method: 'post',
+                url: config.api + url,
+                data: qs.stringify(data),
+                timeout: config.timeout,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                },
+            })
+            const res = checkStatus(response)
+            return checkCode(res)
+        },
+        async get(url, params) {
+            const response = await axios({
+                method: 'get',
+                url: config.api + url,
+                params,
+                timeout: config.timeout,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            })
+            const res = checkStatus(response)
+            return checkCode(res)
+        },
+    }
+}
 
 export default api()

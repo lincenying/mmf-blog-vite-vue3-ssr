@@ -38,15 +38,8 @@ const usePiniaStore = defineStore('backendUserStore', () => {
                 page: config.page,
             }
 
-            let _list
-
-            if (page === 1)
-                _list = list
-            else
-                _list = state.lists.data.concat(list)
-
             state.lists = {
-                data: _list,
+                data: page === 1 ? list : state.lists.data.concat(list),
                 hasNext,
                 hasPrev,
                 page: (page || 1) + 1,

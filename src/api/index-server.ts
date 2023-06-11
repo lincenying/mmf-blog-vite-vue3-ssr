@@ -14,8 +14,6 @@ function objToStr(cookies: Record<string, string | number | boolean>) {
     return cookie
 }
 
-export default {}
-
 export function api(cookies: UserCookies): ApiServerReturn {
     return {
         cookies,

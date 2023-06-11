@@ -33,15 +33,8 @@ const usePiniaStore = defineStore('globalCommentStore', () => {
                 ...data,
             }
 
-            let _list
-
-            if (page === 1)
-                _list = list
-            else
-                _list = state.lists.data.concat(list)
-
             state.lists = {
-                data: _list,
+                data: page === 1 ? list : state.lists.data.concat(list),
                 hasNext,
                 hasPrev,
                 page,
