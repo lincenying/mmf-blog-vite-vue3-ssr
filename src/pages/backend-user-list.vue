@@ -35,7 +35,7 @@ defineOptions({
     asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const backendUserStore = useBackendUserStore(store)
-        return backendUserStore.getUserList({ page: 1, path: route.path }, api)
+        return backendUserStore.getUserList({ page: 1, path: route.fullPath }, api)
     },
 })
 

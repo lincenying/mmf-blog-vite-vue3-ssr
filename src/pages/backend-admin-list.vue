@@ -35,7 +35,7 @@ defineOptions({
     asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const backendAdminStore = useBackendAdminStore(store)
-        return backendAdminStore.getAdminList({ page: 1, path: route.path }, api)
+        return backendAdminStore.getAdminList({ page: 1, path: route.fullPath }, api)
     },
 })
 

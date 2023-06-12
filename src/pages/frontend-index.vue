@@ -1,7 +1,7 @@
 <template>
     <div class="main wrap">
         <div class="main-left">
-            <div class="home-feeds cards-wrap">
+            <div class="cards-wrap home-feeds">
                 <!-- <topics-item-none v-if="!topics.path">加载中, 请稍等...</topics-item-none> -->
                 <div v-if="!topics.path" class="card card-content-loader">
                     <ContentLoader :height="160" :width="660" :speed="2" primary-color="#f3f3f3" secondary-color="#ecebeb">
@@ -12,7 +12,7 @@
                     </ContentLoader>
                 </div>
                 <template v-else-if="topics.data.length > 0">
-                    <topics-item v-for="item in topics.data" :key="item._id" :item="item" />
+                    <TopicsItem v-for="item in topics.data" :key="item._id" :item="item" />
                     <div class="load-more-wrap">
                         <a v-if="topics.hasNext" href="javascript:;" class="load-more" :class="loading ? 'loading' : ''" @click="loadMore()">
                             {{ loading ? '加载中' : '更多' }} <i class="icon icon-circle-loading" />
@@ -40,7 +40,7 @@ defineOptions({
         const { store, route, api } = payload
         const {
             params: { id, key, by },
-            path,
+            fullPath: path,
         } = route
         const globalCategoryStore = useGlobalCategoryStore(store)
         const frontendArticleStore = useFrontendArticleStore(store)

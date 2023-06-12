@@ -45,7 +45,7 @@ defineOptions({
     asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const globalCategoryStore = useGlobalCategoryStore(store)
-        return globalCategoryStore.getCategoryList({ limit: 99, path: route.path }, api)
+        return globalCategoryStore.getCategoryList({ limit: 99, path: route.fullPath }, api)
     },
 })
 

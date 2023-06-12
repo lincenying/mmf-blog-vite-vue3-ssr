@@ -32,7 +32,7 @@ defineOptions({
     asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const backendUserStore = useBackendUserStore(store)
-        return backendUserStore.getUserItem({ id: route.params.id, path: route.path, from: 'backend' }, api)
+        return backendUserStore.getUserItem({ id: route.params.id, path: route.fullPath, from: 'backend' }, api)
     },
 })
 

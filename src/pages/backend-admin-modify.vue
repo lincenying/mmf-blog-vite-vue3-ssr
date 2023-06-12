@@ -1,5 +1,5 @@
 <template>
-    <div class="settings-main card">
+    <div class="card settings-main">
         <div class="settings-main-content">
             <form>
                 <a-input title="昵称">
@@ -32,7 +32,7 @@ defineOptions({
     asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const backendAdminStore = useBackendAdminStore(store)
-        return backendAdminStore.getAdminItem({ id: route.params.id, path: route.path }, api)
+        return backendAdminStore.getAdminItem({ id: route.params.id, path: route.fullPath }, api)
     },
 })
 

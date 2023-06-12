@@ -40,7 +40,7 @@ defineOptions({
     asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const globalCommentStore = useGlobalCommentStore(store)
-        return globalCommentStore.getCommentList({ page: 1, path: route.path, all: 1, id: route.params.id }, api)
+        return globalCommentStore.getCommentList({ page: 1, path: route.fullPath, all: 1, id: route.params.id }, api)
     },
 })
 

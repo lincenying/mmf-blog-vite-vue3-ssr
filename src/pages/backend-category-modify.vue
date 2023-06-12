@@ -26,7 +26,7 @@ defineOptions({
     asyncData(payload: AsyncDataConfig) {
         const { store, route, api } = payload
         const globalCategoryStore = useGlobalCategoryStore(store)
-        return globalCategoryStore.getCategoryItem({ path: route.path, id: route.params.id }, api)
+        return globalCategoryStore.getCategoryItem({ path: route.fullPath, id: route.params.id }, api)
     },
 })
 
