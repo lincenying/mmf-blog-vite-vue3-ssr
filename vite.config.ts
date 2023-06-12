@@ -13,7 +13,7 @@ import UnoCSS from 'unocss/vite'
 
 import Components from './vite.config.components'
 import PWA from './vite.config.pwa'
-import apiDomain from './src/api/url'
+import Build from './vite.config.build'
 
 export function ssrTransformCustomDir() {
     return {
@@ -31,19 +31,7 @@ export default defineConfig(({ mode, command }) => {
     const localMock = true
 
     const config = {
-        server: {
-            port: 7777,
-            host: '0.0.0.0',
-            hot: true,
-            disableHostCheck: true,
-            proxy: {
-                '/api': {
-                    target: apiDomain,
-                    changeOrigin: true,
-                    rewrite: (path: string) => path.replace(/^\/api/, '/api'),
-                },
-            },
-        },
+        base: './',
         plugins: [
             VueMacros.vite({
                 plugins: {
@@ -68,33 +56,12 @@ export default defineConfig(({ mode, command }) => {
             }),
             ...PWA(),
         ],
-        css: {
-            preprocessorOptions: {
-                less: {
-                    javascriptEnabled: true,
-                },
-            },
-        },
         resolve: {
             alias: {
                 '@': path.join(__dirname, './src'),
             },
         },
-
-        base: './',
-        build: {
-            target: 'es2018',
-            cssTarget: 'chrome79',
-            minify: true,
-            assetsInlineLimit: 4096,
-            chunkSizeWarningLimit: 1000,
-            outDir: 'dist',
-            rollupOptions: {
-                input: {
-                    main: path.resolve(__dirname, 'index.html'),
-                },
-            },
-        },
+        ...Build,
     }
     return config
 })
