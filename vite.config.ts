@@ -1,6 +1,7 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+import type { UserConfigExport } from 'vite'
 import { defineConfig, loadEnv } from 'vite'
 
 import vuePlugin from '@vitejs/plugin-vue'
@@ -15,10 +16,15 @@ import Components from './vite.config.components'
 import PWA from './vite.config.pwa'
 import Build from './vite.config.build'
 
-export function ssrTransformCustomDir() {
+function charsetRemoval() {
     return {
-        props: [],
-        needRuntime: true,
+        postcssPlugin: 'internal:charset-removal',
+        AtRule: {
+            charset: (atRule: any) => {
+                if (atRule.name === 'charset')
+                    atRule.remove()
+            },
+        },
     }
 }
 
@@ -30,7 +36,7 @@ export default defineConfig(({ mode, command }) => {
 
     const localMock = true
 
-    const config = {
+    const config: UserConfigExport = {
         base: './',
         plugins: [
             VueMacros.vite({
@@ -51,9 +57,7 @@ export default defineConfig(({ mode, command }) => {
                 logger: true,
             }),
             ...Components(),
-            UnoCSS({
-                /* options */
-            }),
+            UnoCSS({}),
             ...PWA(),
         ],
         resolve: {
@@ -62,6 +66,13 @@ export default defineConfig(({ mode, command }) => {
             },
         },
         ...Build,
+        css: {
+            postcss: {
+                plugins: [
+                    charsetRemoval(),
+                ],
+            },
+        },
     }
     return config
 })
