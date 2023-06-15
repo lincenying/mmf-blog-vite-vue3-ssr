@@ -18,7 +18,12 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
         },
     })
 
-    const getAdminList = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
+    /**
+     * 读取管理员列表
+     * @param config 请求参数
+     * @param $api
+     */
+    const getAdminList = async (config: Pick<ApiConfig, 'page' | 'path'>, $api?: ApiServerReturn | ApiClientReturn) => {
         if (!$api)
             $api = api
         if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1)
@@ -46,7 +51,12 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
             }
         }
     }
-    const getAdminItem = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
+    /**
+     * 读取管理员详情
+     * @param config 请求参数
+     * @param $api
+     */
+    const getAdminItem = async (config: Pick<ApiConfig, 'id' | 'path'>, $api?: ApiServerReturn | ApiClientReturn) => {
         if (!$api)
             $api = api
         const { code, data } = await $api.get<User>('backend/admin/item', { ...config, path: undefined })
@@ -57,12 +67,20 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
             }
         }
     }
+    /**
+     * 编辑管理员
+     * @param payload 请求参数
+     */
     const updateAdminItem = (payload: User) => {
         state.item.data = payload
         const index = state.lists.data.findIndex(ii => ii._id === payload._id)
         if (index > -1)
             state.lists.data.splice(index, 1, payload)
     }
+    /**
+     * 删除管理员
+     * @param id 管理员ID
+     */
     const deleteAdmin = (id: string) => {
         const index = state.lists.data.findIndex(ii => ii._id === id)
         if (index > -1) {
@@ -72,6 +90,10 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
             })
         }
     }
+    /**
+     * 恢复管理员
+     * @param id 管理员ID
+     */
     const recoverAdmin = (id: string) => {
         const index = state.lists.data.findIndex(ii => ii._id === id)
         if (index > -1) {
@@ -92,6 +114,9 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
     }
 })
 
+/**
+ * 后台管理员Store
+ */
 export default usePiniaStore
 export const backendAdminStoreWithout = () => usePiniaStore(piniaInit)
 

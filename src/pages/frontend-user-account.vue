@@ -1,6 +1,6 @@
 <template>
-    <div class="home-feeds cards-wrap">
-        <div class="settings-main card">
+    <div class="cards-wrap home-feeds">
+        <div class="card settings-main">
             <div class="settings-main-content">
                 <form>
                     <a-input title="昵称">

@@ -20,6 +20,11 @@ const usePiniaStore = defineStore('frontendArticleStore', () => {
         trending: [],
     })
 
+    /**
+     * 读取文章列表
+     * @param config 请求参数
+     * @param $api
+     */
     const getArticleList = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
         if (!$api)
             $api = api
@@ -48,6 +53,11 @@ const usePiniaStore = defineStore('frontendArticleStore', () => {
             }
         }
     }
+    /**
+     * 读取文章详情
+     * @param config 请求参数
+     * @param $api
+     */
     const getArticleItem = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
         if (!$api)
             $api = api
@@ -60,6 +70,11 @@ const usePiniaStore = defineStore('frontendArticleStore', () => {
             }
         }
     }
+    /**
+     * 读取热门列表
+     * @param _
+     * @param $api
+     */
     const getTrending = async (_: any, $api?: ApiServerReturn | ApiClientReturn) => {
         if (!$api)
             $api = api
@@ -69,6 +84,10 @@ const usePiniaStore = defineStore('frontendArticleStore', () => {
         if (data && code === 200)
             state.trending = data.list
     }
+    /**
+     * 编辑点赞状态
+     * @param payload 请求参数
+     */
     const modifyLikeStatus = (payload: { id: string; status: boolean }) => {
         const { id, status } = payload
         if (state.item.data && state.item.data._id === id) {

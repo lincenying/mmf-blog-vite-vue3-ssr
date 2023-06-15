@@ -15,6 +15,11 @@ const usePiniaStore = defineStore('globalCommentStore', () => {
         },
     })
 
+    /**
+     * 读取评论列表
+     * @param config 请求参数
+     * @param $api
+     */
     const getCommentList = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
         if (!$api)
             $api = api
@@ -42,9 +47,17 @@ const usePiniaStore = defineStore('globalCommentStore', () => {
             }
         }
     }
+    /**
+     * 添加评论成功后, 插入评论
+     * @param payload 评论详情
+     */
     const insertCommentItem = (payload: Comment) => {
         state.lists.data = [payload].concat(state.lists.data)
     }
+    /**
+     * 删除评论成功后, 更新评论数据
+     * @param payload 评论详情
+     */
     const deleteComment = (id: string) => {
         const index = state.lists.data.findIndex(ii => ii._id === id)
         if (index > -1) {
@@ -54,6 +67,11 @@ const usePiniaStore = defineStore('globalCommentStore', () => {
             })
         }
     }
+
+    /**
+     * 恢复评论成功后, 更新评论数据
+     * @param payload 评论详情
+     */
     const recoverComment = (id: string) => {
         const index = state.lists.data.findIndex(ii => ii._id === id)
         if (index > -1) {

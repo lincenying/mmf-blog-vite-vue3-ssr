@@ -18,7 +18,11 @@ const usePiniaStore = defineStore('backendUserStore', () => {
             path: '',
         },
     })
-
+    /**
+     * 读取用户列表 - 后台
+     * @param config 请求参数
+     * @param $api
+     */
     const getUserList = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
         if (!$api)
             $api = api
@@ -47,6 +51,11 @@ const usePiniaStore = defineStore('backendUserStore', () => {
             }
         }
     }
+    /**
+     * 读取用户详情
+     * @param config 请求参数
+     * @param $api
+     */
     const getUserItem = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
         if (!$api)
             $api = api
@@ -58,12 +67,20 @@ const usePiniaStore = defineStore('backendUserStore', () => {
             }
         }
     }
+    /**
+     * 编辑用户成功后, 更新用户数据
+     * @param payload 用户详情
+     */
     const updateUserItem = (payload: User) => {
         state.item.data = payload
         const index = state.lists.data.findIndex(ii => ii._id === payload._id)
         if (index > -1)
             state.lists.data.splice(index, 1, payload)
     }
+    /**
+     * 删除用户成功, 更新用户数据
+     * @param id 用户ID
+     */
     const deleteUser = (id: string) => {
         const index = state.lists.data.findIndex(ii => ii._id === id)
         if (index > -1) {
@@ -73,6 +90,10 @@ const usePiniaStore = defineStore('backendUserStore', () => {
             })
         }
     }
+    /**
+     * 恢复用户成功, 更新用户数据
+     * @param id 用户ID
+     */
     const recoverUser = (id: string) => {
         const index = state.lists.data.findIndex(ii => ii._id === id)
         if (index > -1) {
