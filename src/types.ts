@@ -61,65 +61,35 @@ export interface Upload {
  */
 export interface Article {
     _id: string
-    /**
-     * 文章标题
-     */
+    /** * 文章标题 */
     title: string
-    /**
-     * 文章内容: markdown
-     */
+    /** * 文章内容: markdown */
     content: string
-    /**
-     * 文章内容: html
-     */
+    /** * 文章内容: html */
     html: string
-    /**
-     * 文章导航
-     */
+    /** * 文章导航 */
     toc: string
-    /**
-     * 分类ID
-     */
+    /** * 分类ID */
     category: string
-    /**
-     * 分类名称
-     */
+    /** * 分类名称 */
     category_name: string
-    /**
-     * 访问数
-     */
+    /** * 访问数 */
     visit: number
-    /**
-     * 点赞数
-     */
+    /** * 点赞数 */
     like: number
-    /**
-     * 评论数
-     */
+    /** * 评论数 */
     comment_count: number
-    /**
-     * 发布时间
-     */
+    /** * 发布时间 */
     creat_date: string
-    /**
-     * 编辑时间
-     */
+    /** * 编辑时间 */
     update_date: string
-    /**
-     * 是否删除: 0: 正常 | 1: 删除
-     */
+    /** * 是否删除: 0: 正常 | 1: 删除 */
     is_delete: number
-    /**
-     * 发布时间戳
-     */
+    /** * 发布时间戳 */
     timestamp: number
-    /**
-     * 点赞用户ID列表
-     */
-    likes: [string]
-    /**
-     * 登录用户是否已点赞
-     */
+    /** * 点赞用户ID列表 */
+    likes: string[]
+    /** * 登录用户是否已点赞 */
     like_status?: boolean
 }
 
@@ -128,33 +98,19 @@ export interface Article {
  */
 export interface Category {
     _id: string
-    /**
-     * 分类名称
-     */
+    /** * 分类名称 */
     cate_name: string
-    /**
-     * 分类排序
-     */
+    /** * 分类排序 */
     cate_order: string
-    /**
-     * 分类中文章数量
-     */
+    /** * 分类中文章数量 */
     cate_num?: number
-    /**
-     * 创建时间
-     */
+    /** * 创建时间 */
     creat_date?: string
-    /**
-     * 编辑时间
-     */
+    /** * 编辑时间 */
     update_date?: string
-    /**
-     * 是否删除: 0: 正常 | 1: 已删除
-     */
+    /** * 是否删除: 0: 正常 | 1: 已删除 */
     is_delete?: number
-    /**
-     * 发布时间戳
-     */
+    /** * 发布时间戳 */
     timestamp?: number
 }
 
@@ -163,37 +119,21 @@ export interface Category {
  */
 export interface Comment {
     _id: string
-    /**
-     * 评论所属文章ID
-     */
+    /** * 评论所属文章ID */
     article_id: string
-    /**
-     * 发布评论的用户
-     */
+    /** * 发布评论的用户 */
     userid: Record<string, any>
-    /**
-     * 评论内容
-     */
+    /** * 评论内容 */
     content: string
-    /**
-     * 创建时间
-     */
+    /** * 创建时间 */
     creat_date: string
-    /**
-     * 是否删除: 0: 正常 | 1: 已删除
-     */
+    /** * 是否删除: 0: 正常 | 1: 已删除 */
     is_delete: number
-    /**
-     * 发布时间戳
-     */
+    /** * 发布时间戳 */
     timestamp: number
-    /**
-     * 用户邮箱
-     */
+    /** * 用户邮箱 */
     email?: string
-    /**
-     * 用户名
-     */
+    /** * 用户名 */
     username?: string
 }
 
@@ -202,33 +142,19 @@ export interface Comment {
  */
 export interface User {
     _id: string
-    /**
-     * 用户名
-     */
+    /** * 用户名 */
     username: string
-    /**
-     * 邮箱
-     */
+    /** * 邮箱 */
     email: string
-    /**
-     * 密码
-     */
+    /** * 密码 */
     password: string
-    /**
-     * 创建时间
-     */
+    /** * 创建时间 */
     creat_date: string
-    /**
-     * 编辑时间
-     */
+    /** * 编辑时间 */
     update_date: string
-    /**
-     * 是否删除: 0: 正常 | 1: 已删除
-     */
+    /** * 是否删除: 0: 正常 | 1: 已删除 */
     is_delete: number
-    /**
-     * 发布时间戳
-     */
+    /** * 发布时间戳 */
     timestamp: number
     wx_avatar?: string
     wx_signature?: string
@@ -372,25 +298,15 @@ export interface UserCookies {
 export interface GlobalStore {
     loading: boolean
     cookies: UserCookies
-    /**
-     * 显式登录弹窗
-     */
+    /** * 显式登录弹窗 */
     showLoginModal: boolean
-    /**
-     * 显式注册弹窗
-     */
+    /** * 显式注册弹窗 */
     showRegisterModal: boolean
-    /**
-     * 是否开发环境
-     */
+    /** * 是否开发环境 */
     ISDEV: boolean
-    /**
-     * 是否预发布环境
-     */
+    /** * 是否预发布环境 */
     ISPRE: boolean
-    /**
-     * 是否生产环境
-     */
+    /** * 是否生产环境 */
     ISPROD: boolean
 }
 
@@ -398,21 +314,13 @@ export interface GlobalStore {
  * Sheel Pinia Store
  */
 export interface ShellStore {
-    /**
-     * 是否需要页面切换动画
-     */
+    /** * 是否需要页面切换动画 */
     needPageTransition: boolean
-    /**
-     * 多个页面是否处于切换中
-     */
+    /** * 多个页面是否处于切换中 */
     isPageSwitching: boolean
-    /**
-     * 多个页面切换效果名称
-     */
+    /** * 多个页面切换效果名称 */
     pageTransitionName: string
-    /**
-     * 上个页面 scroll 的信息
-     */
+    /** * 上个页面 scroll 的信息 */
     historyPageScrollTop: ObjT<number>
 }
 
