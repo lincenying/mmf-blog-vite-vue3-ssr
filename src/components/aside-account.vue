@@ -20,7 +20,7 @@ defineOptions({
 })
 
 async function handleLogout() {
-    await api.post('frontend/user/logout', {})
+    await api.post<string>('frontend/user/logout', {})
     window.location.href = '/'
 }
 </script>

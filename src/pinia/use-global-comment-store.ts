@@ -26,7 +26,7 @@ const usePiniaStore = defineStore('globalCommentStore', () => {
         if (config.path === state.lists.path && config.page === 1)
             return
         const { code, data } = await $api.get<ResponseDataLists<Comment[]>>('frontend/comment/list', { ...config, path: undefined, cache: true })
-        if (data && code === 200) {
+        if (code === 200 && data) {
             const {
                 list = [],
                 path = '',

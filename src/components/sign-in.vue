@@ -24,6 +24,7 @@
 
 <script setup lang="ts">
 import api from '@/api/index-client'
+import type { UserCookies } from '@/types'
 
 const props = defineProps<{
     show: boolean
@@ -53,7 +54,7 @@ const handleLogin = useLockFn(async () => {
     if (!form.username || !form.password)
         return showMsg('请将表单填写完整!')
 
-    const { code, message } = await api.post('frontend/user/login', form)
+    const { code, message } = await api.post<UserCookies>('frontend/user/login', form)
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         window.location.reload()

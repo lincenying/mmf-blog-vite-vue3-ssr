@@ -58,7 +58,7 @@ const handleSubmit = useLockFn(async () => {
         showMsg('邮箱格式错误!')
         return
     }
-    const { code, message } = await api.post('frontend/user/account', {
+    const { code, message } = await api.post<'success' | 'error'>('frontend/user/account', {
         email,
         username,
         id: cookies.userid,

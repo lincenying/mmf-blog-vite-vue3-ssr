@@ -61,14 +61,14 @@ async function loadMore(page = lists.page + 1) {
     toggleLoading(false)
 }
 async function handleRecover(id: string) {
-    const { code, message } = await api.get('backend/admin/recover', { id })
+    const { code, message } = await api.get<'success' | 'error'>('backend/admin/recover', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         backendAdminStore.recoverAdmin(id)
     }
 }
 async function handleDelete(id: string) {
-    const { code, message } = await api.get('backend/admin/delete', { id })
+    const { code, message } = await api.get<'success' | 'error'>('backend/admin/delete', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         backendAdminStore.deleteAdmin(id)

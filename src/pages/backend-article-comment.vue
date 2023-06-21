@@ -60,14 +60,14 @@ async function loadMore(page = lists.page + 1) {
     toggleLoading(false)
 }
 async function handleRecover(id: string) {
-    const { code, message } = await api.get('frontend/comment/recover', { id })
+    const { code, message } = await api.get<'success' | 'error'>('frontend/comment/recover', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         globalCommentStore.recoverComment(id)
     }
 }
 async function handleDelete(id: string) {
-    const { code, message } = await api.get('frontend/comment/delete', { id })
+    const { code, message } = await api.get<'success' | 'error'>('frontend/comment/delete', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         globalCommentStore.deleteComment(id)

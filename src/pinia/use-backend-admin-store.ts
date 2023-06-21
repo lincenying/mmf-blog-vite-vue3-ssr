@@ -29,7 +29,7 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
         if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1)
             return
         const { code, data } = await $api.get<ResponseDataLists<User[]>>('backend/admin/list', { ...config, path: undefined, cache: true })
-        if (data && code === 200) {
+        if (code === 200 && data) {
             const {
                 list = [],
                 path,
@@ -60,7 +60,7 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
         if (!$api)
             $api = api
         const { code, data } = await $api.get<User>('backend/admin/item', { ...config, path: undefined })
-        if (data && code === 200) {
+        if (code === 200 && data) {
             state.item = {
                 data,
                 ...config,

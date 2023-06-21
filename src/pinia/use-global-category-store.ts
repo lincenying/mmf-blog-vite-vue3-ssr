@@ -22,7 +22,7 @@ const usePiniaStore = defineStore('globalCategoryStore', () => {
         if (state.lists.length)
             return
         const { code, data } = await $api.get<ResponseDataList<Category[]>>('backend/category/list', { ...config, path: undefined, cache: true })
-        if (data && code === 200)
+        if (code === 200 && data)
             state.lists = data.list
     }
     /**
@@ -33,8 +33,8 @@ const usePiniaStore = defineStore('globalCategoryStore', () => {
     const getCategoryItem = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
         if (!$api)
             $api = api
-        const { code, data } = await $api.get<Category>('backend/category/item', { ...config, path: undefined })
-        if (data && code === 200) {
+        const { code, data } = await $api.get<UnfAble<Category>>('backend/category/item', { ...config, path: undefined })
+        if (code === 200 && data) {
             state.item = {
                 data,
                 ...config,

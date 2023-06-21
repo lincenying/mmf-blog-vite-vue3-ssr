@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { getDateDiff } from '@lincy/utils'
-import type { AsyncDataConfig } from '@/types'
+import type { Article, AsyncDataConfig } from '@/types'
 import api from '@/api/index-client'
 
 defineOptions({
@@ -63,14 +63,14 @@ async function loadMore(page = lists.page + 1) {
     toggleLoading(false)
 }
 async function handleRecover(id: string) {
-    const { code, message } = await api.get('backend/article/recover', { id })
+    const { code, message } = await api.get<UnfAble<Article>>('backend/article/recover', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         backendArticleStore.recoverArticle(id)
     }
 }
 async function handleDelete(id: string) {
-    const { code, message } = await api.get('backend/article/delete', { id })
+    const { code, message } = await api.get<UnfAble<Article>>('backend/article/delete', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         backendArticleStore.deleteArticle(id)

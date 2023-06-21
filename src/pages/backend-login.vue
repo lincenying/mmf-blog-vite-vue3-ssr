@@ -39,9 +39,9 @@ const handleLogin = useLockFn(async () => {
         return showMsg('请输入用户名和密码!')
 
     const loader = ctx.$loading.show()
-    const { code, data } = await api.post('backend/admin/login', form)
+    const { code, data } = await api.post<UnfAble<string>>('backend/admin/login', form)
     loader.hide()
-    if (data && code === 200)
+    if (code === 200 && data)
         router.push('/backend/article/list')
 })
 
