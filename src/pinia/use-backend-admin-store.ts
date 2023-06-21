@@ -4,7 +4,7 @@ import api from '@/api/index-client'
 import type { AdminStore, ApiClientReturn, ApiConfig, ApiServerReturn, User } from '@/types'
 
 const usePiniaStore = defineStore('backendAdminStore', () => {
-    const state = reactive<AdminStore>({
+    const state: AdminStore = reactive({
         lists: {
             hasNext: 0,
             hasPrev: 0,

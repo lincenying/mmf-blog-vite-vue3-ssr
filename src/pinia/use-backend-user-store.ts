@@ -5,7 +5,7 @@ import type { ApiClientReturn, ApiConfig, ApiServerReturn, User, UserStore } fro
 import api from '@/api/index-client'
 
 const usePiniaStore = defineStore('backendUserStore', () => {
-    const state = reactive<UserStore>({
+    const state: UserStore = reactive({
         lists: {
             hasNext: 0,
             hasPrev: 0,

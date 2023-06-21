@@ -4,7 +4,7 @@ import type { ApiClientReturn, ApiConfig, ApiServerReturn, Category, CategorySto
 import api from '@/api/index-client'
 
 const usePiniaStore = defineStore('globalCategoryStore', () => {
-    const state = reactive<CategoryStore>({
+    const state: CategoryStore = reactive({
         lists: [],
         item: {
             data: null,

@@ -7,7 +7,7 @@ interface HistoryType {
 }
 
 const usePiniaStore = defineStore('appShellStore', () => {
-    const state = reactive<ShellStore>({
+    const state: ShellStore = reactive({
         needPageTransition: true,
         isPageSwitching: false,
         pageTransitionName: '',

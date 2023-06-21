@@ -5,7 +5,7 @@ import type { ApiClientReturn, ApiConfig, ApiServerReturn, Article, ArticleStore
 import api from '@/api/index-client'
 
 const usePiniaStore = defineStore('backendArticleStore', () => {
-    const state = reactive<ArticleStore>({
+    const state: ArticleStore = reactive({
         lists: {
             data: [],
             path: '',

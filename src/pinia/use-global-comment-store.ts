@@ -5,7 +5,7 @@ import type { ApiClientReturn, ApiConfig, ApiServerReturn, Comment, CommentStore
 import api from '@/api/index-client'
 
 const usePiniaStore = defineStore('globalCommentStore', () => {
-    const state = reactive<CommentStore>({
+    const state: CommentStore = reactive({
         lists: {
             data: [],
             hasNext: 0,

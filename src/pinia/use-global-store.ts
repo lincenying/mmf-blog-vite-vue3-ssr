@@ -2,7 +2,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import type { GlobalStore } from '@/types'
 
 const usePiniaStore = defineStore('globalStore', () => {
-    const state = reactive<GlobalStore>({
+    const state: GlobalStore = reactive({
         loading: false,
         cookies: {},
         showLoginModal: false,
