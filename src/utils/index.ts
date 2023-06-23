@@ -9,7 +9,7 @@ import { ElMessage } from '@/plugin/element'
  * showMsg({ type: 'success' | 'warning' | 'info' | 'error', content: 'content'})
  * ```
  */
-export function showMsg(config: Record<string, any> | string) {
+export function showMsg(config: Obj | string) {
     let content, type: 'success' | 'warning' | 'info' | 'error'
     if (!config) {
         content = '接口返回数据错误'

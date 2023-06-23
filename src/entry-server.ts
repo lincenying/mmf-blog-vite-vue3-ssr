@@ -27,7 +27,7 @@ function renderPreloadLink(file: string) {
     return ''
 }
 
-function renderPreloadLinks(modules: any[], manifest: Record<string, any>) {
+function renderPreloadLinks(modules: any[], manifest: Obj) {
     let links = ''
     const seen = new Set()
     modules.forEach((id) => {
@@ -93,7 +93,7 @@ export async function render(url: string, manifest: Record<string, string[]>, re
 
     // 传递可通过 useSSRContext() 使用的 SSR 上下文对象 @vitejs/plugin-vue 将代码注入到组件的 setup() 中，该组件在 ctx.modules 上注册。
     // 渲染之后，ctx.modules 将包含在此渲染调用期间已实例化的所有组件。
-    const ctx: Record<string, any> = {}
+    const ctx: Obj = {}
     let html = await renderToString(app, ctx)
 
     const { headTags } = await renderHeadToString(head)
