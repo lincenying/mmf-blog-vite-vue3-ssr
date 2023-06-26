@@ -28,12 +28,11 @@
 <script setup lang="ts">
 import { UTC2Date } from '@lincy/utils'
 import api from '@/api/index-client'
-import type { AsyncDataConfig } from '@/types'
 
 defineOptions({
     name: 'BackendAdminList',
-    asyncData(payload: AsyncDataConfig) {
-        const { store, route, api } = payload
+    asyncData(ctx) {
+        const { store, route, api } = ctx
         const backendAdminStore = useBackendAdminStore(store)
         return backendAdminStore.getAdminList({ page: 1, path: route.fullPath }, api)
     },
@@ -85,9 +84,7 @@ onMounted(() => {
     }
 })
 
-const headTitle = computed(() => {
-    return '管理员列表 - M.M.F 小屋'
-})
+const headTitle = ref('管理员列表 - M.M.F 小屋')
 useHead({
     // Can be static or computed
     title: headTitle,

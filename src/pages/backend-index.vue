@@ -20,11 +20,7 @@ defineOptions({
 
 const route = useRoute()
 
-const key = computed(() => {
-    return route.path.replace(/\//g, '_')
-})
+const key = computed(() => route.path.replace(/\//g, '_'))
 
-const isLogin = computed(() => {
-    return ['/backend/login', '/backend/login/'].includes(route.path)
-})
+const isLogin = computed(() => ['/backend/login', '/backend/login/'].includes(route.path))
 </script>

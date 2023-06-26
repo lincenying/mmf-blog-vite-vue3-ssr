@@ -10,6 +10,7 @@ import 'prismjs/components/prism-json'
 
 import { createApp } from './main'
 
+import type { CusRouteComponent } from './types'
 import reloadPrompt from '@/components/reload-prompt.vue'
 
 import 'uno.css'
@@ -40,8 +41,9 @@ router.isReady().then(() => {
 
         await Promise.all(
             activated.map((c) => {
-                if ((c.components?.default as any).asyncData)
-                    return (c.components?.default as any).asyncData({ store, route: to })
+                const routeComponent = c.components?.default as CusRouteComponent
+                if (routeComponent.asyncData)
+                    return routeComponent.asyncData({ store, route: to })
 
                 return true
             }),

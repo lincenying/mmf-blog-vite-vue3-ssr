@@ -55,12 +55,10 @@
 </template>
 
 <script setup lang="ts">
-import type { AsyncDataConfig } from '@/types'
-
 defineOptions({
     name: 'FrontendAbout',
-    asyncData(payload: AsyncDataConfig) {
-        const { store, route, api } = payload
+    asyncData(ctx) {
+        const { store, route, api } = ctx
         const frontendArticleStore = useFrontendArticleStore(store)
         return frontendArticleStore.getTrending({ id: route.query.id }, api)
     },
@@ -72,9 +70,7 @@ const { trending } = $(storeToRefs(frontendArticleStore))
 
 onMounted(() => {})
 
-const headTitle = computed(() => {
-    return '关于 - M.M.F 小屋'
-})
+const headTitle = ref('关于 - M.M.F 小屋')
 useHead({
     // Can be static or computed
     title: headTitle,

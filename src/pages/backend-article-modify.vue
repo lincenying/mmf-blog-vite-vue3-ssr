@@ -36,14 +36,14 @@
 
 <script setup lang="ts">
 import type { AnyFn } from '@vueuse/core'
-import type { Article, AsyncDataConfig, Upload } from '@/types'
+import type { Article, Upload } from '@/types'
 import api from '@/api/index-client'
 import { uploadApi } from '@/api/upload-api'
 
 defineOptions({
     name: 'BackendArticleModify',
-    asyncData(payload: AsyncDataConfig) {
-        const { store, route, api } = payload
+    asyncData(ctx) {
+        const { store, route, api } = ctx
         const globalCategoryStore = useGlobalCategoryStore(store)
         return globalCategoryStore.getCategoryList({ limit: 99, path: route.fullPath }, api)
     },
@@ -136,9 +136,7 @@ async function handleUploadImage(event: EventTarget, insertImage: AnyFn, files: 
     loader.hide()
 }
 
-const headTitle = computed(() => {
-    return '编辑文章 - M.M.F 小屋'
-})
+const headTitle = ref('编辑文章 - M.M.F 小屋')
 useHead({
     // Can be static or computed
     title: headTitle,

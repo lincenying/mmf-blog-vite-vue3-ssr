@@ -30,13 +30,13 @@
 
 <script setup lang="ts">
 import { getDateDiff } from '@lincy/utils'
-import type { Article, AsyncDataConfig } from '@/types'
+import type { Article } from '@/types'
 import api from '@/api/index-client'
 
 defineOptions({
     name: 'BackendArticleList',
-    asyncData(payload: AsyncDataConfig) {
-        const { store, route, api } = payload
+    asyncData(ctx) {
+        const { store, route, api } = ctx
         const backendArticleStore = useBackendArticleStore(store)
         return backendArticleStore.getArticleList({ page: 1, path: route.fullPath }, api)
     },
@@ -87,9 +87,7 @@ onMounted(() => {
     }
 })
 
-const headTitle = computed(() => {
-    return '文章列表 - M.M.F 小屋'
-})
+const headTitle = ref('文章列表 - M.M.F 小屋')
 useHead({
     // Can be static or computed
     title: headTitle,

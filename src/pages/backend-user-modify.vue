@@ -24,13 +24,13 @@
 </template>
 
 <script setup lang="ts">
-import type { AsyncDataConfig, User } from '@/types'
+import type { User } from '@/types'
 import api from '@/api/index-client'
 
 defineOptions({
     name: 'BackendUserModify',
-    asyncData(payload: AsyncDataConfig) {
-        const { store, route, api } = payload
+    asyncData(ctx) {
+        const { store, route, api } = ctx
         const backendUserStore = useBackendUserStore(store)
         return backendUserStore.getUserItem({ id: route.params.id, path: route.fullPath, from: 'backend' }, api)
     },
@@ -83,9 +83,7 @@ async function handleModify() {
     }
 }
 
-const headTitle = computed(() => {
-    return '用户编辑 - M.M.F 小屋'
-})
+const headTitle = ref('用户编辑 - M.M.F 小屋')
 useHead({
     // Can be static or computed
     title: headTitle,

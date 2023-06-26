@@ -4,7 +4,7 @@
             <div class="comment-post-wrap">
                 <img :src="useAvatar(userEmail)" alt="" class="avatar-img">
                 <div class="comment-post-input-wrap base-textarea-wrap">
-                    <textarea id="content" v-model="form.content" class="textarea-input base-input" cols="30" rows="4" />
+                    <textarea id="content" v-model="form.content" class="base-input textarea-input" cols="30" rows="4" />
                 </div>
                 <div class="comment-post-actions"><a href="javascript:;" class="btn btn-blue" @click="handlePostComment">发表评论</a></div>
             </div>
@@ -60,12 +60,8 @@ const form = reactive({
     content: '',
 })
 
-const user = $computed(() => {
-    return cookies.user
-})
-const userEmail = computed(() => {
-    return cookies.useremail
-})
+const user = $computed(() => cookies.user)
+const userEmail = $computed(() => cookies.useremail)
 
 async function handleLoadComment() {
     toggleLoading(true)

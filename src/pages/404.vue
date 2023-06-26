@@ -14,12 +14,10 @@
 </template>
 
 <script setup lang="ts">
-import type { AsyncDataConfig } from '@/types'
-
 defineOptions({
     name: '404Page',
-    asyncData(payload: AsyncDataConfig) {
-        const { store, route, api } = payload
+    asyncData(ctx) {
+        const { store, route, api } = ctx
         const frontendArticleStore = useFrontendArticleStore(store)
         return frontendArticleStore.getTrending({ id: route.query.id }, api)
     },
@@ -28,9 +26,7 @@ defineOptions({
 const frontendArticleStore = useFrontendArticleStore()
 const { trending } = $(storeToRefs(frontendArticleStore))
 
-const headTitle = computed(() => {
-    return 'Page Not Found - M.M.F 小屋'
-})
+const headTitle = ref('Page Not Found - M.M.F 小屋')
 useHead({
     // Can be static or computed
     title: headTitle,

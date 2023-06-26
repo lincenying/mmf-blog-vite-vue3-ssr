@@ -4,13 +4,13 @@ import { createElementBlock } from 'vue'
 export default defineComponent({
     name: 'ClientOnly',
 
-    props: ['fallback', 'placeholder', 'placeholderTag', 'fallbackTag'],
+    props: { fallback: String, placeholder: String, placeholderTag: String, fallbackTag: String },
     setup(_, { slots }) {
         const mounted = ref(false)
         onMounted(() => {
             mounted.value = true
         })
-        return (props: any) => {
+        return (props: { fallback: string; placeholder: string; fallbackTag: string; placeholderTag: string }) => {
             if (mounted.value)
                 return slots.default?.()
 

@@ -69,9 +69,7 @@ async function handleInsert() {
     }
 }
 
-const headTitle = computed(() => {
-    return '添加分类 - M.M.F 小屋'
-})
+const headTitle = ref('添加分类 - M.M.F 小屋')
 useHead({
     // Can be static or computed
     title: headTitle,

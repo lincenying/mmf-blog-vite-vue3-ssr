@@ -66,5 +66,5 @@ declare interface Window {
         get: (...args) => Promise<any>
         [propName: string]: (...args) => Promise<any>
     }
-    __INITIAL_STATE__: any
+    __INITIAL_STATE__: Record<string, any>
 }

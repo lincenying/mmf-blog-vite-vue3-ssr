@@ -11,11 +11,19 @@
 <script setup lang="ts">
 import type { Fn } from '@vueuse/core'
 
+type NewCanvasRenderingContext2D = CanvasRenderingContext2D & {
+    webkitBackingStorePixelRatio: number
+    mozBackingStorePixelRatio: number
+    msBackingStorePixelRatio: number
+    oBackingStorePixelRatio: number
+    backingStorePixelRatio: number
+}
+
 const r180 = Math.PI
 const r90 = Math.PI / 2
 const r15 = Math.PI / 12
 const color = '#88888825'
-const el = ref<HTMLCanvasElement | null>(null)
+const el = ref<Nullable<HTMLCanvasElement>>(null)
 const { random } = Math
 const size = reactive(useWindowSize())
 const start = ref<Fn>(() => {})
@@ -23,7 +31,7 @@ const init = ref(4)
 const len = ref(6)
 const stopped = ref(false)
 function initCanvas(canvas: HTMLCanvasElement, width = 400, height = 400, _dpi?: number) {
-    const ctx: any = canvas.getContext('2d')!
+    const ctx = canvas.getContext('2d') as NewCanvasRenderingContext2D
     const dpr = window.devicePixelRatio || 1
     const bsr
         = ctx.webkitBackingStorePixelRatio

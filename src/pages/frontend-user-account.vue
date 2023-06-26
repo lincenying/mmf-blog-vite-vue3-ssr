@@ -72,9 +72,7 @@ const handleSubmit = useLockFn(async () => {
     }
 })
 
-const headTitle = computed(() => {
-    return '帐号 - M.M.F 小屋'
-})
+const headTitle = ref('帐号 - M.M.F 小屋')
 
 useHead({
     // Can be static or computed

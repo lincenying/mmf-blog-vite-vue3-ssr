@@ -149,8 +149,8 @@ devDependencies:
     specifier: ^2.0.22
     version: 2.0.22
   polyfill-library:
-    specifier: ^4.7.0
-    version: 4.7.0
+    specifier: ^4.8.0
+    version: 4.8.0
   postcss:
     specifier: ^8.4.24
     version: 8.4.24
@@ -3760,8 +3760,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001507
-      electron-to-chromium: 1.4.439
+      caniuse-lite: 1.0.30001508
+      electron-to-chromium: 1.4.440
       node-releases: 2.0.12
       update-browserslist-db: 1.0.11(browserslist@4.21.9)
     dev: true
@@ -3875,8 +3875,8 @@ packages:
     resolution: {integrity: sha512-IhoQqRrW6WiecFcfZgoJS1YLEN1/HR1vHP5WNgjCARRW7KUNToHHTX3FrwCM+y4zkRa48D9rE90WFYc2IWhDWQ==}
     dev: true
 
-  /caniuse-lite@1.0.30001507:
-    resolution: {integrity: sha512-SFpUDoSLCaE5XYL2jfqe9ova/pbQHEmbheDf5r4diNwbAgR3qxM9NQtfsiSscjqoya5K7kFcHPUQ+VsUkIJR4A==}
+  /caniuse-lite@1.0.30001508:
+    resolution: {integrity: sha512-sdQZOJdmt3GJs1UMNpCCCyeuS2IEGLXnHyAo9yIO5JJDjbjoVRij4M1qep6P6gFpptD1PqIYgzM+gwJbOi92mw==}
     dev: true
 
   /chalk@2.4.2:
@@ -5003,8 +5003,8 @@ packages:
     resolution: {integrity: sha512-HK3r9l+Jm8dYAm1ctXEWIC+hV60zfcjS9UA5BDlYvnI5S7PU/yytjpvSrTNrSSRRkuu3tDyZhdkwIczh+0DWaw==}
     dev: true
 
-  /electron-to-chromium@1.4.439:
-    resolution: {integrity: sha512-BHpErPSNhb9FB25+OwQP6mCAf3ZXfGbmuvc4LzBNVJwpCcXQJm++LerimocYRG9FRxUVRKZqaB7d0+pImSTPSg==}
+  /electron-to-chromium@1.4.440:
+    resolution: {integrity: sha512-r6dCgNpRhPwiWlxbHzZQ/d9swfPaEJGi8ekqRBwQYaR3WmA5VkqQfBWSDDjuJU1ntO+W9tHx8OHV/96Q8e0dVw==}
     dev: true
 
   /element-plus@2.3.7(vue@3.3.4):
@@ -7929,8 +7929,8 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /polyfill-library@4.7.0:
-    resolution: {integrity: sha512-9gftEm1xj8nDQsmBtY+9A7TBuG/HSzUxuPge9/41L77HP/EGV6V4JB+Y5oO3Fz0MfLtswrUtcIIz6qzT1uM+MA==}
+  /polyfill-library@4.8.0:
+    resolution: {integrity: sha512-7+EjQmy3C7WJRaqCcVFXDE1DLBAIZ9es3DdvBKBxl98kn4kZCjuFKUi13uKDd618DVqZDkvqorP+pBFs7v5feQ==}
     engines: {node: '>=12'}
     dependencies:
       '@financial-times/polyfill-useragent-normaliser': 2.0.1

@@ -1,6 +1,9 @@
 import type { AxiosInstance } from 'axios'
+import type { Request } from 'express'
 import type { Pinia } from 'pinia'
-import type { RouteLocationNormalized } from 'vue-router'
+import type { RouteComponent, RouteLocationNormalized } from 'vue-router'
+
+export type CusRouteComponent = RouteComponent & { asyncData: (payload: AsyncDataConfig) => Promise<any> }
 
 /**
  * 服务端回传参数
@@ -15,7 +18,8 @@ import type { RouteLocationNormalized } from 'vue-router'
 export interface AsyncDataConfig {
     store: Pinia
     route: RouteLocationNormalized
-    api: ApiServerReturn
+    api?: ApiServerReturn
+    req?: Request
 }
 
 /**

@@ -24,13 +24,13 @@
 </template>
 
 <script setup lang="ts">
-import type { AsyncDataConfig, User } from '@/types'
+import type { User } from '@/types'
 import api from '@/api/index-client'
 
 defineOptions({
     name: 'BackendAdminModify',
-    asyncData(payload: AsyncDataConfig) {
-        const { store, route, api } = payload
+    asyncData(ctx) {
+        const { store, route, api } = ctx
         const backendAdminStore = useBackendAdminStore(store)
         return backendAdminStore.getAdminItem({ id: route.params.id, path: route.fullPath }, api)
     },
@@ -76,9 +76,7 @@ async function handleModify() {
     }
 }
 
-const headTitle = computed(() => {
-    return '编辑管理员 - M.M.F 小屋'
-})
+const headTitle = ref('编辑管理员 - M.M.F 小屋')
 useHead({
     // Can be static or computed
     title: headTitle,

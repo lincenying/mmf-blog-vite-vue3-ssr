@@ -18,7 +18,5 @@ defineOptions({
 
 const route = useRoute()
 
-const key = computed(() => {
-    return route.path.replace(/\//g, '_')
-})
+const key = computed(() => route.path.replace(/\//g, '_'))
 </script>

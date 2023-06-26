@@ -50,9 +50,7 @@ onMounted(() => {
         router.push('/backend/article/list')
 })
 
-const headTitle = computed(() => {
-    return '管理员登录 - M.M.F 小屋'
-})
+const headTitle = ref('管理员登录 - M.M.F 小屋')
 useHead({
     // Can be static or computed
     title: headTitle,

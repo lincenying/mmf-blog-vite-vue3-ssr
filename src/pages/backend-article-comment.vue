@@ -32,13 +32,12 @@
 
 <script setup lang="ts">
 import { getDateDiff } from '@lincy/utils'
-import type { AsyncDataConfig } from '@/types'
 import api from '@/api/index-client'
 
 defineOptions({
     name: 'BackendArticleComment',
-    asyncData(payload: AsyncDataConfig) {
-        const { store, route, api } = payload
+    asyncData(ctx) {
+        const { store, route, api } = ctx
         const globalCommentStore = useGlobalCommentStore(store)
         return globalCommentStore.getCommentList({ page: 1, path: route.fullPath, all: 1, id: route.params.id }, api)
     },
@@ -79,9 +78,7 @@ onMounted(() => {
         loadMore(1)
 })
 
-const headTitle = computed(() => {
-    return '评论列表 - M.M.F 小屋'
-})
+const headTitle = ref('评论列表 - M.M.F 小屋')
 useHead({
     // Can be static or computed
     title: headTitle,

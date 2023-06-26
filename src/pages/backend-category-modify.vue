@@ -18,13 +18,13 @@
 </template>
 
 <script setup lang="ts">
-import type { AsyncDataConfig, Category } from '@/types'
+import type { Category } from '@/types'
 import api from '@/api/index-client'
 
 defineOptions({
     name: 'BackendCategoryModify',
-    asyncData(payload: AsyncDataConfig) {
-        const { store, route, api } = payload
+    asyncData(ctx) {
+        const { store, route, api } = ctx
         const globalCategoryStore = useGlobalCategoryStore(store)
         return globalCategoryStore.getCategoryItem({ path: route.fullPath, id: route.params.id }, api)
     },
@@ -71,9 +71,7 @@ async function handleModify() {
     }
 }
 
-const headTitle = computed(() => {
-    return '编辑分类 - M.M.F 小屋'
-})
+const headTitle = ref('编辑分类 - M.M.F 小屋')
 useHead({
     // Can be static or computed
     title: headTitle,

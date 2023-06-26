@@ -73,7 +73,7 @@
     "mockjs": "^1.1.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.22",
-    "polyfill-library": "^4.7.0",
+    "polyfill-library": "^4.8.0",
     "postcss": "^8.4.24",
     "sass": "^1.63.6",
     "stylelint": "^15.9.0",

@@ -6,8 +6,9 @@ import type { Request } from 'express'
 
 import { createApp } from './main'
 import { api } from './api/index-server'
+import type { CusRouteComponent } from './types'
 
-function renderPreloadLink(file: string) {
+function renderPreloadLink(file: string): string {
     if (file.endsWith('.js'))
         return `<link rel="modulepreload" crossorigin href="${file}">`
     else if (file.endsWith('.css'))
@@ -27,13 +28,13 @@ function renderPreloadLink(file: string) {
     return ''
 }
 
-function renderPreloadLinks(modules: any[], manifest: Obj) {
+function renderPreloadLinks(modules: string[], manifest: ObjT<string[]>): string {
     let links = ''
-    const seen = new Set()
+    const seen = new Set<string>()
     modules.forEach((id) => {
         const files = manifest[id]
         if (files) {
-            files.forEach((file: string) => {
+            files.forEach((file) => {
                 if (!seen.has(file)) {
                     seen.add(file)
                     const filename = basename(file)
@@ -51,11 +52,11 @@ function renderPreloadLinks(modules: any[], manifest: Obj) {
     return links
 }
 
-function replaceHtmlTag(html: string) {
+function replaceHtmlTag(html: string): string {
     return html.replace(/<script(.*?)>/gi, '&lt;script$1&gt;').replace(/<\/script>/g, '&lt;/script&gt;')
 }
 
-export async function render(url: string, manifest: Record<string, string[]>, req: Request) {
+export async function render(url: string, manifest: ObjT<string[]>, req: Request) {
     const { app, router, store, head } = createApp()
 
     app.component('ReloadPrompt', { render: () => null }).component('VMdEditor', { render: () => null })
@@ -68,13 +69,14 @@ export async function render(url: string, manifest: Record<string, string[]>, re
         // context.throw(404, "Not Found");
     }
 
-    const matchedComponents = router.currentRoute.value.matched.flatMap((record: any) => Object.values(record.components))
+    const matchedComponents = router.currentRoute.value.matched.flatMap(record => Object.values(record.components as Record<string, CusRouteComponent>))
+
     const globalStore = useGlobalStore(store)
     globalStore.setCookies(req.cookies)
 
     try {
         await Promise.all(
-            matchedComponents.map((component: any) => {
+            matchedComponents.map((component) => {
                 if (component.asyncData) {
                     return component.asyncData({
                         store,
