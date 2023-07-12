@@ -1,5 +1,3 @@
-import type { AxiosInstance } from 'axios'
-import type { Request } from 'express'
 import type { Pinia } from 'pinia'
 import type { RouteComponent, RouteLocationNormalized } from 'vue-router'
 
@@ -11,15 +9,15 @@ export type CusRouteComponent = RouteComponent & { asyncData: (payload: AsyncDat
  * {
  *    store: Pinia
   *   route: RouteLocationNormalized
- *    api: ApiServerReturn
+ *    api: ApiServer
  * }
  * ```
  */
 export interface AsyncDataConfig {
     store: Pinia
     route: RouteLocationNormalized
-    api?: ApiServerReturn
-    req?: Request
+    api?: ApiServer
+    req?: any
 }
 
 /**
@@ -326,24 +324,4 @@ export interface ShellStore {
     pageTransitionName: string
     /** * 上个页面 scroll 的信息 */
     historyPageScrollTop: ObjT<number>
-}
-
-/**
- * Api 浏览器端封装类型
- */
-export interface ApiClientReturn {
-    get<T>(url: string, params: Obj, headers?: Obj): Promise<ResponseData<T>>
-    post<T>(url: string, data: Obj, headers?: Obj): Promise<ResponseData<T>>
-    file<T>(url: string, data: Obj, headers?: Obj): Promise<ResponseData<T>>
-}
-
-/**
- * Api Node端封装类型
- */
-export interface ApiServerReturn {
-    post<T>(url: string, data: Obj, headers?: Obj): Promise<ResponseData<T>>
-    get<T>(url: string, params: Obj, headers?: Obj): Promise<ResponseData<T>>
-    cookies: UserCookies
-    api: AxiosInstance
-    getCookies: () => UserCookies
 }

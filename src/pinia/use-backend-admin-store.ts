@@ -1,7 +1,7 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
 import api from '@/api/index-client'
-import type { AdminStore, ApiClientReturn, ApiConfig, ApiServerReturn, User } from '@/types'
+import type { AdminStore, ApiConfig, User } from '@/types'
 
 const usePiniaStore = defineStore('backendAdminStore', () => {
     const state: AdminStore = reactive({
@@ -23,12 +23,12 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getAdminList = async (config: Pick<ApiConfig, 'page' | 'path'>, $api?: ApiServerReturn | ApiClientReturn) => {
+    const getAdminList = async (config: Pick<ApiConfig, 'page' | 'path'>, $api?: ApiType) => {
         if (!$api)
             $api = api
         if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1)
             return
-        const { code, data } = await $api.get<ResponseDataLists<User[]>>('backend/admin/list', { ...config, path: undefined, cache: true })
+        const { code, data } = await $api.get<ResDataLists<User[]>>('backend/admin/list', { ...config, path: undefined, cache: true })
         if (code === 200 && data) {
             const {
                 list = [],
@@ -56,7 +56,7 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getAdminItem = async (config: Pick<ApiConfig, 'id' | 'path'>, $api?: ApiServerReturn | ApiClientReturn) => {
+    const getAdminItem = async (config: Pick<ApiConfig, 'id' | 'path'>, $api?: ApiType) => {
         if (!$api)
             $api = api
         const { code, data } = await $api.get<User>('backend/admin/item', { ...config, path: undefined })

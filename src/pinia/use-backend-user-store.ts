@@ -1,6 +1,6 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
-import type { ApiClientReturn, ApiConfig, ApiServerReturn, User, UserStore } from '@/types'
+import type { ApiConfig, User, UserStore } from '@/types'
 
 import api from '@/api/index-client'
 
@@ -23,12 +23,12 @@ const usePiniaStore = defineStore('backendUserStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getUserList = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
+    const getUserList = async (config: ApiConfig, $api?: ApiType) => {
         if (!$api)
             $api = api
         if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1)
             return
-        const { code, data } = await $api.get<ResponseDataLists<User[]>>('backend/user/list', { ...config, path: undefined, cache: true })
+        const { code, data } = await $api.get<ResDataLists<User[]>>('backend/user/list', { ...config, path: undefined, cache: true })
         if (code === 200 && data) {
             const {
                 list = [],
@@ -56,7 +56,7 @@ const usePiniaStore = defineStore('backendUserStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getUserItem = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
+    const getUserItem = async (config: ApiConfig, $api?: ApiType) => {
         if (!$api)
             $api = api
         const { code, data } = await $api.get<User>('backend/user/item', { ...config, path: undefined })

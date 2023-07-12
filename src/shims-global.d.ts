@@ -40,7 +40,7 @@ declare interface ResponseData<T> {
  * }
  * ```
  */
-declare interface ResponseDataLists<T> {
+declare interface ResDataLists<T> {
     hasNext: number | boolean
     hasPrev: number | boolean
     total: number
@@ -55,16 +55,33 @@ declare interface ResponseDataLists<T> {
  * }
  * ```
  */
-declare interface ResponseDataList<T> {
+declare interface ResDataList<T> {
     list: T
 }
 
+/**
+ * Api 浏览器端封装类型
+ */
+declare interface ApiClient {
+    get<T = void>(url: string, params: Obj, headers?: Obj): Promise<ResponseData<T>>
+    post<T = void>(url: string, data: Obj, headers?: Obj): Promise<ResponseData<T>>
+    file<T = void>(url: string, data: Obj, headers?: Obj): Promise<ResponseData<T>>
+}
+
+/**
+ * Api Node端封装类型
+ */
+declare interface ApiServer {
+    post<T = void>(url: string, data: Obj, headers?: Obj): Promise<ResponseData<T>>
+    get<T = void>(url: string, params: Obj, headers?: Obj): Promise<ResponseData<T>>
+    cookies: import('./types').UserCookies
+    api: import('axios').AxiosInstance
+    getCookies: () => import('./types').UserCookies
+}
+
+declare type ApiType = ApiServer | ApiClient
 
 declare interface Window {
-    $$api: {
-        post: (...args) => Promise<any>
-        get: (...args) => Promise<any>
-        [propName: string]: (...args) => Promise<any>
-    }
+    $$api: UnfAble<ApiClient>
     __INITIAL_STATE__: Record<string, any>
 }

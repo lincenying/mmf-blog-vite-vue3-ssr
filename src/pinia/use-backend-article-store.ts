@@ -1,6 +1,6 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
-import type { ApiClientReturn, ApiConfig, ApiServerReturn, Article, ArticleStore } from '@/types'
+import type { ApiConfig, Article, ArticleStore } from '@/types'
 
 import api from '@/api/index-client'
 
@@ -24,12 +24,12 @@ const usePiniaStore = defineStore('backendArticleStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getArticleList = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
+    const getArticleList = async (config: ApiConfig, $api?: ApiType) => {
         if (!$api)
             $api = api
         if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1)
             return
-        const { code, data } = await $api.get<ResponseDataLists<Article[]>>('backend/article/list', { ...config, path: undefined, cache: true })
+        const { code, data } = await $api.get<ResDataLists<Article[]>>('backend/article/list', { ...config, path: undefined, cache: true })
         if (code === 200 && data) {
             const {
                 list = [],
@@ -57,7 +57,7 @@ const usePiniaStore = defineStore('backendArticleStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getArticleItem = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
+    const getArticleItem = async (config: ApiConfig, $api?: ApiType) => {
         if (!$api)
             $api = api
         const { code, data } = await $api.get<Article>('backend/article/item', { ...config, path: undefined })

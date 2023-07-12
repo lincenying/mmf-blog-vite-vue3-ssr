@@ -1,6 +1,6 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
-import type { ApiClientReturn, ApiConfig, ApiServerReturn, Comment, CommentStore } from '@/types'
+import type { ApiConfig, Comment, CommentStore } from '@/types'
 
 import api from '@/api/index-client'
 
@@ -20,12 +20,12 @@ const usePiniaStore = defineStore('globalCommentStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getCommentList = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
+    const getCommentList = async (config: ApiConfig, $api?: ApiType) => {
         if (!$api)
             $api = api
         if (config.path === state.lists.path && config.page === 1)
             return
-        const { code, data } = await $api.get<ResponseDataLists<Comment[]>>('frontend/comment/list', { ...config, path: undefined, cache: true })
+        const { code, data } = await $api.get<ResDataLists<Comment[]>>('frontend/comment/list', { ...config, path: undefined, cache: true })
         if (code === 200 && data) {
             const {
                 list = [],

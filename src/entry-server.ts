@@ -2,8 +2,6 @@ import { basename } from 'node:path'
 import { renderToString } from '@vue/server-renderer'
 import { renderHeadToString } from '@vueuse/head'
 
-import type { Request } from 'express'
-
 import { createApp } from './main'
 import { api } from './api/index-server'
 import type { CusRouteComponent } from './types'
@@ -56,7 +54,7 @@ function replaceHtmlTag(html: string): string {
     return html.replace(/<script(.*?)>/gi, '&lt;script$1&gt;').replace(/<\/script>/g, '&lt;/script&gt;')
 }
 
-export async function render(url: string, manifest: ObjT<string[]>, req: Request) {
+export async function render(url: string, manifest: ObjT<string[]>, req: any) {
     const { app, router, store, head } = createApp()
 
     app.component('ReloadPrompt', { render: () => null }).component('VMdEditor', { render: () => null })

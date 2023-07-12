@@ -1,6 +1,6 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
-import type { ApiClientReturn, ApiConfig, ApiServerReturn, Category, CategoryStore } from '@/types'
+import type { ApiConfig, Category, CategoryStore } from '@/types'
 import api from '@/api/index-client'
 
 const usePiniaStore = defineStore('globalCategoryStore', () => {
@@ -16,12 +16,12 @@ const usePiniaStore = defineStore('globalCategoryStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getCategoryList = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
+    const getCategoryList = async (config: ApiConfig, $api?: ApiType) => {
         if (!$api)
             $api = api
         if (state.lists.length)
             return
-        const { code, data } = await $api.get<ResponseDataList<Category[]>>('backend/category/list', { ...config, path: undefined, cache: true })
+        const { code, data } = await $api.get<ResDataList<Category[]>>('backend/category/list', { ...config, path: undefined, cache: true })
         if (code === 200 && data)
             state.lists = data.list
     }
@@ -30,7 +30,7 @@ const usePiniaStore = defineStore('globalCategoryStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getCategoryItem = async (config: ApiConfig, $api?: ApiServerReturn | ApiClientReturn) => {
+    const getCategoryItem = async (config: ApiConfig, $api?: ApiType) => {
         if (!$api)
             $api = api
         const { code, data } = await $api.get<UnfAble<Category>>('backend/category/item', { ...config, path: undefined })
