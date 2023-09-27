@@ -26,13 +26,13 @@
 import api from '@/api/index-client'
 import type { UserCookies } from '@/types'
 
-const props = defineProps<{
-    show: boolean
-}>()
-
 defineOptions({
     name: 'SignIn',
 })
+
+const props = defineProps<{
+    show: boolean
+}>()
 
 const { show } = $(toRefs(props))
 

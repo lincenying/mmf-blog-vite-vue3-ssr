@@ -56,7 +56,7 @@ const usePiniaStore = defineStore('globalCommentStore', () => {
     }
     /**
      * 删除评论成功后, 更新评论数据
-     * @param payload 评论详情
+     * @param id 评论ID
      */
     const deleteComment = (id: string) => {
         const index = state.lists.data.findIndex(ii => ii._id === id)
@@ -70,7 +70,7 @@ const usePiniaStore = defineStore('globalCommentStore', () => {
 
     /**
      * 恢复评论成功后, 更新评论数据
-     * @param payload 评论详情
+     * @param id 评论ID
      */
     const recoverComment = (id: string) => {
         const index = state.lists.data.findIndex(ii => ii._id === id)

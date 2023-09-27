@@ -8,7 +8,7 @@ export type CusRouteComponent = RouteComponent & { asyncData: (payload: AsyncDat
  * ```
  * {
  *    store: Pinia
-  *   route: RouteLocationNormalized
+ *    route: RouteLocationNormalized
  *    api: ApiServer
  * }
  * ```

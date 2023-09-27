@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 
 import { createServer as viteCreateServer } from 'vite'
@@ -121,9 +122,7 @@ if (process.env.NODE_ENV !== 'production')
     port = 17777
 
 if (!isTest) {
-    createServer().then(({ app }) =>
-        app.listen(port, () => {
-            console.log(`监听: http://localhost:${port}`)
-        }),
-    )
+    createServer().then(({ app }) => app.listen(port, () => {
+        console.log(`监听: http://localhost:${port}`)
+    }))
 }

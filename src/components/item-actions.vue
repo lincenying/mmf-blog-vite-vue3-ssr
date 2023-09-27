@@ -23,13 +23,13 @@ import type { Article } from '@/types'
 
 import api from '@/api/index-client'
 
-const props = defineProps<{
-    item: Article
-}>()
-
 defineOptions({
     name: 'ItemActions',
 })
+
+const props = defineProps<{
+    item: Article
+}>()
 
 const { item } = $(toRefs(props))
 

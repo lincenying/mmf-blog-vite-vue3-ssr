@@ -10,14 +10,14 @@
 </template>
 
 <script setup lang="ts">
+defineOptions({
+    name: 'AInput',
+})
+
 const props = defineProps<{
     title: string
     classes?: string
 }>()
-
-defineOptions({
-    name: 'AInput',
-})
 
 const { title, classes } = $(toRefs(props))
 </script>

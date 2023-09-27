@@ -34,13 +34,13 @@
 import { strLen } from '@lincy/utils'
 import api from '@/api/index-client'
 
-const props = defineProps<{
-    show: boolean
-}>()
-
 defineOptions({
     name: 'SignUp',
 })
+
+const props = defineProps<{
+    show: boolean
+}>()
 
 const { show } = $(toRefs(props))
 

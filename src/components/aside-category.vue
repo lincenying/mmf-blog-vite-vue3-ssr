@@ -14,13 +14,13 @@
 <script setup lang="ts">
 import type { Category } from '@/types'
 
-const props = defineProps<{
-    category: Category[]
-}>()
-
 defineOptions({
     name: 'AsideCategory',
 })
+
+const props = defineProps<{
+    category: Category[]
+}>()
 
 const { category } = $(toRefs(props))
 </script>

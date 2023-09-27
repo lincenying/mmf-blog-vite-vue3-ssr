@@ -37,13 +37,13 @@
 import api from '@/api/index-client'
 import type { Comment, CommentStoreList } from '@/types'
 
-const props = defineProps<{
-    comments: CommentStoreList
-}>()
-
 defineOptions({
     name: 'FrontendComment',
 })
+
+const props = defineProps<{
+    comments: CommentStoreList
+}>()
 
 const { comments } = $(toRefs(props))
 

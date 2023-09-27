@@ -31,7 +31,7 @@ const usePiniaStore = defineStore('appShellStore', () => {
     /**
      * 设置页面是否处于切换中
      *
-     * @param {boolean} isPageSwitching isPageSwitching
+     * @param isPageSwitching isPageSwitching
      */
     const setPageSwitching = (isPageSwitching: boolean) => {
         state.isPageSwitching = isPageSwitching

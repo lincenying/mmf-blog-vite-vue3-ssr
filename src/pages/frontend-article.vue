@@ -21,7 +21,7 @@
                 <div class="card card-answer">
                     <div class="answer-content">
                         <!-- eslint-disable-next-line vue/no-v-html -->
-                        <div class="article-content markdown-body" v-html="addTarget(articleData.html)" />
+                        <div class="markdown-body article-content" v-html="addTarget(articleData.html)" />
                     </div>
                     <item-actions :item="articleData" />
                 </div>

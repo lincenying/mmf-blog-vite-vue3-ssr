@@ -87,6 +87,8 @@ const usePiniaStore = defineStore('frontendArticleStore', () => {
     /**
      * 编辑点赞状态
      * @param payload 请求参数
+     * @param payload.id ID
+     * @param payload.status 状态
      */
     const modifyLikeStatus = (payload: { id: string; status: boolean }) => {
         const { id, status } = payload

@@ -21,13 +21,13 @@
 <script setup lang="ts">
 import type { Article } from '@/types'
 
-const props = defineProps<{
-    item: Article
-}>()
-
 defineOptions({
     name: 'TopicsItem',
 })
+
+const props = defineProps<{
+    item: Article
+}>()
 
 const { item } = $(toRefs(props))
 </script>

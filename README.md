@@ -1,4 +1,4 @@
-# mmf-blog vuejs 3.0 v3         [中文说明](https://github.com/lincenying/mmf-blog-vite-vue3/blob/main/README_CN.md)
+# mmf-blog vuejs 3.0 v3         [中文说明](https://github.com/lincenying/mmf-blog-vite-vue3/blob/main/doc/README_CN.md)
 
 demo: [http://www.mmxiaowu.com](http://www.mmxiaowu.com)
 

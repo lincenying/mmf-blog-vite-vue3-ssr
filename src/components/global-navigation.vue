@@ -41,13 +41,13 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
-    isBackend: boolean
-}>()
-
 defineOptions({
     name: 'GlobalNavigation',
 })
+
+const props = defineProps<{
+    isBackend: boolean
+}>()
 
 const { isBackend } = $(toRefs(props))
 

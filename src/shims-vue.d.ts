@@ -1,5 +1,6 @@
 declare module '*.vue' {
     import type { defineComponent } from 'vue'
+
     const Component: ReturnType<typeof defineComponent>
     export default Component
 }
@@ -7,6 +8,6 @@ declare module '*.vue' {
 export {}
 declare module 'vue' {
     interface ComponentCustomOptions {
-        asyncData?: (ctx: AsyncDataConfig) => Promise<void | void[]>
+        asyncData?: (ctx: import('./types').AsyncDataConfig) => Promise<void | void[]>
     }
-  }
+}

@@ -17,13 +17,13 @@
 <script setup lang="ts">
 import type { Article } from '@/types'
 
-const props = defineProps<{
-    trending: Article[]
-}>()
-
 defineOptions({
     name: 'AsideTrending',
 })
+
+const props = defineProps<{
+    trending: Article[]
+}>()
 
 const { trending } = $(toRefs(props))
 </script>
