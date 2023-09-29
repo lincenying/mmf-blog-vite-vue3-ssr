@@ -20,8 +20,8 @@
     "debug": "node --inspect-brk server",
     "workbox": "workbox generateSW workbox-config.js",
     "ts": "vue-tsc --noEmit",
-    "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@kangc/v-md-editor": "^2.3.15",
