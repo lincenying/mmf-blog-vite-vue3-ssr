@@ -309,6 +309,20 @@
     "watchThrottled": true,
     "watchTriggerable": true,
     "watchWithFilter": true,
-    "whenever": true
+    "whenever": true,
+    "ExtractDefaultPropTypes": true,
+    "ExtractPropTypes": true,
+    "ExtractPublicPropTypes": true,
+    "WritableComputedRef": true,
+    "createHead": true,
+    "injectLocal": true,
+    "provideLocal": true,
+    "useClipboardItems": true,
+    "getActiveHead": true,
+    "injectHead": true,
+    "useHeadSafe": true,
+    "useServerHead": true,
+    "useServerHeadSafe": true,
+    "useServerSeoMeta": true
   }
 }
