@@ -2,7 +2,7 @@ import axios from 'axios'
 import qs from 'qs'
 import md5 from 'md5'
 import config from './config-server'
-import type { ApiServer, UserCookies } from '@/types'
+import type { UserCookies } from '@/types'
 
 function objToStr(cookies: Record<string, string | number | boolean>) {
     if (!cookies)

@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 /** * Null 或者 T */
 declare type Nullable<T> = T | null
 /** * 非 Null 类型 */
