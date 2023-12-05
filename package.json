@@ -67,6 +67,7 @@
     "cookie-parser": "^1.4.6",
     "cross-env": "^7.0.3",
     "eslint": "^8.55.0",
+    "eslint-plugin-format": "^0.1.0",
     "http-proxy-middleware": "^2.0.6",
     "lint-staged": "^15.2.0",
     "lru-cache": "^10.1.0",

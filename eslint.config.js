@@ -8,6 +8,13 @@ const autoImport = JSON.parse(
 
 const config = lincy(
     {
+        formatters: {
+            css: false,
+            graphql: true,
+            html: true,
+            markdown: true,
+            toml: false,
+        },
         overrides: {
             ignores: [
                 '**/assets',

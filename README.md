@@ -1,4 +1,4 @@
-# mmf-blog vuejs 3.0 v3         [中文说明](https://github.com/lincenying/mmf-blog-vite-vue3/blob/main/doc/README_CN.md)
+# mmf-blog vuejs 3.0 v3 [中文说明](https://github.com/lincenying/mmf-blog-vite-vue3/blob/main/doc/README_CN.md)
 
 demo: [http://www.mmxiaowu.com](http://www.mmxiaowu.com)
 
@@ -31,26 +31,31 @@ express: https://github.com/lincenying/mmf-blog-api-v2
 express-ts: https://github.com/lincenying/mmf-blog-api-ts
 
 ## Project setup
+
 ```bash
 $ pnpm install
 ```
 
 ### Compiles and hot-reloads for development
+
 ```bash
 $ pnpm serve
 ```
 
 ### Compiles and minifies for production
+
 ```bash
 $ pnpm build
 ```
 
 ### Preview for production
+
 ```bash
 $ pnpm start
 ```
 
 ### Lints and fixes files
+
 ```bash
 $ pnpm lint
 ```
