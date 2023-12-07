@@ -8,6 +8,7 @@ const autoImport = JSON.parse(
 
 const config = lincy(
     {
+        unocss: true,
         formatters: {
             css: false,
             graphql: true,
@@ -20,15 +21,6 @@ const config = lincy(
                 '**/assets',
                 '**/static',
             ],
-        },
-    },
-    {
-        plugins: {
-            '@unocss': plugin,
-        },
-        rules: {
-            ...plugin.configs.recommended.rules,
-            '@unocss/order': 'off',
         },
     },
     {

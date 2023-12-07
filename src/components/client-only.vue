@@ -4,7 +4,13 @@ import { createElementBlock } from 'vue'
 export default defineComponent({
     name: 'ClientOnly',
 
-    props: { fallback: String, placeholder: String, placeholderTag: String, fallbackTag: String },
+    props: {
+        fallback: String,
+        placeholder: String,
+        placeholderTag: String,
+        fallbackTag: String,
+    },
+
     setup(_, { slots }) {
         const mounted = ref(false)
         onMounted(() => {
