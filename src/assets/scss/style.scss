@@ -1,12 +1,12 @@
 /* stylelint-disable selector-class-pattern */
-@import "style/reset";
-@import "style/nav";
-@import "style/actions";
-@import "style/btn";
-@import "style/comments";
-@import "style/modal";
-@import "style/icon";
-@import "style/frontend";
+@import 'style/reset';
+@import 'style/nav';
+@import 'style/actions';
+@import 'style/btn';
+@import 'style/comments';
+@import 'style/modal';
+@import 'style/icon';
+@import 'style/frontend';
 
 .frontend {
     padding-top: 60px;
@@ -226,11 +226,11 @@
             font-family:
                 Play,
                 -apple-system-font,
-                "Helvetica Neue",
+                'Helvetica Neue',
                 Tahoma,
-                "PingFang SC",
-                "lantinghei sc",
-                "Microsoft Yahei",
+                'PingFang SC',
+                'lantinghei sc',
+                'Microsoft Yahei',
                 sans-serif;
         }
     }
@@ -364,11 +364,11 @@
                 font-family:
                     Play,
                     -apple-system-font,
-                    "Helvetica Neue",
+                    'Helvetica Neue',
                     Tahoma,
-                    "PingFang SC",
-                    "lantinghei sc",
-                    "Microsoft Yahei",
+                    'PingFang SC',
+                    'lantinghei sc',
+                    'Microsoft Yahei',
                     sans-serif;
 
                 h1 {
@@ -747,7 +747,7 @@ a:hover .icon-arrow-right {
                 width: 0;
                 height: 0;
                 margin-top: -7px;
-                content: "";
+                content: '';
                 border-bottom: 7px solid transparent;
                 border-right: 7px solid #ec3a4b;
                 border-top: 7px solid transparent;
