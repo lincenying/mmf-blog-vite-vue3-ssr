@@ -30,7 +30,7 @@ const usePiniaStore = defineStore('frontendArticleStore', () => {
             $api = api
         if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1)
             return
-        const { code, data } = await $api.get<ResDataLists<Article[]>>('frontend/article/list', { ...config, path: undefined, cache: true })
+        const { code, data } = await $api.get<ResDataLists<Article>>('frontend/article/list', { ...config, path: undefined, cache: true })
         if (code === 200 && data) {
             const {
                 list = [],
@@ -80,7 +80,7 @@ const usePiniaStore = defineStore('frontendArticleStore', () => {
             $api = api
         if (state.trending.length)
             return
-        const { code, data } = await $api.get<ResDataList<Article[]>>('frontend/trending', { cache: true })
+        const { code, data } = await $api.get<ResDataList<Article>>('frontend/trending', { cache: true })
         if (code === 200 && data)
             state.trending = data.list
     }

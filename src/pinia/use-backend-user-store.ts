@@ -28,7 +28,7 @@ const usePiniaStore = defineStore('backendUserStore', () => {
             $api = api
         if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1)
             return
-        const { code, data } = await $api.get<ResDataLists<User[]>>('backend/user/list', { ...config, path: undefined, cache: true })
+        const { code, data } = await $api.get<ResDataLists<User>>('backend/user/list', { ...config, path: undefined, cache: true })
         if (code === 200 && data) {
             const {
                 list = [],

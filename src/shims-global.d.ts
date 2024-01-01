@@ -42,7 +42,7 @@ declare interface ResDataLists<T> {
     hasNext: number | boolean
     hasPrev: number | boolean
     total: number
-    list: T
+    list: T[]
 }
 
 /**
@@ -54,7 +54,7 @@ declare interface ResDataLists<T> {
  * ```
  */
 declare interface ResDataList<T> {
-    list: T
+    list: T[]
 }
 
 /**

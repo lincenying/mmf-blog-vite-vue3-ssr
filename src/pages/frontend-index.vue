@@ -68,7 +68,7 @@ const {
 } = route
 
 const [loading, toggleLoading] = useToggle(false)
-async function loadMore(page = topics.page + 1) {
+async function loadMore(page = topics.page) {
     if (loading.value)
         return
     toggleLoading(true)
