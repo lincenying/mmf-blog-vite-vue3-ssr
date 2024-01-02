@@ -17,7 +17,7 @@ export async function createServer(root = process.cwd(), isProd = process.env.NO
     const __dirname = path.dirname(fileURLToPath(import.meta.url))
     const resolve = p => path.resolve(__dirname, p)
     const indexProd = isProd ? fs.readFileSync(resolve('dist/client/index.html'), 'utf-8') : ''
-    const manifest = isProd ? JSON.parse(fs.readFileSync(resolve('dist/client/ssr-manifest.json'), 'utf-8')) : {}
+    const manifest = isProd ? JSON.parse(fs.readFileSync(resolve('dist/client/.vite/ssr-manifest.json'), 'utf-8')) : {}
     const app = express()
 
     app.use(
