@@ -4,7 +4,7 @@
 import { readFileSync, readdirSync, unlinkSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
-import manifest from './dist/static/ssr-manifest.json'
+import manifest from './dist/client/.vite/ssr-manifest.json'
 import { render } from './dist/server/entry-server.js'
 
 const toAbsolute = p => resolve(__dirname, p)
@@ -30,5 +30,5 @@ const routesToPrerender = readdirSync(toAbsolute('src/pages')).map((file) => {
     }
 
     // done, delete ssr manifest
-    unlinkSync(toAbsolute('dist/static/ssr-manifest.json'))
+    unlinkSync(toAbsolute('dist/client/.vite/ssr-manifest.json'))
 })()
