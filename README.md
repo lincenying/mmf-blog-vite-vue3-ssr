@@ -2,7 +2,7 @@
 
 demo: [http://www.mmxiaowu.com](http://www.mmxiaowu.com)
 
-The main technical stack: vue 3, vue-router 4, pinia, vitejs 4, unocss, eslint, pwa, ssr
+The main technical stack: vue 3, vue-router 4, pinia, vitejs 5, unocss, eslint, pwa, ssr
 
 ---
 
@@ -20,13 +20,11 @@ vue3(spa): [https://github.com/lincenying/mmf-blog-vite-vue3](https://github.com
 
 vue3(pwa ssr): [https://github.com/lincenying/mmf-blog-vite-vue3-ssr](https://github.com/lincenying/mmf-blog-vite-vue3-ssr)
 
+nuxt3: [https://github.com/lincenying/mmf-blog-vite-nuxt](https://github.com/lincenying/mmf-blog-vite-nuxt)
+
 ---
 
 First installation `api server`:
-
-koa2: https://github.com/lincenying/mmf-blog-api-koa2-v2
-
-express: https://github.com/lincenying/mmf-blog-api-v2
 
 express-ts: https://github.com/lincenying/mmf-blog-api-ts
 

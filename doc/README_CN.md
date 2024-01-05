@@ -10,7 +10,7 @@ demo: [http://www.mmxiaowu.com](http://www.mmxiaowu.com)
 
 主要功能包括: 管理员, 用户, 分类, 文章, 评论, 文章点赞
 
-主要技术栈: vue 3, vue-router 4, pinia, vitejs 4, unocss, eslint, pwa, ssr
+主要技术栈: vue 3, vue-router 4, pinia, vitejs 5, unocss, eslint, pwa, ssr
 
 ---
 
@@ -28,13 +28,11 @@ vue3 spa版本: [https://github.com/lincenying/mmf-blog-vite-vue3](https://githu
 
 vue3 pwa ssr版本: [https://github.com/lincenying/mmf-blog-vite-vue3-ssr](https://github.com/lincenying/mmf-blog-vite-vue3-ssr)
 
+nuxt3: [https://github.com/lincenying/mmf-blog-vite-nuxt](https://github.com/lincenying/mmf-blog-vite-nuxt)
+
 ---
 
 先安装 api server:
-
-koa2版: https://github.com/lincenying/mmf-blog-api-koa2-v2
-
-express版: https://github.com/lincenying/mmf-blog-api-v2
 
 express-ts版: https://github.com/lincenying/mmf-blog-api-ts
 
