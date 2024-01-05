@@ -1,9 +1,9 @@
 <template>
     <div class="card settings-main">
         <div class="settings-main-content">
-            <div class="list-section">
+            <div class="list-section list-header">
                 <div class="list-title">分类名称</div>
-                <div class="list-time">分类排序</div>
+                <div class="list-date">分类排序</div>
                 <div class="list-action">操作</div>
             </div>
             <div v-for="item in category" :key="item._id" class="list-section">
