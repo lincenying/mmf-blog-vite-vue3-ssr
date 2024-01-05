@@ -50,7 +50,7 @@ async function loadMore(page: number) {
     if (loading.value)
         return
     toggleLoading(true)
-    await globalCategoryStore.getCategoryList({ page, limit: 99, path: route.path }, api)
+    await globalCategoryStore.getCategoryList({ page, limit: 99, path: route.fullPath }, api)
     toggleLoading(false)
 }
 

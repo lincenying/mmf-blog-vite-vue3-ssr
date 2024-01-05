@@ -56,7 +56,7 @@ async function loadMore(page = lists.page) {
     if (loading.value)
         return
     toggleLoading(true)
-    await backendAdminStore.getAdminList({ page, path: route.path })
+    await backendAdminStore.getAdminList({ page, path: route.fullPath })
     toggleLoading(false)
 }
 async function handleRecover(id: string) {

@@ -55,7 +55,7 @@ async function loadMore(page = lists.page) {
     if (loading.value)
         return
     toggleLoading(true)
-    await backendUserStore.getUserList({ page })
+    await backendUserStore.getUserList({ page, path: route.fullPath })
     toggleLoading(false)
 }
 async function handleRecover(id: string) {
