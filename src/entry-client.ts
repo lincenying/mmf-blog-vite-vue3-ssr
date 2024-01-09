@@ -33,7 +33,7 @@ router.isReady().then(() => {
     router.beforeResolve(async (to, from) => {
         let diffed = false
         const activated = to.matched.filter((c, i) => {
-            return diffed || (diffed = from.matched[i] !== c)
+            return diffed || (diffed = from.matched[i] !== c) || from.path !== to.path
         })
 
         if (!activated.length)

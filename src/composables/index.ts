@@ -51,15 +51,32 @@ export function useSaveScroll() {
 
     const { historyPageScrollTop } = storeToRefs(appShellStore)
 
-    watch(
-        () => route.fullPath,
-        async (currPath) => {
-            const scrollTop = historyPageScrollTop.value[currPath] || 0
-            setTimeout(() => {
-                window.scrollTo(0, scrollTop)
-            }, 350)
-        },
-    )
+    // watch(
+    //     () => route.fullPath,
+    //     async (currPath) => {
+    //         console.log(currPath)
+    //         const scrollTop = historyPageScrollTop.value[currPath] || 0
+    //         setTimeout(() => {
+    //             window.scrollTo(0, scrollTop)
+    //         }, 350)
+    //     },
+    // )
+
+    onActivated(() => {
+        console.log(`onActivated`)
+        const scrollTop = historyPageScrollTop.value[route.fullPath] || 0
+        setTimeout(() => {
+            window.scrollTo(0, scrollTop)
+        }, 100)
+    })
+
+    onMounted(() => {
+        console.log(`onMounted`)
+        const scrollTop = historyPageScrollTop.value[route.fullPath] || 0
+        setTimeout(() => {
+            window.scrollTo(0, scrollTop)
+        }, 100)
+    })
 
     onBeforeRouteLeave((to, from, next) => {
         appShellStore.saveScrollTop({
