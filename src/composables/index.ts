@@ -63,19 +63,17 @@ export function useSaveScroll() {
     // )
 
     onActivated(() => {
-        console.log(`onActivated`)
         const scrollTop = historyPageScrollTop.value[route.fullPath] || 0
         setTimeout(() => {
             window.scrollTo(0, scrollTop)
-        }, 100)
+        }, 300)
     })
 
     onMounted(() => {
-        console.log(`onMounted`)
         const scrollTop = historyPageScrollTop.value[route.fullPath] || 0
         setTimeout(() => {
             window.scrollTo(0, scrollTop)
-        }, 100)
+        }, 300)
     })
 
     onBeforeRouteLeave((to, from, next) => {
