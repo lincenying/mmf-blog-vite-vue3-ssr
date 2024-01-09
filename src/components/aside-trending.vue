@@ -4,7 +4,7 @@
         <div class="card-content">
             <div v-for="(item, index) in trending" :key="item._id" class="trending-item">
                 <span class="trending-rank-num">{{ index + 1 }}</span>
-                <a href="javascript:;" :to="`/article/${item._id}`" class="trending-title" @click="goTo(item._id)">{{ item.title }}</a>
+                <router-link :to="`/article/${item._id}`" class="trending-title">{{ item.title }}</router-link>
                 <div class="trending-meta">
                     <div class="trending-meta-item"><i class="icon icon-action-voteup" />{{ item.like }}</div>
                     <div class="trending-meta-item"><i class="icon icon-action-comment" />{{ item.comment_count }}</div>
@@ -26,10 +26,4 @@ const props = defineProps<{
 }>()
 
 const { trending } = $(toRefs(props))
-
-const router = useRouter()
-function goTo(id: string) {
-    console.log(id)
-    router.push(`/article/${id}`)
-}
 </script>
