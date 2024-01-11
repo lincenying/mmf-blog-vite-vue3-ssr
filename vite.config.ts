@@ -38,7 +38,7 @@ export default defineConfig(({ mode, command }) => {
     const localMock = true
 
     const config: UserConfigExport = {
-        base: './',
+        base: '/',
         plugins: [
             VueMacros.vite({
                 plugins: {
