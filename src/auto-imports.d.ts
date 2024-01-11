@@ -22,7 +22,6 @@ declare global {
   const createApp: typeof import('vue')['createApp']
   const createEventHook: typeof import('@vueuse/core')['createEventHook']
   const createGlobalState: typeof import('@vueuse/core')['createGlobalState']
-  const createHead: typeof import('@unhead/vue')['createHead']
   const createInjectionState: typeof import('@vueuse/core')['createInjectionState']
   const createReactiveFn: typeof import('@vueuse/core')['createReactiveFn']
   const createReusableTemplate: typeof import('@vueuse/core')['createReusableTemplate']
