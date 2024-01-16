@@ -7,7 +7,7 @@ export default () => VitePWA({
     registerType: 'autoUpdate',
     workbox: {
         cacheId: 'mmf-blog-vite-vue3-ssr',
-        globPatterns: ['**/*.{js,css,html,txt,png,ico,svg}'],
+        globPatterns: ['**/*.{js,css,txt,png,ico,svg}'],
         navigateFallback: null,
         cleanupOutdatedCaches: true,
         runtimeCaching: [
