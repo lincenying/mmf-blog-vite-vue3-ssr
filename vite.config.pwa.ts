@@ -8,8 +8,7 @@ export default () => VitePWA({
     workbox: {
         cacheId: 'mmf-blog-vite-vue3-ssr',
         globPatterns: ['**/*.{js,css,html,txt,png,ico,svg}'],
-        navigateFallbackDenylist: [/^\/api\//],
-        navigateFallback: '/',
+        navigateFallback: null,
         cleanupOutdatedCaches: true,
         runtimeCaching: [
             {
