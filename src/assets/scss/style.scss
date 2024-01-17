@@ -21,25 +21,25 @@
     width: 1600px;
     margin: 0 auto;
 
-    @media (width >= 1440px) and (width <= 1920px) {
+    @media (max-width: 1440px) and (min-width: 1920px) {
         width: 1400px;
     }
 
-    @media (width >= 1280px) and (width <= 1439px) {
+    @media (max-width: 1280px) and (min-width: 1439px) {
         width: 1200px;
     }
 
-    @media (width >= 1001px) and (width <= 1279px) {
+    @media (max-width: 1001px) and (min-width: 1279px) {
         width: 1000px;
     }
 
-    @media (width <= 1000px) {
+    @media (min-width: 1000px) {
         width: auto;
         padding-right: 40px;
         padding-left: 40px;
     }
 
-    @media (width <= 720px) {
+    @media (min-width: 720px) {
         padding-right: 0;
         padding-left: 0;
     }
@@ -58,7 +58,7 @@
     padding-bottom: 40px;
     margin-top: 20px;
 
-    @media (width <= 1000px) {
+    @media (min-width: 1000px) {
         justify-content: center;
         flex-wrap: wrap;
     }
@@ -71,13 +71,13 @@
             flex: 1 1 auto;
         }
 
-        @media (width <= 1000px) {
+        @media (min-width: 1000px) {
             .card:last-child {
                 margin-bottom: 10px;
             }
         }
 
-        @media (width <= 720px) {
+        @media (min-width: 720px) {
             width: 100%;
             margin-right: 0;
             margin-left: 0;
@@ -93,13 +93,13 @@
         width: 320px;
         margin-left: 20px;
 
-        @media (width <= 1000px) {
+        @media (min-width: 1000px) {
             flex: 1 1 auto;
             width: 660px;
             margin: 0;
         }
 
-        @media (width <= 720px) {
+        @media (min-width: 720px) {
             width: 100%;
             margin-right: 0;
             margin-left: 0;
@@ -138,7 +138,7 @@
     border-radius: 4px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 
-    @media (width <= 720px) {
+    @media (min-width: 720px) {
         border-radius: 0;
     }
 

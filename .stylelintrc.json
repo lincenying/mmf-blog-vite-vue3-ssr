@@ -6,6 +6,7 @@
       {
         "ignoreAtRules": ["tailwind", "apply", "variants", "responsive", "screen", "use"]
       }
-    ]
+    ],
+    "media-feature-range-notation": null
   }
 }
