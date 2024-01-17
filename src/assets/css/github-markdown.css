@@ -141,7 +141,7 @@
 
 .markdown-body ul,
 .markdown-body ol {
-    list-style-type decimal
+    list-style-type: decimal;
     padding: 0;
     margin-top: 0;
     margin-bottom: 0;
