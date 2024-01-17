@@ -85,7 +85,7 @@
 //     opacity: 0;
 //     transform: translate3d(100px, 0, 0);
 // }
-@media (min-width: 540px) {
+@media (max-width: 540px) {
     .slide-left-enter-active,
     .slide-left-leave-active,
     .slide-right-enter-active,
@@ -144,15 +144,15 @@
     margin-left: 520px;
     transition: all 0.3s ease;
 
-    @media (max-width: 1440px) and (min-width: 1920px) {
+    @media (min-width: 1440px) and (max-width: 1920px) {
         margin-left: 720px;
     }
 
-    @media (max-width: 1280px) and (min-width: 1439px) {
+    @media (min-width: 1280px) and (max-width: 1439px) {
         margin-left: 620px;
     }
 
-    @media (max-width: 1001px) and (min-width: 1279px) {
+    @media (min-width: 1001px) and (max-width: 1279px) {
         margin-left: 520px;
     }
 
