@@ -18,3 +18,12 @@
         'Microsoft Yahei',
         sans-serif;
 }
+
+.vuepress-markdown-body:not(.custom) {
+    padding: 0;
+}
+
+.vuepress-markdown-body > :first-child,
+.vuepress-markdown-body > div[data-v-md-line]:first-child > :first-child {
+    margin-top: -60px !important;
+}
