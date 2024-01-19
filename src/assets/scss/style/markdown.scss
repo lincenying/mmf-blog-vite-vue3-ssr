@@ -1,0 +1,20 @@
+.github-markdown-body code[class*='v-md-prism-'],
+.github-markdown-body pre[class*='v-md-prism-'],
+.vuepress-markdown-body code[class*='v-md-prism-'],
+.vuepress-markdown-body pre[class*='v-md-prism-'] {
+    font-size: 14px;
+}
+
+.markdown-body,
+.markdown-body pre,
+.markdown-body code {
+    font-family:
+        consola,
+        -apple-system-font,
+        'Helvetica Neue',
+        Tahoma,
+        'PingFang SC',
+        'lantinghei sc',
+        'Microsoft Yahei',
+        sans-serif;
+}

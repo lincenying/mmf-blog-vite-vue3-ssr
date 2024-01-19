@@ -28,11 +28,19 @@
                 </div>
             </div>
         </div>
-        <div class="settings-footer"><a href="javascript:;" class="btn btn-yellow" @click="handleInsert">添加文章</a></div>
+        <div class="settings-footer">
+            <label mr-10px inline-flex items-center>
+                <input v-model="frontHtml" type="checkbox" value="1">
+                <span ml-5px>使用前端生成Html?</span>
+            </label>
+            <a href="javascript:;" class="btn btn-yellow" @click="handleInsert">添加文章</a>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import VueMarkdownEditor from '@kangc/v-md-editor'
+
 import type { AnyFn } from '@vueuse/core'
 import type { Article, Upload } from '@/types'
 import api from '@/api/index-client'
@@ -58,6 +66,8 @@ const backendArticleStore = useBackendArticleStore()
 
 let isClient = $ref(false)
 
+const frontHtml = ref(true)
+
 const [loading, toggleLoading] = useToggle(false)
 
 const form = reactive({
@@ -80,6 +90,10 @@ async function handleInsert() {
         return
     toggleLoading(true)
     // form.html = this.$refs.md.d_render
+    if (frontHtml.value) {
+        const html = VueMarkdownEditor.vMdParser.themeConfig.markdownParser.render(form.content)
+        form.html = html
+    }
     const { code, data, message } = await api.post<Article>('backend/article/insert', form)
     toggleLoading(false)
     if (code === 200) {

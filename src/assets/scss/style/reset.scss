@@ -56,6 +56,26 @@ td {
     font-display: fallback;
 }
 
+@font-face {
+    font-family: consola;
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/consola.ttf') format('ttf');
+    unicode-range:
+        U+0000-00FF,
+        U+0131,
+        U+0152-0153,
+        U+02C6,
+        U+02DA,
+        U+02DC,
+        U+2000-206F,
+        U+2074,
+        U+20AC,
+        U+2212,
+        U+2215;
+    font-display: fallback;
+}
+
 body,
 button,
 input,

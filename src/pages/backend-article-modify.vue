@@ -28,6 +28,10 @@
             </div>
         </div>
         <div class="settings-footer">
+            <label mr-10px inline-flex items-center>
+                <input v-model="frontHtml" type="checkbox" value="1">
+                <span ml-5px>使用前端生成Html?</span>
+            </label>
             <a href="javascript:;" class="btn btn-yellow" @click="handleModify">编辑文章</a>
             <router-link to="/backend/article/list" class="btn btn-blue">返回</router-link>
         </div>
@@ -35,6 +39,8 @@
 </template>
 
 <script setup lang="ts">
+import VueMarkdownEditor from '@kangc/v-md-editor'
+
 import type { AnyFn } from '@vueuse/core'
 import type { Article, Upload } from '@/types'
 import api from '@/api/index-client'
@@ -61,6 +67,8 @@ const backendArticleStore = useBackendArticleStore()
 const { item } = $(storeToRefs(backendArticleStore))
 
 const [loading, toggleLoading] = useToggle(false)
+
+const frontHtml = ref(true)
 
 const form = reactive({
     id: route.params.id,
@@ -109,6 +117,10 @@ async function handleModify() {
         return
     toggleLoading(true)
     // form.html = this.$refs.md.d_render
+    if (frontHtml.value) {
+        const html = VueMarkdownEditor.vMdParser.themeConfig.markdownParser.render(form.content)
+        form.html = html
+    }
     const { code, data, message } = await api.post<Article>('backend/article/modify', form)
     toggleLoading(false)
     if (code === 200) {
