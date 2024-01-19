@@ -15,6 +15,7 @@ import 'prismjs/components/prism-twig'
 import 'prismjs/components/prism-css'
 import 'prismjs/components/prism-sass'
 import 'prismjs/components/prism-less'
+import 'prismjs/components/prism-bash'
 
 import { createApp } from './main'
 
