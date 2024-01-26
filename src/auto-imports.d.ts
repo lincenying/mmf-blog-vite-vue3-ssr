@@ -327,6 +327,7 @@ declare global {
 // for vue template auto import
 import { UnwrapRef } from 'vue'
 declare module 'vue' {
+  interface GlobalComponents {}
   interface ComponentCustomProperties {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly appShellStoreWithout: UnwrapRef<typeof import('./pinia/use-app-shell-store')['appShellStoreWithout']>
@@ -643,6 +644,7 @@ declare module 'vue' {
   }
 }
 declare module '@vue/runtime-core' {
+  interface GlobalComponents {}
   interface ComponentCustomProperties {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly appShellStoreWithout: UnwrapRef<typeof import('./pinia/use-app-shell-store')['appShellStoreWithout']>
