@@ -1,6 +1,7 @@
 import { LoadingPlugin } from 'vue-loading-overlay'
 import VueMarkdownEditor from '@kangc/v-md-editor'
-import vuePressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js'
+import vuePressTheme from '@kangc/v-md-editor/lib/theme/vuepress'
+import createLineNumbertPlugin from '@kangc/v-md-editor/lib/plugins/line-number/index'
 
 // Prism
 import Prism from 'prismjs'
@@ -32,9 +33,14 @@ import 'element-plus/es/components/message/style/css'
 import 'element-plus/es/components/message-box/style/css'
 import './assets/scss/style.scss'
 
-VueMarkdownEditor.use(vuePressTheme, {
-    Prism,
-})
+VueMarkdownEditor
+    .use(vuePressTheme, {
+        Prism,
+        codeHighlightExtensionMap: {
+            vue: 'html',
+        },
+    })
+    .use(createLineNumbertPlugin())
 
 const { app, router, store } = createApp()
 
