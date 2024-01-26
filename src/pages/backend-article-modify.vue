@@ -21,6 +21,7 @@
                             :disabled-menus="[]"
                             mode="edit"
                             height="500px"
+                            left-toolbar="undo redo clear | h bold italic strikethrough link | ul ol table hr | image quote code tip | save"
                             @upload-image="handleUploadImage"
                         />
                     </client-only>
