@@ -2,7 +2,7 @@
 .github-markdown-body pre[class*='v-md-prism-'],
 .vuepress-markdown-body code[class*='v-md-prism-'],
 .vuepress-markdown-body pre[class*='v-md-prism-'] {
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .markdown-body,
@@ -21,4 +21,8 @@
 
 .vuepress-markdown-body:not(.custom) {
     padding: 0;
+}
+
+.vuepress-markdown-body div[class*='v-md-pre-wrapper-'].line-numbers-mode .line-numbers-wrapper {
+    font-size: 15px;
 }
