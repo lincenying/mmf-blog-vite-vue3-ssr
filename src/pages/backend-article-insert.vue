@@ -40,12 +40,11 @@
 </template>
 
 <script setup lang="ts">
-import VueMarkdownEditor from '@kangc/v-md-editor'
-
 import type { AnyFn } from '@vueuse/core'
 import type { Article, Upload } from '@/types'
 import api from '@/api/index-client'
 import { uploadApi } from '@/api/upload-api'
+import VueMarkdownEditor from '@/plugin/v-md-editor'
 
 defineOptions({
     name: 'BackendArticleInsert',
