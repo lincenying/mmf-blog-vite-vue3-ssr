@@ -31,7 +31,7 @@
     "@unhead/vue": "^1.8.10",
     "@vueuse/core": "^10.7.2",
     "axios": "^1.6.7",
-    "element-plus": "^2.5.3",
+    "element-plus": "^2.5.5",
     "express": "^4.18.2",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
@@ -70,7 +70,7 @@
     "eslint": "^8.56.0",
     "eslint-plugin-format": "^0.1.0",
     "http-proxy-middleware": "^2.0.6",
-    "lint-staged": "^15.2.0",
+    "lint-staged": "^15.2.1",
     "lru-cache": "^10.2.0",
     "mockjs": "^1.1.0",
     "morgan": "^1.10.0",
@@ -79,7 +79,7 @@
     "postcss": "^8.4.33",
     "sass": "^1.70.0",
     "simple-git-hooks": "^2.9.0",
-    "stylelint": "^16.2.0",
+    "stylelint": "^16.2.1",
     "typescript": "^5.3.3",
     "unocss": "^0.58.4",
     "unplugin-auto-import": "^0.17.5",
@@ -104,8 +104,7 @@
     "pre-commit": "npx lint-staged"
   },
   "lint-staged": {
-    "*.{js,ts,tsx,vue}": [
-      "eslint --fix"
-    ]
+    "*.{[jt]s?(x),vue,md}": "eslint --fix",
+    "*.{css,scss}": "stylelint --fix"
   }
 }
