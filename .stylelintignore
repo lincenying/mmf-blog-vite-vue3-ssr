@@ -1,4 +1,4 @@
 node_modules
-dist
+dist/**/*.css
 github-markdown.css
 *.min.css

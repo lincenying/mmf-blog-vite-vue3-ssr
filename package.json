@@ -22,7 +22,7 @@
     "lint": "eslint .",
     "lint:ts": "vue-tsc --noEmit",
     "lint:fix": "eslint . --fix",
-    "lint:css": "stylelint '**/*.{css,scss}' --fix"
+    "lint:css": "stylelint '**/*.{css,scss}' --fix --allow-empty-input"
   },
   "dependencies": {
     "@kangc/v-md-editor": "^2.3.18",
@@ -111,6 +111,6 @@
   },
   "lint-staged": {
     "*.{[jt]s?(x),vue,md}": "eslint --fix",
-    "*.{css,scss}": "stylelint --fix"
+    "*.{css,scss}": "stylelint --fix --allow-empty-input"
   }
 }
