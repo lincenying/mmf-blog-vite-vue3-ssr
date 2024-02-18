@@ -1,6 +1,8 @@
 import type { Pinia } from 'pinia'
 import type { RouteComponent, RouteLocationNormalized } from 'vue-router'
 
+export interface RenderType { html: string; preloadLinks: string; headTags: string; store: Pinia }
+
 export type CusRouteComponent = RouteComponent & { asyncData: (payload: AsyncDataConfig) => Promise<any> }
 
 /**

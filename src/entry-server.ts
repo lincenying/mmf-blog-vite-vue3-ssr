@@ -2,9 +2,10 @@ import { basename } from 'node:path'
 import { renderToString } from '@vue/server-renderer'
 import { renderSSRHead } from '@unhead/ssr'
 
+import type { Request } from 'express'
 import { createApp } from './main'
 import { api } from './api/index-server'
-import type { CusRouteComponent } from './types'
+import type { CusRouteComponent, RenderType } from './types'
 
 function renderPreloadLink(file: string): string {
     if (file.endsWith('.js'))
@@ -54,7 +55,7 @@ function replaceHtmlTag(html: string): string {
     return html.replace(/<script(.*?)>/gi, '&lt;script$1&gt;').replace(/<\/script>/g, '&lt;/script&gt;')
 }
 
-export async function render(url: string, manifest: ObjT<string[]>, req: any) {
+export async function render(url: string, manifest: ObjT<string[]>, req: Request): Promise<RenderType> {
     const { app, router, store, head } = createApp()
 
     app.component('ReloadPrompt', { render: () => null }).component('VMdEditor', { render: () => null })
@@ -102,5 +103,5 @@ export async function render(url: string, manifest: ObjT<string[]>, req: any) {
 
     // Vite 生成的 SSR 清单包含模块 -> 块/资产映射，然后我们可以使用它来确定需要为此请求预加载哪些文件。
     const preloadLinks = renderPreloadLinks(ctx.modules, manifest)
-    return [html, preloadLinks, headTags, store]
+    return { html, preloadLinks, headTags, store }
 }

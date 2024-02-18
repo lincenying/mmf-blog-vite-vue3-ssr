@@ -1,21 +1,26 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+import type { UserConfigExport } from 'vite'
 import apiDomain from './src/api/url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-export default {
+const config: UserConfigExport = {
     server: {
         port: 7777,
         host: '0.0.0.0',
-        hot: true,
-        disableHostCheck: true,
         proxy: {
             '/api': {
                 target: apiDomain,
                 changeOrigin: true,
                 rewrite: (path: string) => path.replace(/^\/api/, '/api'),
+                configure: (proxy, _options) => {
+                    proxy.on('proxyReq', (proxyReq, req, _res) => {
+                        // @ts-expect-error 给我通过
+                        proxyReq.setHeader('X-Real-IP', req.ip || req.connection.remoteAddress)
+                    })
+                },
             },
         },
     },
@@ -33,3 +38,5 @@ export default {
         },
     },
 }
+
+export default config

@@ -7,7 +7,7 @@ import { resolve } from 'node:path'
 import manifest from './dist/client/.vite/ssr-manifest.json'
 import { render } from './dist/server/entry-server.js'
 
-const toAbsolute = p => resolve(__dirname, p)
+const toAbsolute = (p: string) => resolve(__dirname, p)
 
 const template = readFileSync(toAbsolute('dist/static/index.html'), 'utf-8')
 
@@ -20,9 +20,9 @@ const routesToPrerender = readdirSync(toAbsolute('src/pages')).map((file) => {
 ;(async () => {
     // pre-render each route...
     for (const url of routesToPrerender) {
-        const [appHtml, preloadLinks] = await render(url, manifest)
+        const { html: appHtml, preloadLinks } = await render(url, manifest)
 
-        const html = template.replace('<!--preload-links-->', preloadLinks).replace('<!--app-html-->', appHtml)
+        const html = template.replace('<!--preload-links-->', preloadLinks as string).replace('<!--app-html-->', appHtml as string)
 
         const filePath = `dist/static${url === '/' ? '/index' : url}.html`
         writeFileSync(toAbsolute(filePath), html)
