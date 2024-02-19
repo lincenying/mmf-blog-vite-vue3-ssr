@@ -325,5 +325,5 @@ export interface ShellStore {
     /** * 多个页面切换效果名称 */
     pageTransitionName: string
     /** * 上个页面 scroll 的信息 */
-    historyPageScrollTop: ObjT<number>
+    historyPageScrollTop: Obj<number>
 }

@@ -27,7 +27,7 @@ function renderPreloadLink(file: string): string {
     return ''
 }
 
-function renderPreloadLinks(modules: string[], manifest: ObjT<string[]>): string {
+function renderPreloadLinks(modules: string[], manifest: Obj<string[]>): string {
     let links = ''
     const seen = new Set<string>()
     modules.forEach((id) => {
@@ -55,7 +55,7 @@ function replaceHtmlTag(html: string): string {
     return html.replace(/<script(.*?)>/gi, '&lt;script$1&gt;').replace(/<\/script>/g, '&lt;/script&gt;')
 }
 
-export async function render(url: string, manifest: ObjT<string[]>, req: Request): Promise<RenderType> {
+export async function render(url: string, manifest: Obj<string[]>, req: Request): Promise<RenderType> {
     const { app, router, store, head } = createApp()
 
     app.component('ReloadPrompt', { render: () => null }).component('VMdEditor', { render: () => null })

@@ -13,7 +13,7 @@ import { UTC2Date } from "@lincy/utils";
 async function createServer() {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const resolve = (p) => path.resolve(__dirname, p);
-  const indexProd = fs.readFileSync(resolve("client/index.html"), "utf-8");
+  const template = fs.readFileSync(resolve("client/index.html"), "utf-8");
   const manifest = JSON.parse(fs.readFileSync(resolve("client/.vite/ssr-manifest.json"), "utf-8"));
   const app = express();
   logger.token("remote-addr", (req) => {
@@ -59,7 +59,7 @@ async function createServer() {
       const url = req.originalUrl;
       const render = (await import("./server/entry-server.js")).render;
       const { html: appHtml, preloadLinks, headTags } = await render(url, manifest, req);
-      const html = indexProd.replace("<!--preload-links-->", preloadLinks).replace("<!--app-html-->", appHtml).replace("<!--head-tags-->", headTags);
+      const html = template.replace("<!--preload-links-->", preloadLinks).replace("<!--app-html-->", appHtml).replace("<!--head-tags-->", headTags);
       res.status(200).set({ "Content-Type": "text/html" }).end(html);
     } catch (e) {
       const err = e;
