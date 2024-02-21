@@ -41,7 +41,7 @@ export async function createServer() {
 
     // Node.js 压缩中间件
     app.use(compression())
-    // Node.js 代理中间件
+    // Node.js 代理中间件, 也可以在 nginx 直接配置, 那么将不会走这里的代理中间件
     app.use(
         '/api',
         createProxyMiddleware({

@@ -17,8 +17,7 @@ const config: UserConfigExport = {
                 rewrite: (path: string) => path.replace(/^\/api/, '/api'),
                 configure: (proxy, _options) => {
                     proxy.on('proxyReq', (proxyReq, req, _res) => {
-                        // @ts-expect-error 给我通过
-                        proxyReq.setHeader('X-Real-IP', req.ip || req.connection.remoteAddress)
+                        proxyReq.setHeader('X-Real-IP', req.socket.remoteAddress || 'unknown')
                     })
                 },
             },

@@ -2,8 +2,9 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { unheadVueComposablesImports } from '@unhead/vue'
+import type { PluginOption } from 'vite'
 
-export default () => ([
+export default (): PluginOption[] => ([
     AutoImport({
         eslintrc: {
             enabled: true,
@@ -27,8 +28,9 @@ export default () => ([
         ],
         dts: 'src/auto-imports.d.ts',
         dirs: ['src/components', 'src/composables', 'src/pinia'],
-
-        resolvers: [ElementPlusResolver()],
+        resolvers: [
+            ElementPlusResolver(),
+        ],
         defaultExportByFilename: false,
         vueTemplate: true,
     }),
@@ -40,7 +42,9 @@ export default () => ([
             /\.md$/, // .md
         ],
         extensions: ['vue', 'tsx', 'jsx'],
-        resolvers: [ElementPlusResolver()],
+        resolvers: [
+            ElementPlusResolver(),
+        ],
         dts: 'src/components.d.ts',
     }),
 ])
