@@ -4,7 +4,7 @@ import apiDomain from './url.js'
 
 const cached = true
 
-const cache: Nullable<LRUCache<string, Obj>> = (cached && new LRUCache({
+const cache: Nullable<LRUCache<string, Objable>> = (cached && new LRUCache({
     max: 1000,
 })) || null
 

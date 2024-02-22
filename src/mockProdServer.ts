@@ -3,7 +3,7 @@ import type { MockMethod } from '@lincy/vite-plugin-mock'
 // @ts-expect-error 1111
 import { createProdMockServer } from '@lincy/vite-plugin-mock/client'
 
-const modules: Obj = import.meta.glob('../mock/*.ts', { eager: true })
+const modules: Objable = import.meta.glob('../mock/*.ts', { eager: true })
 
 const _mockModules: Array<MockMethod> = []
 Object.keys(modules).forEach((key) => {

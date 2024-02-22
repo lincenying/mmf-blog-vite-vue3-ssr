@@ -1,7 +1,12 @@
 import type { Pinia } from 'pinia'
 import type { RouteComponent, RouteLocationNormalized } from 'vue-router'
 
-export interface RenderType { html: string; preloadLinks: string; headTags: string; store: Pinia }
+export interface RenderType {
+    html: string
+    preloadLinks: string
+    headTags: string
+    store: Pinia
+}
 
 export type CusRouteComponent = RouteComponent & { asyncData: (payload: AsyncDataConfig) => Promise<any> }
 
@@ -126,7 +131,7 @@ export interface Comment {
     /** * 评论所属文章ID */
     article_id: string
     /** * 发布评论的用户 */
-    userid: Obj
+    userid: Objable
     /** * 评论内容 */
     content: string
     /** * 创建时间 */
@@ -162,7 +167,7 @@ export interface User {
     timestamp: number
     wx_avatar?: string
     wx_signature?: string
-    userid?: Obj
+    userid?: Objable
 }
 
 export interface ArticleItemConfig {
@@ -325,5 +330,5 @@ export interface ShellStore {
     /** * 多个页面切换效果名称 */
     pageTransitionName: string
     /** * 上个页面 scroll 的信息 */
-    historyPageScrollTop: Obj<number>
+    historyPageScrollTop: Objable<number>
 }

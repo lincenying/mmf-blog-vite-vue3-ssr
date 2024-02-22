@@ -27,7 +27,7 @@ function renderPreloadLink(file: string): string {
     return ''
 }
 
-function renderPreloadLinks(modules: string[], manifest: Obj<string[]>): string {
+function renderPreloadLinks(modules: string[], manifest: Objable<string[]>): string {
     let links = ''
     const seen = new Set<string>()
     modules.forEach((id) => {
@@ -55,7 +55,7 @@ function replaceHtmlTag(html: string): string {
     return html.replace(/<script(.*?)>/gi, '&lt;script$1&gt;').replace(/<\/script>/g, '&lt;/script&gt;')
 }
 
-export async function render(url: string, manifest: Obj<string[]>, req: Request): Promise<RenderType> {
+export async function render(url: string, manifest: Objable<string[]>, req: Request): Promise<RenderType> {
     const { app, router, store, head } = createApp()
 
     app.component('ReloadPrompt', { render: () => null }).component('VMdEditor', { render: () => null })
@@ -94,7 +94,7 @@ export async function render(url: string, manifest: Obj<string[]>, req: Request)
 
     // 传递可通过 useSSRContext() 使用的 SSR 上下文对象 @vitejs/plugin-vue 将代码注入到组件的 setup() 中，该组件在 ctx.modules 上注册。
     // 渲染之后，ctx.modules 将包含在此渲染调用期间已实例化的所有组件。
-    const ctx: Obj = {}
+    const ctx: Objable = {}
     let html = await renderToString(app, ctx)
 
     const { headTags } = await renderSSRHead(head)
