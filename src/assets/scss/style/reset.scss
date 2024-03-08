@@ -40,7 +40,7 @@ td {
     font-family: Play;
     font-style: normal;
     font-weight: 400;
-    src: url('../fonts/Play.woff2') format('woff2');
+    src: url('@/assets/fonts/Play.woff2') format('woff2');
     unicode-range:
         U+0000-00FF,
         U+0131,
@@ -60,7 +60,7 @@ td {
     font-family: consola;
     font-style: normal;
     font-weight: 400;
-    src: url('../fonts/consola.ttf') format('ttf');
+    src: url('@/assets/fonts/consola.ttf') format('ttf');
     unicode-range:
         U+0000-00FF,
         U+0131,
