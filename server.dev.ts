@@ -59,10 +59,10 @@ export async function createServer(root = process.cwd(), hmrPort?: number) {
     // 使用 vite 的 connect 实例作为中间件
     app.use(vite.middlewares)
 
-    // 解析 application/json
-    app.use(express.json())
-    // 解析 application/x-www-form-urlencoded
-    app.use(express.urlencoded({ extended: true }))
+    // 解析 application/json 中间件
+    app.use(express.json({ limit: '50mb' }))
+    // 解析 application/x-www-form-urlencoded 中间件
+    app.use(express.urlencoded({ limit: '50mb', extended: true }))
     // 解析 cookies 中间件
     app.use(cookieParser())
 

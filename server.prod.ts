@@ -63,9 +63,9 @@ export async function createServer() {
     )
 
     // 解析 application/json 中间件
-    app.use(express.json())
+    app.use(express.json({ limit: '50mb' }))
     // 解析 application/x-www-form-urlencoded 中间件
-    app.use(express.urlencoded({ extended: true }))
+    app.use(express.urlencoded({ limit: '50mb', extended: true }))
     // 解析 cookies 中间件
     app.use(cookieParser())
 
