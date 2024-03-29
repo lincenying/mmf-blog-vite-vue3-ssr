@@ -2,10 +2,12 @@ import { LRUCache } from 'lru-cache'
 
 import apiDomain from './url.js'
 
+/** 是否开启`LRUCache` */
 const cached = true
 
 const cache: Nullable<LRUCache<string, Objable>> = (cached && new LRUCache({
     max: 1000,
+    ttl: 1000 * 60 * 5,
 })) || null
 
 const config = {
