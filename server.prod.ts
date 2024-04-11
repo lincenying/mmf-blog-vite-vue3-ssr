@@ -43,15 +43,17 @@ export async function createServer() {
     app.use(compression())
     // Node.js 代理中间件, 也可以在 nginx 直接配置, 那么将不会走这里的代理中间件
     app.use(
-        '/api',
         createProxyMiddleware({
             target: 'http://127.0.0.1:4000',
             changeOrigin: true,
+            pathFilter: ['/api/**'],
             pathRewrite: {
                 '^/api': '/api',
             },
-            onProxyReq(proxyReq, req) {
-                req.headers['X-Real-IP'] = requestIp.getClientIp(req) || 'unknown'
+            on: {
+                proxyReq(proxyReq, req) {
+                    proxyReq.setHeader('x-real-ip', requestIp.getClientIp(req) || 'unknown')
+                },
             },
         }),
     )
