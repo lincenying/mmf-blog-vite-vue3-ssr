@@ -69,8 +69,9 @@ const {
 
 const [loading, toggleLoading] = useToggle(false)
 async function loadMore(page = topics.page) {
-    if (loading.value)
+    if (loading.value) {
         return
+    }
     toggleLoading(true)
     await frontendArticleStore.getArticleList({ page, limit: 10, id, path, key, by })
     toggleLoading(false)
@@ -78,8 +79,9 @@ async function loadMore(page = topics.page) {
 
 onActivated(() => {
     console.log(`frontend-index onActivated:${route.path}`)
-    if (topics.path !== route.path)
+    if (topics.path !== route.path) {
         loadMore(1)
+    }
 })
 
 // onMounted(() => {
@@ -91,8 +93,9 @@ const headTitle = computed(() => {
     const { id, key, by } = route.params
     if (id) {
         const obj = category.find(item => item._id === id)
-        if (obj)
+        if (obj) {
             title = `${obj.cate_name} - ${title}`
+        }
     }
     else if (key) {
         title = `搜索: ${key} - ${title}`

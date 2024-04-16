@@ -17,6 +17,7 @@ polyfillLibrary.getPolyfillString({
     },
     excludes: ['AggregateError'],
 }).then((bundleString) => {
-    if (typeof bundleString === 'string')
+    if (typeof bundleString === 'string') {
         fs.writeFileSync('./public/static/js/polyfill.js', bundleString)
+    }
 })

@@ -62,16 +62,21 @@ function handleLogin() {
 }
 const handleRegister = useLockFn(async () => {
     const reg = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)$/i
-    if (!form.username || !form.password || !form.email)
+    if (!form.username || !form.password || !form.email) {
         return showMsg('请将表单填写完整!')
-    else if (strLen(form.username) < 4)
+    }
+    else if (strLen(form.username) < 4) {
         return showMsg('用户长度至少 2 个中文或 4 个英文!')
-    else if (!reg.test(form.email))
+    }
+    else if (!reg.test(form.email)) {
         return showMsg('邮箱格式错误!')
-    else if (strLen(form.password) < 8)
+    }
+    else if (strLen(form.password) < 8) {
         return showMsg('密码长度至少 8 位!')
-    else if (form.password !== form.re_password)
+    }
+    else if (form.password !== form.re_password) {
         return showMsg('两次输入的密码不一致!')
+    }
 
     const { code, message } = await api.post<'success' | 'error'>('frontend/user/insert', form)
     if (code === 200) {

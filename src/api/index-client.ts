@@ -19,8 +19,9 @@ axios.interceptors.response.use(
 )
 
 function checkStatus(response: AxiosResponse): ResponseData<any> {
-    if (response && (response.status === 200 || response.status === 304))
+    if (response && (response.status === 200 || response.status === 304)) {
         return response.data
+    }
     return {
         code: -404,
         message: (response && response.statusText) || '未知错误',
@@ -30,12 +31,15 @@ function checkStatus(response: AxiosResponse): ResponseData<any> {
 }
 
 function checkCode(res: ResponseData<any>): ResponseData<any> {
-    if (res.code === -500)
+    if (res.code === -500) {
         window.location.href = '/backend'
-    else if (res.code === -400)
+    }
+    else if (res.code === -400) {
         window.location.href = '/'
-    else if (res.code !== 200)
+    }
+    else if (res.code !== 200) {
         showMsg(res.message)
+    }
 
     return res
 }

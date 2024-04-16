@@ -47,8 +47,9 @@ const handleLike = useLockFn(async () => {
         return
     }
     let url = 'frontend/like'
-    if (item.like_status)
+    if (item.like_status) {
         url = 'frontend/unlike'
+    }
     const { code, message } = await api.get<'success' | 'error'>(url, { id: item._id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })

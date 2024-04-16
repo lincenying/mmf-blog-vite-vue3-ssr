@@ -25,10 +25,12 @@ const usePiniaStore = defineStore('backendArticleStore', () => {
      * @param $api
      */
     const getArticleList = async (config: ApiConfig, $api?: ApiType) => {
-        if (!$api)
+        if (!$api) {
             $api = api
-        if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1)
+        }
+        if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1) {
             return
+        }
         const { code, data } = await $api.get<ResDataLists<Article>>('backend/article/list', { ...config, path: undefined })
         if (code === 200 && data) {
             const {
@@ -58,8 +60,9 @@ const usePiniaStore = defineStore('backendArticleStore', () => {
      * @param $api
      */
     const getArticleItem = async (config: ApiConfig, $api?: ApiType) => {
-        if (!$api)
+        if (!$api) {
             $api = api
+        }
         const { code, data } = await $api.get<Article>('backend/article/item', { ...config, path: undefined })
         if (code === 200 && data) {
             state.item = {
@@ -99,8 +102,9 @@ const usePiniaStore = defineStore('backendArticleStore', () => {
      * @param payload 文章详情
      */
     const insertArticleItem = (payload: Article) => {
-        if (state.lists.path)
+        if (state.lists.path) {
             state.lists.data = [payload].concat(state.lists.data)
+        }
     }
     /**
      * 编辑成功后更新文章
@@ -108,8 +112,9 @@ const usePiniaStore = defineStore('backendArticleStore', () => {
      */
     const updateArticleItem = (payload: Article) => {
         const index = state.lists.data.findIndex(ii => ii._id === payload._id)
-        if (index > -1)
+        if (index > -1) {
             state.lists.data.splice(index, 1, payload)
+        }
     }
 
     return {
@@ -126,5 +131,6 @@ const usePiniaStore = defineStore('backendArticleStore', () => {
 export default usePiniaStore
 export const backendArticleStoreWithout = () => usePiniaStore(piniaInit)
 
-if (import.meta.hot)
+if (import.meta.hot) {
     import.meta.hot.accept(acceptHMRUpdate(usePiniaStore, import.meta.hot))
+}

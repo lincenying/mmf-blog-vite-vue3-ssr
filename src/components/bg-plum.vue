@@ -69,20 +69,24 @@ onMounted(async () => {
         ctx.stroke()
         const rad1 = rad + random() * r15
         const rad2 = rad - random() * r15
-        if (nx < -100 || nx > size.width + 100 || ny < -100 || ny > size.height + 100)
+        if (nx < -100 || nx > size.width + 100 || ny < -100 || ny > size.height + 100) {
             return
-        if (iterations <= init.value || random() > 0.5)
+        }
+        if (iterations <= init.value || random() > 0.5) {
             steps.push(() => step(nx, ny, rad1))
-        if (iterations <= init.value || random() > 0.5)
+        }
+        if (iterations <= init.value || random() > 0.5) {
             steps.push(() => step(nx, ny, rad2))
+        }
     }
     let lastTime = performance.now()
     const interval = 1000 / 40
 
     let controls: ReturnType<typeof useRafFn>
     const frame = () => {
-        if (performance.now() - lastTime < interval)
+        if (performance.now() - lastTime < interval) {
             return
+        }
         iterations += 1
         prevSteps = steps
         steps = []
@@ -107,8 +111,9 @@ onMounted(async () => {
             () => step(0, random() * size.height, 0),
             () => step(size.width, random() * size.height, r180),
         ]
-        if (size.width < 500)
+        if (size.width < 500) {
             steps = steps.slice(0, 2)
+        }
         controls.resume()
         stopped.value = false
     }

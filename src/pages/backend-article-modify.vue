@@ -84,8 +84,9 @@ watch(
     () => form.category,
     (val) => {
         const obj = lists.find(item => item._id === val)
-        if (obj)
+        if (obj) {
             form.category_name = obj.cate_name
+        }
     },
 )
 
@@ -113,8 +114,9 @@ async function handleModify() {
         showMsg('请将表单填写完整!')
         return
     }
-    if (loading.value)
+    if (loading.value) {
         return
+    }
     toggleLoading(true)
     // form.html = this.$refs.md.d_render
     if (frontHtml.value) {

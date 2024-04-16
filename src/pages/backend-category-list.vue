@@ -47,8 +47,9 @@ useSaveScroll()
 const [loading, toggleLoading] = useToggle(false)
 
 async function loadMore(page: number) {
-    if (loading.value)
+    if (loading.value) {
         return
+    }
     toggleLoading(true)
     await globalCategoryStore.getCategoryList({ page, limit: 99, path: route.fullPath }, api)
     toggleLoading(false)

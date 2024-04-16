@@ -35,19 +35,22 @@ const form = reactive({
 })
 
 const handleLogin = useLockFn(async () => {
-    if (!form.username || !form.password)
+    if (!form.username || !form.password) {
         return showMsg('请输入用户名和密码!')
+    }
 
     const loader = ctx.$loading.show()
     const { code, data } = await api.post<Nullable<string>>('backend/admin/login', form)
     loader.hide()
-    if (code === 200 && data)
+    if (code === 200 && data) {
         router.push('/backend/article/list')
+    }
 })
 
 onMounted(() => {
-    if (cookies.get('b_user'))
+    if (cookies.get('b_user')) {
         router.push('/backend/article/list')
+    }
 })
 
 const headTitle = ref('管理员登录 - M.M.F 小屋')

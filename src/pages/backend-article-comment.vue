@@ -52,8 +52,9 @@ const { lists } = $(storeToRefs(globalCommentStore))
 const [loading, toggleLoading] = useToggle(false)
 
 async function loadMore(page = lists.page) {
-    if (loading.value)
+    if (loading.value) {
         return
+    }
     toggleLoading(true)
     await globalCommentStore.getCommentList({ page, path: route.fullPath, all: 1, id: route.params.id }, api)
     toggleLoading(false)
@@ -74,8 +75,9 @@ async function handleDelete(id: string) {
 }
 
 onMounted(() => {
-    if (lists.path === '')
+    if (lists.path === '') {
         loadMore(1)
+    }
 })
 
 const headTitle = ref('评论列表 - M.M.F 小屋')

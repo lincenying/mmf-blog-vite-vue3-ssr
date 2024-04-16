@@ -24,10 +24,12 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
      * @param $api
      */
     const getAdminList = async (config: Pick<ApiConfig, 'page' | 'path'>, $api?: ApiType) => {
-        if (!$api)
+        if (!$api) {
             $api = api
-        if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1)
+        }
+        if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1) {
             return
+        }
         const { code, data } = await $api.get<ResDataLists<User>>('backend/admin/list', { ...config, path: undefined })
         if (code === 200 && data) {
             const {
@@ -57,8 +59,9 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
      * @param $api
      */
     const getAdminItem = async (config: Pick<ApiConfig, 'id' | 'path'>, $api?: ApiType) => {
-        if (!$api)
+        if (!$api) {
             $api = api
+        }
         const { code, data } = await $api.get<User>('backend/admin/item', { ...config, path: undefined })
         if (code === 200 && data) {
             state.item = {
@@ -74,8 +77,9 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
     const updateAdminItem = (payload: User) => {
         state.item.data = payload
         const index = state.lists.data.findIndex(ii => ii._id === payload._id)
-        if (index > -1)
+        if (index > -1) {
             state.lists.data.splice(index, 1, payload)
+        }
     }
     /**
      * 删除管理员
@@ -120,5 +124,6 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
 export default usePiniaStore
 export const backendAdminStoreWithout = () => usePiniaStore(piniaInit)
 
-if (import.meta.hot)
+if (import.meta.hot) {
     import.meta.hot.accept(acceptHMRUpdate(usePiniaStore, import.meta.hot))
+}

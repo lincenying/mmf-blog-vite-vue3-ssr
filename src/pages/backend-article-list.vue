@@ -56,8 +56,9 @@ useSaveScroll()
 const [loading, toggleLoading] = useToggle(false)
 
 async function loadMore(page = lists.page) {
-    if (loading.value)
+    if (loading.value) {
         return
+    }
     toggleLoading(true)
     await backendArticleStore.getArticleList({ page, path: route.fullPath })
     toggleLoading(false)

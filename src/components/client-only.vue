@@ -17,12 +17,14 @@ export default defineComponent({
             mounted.value = true
         })
         return (props: { fallback: string; placeholder: string; fallbackTag: string; placeholderTag: string }) => {
-            if (mounted.value)
+            if (mounted.value) {
                 return slots.default?.()
+            }
 
             const slot = slots.fallback || slots.placeholder
-            if (slot)
+            if (slot) {
                 return slot()
+            }
 
             const fallbackStr = props.fallback || props.placeholder || ''
             const fallbackTag = props.fallbackTag || props.placeholderTag || 'span'

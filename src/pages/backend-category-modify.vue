@@ -59,8 +59,9 @@ async function handleModify() {
         showMsg('请将表单填写完整!')
         return
     }
-    if (loading.value)
+    if (loading.value) {
         return
+    }
     toggleLoading(true)
     const { code, data, message } = await api.post<Category>('backend/category/modify', form)
     toggleLoading(false)

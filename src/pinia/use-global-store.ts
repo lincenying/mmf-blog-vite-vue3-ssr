@@ -44,5 +44,6 @@ const usePiniaStore = defineStore('globalStore', () => {
 export default usePiniaStore
 export const globalStoreWithout = () => usePiniaStore(piniaInit)
 
-if (import.meta.hot)
+if (import.meta.hot) {
     import.meta.hot.accept(acceptHMRUpdate(usePiniaStore, import.meta.hot))
+}

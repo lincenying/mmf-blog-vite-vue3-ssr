@@ -21,10 +21,12 @@ const usePiniaStore = defineStore('globalCommentStore', () => {
      * @param $api
      */
     const getCommentList = async (config: ApiConfig, $api?: ApiType) => {
-        if (!$api)
+        if (!$api) {
             $api = api
-        if (config.path === state.lists.path && config.page === 1)
+        }
+        if (config.path === state.lists.path && config.page === 1) {
             return
+        }
         const { code, data } = await $api.get<ResDataLists<Comment>>('frontend/comment/list', { ...config, path: undefined, cache: true })
         if (code === 200 && data) {
             const {
@@ -94,5 +96,6 @@ const usePiniaStore = defineStore('globalCommentStore', () => {
 export default usePiniaStore
 export const globalCommentStoreWithout = () => usePiniaStore(piniaInit)
 
-if (import.meta.hot)
+if (import.meta.hot) {
     import.meta.hot.accept(acceptHMRUpdate(usePiniaStore, import.meta.hot))
+}

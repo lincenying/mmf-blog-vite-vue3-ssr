@@ -5,8 +5,9 @@ import config from './config-server'
 import type { UserCookies } from '@/types'
 
 function objToStr(cookies: Record<string, string | number | boolean>) {
-    if (!cookies)
+    if (!cookies) {
         return ''
+    }
     let cookie = ''
     Object.keys(cookies).forEach((item) => {
         cookie += `${item}=${cookies[item]}; `
@@ -45,8 +46,9 @@ export function api(cookies: UserCookies): ApiServer {
                     ...headers,
                 },
             })
-            if (config.cached && data.cache)
+            if (config.cached && data.cache) {
                 config.cached.set(key, res)
+            }
             return res && res.data
         },
         async get(url, params, headers = {}) {
@@ -65,8 +67,9 @@ export function api(cookies: UserCookies): ApiServer {
                     ...headers,
                 },
             })
-            if (config.cached && params.cache)
+            if (config.cached && params.cache) {
                 config.cached.set(key, res)
+            }
             return res && res.data
         },
     }

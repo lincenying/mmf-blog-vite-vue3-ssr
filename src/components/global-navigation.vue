@@ -63,8 +63,9 @@ function handleLogin() {
 const router = useRouter()
 function onSearch(e: Event) {
     const qs = (e.target as HTMLInputElement).value
-    if (qs === '')
+    if (qs === '') {
         return false
+    }
 
     router.replace(`/search/${qs}`)
 }
