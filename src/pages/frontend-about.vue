@@ -60,7 +60,7 @@ defineOptions({
     asyncData(ctx) {
         const { store, route, api } = ctx
         const frontendArticleStore = useFrontendArticleStore(store)
-        return frontendArticleStore.getTrending({ id: route.query.id }, api)
+        return frontendArticleStore.getTrending({ id: route.query.id as string }, api)
     },
 })
 

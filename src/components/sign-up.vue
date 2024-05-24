@@ -61,7 +61,7 @@ function handleLogin() {
     globalStore.setRegisterModal(false)
 }
 const handleRegister = useLockFn(async () => {
-    const reg = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)$/i
+    const reg = /^[\w\-.]+@[\w-]+\.[\w-]+$/
     if (!form.username || !form.password || !form.email) {
         return showMsg('请将表单填写完整!')
     }

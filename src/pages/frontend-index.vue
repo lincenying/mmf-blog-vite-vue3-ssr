@@ -45,7 +45,7 @@ defineOptions({
         const frontendArticleStore = useFrontendArticleStore(store)
         return Promise.all([
             globalCategoryStore.getCategoryList({}, api),
-            frontendArticleStore.getTrending({}, api),
+            frontendArticleStore.getTrending(undefined, api),
             frontendArticleStore.getArticleList({ page: 1, limit: 10, id, path, key, by }, api),
         ])
     },

@@ -67,9 +67,18 @@ async function handleRecover(id: string) {
         backendAdminStore.recoverAdmin(id)
     }
 }
+/**
+ * 处理删除操作的异步函数。
+ * @param id 要删除的条目的唯一标识符，类型为字符串。
+ * @returns 不返回任何内容，但会在删除操作成功或失败时触发相应的操作，如显示消息和更新存储。
+ */
 async function handleDelete(id: string) {
+    // 向后端发送删除请求，并等待响应
     const { code, message } = await api.get<'success' | 'error'>('backend/admin/delete', { id })
+
+    // 检查响应代码，如果为200，则视为删除成功
     if (code === 200) {
+        // 显示成功消息，并从存储中删除该管理员
         showMsg({ type: 'success', content: message })
         backendAdminStore.deleteAdmin(id)
     }

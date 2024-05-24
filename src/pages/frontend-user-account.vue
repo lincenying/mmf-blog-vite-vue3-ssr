@@ -49,7 +49,7 @@ onMounted(() => {
 })
 
 const handleSubmit = useLockFn(async () => {
-    const reg = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)$/i
+    const reg = /^[\w\-.]+@[\w-]+\.[\w-]+$/
     if (!email) {
         showMsg('请填写邮箱地址!')
         return

@@ -23,10 +23,7 @@ const usePiniaStore = defineStore('backendUserStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getUserList = async (config: ApiConfig, $api?: ApiType) => {
-        if (!$api) {
-            $api = api
-        }
+    const getUserList = async (config: ApiConfig, $api: ApiType = api) => {
         if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1) {
             return
         }
@@ -58,10 +55,7 @@ const usePiniaStore = defineStore('backendUserStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getUserItem = async (config: ApiConfig, $api?: ApiType) => {
-        if (!$api) {
-            $api = api
-        }
+    const getUserItem = async (config: ApiConfig, $api: ApiType = api) => {
         const { code, data } = await $api.get<User>('backend/user/item', { ...config, path: undefined })
         if (code === 200 && data) {
             state.item = {

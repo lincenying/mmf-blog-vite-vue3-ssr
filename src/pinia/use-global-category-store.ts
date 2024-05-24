@@ -16,10 +16,7 @@ const usePiniaStore = defineStore('globalCategoryStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getCategoryList = async (config: ApiConfig, $api?: ApiType) => {
-        if (!$api) {
-            $api = api
-        }
+    const getCategoryList = async (config: ApiConfig, $api: ApiType = api) => {
         if (state.lists.length) {
             return
         }
@@ -33,10 +30,7 @@ const usePiniaStore = defineStore('globalCategoryStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getCategoryItem = async (config: ApiConfig, $api?: ApiType) => {
-        if (!$api) {
-            $api = api
-        }
+    const getCategoryItem = async (config: ApiConfig, $api: ApiType = api) => {
         const { code, data } = await $api.get<Nullable<Category>>('backend/category/item', { ...config, path: undefined })
         if (code === 200 && data) {
             state.item = {

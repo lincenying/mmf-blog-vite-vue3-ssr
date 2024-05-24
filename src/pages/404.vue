@@ -3,7 +3,7 @@
         <div class="main-left">
             <div class="card card-answer">
                 <div class="answer-content">
-                    <div class="flex justify-center py-40px">
+                    <div class="flex justify-center -40px">
                         <img src="/static/images/error_1.jpg" alt="">
                     </div>
                 </div>
@@ -19,7 +19,7 @@ defineOptions({
     asyncData(ctx) {
         const { store, route, api } = ctx
         const frontendArticleStore = useFrontendArticleStore(store)
-        return frontendArticleStore.getTrending({ id: route.query.id }, api)
+        return frontendArticleStore.getTrending({ id: route.query.id as string }, api)
     },
 })
 

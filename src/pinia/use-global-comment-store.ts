@@ -20,10 +20,7 @@ const usePiniaStore = defineStore('globalCommentStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getCommentList = async (config: ApiConfig, $api?: ApiType) => {
-        if (!$api) {
-            $api = api
-        }
+    const getCommentList = async (config: ApiConfig, $api: ApiType = api) => {
         if (config.path === state.lists.path && config.page === 1) {
             return
         }

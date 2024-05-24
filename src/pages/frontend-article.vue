@@ -55,7 +55,7 @@ defineOptions({
         const globalCommentStore = useGlobalCommentStore(store)
         return Promise.all([
             globalCategoryStore.getCategoryList({}, api),
-            frontendArticleStore.getTrending({}, api),
+            frontendArticleStore.getTrending(undefined, api),
             globalCommentStore.getCommentList({ id, path, page: 1, limit: 10 }, api),
             frontendArticleStore.getArticleItem({ id, path }, api),
         ])
