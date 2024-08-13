@@ -11,7 +11,7 @@ const config = lincy(
             graphql: true,
             html: true,
             markdown: true,
-            toml: false,
+            toml: true,
         },
         overrides: {
             ignores: [

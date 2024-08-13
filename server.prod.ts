@@ -1,3 +1,4 @@
+import process from 'node:process'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -44,7 +45,7 @@ export async function createServer() {
     // Node.js 代理中间件, 也可以在 nginx 直接配置, 那么将不会走这里的代理中间件
     app.use(
         createProxyMiddleware({
-            target: 'http://127.0.0.1:4000',
+            target: process.env.API_URL || 'http://127.0.0.1:4000',
             changeOrigin: true,
             pathFilter: ['/api/**'],
             pathRewrite: {
