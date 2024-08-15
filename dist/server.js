@@ -10,6 +10,13 @@ import compression from "compression";
 import serveStatic from "serve-static";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import { UTC2Date } from "@lincy/utils";
+
+// src/api/url.js
+import process from "process";
+var url = process.env.API_URL || "http://127.0.0.1:4000";
+var url_default = url;
+
+// server.prod.ts
 async function createServer() {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const resolve = (p) => path.resolve(__dirname, p);
@@ -35,7 +42,7 @@ async function createServer() {
   app.use(compression());
   app.use(
     createProxyMiddleware({
-      target: "http://127.0.0.1:4000",
+      target: url_default,
       changeOrigin: true,
       pathFilter: ["/api/**"],
       pathRewrite: {
@@ -58,9 +65,9 @@ async function createServer() {
   app.use(cookieParser());
   app.use("*", async (req, res) => {
     try {
-      const url = req.originalUrl;
+      const url2 = req.originalUrl;
       const render = (await import("./server/entry-server.js")).render;
-      const { html: appHtml, preloadLinks, headTags } = await render(url, manifest, req);
+      const { html: appHtml, preloadLinks, headTags } = await render(url2, manifest, req);
       const html = template.replace("<!--preload-links-->", preloadLinks).replace("<!--app-html-->", appHtml).replace("<!--head-tags-->", headTags);
       res.status(200).set({ "Content-Type": "text/html" }).end(html);
     } catch (e) {
