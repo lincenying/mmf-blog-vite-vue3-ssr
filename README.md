@@ -89,7 +89,7 @@ docker rmi images-mmf-blog-vite-vue3-ssr
 ```yaml
 api:
   container_name: api-server
-  image: lincenying/api-server:1.0.0
+  image: lincenying/api-server:1.0.1
 ```
 
 修改`docker-compose.yml`中的`mongo.volumes`配置, 将宿主机数据库路径映射到容器中

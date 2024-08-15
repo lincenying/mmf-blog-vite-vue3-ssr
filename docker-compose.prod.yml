@@ -12,7 +12,7 @@ services:
 
     api:
         container_name: api-server
-        image: lincenying/api-server:1.0.0
+        image: lincenying/api-server:1.0.1
         environment:
             DATABASE_URL: mongodb://mongo:27017
         ports:
