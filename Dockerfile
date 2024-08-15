@@ -2,7 +2,7 @@
 ARG NODE_VERSION=node:18-alpine
 
 # 生产环境镜像
-FROM $NODE_VERSION AS production
+FROM $NODE_VERSION AS dependency-base
 
 # 安装 pnpm
 RUN npm config set registry https://registry.npmmirror.com
@@ -19,6 +19,25 @@ RUN pnpm install --frozen-lockfile
 
 # 编译项目
 RUN pnpm build
+
+# Stage 2: Production image
+FROM $NODE_VERSION AS production
+
+# Create app directory
+WORKDIR /app
+
+# Copy built assets from previous stage
+COPY --from=dependency-base /app/dist /app/dist
+COPY --from=dependency-base /app/package.json /app/package.json
+COPY --from=dependency-base /app/pnpm-lock.yaml /app/pnpm-lock.yaml
+COPY --from=dependency-base /app/.npmrc /app/.npmrc
+
+RUN npm config set registry https://registry.npmmirror.com
+RUN npm install -g pnpm
+
+RUN pnpm install --only=prod
+
+RUN pnpm store prune
 
 # 设置环境变量
 ## 生产环境

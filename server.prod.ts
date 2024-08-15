@@ -1,4 +1,3 @@
-import process from 'node:process'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -11,6 +10,7 @@ import compression from 'compression'
 import serveStatic from 'serve-static'
 import { createProxyMiddleware } from 'http-proxy-middleware'
 import { UTC2Date } from '@lincy/utils'
+import apiDomain from './src/api/url'
 import type { RenderType } from '@/types'
 
 export async function createServer() {
@@ -45,7 +45,7 @@ export async function createServer() {
     // Node.js 代理中间件, 也可以在 nginx 直接配置, 那么将不会走这里的代理中间件
     app.use(
         createProxyMiddleware({
-            target: process.env.API_URL || 'http://127.0.0.1:4000',
+            target: apiDomain,
             changeOrigin: true,
             pathFilter: ['/api/**'],
             pathRewrite: {

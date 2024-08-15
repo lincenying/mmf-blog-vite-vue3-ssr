@@ -31,31 +31,31 @@ express-ts: https://github.com/lincenying/mmf-blog-api-ts
 ## Project setup
 
 ```bash
-$ pnpm install
+pnpm install & npx simple-git-hooks
 ```
 
 ### Compiles and hot-reloads for development
 
 ```bash
-$ pnpm serve
+pnpm serve
 ```
 
 ### Compiles and minifies for production
 
 ```bash
-$ pnpm build
+pnpm build
 ```
 
 ### Preview for production
 
 ```bash
-$ pnpm start
+pnpm start
 ```
 
 ### Lints and fixes files
 
 ```bash
-$ pnpm lint
+pnpm lint
 ```
 
 ## docker
@@ -101,6 +101,7 @@ volumes:
 
 ```bash
 # 生成镜像及启动容器
+docker-compose build
 docker-compose up -d
 ```
 
