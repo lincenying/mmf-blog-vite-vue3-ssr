@@ -38,7 +38,9 @@ function guardRoute(to: RouteLocationNormalized, from: RouteLocationNormalized, 
     if (isBrowser && !token) {
         next('/')
     }
-    else { next() }
+    else {
+        next()
+    }
 }
 
 function guardRouteBackend(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
@@ -46,7 +48,9 @@ function guardRouteBackend(to: RouteLocationNormalized, from: RouteLocationNorma
     if (isBrowser && !token) {
         next('/backend/login')
     }
-    else { next() }
+    else {
+        next()
+    }
 }
 
 const backendConfig = {
@@ -125,7 +129,9 @@ export function createRouter(store: Pinia) {
             else if ((to.meta.index as number) > (from.meta.index as number)) {
                 pageTransitionName = slideLeft
             }
-            else { pageTransitionName = slideRight }
+            else {
+                pageTransitionName = slideRight
+            }
 
             appShellStore.setPageTransitionName(pageTransitionName)
         }

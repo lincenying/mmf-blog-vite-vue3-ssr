@@ -3,7 +3,7 @@
         <div class="main-left">
             <div class="card card-answer">
                 <div class="answer-content">
-                    <div class="flex justify-center -40px">
+                    <div class="flex justify-center py-40px">
                         <img src="/static/images/error_1.jpg" alt="">
                     </div>
                 </div>

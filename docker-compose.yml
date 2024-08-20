@@ -1,44 +1,44 @@
 services:
-    mongo:
-        container_name: mongo-server
-        image: mongo:3.6
-        restart: always
-        volumes:
-            - /Users/lincenying/web/mongodb/data:/data/db
-        ports:
-            - 27017:27017
-        networks:
-            - webnet
+  mongo:
+    container_name: mongo-server
+    image: mongo:3.6
+    restart: always
+    volumes:
+      - /Users/lincenying/web/mongodb/data:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - webnet
 
-    api:
-        container_name: api-server
-        image: lincenying/api-server:1.0.1
-        environment:
-            DATABASE_URL: mongodb://mongo:27017
-        ports:
-            - 4008:4000
-        depends_on:
-            - mongo
-        networks:
-            - webnet
+  api:
+    container_name: api-server
+    image: lincenying/api-server:1.0.1
+    environment:
+      DATABASE_URL: mongodb://mongo:27017
+    ports:
+      - 4008:4000
+    depends_on:
+      - mongo
+    networks:
+      - webnet
 
-    app:
-        container_name: images-mmf-blog-vite-vue3-ssr
-        image: lincenying/images-mmf-blog-vite-vue3-ssr:${TAG}
-        environment:
-            API_URL: http://api:4000
-        env_file:
-            - .env
-        build:
-            context: .
-            dockerfile: ./Dockerfile
-        depends_on:
-            - api
-        ports:
-            - 7777:7777
-        networks:
-            - webnet
+  app:
+    container_name: images-mmf-blog-vite-vue3-ssr
+    image: lincenying/images-mmf-blog-vite-vue3-ssr:${TAG}
+    environment:
+      API_URL: http://api:4000
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    depends_on:
+      - api
+    ports:
+      - 7777:7777
+    networks:
+      - webnet
 
 networks:
-    webnet:
-        driver: bridge
+  webnet:
+    driver: bridge
