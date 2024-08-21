@@ -70,7 +70,7 @@ pnpm lint
 # 构建镜像
 docker build -t images-mmf-blog-vite-vue3-ssr -f ./Dockerfile .
 # 运行镜像
-docker run -d -p 7777:7777 --name container-mmf-blog-vite-vue3-ssr images-mmf-blog-vite-vue3-ssr
+docker run -d -p 7777:7777 --add-host=host.docker.internal:host-gateway --name container-mmf-blog-vite-vue3-ssr images-mmf-blog-vite-vue3-ssr
 # 进入镜像
 docker exec -it container-mmf-blog-vite-vue3-ssr /bin/bash
 # 停止容器
