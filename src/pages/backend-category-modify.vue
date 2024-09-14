@@ -18,8 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Category } from '@/types'
-import api from '@/api/index-client'
+import type { Category } from '~/types'
 
 defineOptions({
     name: 'BackendCategoryModify',
@@ -63,7 +62,7 @@ async function handleModify() {
         return
     }
     toggleLoading(true)
-    const { code, data, message } = await api.post<Category>('backend/category/modify', form)
+    const { code, data, message } = await capi.post<Category>('backend/category/modify', form)
     toggleLoading(false)
     if (code === 200) {
         showMsg({ type: 'success', content: message })

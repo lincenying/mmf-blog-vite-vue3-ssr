@@ -1,6 +1,6 @@
 import VueMarkdownEditor from '@kangc/v-md-editor'
-import vuePressTheme from '@kangc/v-md-editor/lib/theme/vuepress'
 import createLineNumbertPlugin from '@kangc/v-md-editor/lib/plugins/line-number/index'
+import vuePressTheme from '@kangc/v-md-editor/lib/theme/vuepress'
 
 // Prism
 import Prism from 'prismjs'

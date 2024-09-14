@@ -1,8 +1,6 @@
+import type { ApiConfig, Comment, CommentStore } from '~/types'
+
 import { acceptHMRUpdate, defineStore } from 'pinia'
-
-import type { ApiConfig, Comment, CommentStore } from '@/types'
-
-import api from '@/api/index-client'
 
 const usePiniaStore = defineStore('globalCommentStore', () => {
     const state: CommentStore = reactive({
@@ -20,7 +18,7 @@ const usePiniaStore = defineStore('globalCommentStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getCommentList = async (config: ApiConfig, $api: ApiType = api) => {
+    const getCommentList = async (config: ApiConfig, $api: ApiType = capi) => {
         if (config.path === state.lists.path && config.page === 1) {
             return
         }

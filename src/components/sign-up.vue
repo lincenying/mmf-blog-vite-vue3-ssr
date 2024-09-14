@@ -32,7 +32,6 @@
 
 <script setup lang="ts">
 import { strLen } from '@lincy/utils'
-import api from '@/api/index-client'
 
 defineOptions({
     name: 'SignUp',
@@ -78,7 +77,7 @@ const handleRegister = useLockFn(async () => {
         return showMsg('两次输入的密码不一致!')
     }
 
-    const { code, message } = await api.post<'success' | 'error'>('frontend/user/insert', form)
+    const { code, message } = await capi.post<'success' | 'error'>('frontend/user/insert', form)
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         handleLogin()

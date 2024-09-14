@@ -32,7 +32,6 @@
 
 <script setup lang="ts">
 import { getDateDiff } from '@lincy/utils'
-import api from '@/api/index-client'
 
 defineOptions({
     name: 'BackendArticleComment',
@@ -56,18 +55,18 @@ async function loadMore(page = lists.page) {
         return
     }
     toggleLoading(true)
-    await globalCommentStore.getCommentList({ page, path: route.fullPath, all: 1, id: route.params.id }, api)
+    await globalCommentStore.getCommentList({ page, path: route.fullPath, all: 1, id: route.params.id }, capi)
     toggleLoading(false)
 }
 async function handleRecover(id: string) {
-    const { code, message } = await api.get<'success' | 'error'>('frontend/comment/recover', { id })
+    const { code, message } = await capi.get<'success' | 'error'>('frontend/comment/recover', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         globalCommentStore.recoverComment(id)
     }
 }
 async function handleDelete(id: string) {
-    const { code, message } = await api.get<'success' | 'error'>('frontend/comment/delete', { id })
+    const { code, message } = await capi.get<'success' | 'error'>('frontend/comment/delete', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         globalCommentStore.deleteComment(id)

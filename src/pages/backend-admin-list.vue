@@ -27,7 +27,6 @@
 
 <script setup lang="ts">
 import { UTC2Date } from '@lincy/utils'
-import api from '@/api/index-client'
 
 defineOptions({
     name: 'BackendAdminList',
@@ -61,7 +60,7 @@ async function loadMore(page = lists.page) {
     toggleLoading(false)
 }
 async function handleRecover(id: string) {
-    const { code, message } = await api.get<'success' | 'error'>('backend/admin/recover', { id })
+    const { code, message } = await capi.get<'success' | 'error'>('backend/admin/recover', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         backendAdminStore.recoverAdmin(id)
@@ -74,7 +73,7 @@ async function handleRecover(id: string) {
  */
 async function handleDelete(id: string) {
     // 向后端发送删除请求，并等待响应
-    const { code, message } = await api.get<'success' | 'error'>('backend/admin/delete', { id })
+    const { code, message } = await capi.get<'success' | 'error'>('backend/admin/delete', { id })
 
     // 检查响应代码，如果为200，则视为删除成功
     if (code === 200) {

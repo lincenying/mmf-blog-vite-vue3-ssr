@@ -52,9 +52,9 @@ CMD ["node", "./dist/server.js"]
 
 # 构建镜像
 # docker build -t images-mmf-blog-vite-vue3-ssr -f ./Dockerfile .
-# 运行镜像
+# 运行容器
 # docker run -d -p 7777:7777 --name container-mmf-blog-vite-vue3-ssr images-mmf-blog-vite-vue3-ssr
-# 进入镜像
+# 进入容器
 # docker exec -it container-mmf-blog-vite-vue3-ssr /bin/sh
 # 停止容器
 # docker stop container-mmf-blog-vite-vue3-ssr

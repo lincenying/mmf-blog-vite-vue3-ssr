@@ -1,8 +1,6 @@
+import type { ApiConfig, Article, FArticleStore } from '~/types'
+
 import { acceptHMRUpdate, defineStore } from 'pinia'
-
-import type { ApiConfig, Article, FArticleStore } from '@/types'
-
-import api from '@/api/index-client'
 
 const usePiniaStore = defineStore('frontendArticleStore', () => {
     const state: FArticleStore = reactive({
@@ -26,7 +24,7 @@ const usePiniaStore = defineStore('frontendArticleStore', () => {
      * @param $api 可选，API 接口实例，默认为全局 api 实例。
      * @returns 没有显式返回值，但会更新 state 中的 lists 状态。
      */
-    const getArticleList = async (config: ApiConfig, $api: ApiType = api) => {
+    const getArticleList = async (config: ApiConfig, $api: ApiType = capi) => {
         // 如果当前已有数据且请求的路径和页码相同，则无需重复请求
         if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1) {
             return
@@ -67,7 +65,7 @@ const usePiniaStore = defineStore('frontendArticleStore', () => {
      * @param $api - 可选的 API 实例，如果未提供，则使用默认的 api 实例。
      * 该函数不直接返回值，而是通过更新 state.item 来间接地返回结果。
      */
-    const getArticleItem = async (config: ApiConfig, $api: ApiType = api) => {
+    const getArticleItem = async (config: ApiConfig, $api: ApiType = capi) => {
         // 向 API 发起请求获取文章详情，配置中排除了 path 属性，并以 markdown 格式返回，启用缓存
         const { code, data } = await $api.get<Article>('frontend/article/item', { ...config, path: undefined, markdown: 1, cache: true })
         // 如果请求成功且有返回数据，则更新 state 中的 item 信息
@@ -88,7 +86,7 @@ const usePiniaStore = defineStore('frontendArticleStore', () => {
      * @param $api 可选参数，用于发起请求的API实例，默认使用全局api实例。
      * @returns 无返回值。但会更新全局状态中的trending数据。
      */
-    const getTrending = async (payload: { id?: string } = {}, $api: ApiType = api) => {
+    const getTrending = async (payload: { id?: string } = {}, $api: ApiType = capi) => {
         // 检查已有trending数据，若有则不再请求
         if (state.trending.length) {
             return

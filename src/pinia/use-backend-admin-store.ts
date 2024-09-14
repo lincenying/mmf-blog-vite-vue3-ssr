@@ -1,7 +1,6 @@
-import { acceptHMRUpdate, defineStore } from 'pinia'
+import type { AdminStore, ApiConfig, User } from '~/types'
 
-import api from '@/api/index-client'
-import type { AdminStore, ApiConfig, User } from '@/types'
+import { acceptHMRUpdate, defineStore } from 'pinia'
 
 const usePiniaStore = defineStore('backendAdminStore', () => {
     const state: AdminStore = reactive({
@@ -24,7 +23,7 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
      * @param $api 可选，ApiType类型的API实例，默认为api。
      * 该函数没有返回值，它主要用于更新状态。
      */
-    const getAdminList = async (config: Pick<ApiConfig, 'page' | 'path'>, $api: ApiType = api) => {
+    const getAdminList = async (config: Pick<ApiConfig, 'page' | 'path'>, $api: ApiType = capi) => {
         // 如果当前列表数据已存在且路径与页码与请求配置相同，则不进行任何操作
         if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1) {
             return
@@ -63,7 +62,7 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
      * @param $api ApiType类型，默认为api，用于执行API请求。
      * 该函数没有返回值，但会更新状态（state）中的item属性。
      */
-    const getAdminItem = async (config: Pick<ApiConfig, 'id' | 'path'>, $api: ApiType = api) => {
+    const getAdminItem = async (config: Pick<ApiConfig, 'id' | 'path'>, $api: ApiType = capi) => {
         const { code, data } = await $api.get<User>('backend/admin/item', { ...config, path: undefined })
         if (code === 200 && data) {
             state.item = {

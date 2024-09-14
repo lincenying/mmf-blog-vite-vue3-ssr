@@ -23,8 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import api from '@/api/index-client'
-import type { UserCookies } from '@/types'
+import type { UserCookies } from '~/types'
 
 defineOptions({
     name: 'SignIn',
@@ -55,7 +54,7 @@ const handleLogin = useLockFn(async () => {
         return showMsg('请将表单填写完整!')
     }
 
-    const { code, message } = await api.post<UserCookies>('frontend/user/login', form)
+    const { code, message } = await capi.post<UserCookies>('frontend/user/login', form)
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         window.location.reload()

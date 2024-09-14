@@ -22,8 +22,6 @@
 </template>
 
 <script setup lang="ts">
-import api from '@/api/index-client'
-
 defineOptions({
     name: 'BackendCategoryList',
     asyncData(ctx) {
@@ -51,7 +49,7 @@ async function loadMore(page: number) {
         return
     }
     toggleLoading(true)
-    await globalCategoryStore.getCategoryList({ page, limit: 99, path: route.fullPath }, api)
+    await globalCategoryStore.getCategoryList({ page, limit: 99, path: route.fullPath }, capi)
     toggleLoading(false)
 }
 
@@ -66,7 +64,7 @@ onMounted(() => {
 })
 
 async function handleRecover(id: string) {
-    const { code, message } = await api.get<'success' | 'error'>('backend/category/recover', { id })
+    const { code, message } = await capi.get<'success' | 'error'>('backend/category/recover', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         globalCategoryStore.recoverCategory(id)
@@ -74,7 +72,7 @@ async function handleRecover(id: string) {
 }
 
 async function handleDelete(id: string) {
-    const { code, message } = await api.get<'success' | 'error'>('backend/category/delete', { id })
+    const { code, message } = await capi.get<'success' | 'error'>('backend/category/delete', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         globalCategoryStore.deleteCategory(id)

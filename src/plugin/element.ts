@@ -1,6 +1,6 @@
-import { ElLoading, ElMessage as _ElMessage, ElMessageBox as _ElMessageBox } from 'element-plus'
-
 import type { App } from 'vue'
+
+import { ElMessage as _ElMessage, ElMessageBox as _ElMessageBox, ElLoading } from 'element-plus'
 
 /**
  * 为应用安装自定义功能扩展

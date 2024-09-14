@@ -21,8 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import api from '@/api/index-client'
-import type { User } from '@/types'
+import type { User } from '~/types'
 
 defineOptions({
     name: 'FrontendUserAccount',
@@ -37,7 +36,7 @@ let username = $ref('')
 let email = $ref('')
 
 async function getUser() {
-    const { code, data } = await api.get<User>('frontend/user/account', {})
+    const { code, data } = await capi.get<User>('frontend/user/account', {})
     if (code === 200) {
         username = data.username
         email = data.email
@@ -58,7 +57,7 @@ const handleSubmit = useLockFn(async () => {
         showMsg('邮箱格式错误!')
         return
     }
-    const { code, message } = await api.post<'success' | 'error'>('frontend/user/account', {
+    const { code, message } = await capi.post<'success' | 'error'>('frontend/user/account', {
         email,
         username,
         id: cookies.userid,

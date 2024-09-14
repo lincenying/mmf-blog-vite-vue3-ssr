@@ -1,8 +1,6 @@
+import type { ApiConfig, Article, ArticleStore } from '~/types'
+
 import { acceptHMRUpdate, defineStore } from 'pinia'
-
-import type { ApiConfig, Article, ArticleStore } from '@/types'
-
-import api from '@/api/index-client'
 
 const usePiniaStore = defineStore('backendArticleStore', () => {
     const state: ArticleStore = reactive({
@@ -24,7 +22,7 @@ const usePiniaStore = defineStore('backendArticleStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getArticleList = async (config: ApiConfig, $api: ApiType = api) => {
+    const getArticleList = async (config: ApiConfig, $api: ApiType = capi) => {
         if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1) {
             return
         }
@@ -56,7 +54,7 @@ const usePiniaStore = defineStore('backendArticleStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getArticleItem = async (config: ApiConfig, $api: ApiType = api) => {
+    const getArticleItem = async (config: ApiConfig, $api: ApiType = capi) => {
         const { code, data } = await $api.get<Article>('backend/article/item', { ...config, path: undefined })
         if (code === 200 && data) {
             state.item = {

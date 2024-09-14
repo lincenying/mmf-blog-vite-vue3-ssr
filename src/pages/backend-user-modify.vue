@@ -24,8 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import type { User } from '@/types'
-import api from '@/api/index-client'
+import type { User } from '~/types'
 
 defineOptions({
     name: 'BackendUserModify',
@@ -75,7 +74,7 @@ async function handleModify() {
         return
     }
     toggleLoading(true)
-    const { code, data, message } = await api.post<User>('backend/user/modify', form)
+    const { code, data, message } = await capi.post<User>('backend/user/modify', form)
     toggleLoading(false)
     if (code === 200) {
         showMsg({ type: 'success', content: message })

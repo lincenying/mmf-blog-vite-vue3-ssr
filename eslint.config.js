@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs'
+
 import lincy from '@lincy/eslint-config'
 
 const autoImport = JSON.parse(readFileSync(new URL('./.eslintrc-auto-import.json', import.meta.url)))

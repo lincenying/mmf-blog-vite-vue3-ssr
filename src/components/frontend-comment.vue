@@ -34,8 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import api from '@/api/index-client'
-import type { Comment, CommentStoreList } from '@/types'
+import type { Comment, CommentStoreList } from '~/types'
 
 defineOptions({
     name: 'FrontendComment',
@@ -81,7 +80,7 @@ const handlePostComment = useLockFn(async () => {
         showMsg('请输入评论内容!')
     }
     else {
-        const { code, data } = await api.post<Comment>('frontend/comment/insert', form)
+        const { code, data } = await capi.post<Comment>('frontend/comment/insert', form)
         if (code === 200) {
             form.content = ''
             showMsg({ type: 'success', content: '评论发布成功!' })

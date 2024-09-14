@@ -19,9 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Article } from '@/types'
-
-import api from '@/api/index-client'
+import type { Article } from '~/types'
 
 defineOptions({
     name: 'ItemActions',
@@ -50,7 +48,7 @@ const handleLike = useLockFn(async () => {
     if (item.like_status) {
         url = 'frontend/unlike'
     }
-    const { code, message } = await api.get<'success' | 'error'>(url, { id: item._id })
+    const { code, message } = await capi.get<'success' | 'error'>(url, { id: item._id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         frontendArticleStore.modifyLikeStatus({

@@ -15,8 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import api from '@/api/index-client'
-import type { Category } from '@/types'
+import type { Category } from '~/types'
 
 defineOptions({
     name: 'BackendCategoryInsert',
@@ -58,7 +57,7 @@ async function handleInsert() {
         return
     }
     toggleLoading(true)
-    const { code, data, message } = await api.post<Category>('backend/category/insert', form)
+    const { code, data, message } = await capi.post<Category>('backend/category/insert', form)
     toggleLoading(false)
     if (code === 200) {
         showMsg({ type: 'success', content: message })

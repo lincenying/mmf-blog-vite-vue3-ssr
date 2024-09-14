@@ -1,7 +1,6 @@
-import { acceptHMRUpdate, defineStore } from 'pinia'
+import type { ApiConfig, Category, CategoryStore } from '~/types'
 
-import type { ApiConfig, Category, CategoryStore } from '@/types'
-import api from '@/api/index-client'
+import { acceptHMRUpdate, defineStore } from 'pinia'
 
 const usePiniaStore = defineStore('globalCategoryStore', () => {
     const state: CategoryStore = reactive({
@@ -16,7 +15,7 @@ const usePiniaStore = defineStore('globalCategoryStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getCategoryList = async (config: ApiConfig, $api: ApiType = api) => {
+    const getCategoryList = async (config: ApiConfig, $api: ApiType = capi) => {
         if (state.lists.length) {
             return
         }
@@ -30,7 +29,7 @@ const usePiniaStore = defineStore('globalCategoryStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getCategoryItem = async (config: ApiConfig, $api: ApiType = api) => {
+    const getCategoryItem = async (config: ApiConfig, $api: ApiType = capi) => {
         const { code, data } = await $api.get<Nullable<Category>>('backend/category/item', { ...config, path: undefined })
         if (code === 200 && data) {
             state.item = {

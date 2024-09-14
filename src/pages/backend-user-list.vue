@@ -27,7 +27,6 @@
 
 <script setup lang="ts">
 import { UTC2Date } from '@lincy/utils'
-import api from '@/api/index-client'
 
 defineOptions({
     name: 'BackendUserList',
@@ -60,14 +59,14 @@ async function loadMore(page = lists.page) {
     toggleLoading(false)
 }
 async function handleRecover(id: string) {
-    const { code, message } = await api.get<'success' | 'error'>('backend/user/recover', { id })
+    const { code, message } = await capi.get<'success' | 'error'>('backend/user/recover', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         backendUserStore.recoverUser(id)
     }
 }
 async function handleDelete(id: string) {
-    const { code, message } = await api.get<'success' | 'error'>('backend/user/delete', { id })
+    const { code, message } = await capi.get<'success' | 'error'>('backend/user/delete', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         backendUserStore.deleteUser(id)

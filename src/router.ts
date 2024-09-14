@@ -3,11 +3,12 @@
  * @author lincenying(lincenying@qq.com)
  */
 
-import cookies from 'js-cookie'
-import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
-import { createRouter as _createRouter, createMemoryHistory, createWebHistory } from 'vue-router'
 import type { Pinia } from 'pinia'
+import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
+
 import { isBrowser } from '@lincy/utils'
+import cookies from 'js-cookie'
+import { createRouter as _createRouter, createMemoryHistory, createWebHistory } from 'vue-router'
 
 // 定义切割点，异步加载路由组件
 const NotFound = () => import('./pages/404.vue')

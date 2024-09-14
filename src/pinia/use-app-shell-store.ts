@@ -1,5 +1,6 @@
+import type { ShellStore } from '~/types'
+
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import type { ShellStore } from '@/types'
 
 interface HistoryType {
     path: string

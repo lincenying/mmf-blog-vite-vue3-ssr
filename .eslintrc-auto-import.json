@@ -18,6 +18,7 @@
     "backendAdminStoreWithout": true,
     "backendArticleStoreWithout": true,
     "backendUserStoreWithout": true,
+    "capi": true,
     "computed": true,
     "computedAsync": true,
     "computedEager": true,
@@ -83,6 +84,7 @@
     "onStartTyping": true,
     "onUnmounted": true,
     "onUpdated": true,
+    "onWatcherCleanup": true,
     "pausableWatch": true,
     "piniaInit": true,
     "provide": true,
@@ -207,6 +209,7 @@
     "useGlobalStore": true,
     "useHead": true,
     "useHeadSafe": true,
+    "useId": true,
     "useIdle": true,
     "useImage": true,
     "useInfiniteScroll": true,
@@ -224,6 +227,7 @@
     "useMediaQuery": true,
     "useMemoize": true,
     "useMemory": true,
+    "useModel": true,
     "useMounted": true,
     "useMouse": true,
     "useMouseInElement": true,
@@ -276,6 +280,7 @@
     "useStyleTag": true,
     "useSupported": true,
     "useSwipe": true,
+    "useTemplateRef": true,
     "useTemplateRefsList": true,
     "useTextDirection": true,
     "useTextSelection": true,
@@ -322,6 +327,8 @@
     "watchThrottled": true,
     "watchTriggerable": true,
     "watchWithFilter": true,
-    "whenever": true
+    "whenever": true,
+    "sapi": true,
+    "uploadApi": true
   }
 }

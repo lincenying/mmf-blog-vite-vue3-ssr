@@ -1,12 +1,13 @@
+import type { BuildOptions, ServerOptions } from 'vite'
+
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import type { UserConfigExport } from 'vite'
 import apiDomain from './src/api/url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-const config: UserConfigExport = {
+const config: { server: ServerOptions; build: BuildOptions } = {
     server: {
         port: 7777,
         host: '0.0.0.0',

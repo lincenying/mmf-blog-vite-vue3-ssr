@@ -20,8 +20,6 @@
 <script setup lang="ts">
 import cookies from 'js-cookie'
 
-import api from '@/api/index-client'
-
 defineOptions({
     name: 'BackendLogin',
 })
@@ -40,7 +38,7 @@ const handleLogin = useLockFn(async () => {
     }
 
     const loader = ctx.$loading.show()
-    const { code, data } = await api.post<Nullable<string>>('backend/admin/login', form)
+    const { code, data } = await capi.post<Nullable<string>>('backend/admin/login', form)
     loader.hide()
     if (code === 200 && data) {
         router.push('/backend/article/list')

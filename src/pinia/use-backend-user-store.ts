@@ -1,8 +1,6 @@
+import type { ApiConfig, User, UserStore } from '~/types'
+
 import { acceptHMRUpdate, defineStore } from 'pinia'
-
-import type { ApiConfig, User, UserStore } from '@/types'
-
-import api from '@/api/index-client'
 
 const usePiniaStore = defineStore('backendUserStore', () => {
     const state: UserStore = reactive({
@@ -23,7 +21,7 @@ const usePiniaStore = defineStore('backendUserStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getUserList = async (config: ApiConfig, $api: ApiType = api) => {
+    const getUserList = async (config: ApiConfig, $api: ApiType = capi) => {
         if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1) {
             return
         }
@@ -55,7 +53,7 @@ const usePiniaStore = defineStore('backendUserStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getUserItem = async (config: ApiConfig, $api: ApiType = api) => {
+    const getUserItem = async (config: ApiConfig, $api: ApiType = capi) => {
         const { code, data } = await $api.get<User>('backend/user/item', { ...config, path: undefined })
         if (code === 200 && data) {
             state.item = {

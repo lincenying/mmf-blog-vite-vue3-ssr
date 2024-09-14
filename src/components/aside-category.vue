@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Category } from '@/types'
+import type { Category } from '~/types'
 
 defineOptions({
     name: 'AsideCategory',

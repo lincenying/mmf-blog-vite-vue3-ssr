@@ -1,34 +1,18 @@
+import type { UserConfigExport } from 'vite'
+
 import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 
-import type { UserConfigExport } from 'vite'
-import { defineConfig, loadEnv } from 'vite'
-
-import vuePlugin from '@vitejs/plugin-vue'
-import vueJsx from '@vitejs/plugin-vue-jsx'
-
-import VueMacros from 'unplugin-vue-macros'
-
 import { viteMockServe } from '@lincy/vite-plugin-mock'
 import UnoCSS from 'unocss/vite'
+import { defineConfig, loadEnv } from 'vite'
 
-import Components from './vite.config.components'
-import PWA from './vite.config.pwa'
 import Build from './vite.config.build'
-
-function charsetRemoval() {
-    return {
-        postcssPlugin: 'internal:charset-removal',
-        AtRule: {
-            charset: (atRule: any) => {
-                if (atRule.name === 'charset') {
-                    atRule.remove()
-                }
-            },
-        },
-    }
-}
+import Components from './vite.config.components'
+import Css from './vite.config.css'
+import Macros from './vite.config.macros'
+import PWA from './vite.config.pwa'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, command }) => {
@@ -40,39 +24,23 @@ export default defineConfig(({ mode, command }) => {
 
     const config: UserConfigExport = {
         base: '/',
+        server: Build.server,
+        build: Build.build,
+        css: Css,
         plugins: [
-            VueMacros.vite({
-                plugins: {
-                    vue: vuePlugin({
-                        template: {
-                            compilerOptions: {
-                                isCustomElement: tag => ['def'].includes(tag),
-                            },
-                        },
-                    }),
-                    vueJsx: vueJsx(),
-                },
-            }),
+            ...Macros(),
+            ...Components(),
             viteMockServe({
                 mockPath: 'mock',
                 enable: command === 'serve' && localMock,
                 logger: true,
             }),
-            ...Components(),
             UnoCSS({}),
             ...PWA(),
         ],
         resolve: {
             alias: {
                 '@': path.join(__dirname, './src'),
-            },
-        },
-        ...Build,
-        css: {
-            postcss: {
-                plugins: [
-                    charsetRemoval(),
-                ],
             },
         },
     }

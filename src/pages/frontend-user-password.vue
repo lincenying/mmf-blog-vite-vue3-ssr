@@ -34,8 +34,6 @@
 </template>
 
 <script setup lang="ts">
-import api from '@/api/index-client'
-
 defineOptions({
     name: 'FrontendUserPassword',
 })
@@ -54,7 +52,7 @@ const handleSubmit = useLockFn(async () => {
         return showMsg('两次密码输入不一致!')
     }
 
-    const { code, message } = await api.post<'success' | 'error'>('frontend/user/password', form)
+    const { code, message } = await capi.post<'success' | 'error'>('frontend/user/password', form)
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         form.old_password = ''

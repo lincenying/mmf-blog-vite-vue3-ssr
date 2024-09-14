@@ -13,14 +13,12 @@
 </template>
 
 <script setup lang="ts">
-import api from '@/api/index-client'
-
 defineOptions({
     name: 'AsideAccount',
 })
 
 async function handleLogout() {
-    await api.post<string>('frontend/user/logout', {})
+    await capi.post<string>('frontend/user/logout', {})
     window.location.href = '/'
 }
 </script>

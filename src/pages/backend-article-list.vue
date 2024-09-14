@@ -29,9 +29,9 @@
 </template>
 
 <script setup lang="ts">
+import type { Article } from '~/types'
+
 import { getDateDiff } from '@lincy/utils'
-import type { Article } from '@/types'
-import api from '@/api/index-client'
 
 defineOptions({
     name: 'BackendArticleList',
@@ -64,14 +64,14 @@ async function loadMore(page = lists.page) {
     toggleLoading(false)
 }
 async function handleRecover(id: string) {
-    const { code, message } = await api.get<Nullable<Article>>('backend/article/recover', { id })
+    const { code, message } = await capi.get<Nullable<Article>>('backend/article/recover', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         backendArticleStore.recoverArticle(id)
     }
 }
 async function handleDelete(id: string) {
-    const { code, message } = await api.get<Nullable<Article>>('backend/article/delete', { id })
+    const { code, message } = await capi.get<Nullable<Article>>('backend/article/delete', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: message })
         backendArticleStore.deleteArticle(id)

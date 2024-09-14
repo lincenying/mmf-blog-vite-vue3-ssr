@@ -1,11 +1,13 @@
-import { basename } from 'node:path'
-import { renderToString } from '@vue/server-renderer'
-import { renderSSRHead } from '@unhead/ssr'
-
 import type { Request } from 'express'
-import { createApp } from './main'
-import { api } from './api/index-server'
+
 import type { CusRouteComponent, RenderType } from './types'
+
+import { basename } from 'node:path'
+
+import { renderSSRHead } from '@unhead/ssr'
+import { renderToString } from '@vue/server-renderer'
+
+import { createApp } from './main'
 
 function renderPreloadLink(file: string): string {
     if (file.endsWith('.js')) {
@@ -88,7 +90,7 @@ export async function render(url: string, manifest: Objable<string[]>, req: Requ
                         store,
                         route: router.currentRoute.value,
                         req,
-                        api: api(req && req.cookies),
+                        api: sapi(req && req.cookies),
                     })
                 }
                 return null
