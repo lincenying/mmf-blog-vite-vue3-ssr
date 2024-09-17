@@ -45,7 +45,18 @@
     "json",
     "jsonc",
     "yaml",
-    "yml"
+    "toml",
+    "xml",
+    "svg",
+    "gql",
+    "graphql",
+    "astro",
+    "svelte",
+    "css",
+    "less",
+    "scss",
+    "pcss",
+    "postcss"
   ],
   "stylelint.validate": [
     "css",
