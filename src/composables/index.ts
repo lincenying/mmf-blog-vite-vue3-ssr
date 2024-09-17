@@ -87,7 +87,7 @@ export function useSaveScroll() {
         }, 300)
     })
 
-    onBeforeRouteLeave((to, from, next) => {
+    onBeforeRouteLeave((_to, from, next) => {
         appShellStore.saveScrollTop({
             path: from.fullPath,
             scrollTop: Math.max(window.scrollY, document.documentElement.scrollTop, document.body.scrollTop),

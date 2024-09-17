@@ -131,7 +131,7 @@ async function handleModify() {
     }
 }
 
-async function handleUploadImage(event: EventTarget, insertImage: AnyFn, files: FileList) {
+async function handleUploadImage(_event: EventTarget, insertImage: AnyFn, files: FileList) {
     const loader = ctx.$loading.show()
 
     const formData = new FormData()
