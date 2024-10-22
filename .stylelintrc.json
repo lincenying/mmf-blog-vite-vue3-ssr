@@ -1,6 +1,0 @@
-{
-  "extends": ["@lincy/stylelint-config"],
-  "rules": {
-
-  }
-}

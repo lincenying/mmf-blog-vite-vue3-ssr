@@ -1,18 +1,18 @@
 // server.prod.ts
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-import express from "express";
-import logger from "morgan";
-import cookieParser from "cookie-parser";
-import requestIp from "request-ip";
-import compression from "compression";
-import serveStatic from "serve-static";
-import { createProxyMiddleware } from "http-proxy-middleware";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { UTC2Date } from "@lincy/utils";
+import compression from "compression";
+import cookieParser from "cookie-parser";
+import express from "express";
+import { createProxyMiddleware } from "http-proxy-middleware";
+import logger from "morgan";
+import requestIp from "request-ip";
+import serveStatic from "serve-static";
 
 // src/api/url.js
-import process from "process";
+import process from "node:process";
 var url = process.env.API_URL || "http://127.0.0.1:4000";
 var url_default = url;
 

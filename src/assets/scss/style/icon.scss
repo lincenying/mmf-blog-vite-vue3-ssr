@@ -1,3 +1,4 @@
+/* stylelint-disable media-feature-name-no-vendor-prefix */
 // 全部icon样式
 
 .icon {
@@ -144,7 +145,6 @@
     background-image: url('@/assets/images/@1x/entry-people.png');
 }
 
-/* stylelint-disable-next-line media-feature-name-no-vendor-prefix */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5) {
     .icon-nav-logo {
         background-image: url('@/assets/images/@2x/nav-logo.png');

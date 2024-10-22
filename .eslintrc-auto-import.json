@@ -329,6 +329,9 @@
     "watchWithFilter": true,
     "whenever": true,
     "sapi": true,
-    "uploadApi": true
+    "uploadApi": true,
+    "DirectiveBinding": true,
+    "MaybeRef": true,
+    "MaybeRefOrGetter": true
   }
 }
