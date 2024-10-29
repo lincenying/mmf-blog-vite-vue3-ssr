@@ -673,7 +673,6 @@
         padding: 20px;
     }
 }
-
 @media (max-width: 419px) {
     .v-md-editor .vuepress-markdown-body:not(.custom) {
         padding: 15px;
