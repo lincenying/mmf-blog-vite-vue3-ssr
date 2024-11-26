@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 
 import lincy from '@lincy/eslint-config'
 
-const autoImport = JSON.parse(readFileSync(new URL('./.eslintrc-auto-import.json', import.meta.url)))
+const autoImport = JSON.parse(readFileSync(new URL('./.eslintrc-auto-import.json', import.meta.url)).toString())
 
 const config = lincy(
     {
@@ -12,8 +12,8 @@ const config = lincy(
             graphql: true,
             html: true,
             markdown: true,
-            toml: true,
         },
+        toml: true,
         overrides: {
             ignores: [
                 '**/assets',

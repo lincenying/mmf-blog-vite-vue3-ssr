@@ -110,7 +110,7 @@ const usePiniaStore = defineStore('frontendArticleStore', () => {
      * 该函数会更新状态对象中与文章相关的信息，包括文章的喜欢数和喜欢状态。
      */
 
-    const modifyLikeStatus = (payload: { id: string; status: boolean }) => {
+    const modifyLikeStatus = (payload: { id: string, status: boolean }) => {
         const { id, status } = payload
 
         // 更新状态对象中特定文章的喜欢数和喜欢状态

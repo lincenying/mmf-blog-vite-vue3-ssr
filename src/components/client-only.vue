@@ -16,7 +16,7 @@ export default defineComponent({
         onMounted(() => {
             mounted.value = true
         })
-        return (props: { fallback: string; placeholder: string; fallbackTag: string; placeholderTag: string }) => {
+        return (props: { fallback: string, placeholder: string, fallbackTag: string, placeholderTag: string }) => {
             if (mounted.value) {
                 return slots.default?.()
             }
