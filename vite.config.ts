@@ -28,19 +28,20 @@ export default defineConfig(({ mode, command }) => {
         build: Build.build,
         css: Css,
         plugins: [
-            ...Macros(),
-            ...Components(),
+            UnoCSS({}),
             viteMockServe({
                 mockPath: 'mock',
                 enable: command === 'serve' && localMock,
                 logger: true,
             }),
-            UnoCSS({}),
+            ...Macros(),
+            ...Components(),
             ...PWA(),
         ],
         resolve: {
             alias: {
                 '@': path.join(__dirname, './src'),
+                '~': path.join(__dirname, './src'),
             },
         },
     }
