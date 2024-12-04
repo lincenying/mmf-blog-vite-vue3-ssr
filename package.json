@@ -68,6 +68,7 @@
     "@types/request-ip": "^0.0.41",
     "@types/serve-static": "^1.15.7",
     "@unocss/eslint-plugin": "^0.64.1",
+    "@unocss/preset-mini": "0.64.0",
     "@vitejs/plugin-vue": "^5.2.0",
     "@vitejs/plugin-vue-jsx": "^4.1.0",
     "@vue/compiler-sfc": "^3.5.13",
