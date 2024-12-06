@@ -14,6 +14,7 @@ import serveStatic from "serve-static";
 // src/api/url.js
 import process from "node:process";
 var url = process.env.API_URL || "http://127.0.0.1:4000";
+console.log(`\u5F53\u524DAPI\u5730\u5740: ${url}`);
 var url_default = url;
 
 // server.prod.ts
