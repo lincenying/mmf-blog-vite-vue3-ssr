@@ -4,9 +4,9 @@ import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 
-import { viteMockServe } from '@lincy/vite-plugin-mock'
 import UnoCSS from 'unocss/vite'
 import { defineConfig, loadEnv } from 'vite'
+import { viteMockServe } from 'vite-plugin-mock'
 
 import Build from './vite.config.build'
 import Components from './vite.config.components'

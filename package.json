@@ -55,7 +55,6 @@
     "@lincy/eslint-config": "^5.3.1",
     "@lincy/stylelint-config": "^2.0.1",
     "@lincy/unocss-base-config": "^2.0.0",
-    "@lincy/vite-plugin-mock": "^3.0.0",
     "@types/compression": "^1.7.5",
     "@types/cookie-parser": "^1.4.8",
     "@types/express": "^5.0.0",
