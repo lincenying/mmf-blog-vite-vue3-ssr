@@ -16,7 +16,16 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
     response => response,
-    error => Promise.resolve(error.response),
+    (error) => {
+        const response = {} as AxiosResponse
+        response.config = error.config
+        response.data = null
+        response.headers = error.config.headers
+        response.status = error.code
+        response.statusText = error.message
+        response.request = error.request
+        return Promise.resolve(response)
+    },
 )
 
 /**
@@ -25,37 +34,44 @@ axios.interceptors.response.use(
  * @returns 返回一个ResponseData对象，要么是原始响应数据，要么是包含错误代码、错误消息和空数据的对象。
  */
 function checkStatus(response: AxiosResponse): ResponseData<any> {
-    // 如果响应存在且状态码为200或304，认为响应成功，返回响应数据
-    if (response && (response.status === 200 || response.status === 304)) {
+    if (response.status === 200 || response.status === 304) {
         return response.data
     }
-    // 返回一个包含错误代码、错误消息（若存在）和空数据的默认错误响应对象
+    if (response.status === 401) {
+        return {
+            code: 401,
+            info: response.statusText || response.toString(),
+            data: response.statusText || response.toString(),
+            message: `您还没有登录, 或者登录超时!`,
+
+        }
+    }
     return {
         code: -404,
-        message: (response && response.statusText) || '未知错误',
-        data: '',
-
+        info: response.statusText || response.toString(),
+        data: response.statusText || response.toString(),
+        message: `接口返回数据错误, 错误代码: ${response.status || '未知'}`,
     }
 }
 
 /**
  * 检查响应码并根据不同的响应码执行相应的操作。
- * @param res - 包含响应数据和状态码的对象。
+ * @param data - 包含响应数据和状态码的对象。
  * @returns 返回原始的响应对象。
  */
-function checkCode(res: ResponseData<any>): ResponseData<any> {
+function checkCode(data: ResponseData<any>): ResponseData<any> {
     // 根据不同的响应码重定向到不同的页面或显示消息
-    if (res.code === -500) {
+    if (data.code === -500) {
         window.location.href = '/backend'
     }
-    else if (res.code === -400) {
+    else if (data.code === -400) {
         window.location.href = '/'
     }
-    else if (res.code !== 200) {
-        showMsg(res.message)
+    else if (data.code !== 200) {
+        showMsg(data.message)
     }
 
-    return res
+    return data
 }
 
 /**
