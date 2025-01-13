@@ -332,6 +332,9 @@
     "uploadApi": true,
     "DirectiveBinding": true,
     "MaybeRef": true,
-    "MaybeRefOrGetter": true
+    "MaybeRefOrGetter": true,
+    "onElementRemoval": true,
+    "usePreferredReducedTransparency": true,
+    "useSSRWidth": true
   }
 }

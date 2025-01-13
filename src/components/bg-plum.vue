@@ -35,11 +35,11 @@ function initCanvas(canvas: HTMLCanvasElement, width = 400, height = 400, _dpi?:
     const dpr = window.devicePixelRatio || 1
     const bsr
         = ctx.webkitBackingStorePixelRatio
-        || ctx.mozBackingStorePixelRatio
-        || ctx.msBackingStorePixelRatio
-        || ctx.oBackingStorePixelRatio
-        || ctx.backingStorePixelRatio
-        || 1
+            || ctx.mozBackingStorePixelRatio
+            || ctx.msBackingStorePixelRatio
+            || ctx.oBackingStorePixelRatio
+            || ctx.backingStorePixelRatio
+            || 1
     const dpi = _dpi || dpr / bsr
     canvas.style.width = `${width}px`
     canvas.style.height = `${height}px`
