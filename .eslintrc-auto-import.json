@@ -335,6 +335,8 @@
     "MaybeRefOrGetter": true,
     "onElementRemoval": true,
     "usePreferredReducedTransparency": true,
-    "useSSRWidth": true
+    "useSSRWidth": true,
+    "createRef": true,
+    "useCountdown": true
   }
 }

@@ -68,9 +68,9 @@ pnpm lint
 
 ```bash
 # 构建镜像
-docker build -t images-mmf-blog-vite-vue3-ssr -f ./Dockerfile .
+docker build -t lincenying/images-mmf-blog-vite-vue3-ssr:1.25.0312 -f ./Dockerfile .
 # 运行镜像
-docker run -d -p 7777:7777 --add-host=host.docker.internal:host-gateway --name container-mmf-blog-vite-vue3-ssr images-mmf-blog-vite-vue3-ssr
+docker run -d -p 7777:7777 --add-host=host.docker.internal:host-gateway --name container-mmf-blog-vite-vue3-ssr lincenying/images-mmf-blog-vite-vue3-ssr:1.25.0312
 # 进入镜像
 docker exec -it container-mmf-blog-vite-vue3-ssr /bin/bash
 # 停止容器
@@ -89,7 +89,7 @@ docker rmi images-mmf-blog-vite-vue3-ssr
 ```yaml
 api:
   container_name: api-server
-  image: lincenying/api-server:1.0.1
+  image: lincenying/api-server:1.25.0312
 ```
 
 修改`docker-compose.yml`中的`mongo.volumes`配置, 将宿主机数据库路径映射到容器中

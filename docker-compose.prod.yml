@@ -12,7 +12,7 @@ services:
 
   api:
     container_name: api-server
-    image: lincenying/api-server:1.0.1
+    image: lincenying/api-server:${APITAG}
     environment:
       DATABASE_URL: mongodb://mongo:27017
     ports:
@@ -24,7 +24,7 @@ services:
 
   app:
     container_name: images-mmf-blog-vite-vue3-ssr
-    image: lincenying/images-mmf-blog-vite-vue3-ssr:1.0.1
+    image: lincenying/images-mmf-blog-vite-vue3-ssr:${TAG}
     environment:
       API_URL: http://api:4000
     env_file:

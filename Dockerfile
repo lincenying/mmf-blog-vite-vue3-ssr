@@ -51,9 +51,9 @@ EXPOSE 7777
 CMD ["node", "./dist/server.js"]
 
 # 构建镜像
-# docker build -t images-mmf-blog-vite-vue3-ssr -f ./Dockerfile .
+# docker build -t lincenying/images-mmf-blog-vite-vue3-ssr:1.25.0312 -f ./Dockerfile .
 # 运行容器
-# docker run -d -p 7777:7777 --name container-mmf-blog-vite-vue3-ssr images-mmf-blog-vite-vue3-ssr
+# docker run -d -p 7777:7777 --name container-mmf-blog-vite-vue3-ssr lincenying/images-mmf-blog-vite-vue3-ssr:1.25.0312
 # 进入容器
 # docker exec -it container-mmf-blog-vite-vue3-ssr /bin/sh
 # 停止容器
