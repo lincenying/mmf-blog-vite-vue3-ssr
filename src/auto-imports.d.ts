@@ -379,7 +379,6 @@ declare module 'vue' {
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
     readonly frontendArticleStoreWithout: UnwrapRef<typeof import('./pinia/use-frontend-article-store')['frontendArticleStoreWithout']>
-    readonly getActiveHead: UnwrapRef<typeof import('@unhead/vue')['getActiveHead']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly globalCategoryStoreWithout: UnwrapRef<typeof import('./pinia/use-global-category-store')['globalCategoryStoreWithout']>

@@ -1,4 +1,3 @@
-import { createHead } from '@unhead/vue'
 import { createPinia } from 'pinia'
 import { createSSRApp } from 'vue'
 import globalPlugin from '@/plugin/global'
@@ -14,8 +13,7 @@ export function createApp() {
     const app = createSSRApp(App)
     const store = createPinia()
     const router = createRouter(store)
-    const head = createHead()
-    app.use(store).use(router).use(head).use(globalPlugin)
+    app.use(store).use(router).use(globalPlugin)
 
-    return { app, router, store, head }
+    return { app, router, store }
 }

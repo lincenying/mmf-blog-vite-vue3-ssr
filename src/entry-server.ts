@@ -4,7 +4,7 @@ import type { CusRouteComponent, RenderType } from './types'
 
 import { basename } from 'node:path'
 
-import { renderSSRHead } from '@unhead/ssr'
+import { createHead, renderSSRHead } from '@unhead/vue/server'
 import { renderToString } from '@vue/server-renderer'
 
 import { createApp } from './main'
@@ -65,8 +65,12 @@ function replaceHtmlTag(html: string): string {
 }
 
 export async function render(url: string, manifest: Objable<string[]>, req: Request): Promise<RenderType> {
-    const { app, router, store, head } = createApp()
+    const { app, router, store } = createApp()
+    const head = createHead({
+        disableDefaults: true,
+    })
 
+    app.use(head)
     app.component('ReloadPrompt', { render: () => null }).component('VMdEditor', { render: () => null })
 
     // 在渲染之前将路由器设置为所需的 URL
