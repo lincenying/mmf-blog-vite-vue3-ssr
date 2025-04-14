@@ -1,5 +1,5 @@
 # 使用较小的基础镜像
-ARG NODE_VERSION=node:18-alpine
+ARG NODE_VERSION=node:22-alpine
 
 # 生产环境镜像
 FROM $NODE_VERSION AS dependency-base
@@ -51,9 +51,9 @@ EXPOSE 7777
 CMD ["node", "./dist/server.js"]
 
 # 构建镜像
-# docker build -t lincenying/images-mmf-blog-vite-vue3-ssr:1.25.0312 -f ./Dockerfile .
+# docker build -t lincenying/images-mmf-blog-vite-vue3-ssr:1.25.0414 -f ./Dockerfile .
 # 运行容器
-# docker run -d -p 7777:7777 --name container-mmf-blog-vite-vue3-ssr lincenying/images-mmf-blog-vite-vue3-ssr:1.25.0312
+# docker run -d -p 7777:7777 --name container-mmf-blog-vite-vue3-ssr lincenying/images-mmf-blog-vite-vue3-ssr:1.25.0414
 # 进入容器
 # docker exec -it container-mmf-blog-vite-vue3-ssr /bin/sh
 # 停止容器
