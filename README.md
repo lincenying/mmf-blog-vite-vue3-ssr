@@ -67,6 +67,9 @@ pnpm lint
 ### 2. 构建 web 容器
 
 ```bash
+# 第一次执行时, 如果node镜像拉不下来, 可以执行以下命令:
+docker pull swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22
+docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22 node:22-alpine
 # 构建镜像
 docker build -t lincenying/images-mmf-blog-vite-vue3-ssr:1.25.0414 -f ./Dockerfile .
 # 运行镜像

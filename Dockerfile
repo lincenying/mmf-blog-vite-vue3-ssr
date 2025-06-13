@@ -15,7 +15,7 @@ WORKDIR /app
 COPY . .
 
 # 使用pnpm安装依赖
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
 # 编译项目
 RUN pnpm build
@@ -50,6 +50,9 @@ EXPOSE 7777
 # 启动项目
 CMD ["node", "./dist/server.js"]
 
+# 第一次执行时, 如果node镜像拉不下来, 可以执行以下命令:
+# docker pull swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22
+# docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22 node:22-alpine
 # 构建镜像
 # docker build -t lincenying/images-mmf-blog-vite-vue3-ssr:1.25.0414 -f ./Dockerfile .
 # 运行容器
