@@ -88,10 +88,9 @@ declare interface ApiClient {
  * Api Node端封装类型
  */
 declare interface ApiServer {
+    api: import('axios').AxiosInstance
     get: <T = void>(url: string, params: Objable, headers?: Objable) => Promise<ResponseData<T>>
     post: <T = void>(url: string, data: Objable, headers?: Objable) => Promise<ResponseData<T>>
-    cookies: import('./types').UserCookies
-    api: import('axios').AxiosInstance
     getCookies: () => import('./types').UserCookies
 }
 

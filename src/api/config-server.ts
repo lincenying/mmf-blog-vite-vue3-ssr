@@ -7,7 +7,7 @@ const cached = true
 
 const cache: Nullable<LRUCache<string, Objable>> = (cached && new LRUCache({
     max: 1000,
-    ttl: 1000 * 60 * 5,
+    ttl: 1000 * 10,
 })) || null
 
 const config = {

@@ -84,42 +84,47 @@ function checkCode(data: ResponseData<any>): ResponseData<any> {
  * file(url: '/api/url', data: {}, headers: {})
  * ```
  */
-function api(): ApiClient {
+function createInstance(): ApiClient {
+    const api = axios.create({
+        baseURL: config.api,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+        timeout: config.timeout,
+    })
     return {
-        async file(url, data) {
-            const response = await axios({
+        async get(url, params, headers = {}) {
+            const response = await api({
+                method: 'get',
+                url,
+                params,
+                headers: {
+                    ...headers,
+                },
+            })
+            const res = checkStatus(response)
+            return checkCode(res)
+        },
+        async post(url, data, headers = {}) {
+            const response = await api({
+                method: 'post',
+                url,
+                data: qs.stringify(data),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                    ...headers,
+                },
+            })
+            const res = checkStatus(response)
+            return checkCode(res)
+        },
+        async file(url, data, headers = {}) {
+            const response = await api({
                 method: 'post',
                 url,
                 data,
                 headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                },
-            })
-            const res = checkStatus(response)
-            return checkCode(res)
-        },
-        async post(url, data) {
-            const response = await axios({
-                method: 'post',
-                url: config.api + url,
-                data: qs.stringify(data),
-                timeout: config.timeout,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                },
-            })
-            const res = checkStatus(response)
-            return checkCode(res)
-        },
-        async get(url, params) {
-            const response = await axios({
-                method: 'get',
-                url: config.api + url,
-                params,
-                timeout: config.timeout,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
+                    ...headers,
                 },
             })
             const res = checkStatus(response)
@@ -128,4 +133,4 @@ function api(): ApiClient {
     }
 }
 
-export default api()
+export default createInstance()

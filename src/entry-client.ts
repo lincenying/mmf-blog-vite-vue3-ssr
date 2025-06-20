@@ -35,7 +35,7 @@ router.isReady().then(() => {
             activated.map((c) => {
                 const routeComponent = c.components?.default as CusRouteComponent
                 if (routeComponent.asyncData) {
-                    return routeComponent.asyncData({ store, route: to })
+                    return routeComponent.asyncData({ store, route: to, api: capi })
                 }
 
                 return true

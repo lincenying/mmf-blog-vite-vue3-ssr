@@ -18,25 +18,47 @@ function objToStr(cookies: Record<string, string | number | boolean>) {
 }
 
 export function api(cookies: UserCookies): ApiServer {
+    cookies = cookies || {}
+    const api = axios.create({
+        baseURL: config.api,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'cookie': objToStr(cookies),
+        },
+        timeout: config.timeout,
+    })
     return {
-        cookies,
-        api: axios.create({
-            baseURL: config.api,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'cookie': objToStr(cookies),
-            },
-            timeout: config.timeout,
-        }),
+        api,
         getCookies() {
-            return this.cookies
+            return cookies
+        },
+        async get(url, params, headers = {}) {
+            const username = cookies.username || ''
+            const key = md5(url + JSON.stringify(params) + username)
+            if (config.cached && params.cache && config.cached.has(key)) {
+                const res = config.cached.get(key)
+                console.log(`${key}: 命中缓存`)
+                return Promise.resolve(res && res.data)
+            }
+            const res = await this.api({
+                method: 'get',
+                url,
+                params,
+                headers: {
+                    ...headers,
+                },
+            })
+            if (config.cached && params.cache) {
+                config.cached.set(key, res)
+            }
+            return res && res.data
         },
         async post(url, data, headers = {}) {
-            const cookies = this.getCookies() || {}
             const username = cookies.username || ''
             const key = md5(url + JSON.stringify(data) + username)
             if (config.cached && data.cache && config.cached.has(key)) {
                 const res = config.cached.get(key)
+                console.log(`${key}: 命中缓存`)
                 return Promise.resolve(res && res.data)
             }
             const res = await this.api({
@@ -49,27 +71,6 @@ export function api(cookies: UserCookies): ApiServer {
                 },
             })
             if (config.cached && data.cache) {
-                config.cached.set(key, res)
-            }
-            return res && res.data
-        },
-        async get(url, params, headers = {}) {
-            const cookies = this.getCookies() || {}
-            const username = cookies.username || ''
-            const key = md5(url + JSON.stringify(params) + username)
-            if (config.cached && params.cache && config.cached.has(key)) {
-                const res = config.cached.get(key)
-                return Promise.resolve(res && res.data)
-            }
-            const res = await this.api({
-                method: 'get',
-                url,
-                params,
-                headers: {
-                    ...headers,
-                },
-            })
-            if (config.cached && params.cache) {
                 config.cached.set(key, res)
             }
             return res && res.data
