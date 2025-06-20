@@ -1,7 +1,7 @@
 // server.prod.ts
-import fs from "node:fs";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 import { UTC2Date } from "@lincy/utils";
 import compression from "compression";
 import cookieParser from "cookie-parser";
@@ -12,7 +12,7 @@ import requestIp from "request-ip";
 import serveStatic from "serve-static";
 
 // src/api/url.js
-import process from "node:process";
+import process from "process";
 var url = process.env.API_URL || "http://127.0.0.1:4000";
 console.log(`\u5F53\u524DAPI\u5730\u5740: ${url}`);
 var url_default = url;
@@ -64,7 +64,7 @@ async function createServer() {
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   app.use(cookieParser());
-  app.use("*", async (req, res) => {
+  app.use("/{*default}", async (req, res) => {
     try {
       const url2 = req.originalUrl;
       const render = (await import("./server/entry-server.js")).render;
