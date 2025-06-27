@@ -12,8 +12,8 @@ importers:
         specifier: ^2.3.18
         version: 2.3.18(@vue/compiler-sfc@3.5.17)(vue@3.5.17(typescript@5.8.3))
       '@lincy/utils':
-        specifier: ^0.6.2
-        version: 0.6.2
+        specifier: ^0.6.3
+        version: 0.6.3
       '@unhead/ssr':
         specifier: ^2.0.11
         version: 2.0.11(unhead@2.0.11)
@@ -1168,8 +1168,8 @@ packages:
   '@lincy/unocss-base-config@2.3.0':
     resolution: {integrity: sha512-Ntv2S4qdjzW7CR04fPBvxueqnf13Dx3DCA2Nj9xqVdhP5gRCDSgHh6OlWopw2+dcwHv7wgNGKTOLsmrk6skReQ==}
 
-  '@lincy/utils@0.6.2':
-    resolution: {integrity: sha512-ZxrBdt6e92nj06zQm8737ywHF/EGdfCNFulHQ/PhcsfBszK5QxwgUK6lxP+DCChHt/42RzLnAjvbPmxl7fCHfQ==}
+  '@lincy/utils@0.6.3':
+    resolution: {integrity: sha512-vL+Bn8ezIEj6IZU2lMheaDfidGXd6P+GFxmxIGpiPBbkZfCGPkAiW033hk8wkofyzujc53USJ/wzeWTwWaXqag==}
 
   '@mrmlnc/readdir-enhanced@2.2.1':
     resolution: {integrity: sha512-bPHp6Ji8b41szTOcaP63VlnbbO5Ny6dwAATtY6JTjh5N2OLrb5Qk/Th5cRkRQhkWCt+EJsYrNB0MiL+Gpn6e3g==}
@@ -7410,7 +7410,7 @@ snapshots:
       - vite
       - vue
 
-  '@lincy/utils@0.6.2': {}
+  '@lincy/utils@0.6.3': {}
 
   '@mrmlnc/readdir-enhanced@2.2.1':
     dependencies:
@@ -7589,7 +7589,7 @@ snapshots:
 
   '@rollup/pluginutils@5.1.4(rollup@2.79.2)':
     dependencies:
-      '@types/estree': 1.0.6
+      '@types/estree': 1.0.8
       estree-walker: 2.0.2
       picomatch: 4.0.2
     optionalDependencies:

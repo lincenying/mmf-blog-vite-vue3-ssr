@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@kangc/v-md-editor": "^2.3.18",
-    "@lincy/utils": "^0.6.2",
+    "@lincy/utils": "^0.6.3",
     "@unhead/ssr": "^2.0.11",
     "@unhead/vue": "^2.0.11",
     "@vue/server-renderer": "^3.5.17",
