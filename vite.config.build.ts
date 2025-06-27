@@ -23,6 +23,9 @@ const config: { server: ServerOptions, build: BuildOptions } = {
                 },
             },
         },
+        hmr: {
+            port: 25678,
+        },
     },
     build: {
         target: 'es2018',

@@ -56,6 +56,8 @@ watch(item, (val) => {
         form.username = val.data.username
         form.email = val.data.email
     }
+}, {
+    immediate: true,
 })
 
 onMounted(async () => {

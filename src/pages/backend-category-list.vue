@@ -8,7 +8,7 @@
             </div>
             <div v-for="item in category" :key="item._id" class="list-section">
                 <div class="list-title" :class="item.is_delete ? 'text-red-500 line-through' : ''">{{ item.cate_name }}</div>
-                <div class="list-time">{{ item.cate_order }}</div>
+                <div class="list-date">{{ item.cate_order }}</div>
                 <div class="list-action">
                     <router-link :to="`/backend/category/modify/${item._id}`" class="badge badge-success">编辑</router-link>
                     <template v-if="!item.cate_num">
