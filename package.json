@@ -1,7 +1,7 @@
 {
   "name": "mmf-blog-vite-vue3-ssr",
   "type": "module",
-  "version": "2.0.2",
+  "version": "2.25.701",
   "private": true,
   "packageManager": "pnpm@10.12.4",
   "author": "lincenying <lincenying@qq.com>",
@@ -21,7 +21,8 @@
     "lint": "eslint .",
     "lint:ts": "vue-tsc --noEmit",
     "lint:fix": "eslint . --fix",
-    "lint:css": "stylelint '**/*.{css,scss}' --fix --allow-empty-input"
+    "lint:css": "stylelint '**/*.{css,scss}' --fix --allow-empty-input",
+    "release": "bumpp"
   },
   "dependencies": {
     "@kangc/v-md-editor": "^2.3.18",
@@ -69,10 +70,11 @@
     "@types/serve-static": "^1.15.8",
     "@unocss/eslint-plugin": "^66.3.2",
     "@vitejs/plugin-vue": "^6.0.0",
-    "@vitejs/plugin-vue-jsx": "^5.0.0",
+    "@vitejs/plugin-vue-jsx": "^5.0.1",
     "@vue/compiler-sfc": "^3.5.17",
+    "bumpp": "^10.2.0",
     "cross-env": "^7.0.3",
-    "eslint": "^9.29.0",
+    "eslint": "^9.30.0",
     "eslint-plugin-format": "^1.0.1",
     "lint-staged": "^16.1.2",
     "mockjs": "^1.1.0",
@@ -87,11 +89,11 @@
     "typescript": "^5.8.3",
     "unocss": "^66.3.2",
     "unplugin-auto-import": "^19.3.0",
-    "unplugin-vue-components": "^28.7.0",
+    "unplugin-vue-components": "^28.8.0",
     "unplugin-vue-macros": "^2.14.5",
     "vite": "^7.0.0",
     "vite-plugin-mock": "^3.0.2",
-    "vite-plugin-pwa": "^1.0.0",
+    "vite-plugin-pwa": "^1.0.1",
     "vue-tsc": "^2.2.10"
   },
   "pnpm": {
