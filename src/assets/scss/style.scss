@@ -55,8 +55,8 @@
     margin-top: 20px;
 
     @media (max-width: 1000px) {
-        justify-content: center;
         flex-wrap: wrap;
+        justify-content: center;
     }
 
     .main-left {
@@ -102,19 +102,19 @@
 }
 
 .base-input {
+    box-sizing: border-box;
     height: 44px;
     padding: 0 14px;
     font-size: 15px;
+    appearance: none;
     background: #f4f7f7;
     border: none;
     border-radius: 4px;
-    box-sizing: border-box;
-    appearance: none;
 
     /* transition: all 0.2s ease; */
     &:focus {
         background: #eef2f2;
-        box-shadow: 0 0 8px rgba(0, 0, 0, 0.02) inset;
+        box-shadow: 0 0 8px rgb(0, 0, 0, 0.02) inset;
     }
 }
 
@@ -130,7 +130,7 @@
     display: block;
     background: white;
     border-radius: 4px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 2px rgb(0, 0, 0, 0.05);
 
     @media (max-width: 720px) {
         border-radius: 0;
@@ -149,8 +149,8 @@
         font-size: 17px;
         font-weight: 400;
         line-height: 24px;
-        letter-spacing: 0.2em;
         text-align: center;
+        letter-spacing: 0.2em;
 
         .card-title-link {
             color: #3e4545;
@@ -316,9 +316,9 @@
     }
 
     .question-actions {
-        border-top: 1px solid #eef2f2;
         height: 48px;
         font-size: 0;
+        border-top: 1px solid #eef2f2;
     }
 }
 
@@ -536,19 +536,19 @@ a:hover .icon-arrow-right {
 
     .load-more {
         position: relative;
+        box-sizing: border-box;
         display: inline-block;
         width: 100px;
         height: 100px;
         font-size: 16px;
         font-weight: normal;
         line-height: 100px;
-        letter-spacing: 0.12em;
         color: #3aced5;
         text-align: center;
         text-indent: 0.12em;
+        letter-spacing: 0.12em;
         border: 2px solid #54d9e0;
         border-radius: 50px;
-        box-sizing: border-box;
 
         &:hover {
             opacity: 0.8;
@@ -561,16 +561,16 @@ a:hover .icon-arrow-right {
             top: -2px;
             left: 0;
             left: -2px;
-            opacity: 0;
             visibility: hidden;
+            opacity: 0;
         }
 
         &.loading {
             border-color: transparent;
 
             .icon-circle-loading {
-                opacity: 1;
                 visibility: visible;
+                opacity: 1;
                 animation: circle-loading 1.2s linear infinite;
             }
         }
@@ -681,15 +681,15 @@ a:hover .icon-arrow-right {
     }
 
     .select-item {
+        box-sizing: border-box;
         width: 100%;
         padding: 0 14px;
         line-height: 44px;
+        appearance: none;
         cursor: pointer;
         background: none;
         border: 1px solid #e2e9e9;
         border-radius: 4px;
-        box-sizing: border-box;
-        appearance: none;
     }
 
     .icon-arrow-down {
@@ -725,10 +725,10 @@ a:hover .icon-arrow-right {
             line-height: 40px;
             color: #fff;
             white-space: nowrap;
+            visibility: hidden;
             background: #444;
             border-radius: 4px;
             opacity: 0;
-            visibility: hidden;
 
             /* -webkit-transition: all .25s ease-in-out;
             transition: all .25s ease-in-out; */
@@ -742,9 +742,9 @@ a:hover .icon-arrow-right {
                 height: 0;
                 margin-top: -7px;
                 content: '';
-                border-bottom: 7px solid transparent;
-                border-right: 7px solid #ec3a4b;
                 border-top: 7px solid transparent;
+                border-right: 7px solid #ec3a4b;
+                border-bottom: 7px solid transparent;
             }
 
             &.error {
@@ -765,8 +765,8 @@ a:hover .icon-arrow-right {
             }
 
             &.active {
-                opacity: 1;
                 visibility: visible;
+                opacity: 1;
                 transform: translateX(0);
             }
         }
@@ -778,8 +778,8 @@ a:hover .icon-arrow-right {
 
     .settings-footer {
         padding: 24px;
-        border-top: 1px solid #f4f4f4;
         text-align: right;
+        border-top: 1px solid #f4f4f4;
 
         .admin-load-more {
             display: block;

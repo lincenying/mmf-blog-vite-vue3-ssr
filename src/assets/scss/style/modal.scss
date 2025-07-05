@@ -13,20 +13,20 @@
     font-size: 0.1px;
     text-align: center;
     pointer-events: none;
-    background: black;
-    background: rgba(0, 0, 0, 0.72);
-    opacity: 0;
     visibility: hidden;
+    background: black;
+    background: rgb(0, 0, 0, 0.72);
+    opacity: 0;
 
     &.active {
         overflow: auto;
         pointer-events: auto;
-        opacity: 1;
         visibility: visible;
+        opacity: 1;
 
         .modal {
-            opacity: 1;
             visibility: visible;
+            opacity: 1;
         }
     }
 
@@ -39,6 +39,7 @@
 
     .modal {
         position: relative;
+        box-sizing: border-box;
         display: inline-block;
         width: 360px;
         padding: 25px;
@@ -46,11 +47,10 @@
         font-size: 16px;
         text-align: left;
         vertical-align: middle;
+        visibility: hidden;
         background: white;
         border-radius: 12px;
         opacity: 0;
-        visibility: hidden;
-        box-sizing: border-box;
 
         .modal-prev {
             position: absolute;
@@ -97,9 +97,9 @@
         .modal-title {
             font-size: 20px;
             font-weight: normal;
-            letter-spacing: 0.2em;
             text-align: center;
             text-indent: 0.2em;
+            letter-spacing: 0.2em;
         }
 
         .sign-up-form {

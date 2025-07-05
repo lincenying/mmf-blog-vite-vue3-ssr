@@ -41,6 +41,7 @@ td {
     font-style: normal;
     font-weight: 400;
     src: url('@/assets/fonts/Play.woff2') format('woff2');
+    font-display: fallback;
     unicode-range:
         U+0000-00FF,
         U+0131,
@@ -53,13 +54,13 @@ td {
         U+20AC,
         U+2212,
         U+2215;
-    font-display: fallback;
 }
 @font-face {
     font-family: consola;
     font-style: normal;
     font-weight: 400;
     src: url('@/assets/fonts/consola.ttf') format('ttf');
+    font-display: fallback;
     unicode-range:
         U+0000-00FF,
         U+0131,
@@ -72,7 +73,6 @@ td {
         U+20AC,
         U+2212,
         U+2215;
-    font-display: fallback;
 }
 
 body,
@@ -140,7 +140,7 @@ ol {
 a {
     color: #3aced5;
     text-decoration: none;
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    -webkit-tap-highlight-color: rgb(255, 255, 255, 0);
 }
 
 a:hover {
@@ -149,9 +149,10 @@ a:hover {
 
 abbr[title],
 acronym[title] {
+    cursor: help;
+
     /* 注：1.ie6 不支持 abbr; 2.这里用了属性选择符，ie6 下无效果 */
     border-bottom: 1px dotted;
-    cursor: help;
 }
 
 q::before,
@@ -183,8 +184,8 @@ textarea {
 /* 重置表格元素 */
 
 table {
-    border-collapse: collapse;
     border-spacing: 0;
+    border-collapse: collapse;
 }
 
 /* 重置 hr */
