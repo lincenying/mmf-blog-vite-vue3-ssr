@@ -8,15 +8,13 @@
 @use 'style/frontend';
 @use 'style/markdown';
 
-#app {
-    display: block !important;
-}
-
 .frontend {
+    display: block !important;
     padding-top: 60px;
 }
 
 .backend {
+    display: block !important;
     padding-top: 0;
 }
 

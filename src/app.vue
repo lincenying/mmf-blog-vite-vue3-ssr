@@ -1,5 +1,5 @@
 <template>
-    <div :class="backend ? 'backend' : 'frontend'">
+    <div :class="backend ? 'backend' : 'frontend'" :style="ISDEV ? 'display: none;' : ''">
         <global-navigation :is-backend="backend" />
         <router-view v-slot="{ Component }" class="app-view relative">
             <transition :name="pageTransitionName" mode="out-in" @before-enter="handleBeforeEnter" @after-enter="handleAfterEnter">
@@ -27,7 +27,7 @@ defineOptions({
 
 // pinia 状态管理 ===>
 const globalStore = useGlobalStore()
-const { showLoginModal, showRegisterModal } = toRefs(globalStore)
+const { showLoginModal, showRegisterModal, ISDEV } = toRefs(globalStore)
 
 const appShellStore = useAppShellStore()
 const { pageTransitionName } = storeToRefs(appShellStore)
