@@ -8,6 +8,10 @@
 @use 'style/frontend';
 @use 'style/markdown';
 
+#app {
+    display: block !important;
+}
+
 .frontend {
     padding-top: 60px;
 }
