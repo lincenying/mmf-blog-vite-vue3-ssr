@@ -37,9 +37,6 @@ export async function createServer(root = process.cwd(), hmrPort?: number) {
         }),
     )
 
-    /**
-     * @type {import('vite').ViteDevServer}
-     */
     const vite = await viteCreateServer({
         base: '/',
         root,

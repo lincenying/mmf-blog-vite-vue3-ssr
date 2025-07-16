@@ -3,7 +3,7 @@
   "type": "module",
   "version": "2.26.0",
   "private": true,
-  "packageManager": "pnpm@10.12.4",
+  "packageManager": "pnpm@10.13.1",
   "author": "lincenying <lincenying@qq.com>",
   "engines": {
     "node": ">=16.13.0"
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@kangc/v-md-editor": "^2.3.18",
-    "@lincy/utils": "^0.6.3",
+    "@lincy/utils": "^0.6.5",
     "@unhead/ssr": "^2.0.12",
     "@unhead/vue": "^2.0.12",
     "@vue/server-renderer": "^3.5.17",
@@ -34,7 +34,7 @@
     "axios": "^1.10.0",
     "compression": "^1.8.0",
     "cookie-parser": "^1.4.7",
-    "element-plus": "^2.10.3",
+    "element-plus": "^2.10.4",
     "express": "^5.1.0",
     "http-proxy-middleware": "^3.0.5",
     "js-cookie": "^3.0.5",
@@ -54,7 +54,7 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@lincy/eslint-config": "^5.7.0",
+    "@lincy/eslint-config": "^5.7.1",
     "@lincy/stylelint-config": "^2.2.0",
     "@lincy/unocss-base-config": "^2.3.0",
     "@types/compression": "^1.8.1",
@@ -74,7 +74,7 @@
     "@vue/compiler-sfc": "^3.5.17",
     "bumpp": "^10.2.0",
     "cross-env": "^7.0.3",
-    "eslint": "^9.30.1",
+    "eslint": "^9.31.0",
     "eslint-plugin-format": "^1.0.1",
     "lint-staged": "^16.1.2",
     "mockjs": "^1.1.0",
@@ -91,7 +91,7 @@
     "unplugin-auto-import": "^19.3.0",
     "unplugin-vue-components": "^28.8.0",
     "unplugin-vue-macros": "^2.14.5",
-    "vite": "^7.0.2",
+    "vite": "^7.0.4",
     "vite-plugin-mock": "^3.0.2",
     "vite-plugin-pwa": "^1.0.1",
     "vue-tsc": "^3.0.1"

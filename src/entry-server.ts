@@ -32,7 +32,6 @@ function renderPreloadLink(file: string): string {
         return ` <link rel="preload" href="${file}" as="image" type="image/png">`
     }
 
-    // TODO
     return ''
 }
 
@@ -71,17 +70,20 @@ export async function render(url: string, manifest: Objable<string[]>, req: Requ
     })
 
     app.use(head)
-    app.component('ReloadPrompt', { render: () => null }).component('VMdEditor', { render: () => null })
+        .component('ReloadPrompt', { render: () => null })
+        .component('VMdEditor', { render: () => null })
 
     // 在渲染之前将路由器设置为所需的 URL
-    router.push(url)
+    await router.push(url)
     await router.isReady()
 
     if (router.currentRoute.value.matched.length === 0) {
         // context.throw(404, "Not Found");
     }
 
-    const matchedComponents = router.currentRoute.value.matched.flatMap(record => Object.values(record.components as Record<string, CusRouteComponent>))
+    const matchedComponents = router.currentRoute.value.matched.flatMap((record) => {
+        return Object.values(record.components as Record<string, CusRouteComponent>)
+    })
 
     const globalStore = useGlobalStore(store)
     globalStore.setCookies(req.cookies)

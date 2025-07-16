@@ -41,19 +41,18 @@ router.isReady().then(() => {
                         api: capi,
                     })
                 }
-
                 return true
             }),
         )
     })
-    app.component('ReloadPrompt', reloadPrompt)
     app.use(head)
-    app.use(LoadingPlugin, {
-        canCancel: false,
-        loader: 'dots',
-        color: '#54d9e0',
-    })
+        .use(LoadingPlugin, {
+            canCancel: false,
+            loader: 'dots',
+            color: '#54d9e0',
+        })
         .use(VueMarkdownEditor)
+        .component('ReloadPrompt', reloadPrompt)
         .mount('#app')
     console.log('client router ready')
 })

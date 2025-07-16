@@ -1,21 +1,11 @@
 import type { UserCookies } from '~/types'
 
+import { objToCookies } from '@lincy/utils'
 import axios from 'axios'
 import md5 from 'md5'
+
 import qs from 'qs'
-
 import config from './config-server'
-
-function objToStr(cookies: Record<string, string | number | boolean>) {
-    if (!cookies) {
-        return ''
-    }
-    let cookie = ''
-    Object.keys(cookies).forEach((item) => {
-        cookie += `${item}=${cookies[item]}; `
-    })
-    return cookie
-}
 
 export function api(cookies: UserCookies): ApiServer {
     cookies = cookies || {}
@@ -23,7 +13,7 @@ export function api(cookies: UserCookies): ApiServer {
         baseURL: config.api,
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
-            'cookie': objToStr(cookies),
+            'cookie': objToCookies(cookies),
         },
         timeout: config.timeout,
     })
