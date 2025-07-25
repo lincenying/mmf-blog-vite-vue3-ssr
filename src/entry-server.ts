@@ -74,7 +74,7 @@ export async function render(url: string, manifest: Objable<string[]>, req: Requ
         .component('VMdEditor', { render: () => null })
 
     // 在渲染之前将路由器设置为所需的 URL
-    if (url.includes('/backend') && !req.cookies.b_user) {
+    if (url.includes('/backend') && !url.includes('/login') && !req.cookies.b_user) {
         await router.push('/backend/login')
     }
     else if (url.includes('/user') && !req.cookies.user) {
