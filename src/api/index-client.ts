@@ -46,6 +46,15 @@ function checkStatus(response: AxiosResponse): ResponseData<any> {
 
         }
     }
+    if (response.status === 429) {
+        return {
+            code: 429,
+            info: response.statusText || response.toString(),
+            data: response.statusText || response.toString(),
+            message: `请求过于频繁!`,
+
+        }
+    }
     return {
         code: -404,
         info: response.statusText || response.toString(),

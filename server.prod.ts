@@ -13,6 +13,7 @@ import logger from 'morgan'
 import requestIp from 'request-ip'
 import serveStatic from 'serve-static'
 
+import mainLimiter from 'server.middleware'
 import apiDomain from './src/api/url'
 
 export async function createServer() {
@@ -41,6 +42,8 @@ export async function createServer() {
             },
         }),
     )
+
+    app.use(mainLimiter)
 
     // Node.js 压缩中间件
     app.use(compression())

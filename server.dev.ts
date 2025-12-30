@@ -10,6 +10,7 @@ import cookieParser from 'cookie-parser'
 import express from 'express'
 import logger from 'morgan'
 import requestIp from 'request-ip'
+import mainLimiter from 'server.middleware'
 import { createServer as viteCreateServer } from 'vite'
 
 export async function createServer(root = process.cwd(), hmrPort?: number) {
@@ -36,6 +37,8 @@ export async function createServer(root = process.cwd(), hmrPort?: number) {
             },
         }),
     )
+
+    app.use(mainLimiter)
 
     const vite = await viteCreateServer({
         base: '/',
