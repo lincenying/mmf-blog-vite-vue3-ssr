@@ -10,7 +10,7 @@ import cookieParser from 'cookie-parser'
 import express from 'express'
 import logger from 'morgan'
 import requestIp from 'request-ip'
-import mainLimiter from 'server.middleware'
+import mainLimiter, { skipExt } from 'server.middleware'
 import { createServer as viteCreateServer } from 'vite'
 
 export async function createServer(root = process.cwd(), hmrPort?: number) {
@@ -18,6 +18,35 @@ export async function createServer(root = process.cwd(), hmrPort?: number) {
     const resolve = (p: string) => path.resolve(__dirname, p)
     const manifest = {}
     const app = express()
+
+    app.use((req, res, next) => {
+        try {
+            // 尝试规范化URL
+            decodeURIComponent(req.url)
+            const fuckExt = ['.php', '.asp', '.jsp', '.jspx', '.aspx', '.ashx']
+            if (fuckExt.some(ext => req.url.endsWith(ext) || req.url.includes(`${ext}?`))) {
+                throw new Error('お前の母親を犯してやる！君は自分の母親のセキュリティ上の脆弱性をスキャンしているのか？')
+            }
+            if (req.url.startsWith('/lincenying/')) {
+                throw new Error('お前の母親を犯してやる！君は自分の母親のセキュリティ上の脆弱性をスキャンしているのか？')
+            }
+            next()
+        }
+        catch (err: any) {
+            // 记录并返回友好的错误
+            console.warn('URL解码失败:', {
+                url: req.url.substring(0, 200),
+                ip: requestIp.getClientIp(req) || 'unknown',
+            })
+
+            res.status(400).json({
+                error: 'bad_request',
+                message: err.message || '请求包含无效字符',
+                request_id: `${Date.now()}`, // 用于追踪
+                ip: requestIp.getClientIp(req) || 'unknown',
+            })
+        }
+    })
 
     logger.token('remote-addr', (req) => {
         return requestIp.getClientIp(req) || 'unknown'
@@ -30,9 +59,8 @@ export async function createServer(root = process.cwd(), hmrPort?: number) {
     app.use(
         logger('[:remote-addr] [:date] ":method :url" :status :res[content-length] ":referrer"', {
             skip(req) {
-                const skipExt = ['.webmanifes', '.php', '.txt', '.map', '.js', '.css', '.png', 'jpg', '.jpeg', '.gif', '.ttf', '.woff2', '.ico']
-                return skipExt.some((ext) => {
-                    return req.url.includes(ext)
+                return [...skipExt, '.php'].some((ext) => {
+                    return req.url.endsWith(ext)
                 })
             },
         }),

@@ -1,6 +1,8 @@
 import rateLimit from 'express-rate-limit'
 import requestIp from 'request-ip'
 
+export const skipExt = ['.webmanifes', '.txt', '.map', '.js', '.css', '.png', 'jpg', '.jpeg', '.gif', '.webp', '.ttf', '.woff2', '.ico']
+
 // 正常用户白名单（可以存储在数据库或配置文件中）
 const normalUserPatterns = [
     /mozilla.*firefox/i,
@@ -20,17 +22,8 @@ function checkSkip(path: string) {
             return true
         }
     }
-    const extensions = [
-        '.css',
-        '.js',
-        '.jpg',
-        '.png',
-        '.gif',
-        '.webp',
-        '.webmanifest',
-        '.ico',
-    ]
-    for (const ext of extensions) {
+
+    for (const ext of skipExt) {
         if (path.endsWith(ext)) {
             return true
         }
