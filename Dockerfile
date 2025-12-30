@@ -64,4 +64,4 @@ CMD ["node", "./dist/server.js"]
 # 删除容器
 # docker rm container-mmf-blog-vite-vue3-ssr
 # 删除镜像
-# docker rmi images-mmf-blog-vite-vue3-ssr
+# docker rmi lincenying/images-mmf-blog-vite-vue3-ssr
