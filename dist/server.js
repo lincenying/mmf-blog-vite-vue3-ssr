@@ -2467,6 +2467,7 @@ var rate_limit_default = rateLimit;
 
 // server.middleware.ts
 import requestIp from "request-ip";
+var skipExt = [".webmanifes", ".txt", ".map", ".js", ".css", ".png", "jpg", ".jpeg", ".gif", ".webp", ".ttf", ".woff2", ".ico"];
 var normalUserPatterns = [
   /mozilla.*firefox/i,
   /chrome.*safari/i,
@@ -2484,17 +2485,7 @@ function checkSkip(path2) {
       return true;
     }
   }
-  const extensions = [
-    ".css",
-    ".js",
-    ".jpg",
-    ".png",
-    ".gif",
-    ".webp",
-    ".webmanifest",
-    ".ico"
-  ];
-  for (const ext of extensions) {
+  for (const ext of skipExt) {
     if (path2.endsWith(ext)) {
       return true;
     }
@@ -2553,6 +2544,31 @@ async function createServer() {
   const template = fs.readFileSync(resolve("client/index.html"), "utf-8");
   const manifest = JSON.parse(fs.readFileSync(resolve("client/.vite/ssr-manifest.json"), "utf-8"));
   const app = express();
+  app.use((req, res, next) => {
+    try {
+      decodeURIComponent(req.url);
+      const fuckExt = [".php", ".asp", ".jsp", ".jspx", ".aspx", ".ashx"];
+      if (fuckExt.some((ext) => req.url.endsWith(ext) || req.url.includes(`${ext}?`))) {
+        throw new Error("\u304A\u524D\u306E\u6BCD\u89AA\u3092\u72AF\u3057\u3066\u3084\u308B\uFF01\u541B\u306F\u81EA\u5206\u306E\u6BCD\u89AA\u306E\u30BB\u30AD\u30E5\u30EA\u30C6\u30A3\u4E0A\u306E\u8106\u5F31\u6027\u3092\u30B9\u30AD\u30E3\u30F3\u3057\u3066\u3044\u308B\u306E\u304B\uFF1F");
+      }
+      if (req.url.startsWith("/lincenying/")) {
+        throw new Error("\u304A\u524D\u306E\u6BCD\u89AA\u3092\u72AF\u3057\u3066\u3084\u308B\uFF01\u541B\u306F\u81EA\u5206\u306E\u6BCD\u89AA\u306E\u30BB\u30AD\u30E5\u30EA\u30C6\u30A3\u4E0A\u306E\u8106\u5F31\u6027\u3092\u30B9\u30AD\u30E3\u30F3\u3057\u3066\u3044\u308B\u306E\u304B\uFF1F");
+      }
+      next();
+    } catch (err) {
+      console.warn("URL\u89E3\u7801\u5931\u8D25:", {
+        url: req.url.substring(0, 200),
+        ip: requestIp2.getClientIp(req) || "unknown"
+      });
+      res.status(400).json({
+        error: "bad_request",
+        message: err.message || "\u8BF7\u6C42\u5305\u542B\u65E0\u6548\u5B57\u7B26",
+        request_id: `${Date.now()}`,
+        // 用于追踪
+        ip: requestIp2.getClientIp(req) || "unknown"
+      });
+    }
+  });
   logger.token("remote-addr", (req) => {
     return requestIp2.getClientIp(req) || "unknown";
   });
@@ -2562,9 +2578,8 @@ async function createServer() {
   app.use(
     logger('[:remote-addr] [:date] ":method :url" :status :res[content-length] ":referrer"', {
       skip(req) {
-        const skipExt = [".webmanifes", ".php", ".txt", ".map", ".js", ".css", ".png", "jpg", ".jpeg", ".gif", ".ttf", ".woff2", ".ico"];
-        return skipExt.some((ext) => {
-          return req.url.includes(ext);
+        return [...skipExt, ".php"].some((ext) => {
+          return req.url.endsWith(ext);
         });
       }
     })
