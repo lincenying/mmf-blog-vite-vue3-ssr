@@ -23,6 +23,14 @@ VueMarkdownEditor
         codeHighlightExtensionMap: {
             vue: 'html',
         },
+        extend(md: any) {
+            md.set({
+                breaks: true, // 启用换行符转换
+                html: true, // 允许 HTML 标签
+                linkify: true, // 自动转换 URL 为链接
+                typographer: true, // 启用更美观的排版
+            })
+        },
     })
     .use((createLineNumbertPlugin.default || createLineNumbertPlugin)())
 
