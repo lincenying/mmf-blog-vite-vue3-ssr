@@ -7,11 +7,11 @@
             <div class="modal-content">
                 <form class="sign-up-form">
                     <div class="input-wrap">
-                        <input v-model="form.username" type="text" placeholder="昵称" class="base-input" name="username">
+                        <input v-model="form.username" type="text" placeholder="昵称" class="base-input" name="username" maxlength="20">
                         <p class="error-info input-info hidden">长度至少 6 位</p>
                     </div>
                     <div class="input-wrap">
-                        <input v-model="form.password" type="password" placeholder="密码" class="base-input" autocomplete="off" name="password">
+                        <input v-model="form.password" type="password" placeholder="密码" class="base-input" autocomplete="off" name="password" maxlength="20">
                         <p class="error-info input-info hidden">长度至少 6 位</p>
                     </div>
                     <a href="javascript:;" class="btn sign-up-btn btn-yellow" @click="handleLogin">确认登录</a>
