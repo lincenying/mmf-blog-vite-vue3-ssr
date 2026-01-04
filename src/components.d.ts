@@ -34,7 +34,6 @@ declare module 'vue' {
     TopicsItem: typeof import('./components/topics-item.vue')['default']
     TopicsItemNone: typeof import('./components/topics-item-none.vue')['default']
     UserAvatar: typeof import('./components/user-avatar.vue')['default']
-    UserIcon: typeof import('./components/user-icon.vue')['default']
   }
 }
 
@@ -62,5 +61,4 @@ declare global {
   const TopicsItem: typeof import('./components/topics-item.vue')['default']
   const TopicsItemNone: typeof import('./components/topics-item-none.vue')['default']
   const UserAvatar: typeof import('./components/user-avatar.vue')['default']
-  const UserIcon: typeof import('./components/user-icon.vue')['default']
 }
