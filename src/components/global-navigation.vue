@@ -25,16 +25,7 @@
                     <i class="icon icon-search-white" />
                     <input placeholder="记得按回车哦" name="search" class="nav-search-input" @keyup.enter="onSearch($event)">
                 </span>
-                <span v-if="isLogin" class="nav-me">
-                    <router-link to="/user/account" class="nav-me-link">
-                        <img :src="useAvatar(cookies.useremail, 100)" class="nav-avatar-img">
-                    </router-link>
-                </span>
-                <span v-else class="nav-me">
-                    <a href="javascript:;" class="nav-me-link" @click="handleLogin">
-                        <img :src="useAvatar('noavatar')" class="nav-avatar-img">
-                    </a>
-                </span>
+                <user-avatar></user-avatar>
             </div>
         </div>
     </nav>
@@ -50,15 +41,6 @@ const props = defineProps<{
 }>()
 
 const { isBackend } = $(toRefs(props))
-
-const globalStore = useGlobalStore()
-const { cookies } = $(toRefs(globalStore))
-
-const isLogin = computed(() => !!cookies.user)
-
-function handleLogin() {
-    globalStore.setLoginModal(true)
-}
 
 const router = useRouter()
 function onSearch(e: Event) {

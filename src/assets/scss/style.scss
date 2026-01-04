@@ -43,14 +43,6 @@
     }
 }
 
-.grey-link {
-    color: #bac1c2;
-
-    &:hover {
-        color: #818c8c;
-    }
-}
-
 .main {
     display: flex;
     padding-bottom: 40px;
@@ -100,6 +92,14 @@
             margin-right: 0;
             margin-left: 0;
         }
+    }
+}
+
+.grey-link {
+    color: #bac1c2;
+
+    &:hover {
+        color: #818c8c;
     }
 }
 
