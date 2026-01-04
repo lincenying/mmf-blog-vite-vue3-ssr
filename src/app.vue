@@ -10,10 +10,10 @@
                 </keep-alive>
             </transition>
         </router-view>
-        <sign-in :show="showLoginModal" />
-        <sign-up :show="showRegisterModal" />
         <back-top />
         <client-only>
+            <sign-in :show="showLoginModal" />
+            <sign-up :show="showRegisterModal" />
             <bg-plum />
             <reload-prompt />
         </client-only>

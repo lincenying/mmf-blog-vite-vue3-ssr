@@ -21,6 +21,8 @@ declare module 'vue' {
     BackTop: typeof import('./components/back-top.vue')['default']
     BgPlum: typeof import('./components/bg-plum.vue')['default']
     ClientOnly: typeof import('./components/client-only.vue')['default']
+    ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
+    ElTooltip: typeof import('element-plus/es')['ElTooltip']
     FrontendComment: typeof import('./components/frontend-comment.vue')['default']
     GlobalNavigation: typeof import('./components/global-navigation.vue')['default']
     ItemActions: typeof import('./components/item-actions.vue')['default']
@@ -31,6 +33,8 @@ declare module 'vue' {
     SignUp: typeof import('./components/sign-up.vue')['default']
     TopicsItem: typeof import('./components/topics-item.vue')['default']
     TopicsItemNone: typeof import('./components/topics-item-none.vue')['default']
+    UserAvatar: typeof import('./components/user-avatar.vue')['default']
+    UserIcon: typeof import('./components/user-icon.vue')['default']
   }
 }
 
@@ -45,6 +49,8 @@ declare global {
   const BackTop: typeof import('./components/back-top.vue')['default']
   const BgPlum: typeof import('./components/bg-plum.vue')['default']
   const ClientOnly: typeof import('./components/client-only.vue')['default']
+  const ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
+  const ElTooltip: typeof import('element-plus/es')['ElTooltip']
   const FrontendComment: typeof import('./components/frontend-comment.vue')['default']
   const GlobalNavigation: typeof import('./components/global-navigation.vue')['default']
   const ItemActions: typeof import('./components/item-actions.vue')['default']
@@ -55,4 +61,6 @@ declare global {
   const SignUp: typeof import('./components/sign-up.vue')['default']
   const TopicsItem: typeof import('./components/topics-item.vue')['default']
   const TopicsItemNone: typeof import('./components/topics-item-none.vue')['default']
+  const UserAvatar: typeof import('./components/user-avatar.vue')['default']
+  const UserIcon: typeof import('./components/user-icon.vue')['default']
 }

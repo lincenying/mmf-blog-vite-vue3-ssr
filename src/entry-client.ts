@@ -3,7 +3,6 @@ import type { CusRouteComponent } from './types'
 import { createHead } from '@unhead/vue/client'
 import { LoadingPlugin } from 'vue-loading-overlay'
 
-import reloadPrompt from '@/components/reload-prompt.vue'
 import { createApp } from './main'
 import VueMarkdownEditor from './plugin/v-md-editor'
 
@@ -52,7 +51,6 @@ router.isReady().then(() => {
             color: '#54d9e0',
         })
         .use(VueMarkdownEditor)
-        .component('ReloadPrompt', reloadPrompt)
         .mount('#app')
     console.log('client router ready')
 })

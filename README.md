@@ -2,7 +2,7 @@
 
 demo: [http://www.mmxiaowu.com](http://www.mmxiaowu.com)
 
-The main technical stack: vue 3, vue-router 4, pinia, vitejs 5, unocss, eslint, pwa, ssr
+The main technical stack: vue 3, vue-router 4, pinia, vitejs, unocss, eslint, pwa, ssr
 
 ---
 

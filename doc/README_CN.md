@@ -10,7 +10,7 @@ demo: [http://www.mmxiaowu.com](http://www.mmxiaowu.com)
 
 主要功能包括: 管理员, 用户, 分类, 文章, 评论, 文章点赞
 
-主要技术栈: vue 3, vue-router 4, pinia, vitejs 5, unocss, eslint, pwa, ssr
+主要技术栈: vue 3, vue-router 4, pinia, vitejs, unocss, eslint, pwa, ssr
 
 ---
 
