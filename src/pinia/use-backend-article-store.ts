@@ -7,6 +7,7 @@ const usePiniaStore = defineStore('backendArticleStore', () => {
         lists: {
             data: [],
             path: '',
+            key: '',
             hasNext: 0,
             hasPrev: 0,
             page: 1,
@@ -23,7 +24,7 @@ const usePiniaStore = defineStore('backendArticleStore', () => {
      * @param $api
      */
     const getArticleList = async (config: ApiConfig, $api: ApiType = capi) => {
-        if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1) {
+        if (state.lists.data.length > 0 && config.path === state.lists.path && config.key === state.lists.key && config.page === 1) {
             return
         }
         const { code, data } = await $api.get<ResDataLists<Article>>('backend/article/list', { ...config, path: undefined })
@@ -46,6 +47,7 @@ const usePiniaStore = defineStore('backendArticleStore', () => {
                 hasPrev,
                 page: (page || 1) + 1,
                 path,
+                key: config.key,
             }
         }
     }
