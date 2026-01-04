@@ -44,6 +44,9 @@ export default defineConfig(({ mode, command }) => {
                 '~': path.join(__dirname, './src'),
             },
         },
+        ssr: {
+            noExternal: ['element-plus'], // 确保 element-plus 被打包进 SSR bundle
+        },
     }
     return config
 })

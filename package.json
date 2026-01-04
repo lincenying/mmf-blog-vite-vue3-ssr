@@ -55,6 +55,7 @@
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
+    "@iconify-json/mdi": "^1.2.3",
     "@lincy/eslint-config": "^6.3.3",
     "@lincy/stylelint-config": "^2.2.0",
     "@lincy/unocss-base-config": "^2.4.1",

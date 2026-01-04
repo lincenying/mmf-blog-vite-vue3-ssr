@@ -10,6 +10,23 @@
                 </ContentLoader>
             </div>
             <template v-else-if="articleData">
+                <ClientOnly>
+                    <div v-if="showToc === 'show'" class="toc">
+                        <div class="card card-trending">
+                            <h2 class="card-title">文章导航</h2>
+                            <div class="card-content">
+                                <el-scrollbar max-height="calc(100vh - 150px)">
+                                    <div v-for="(sub_item, sub_index) in titlesTree" :key="sub_index" class="toc-item" :style="`--padding-left: ${sub_item.indent * 20}px`" @click="handleAnchorClick(sub_item)">{{ sub_item.title }}</div>
+                                </el-scrollbar>
+                            </div>
+                        </div>
+                        <div class="btn-toc close-toc" @click="showToc = 'hide'">
+                            <el-tooltip class="box-item" effect="dark" content="收起导航" placement="top">
+                                <i class="i-mdi-transfer-left"></i>
+                            </el-tooltip>
+                        </div>
+                    </div>
+                </ClientOnly>
                 <div class="card card-question-head">
                     <div class="question-content">
                         <router-link :to="`/category/${articleData.category}`" class="topic-link-item">{{ articleData.category_name }}</router-link>
@@ -17,11 +34,17 @@
                             <router-link :to="`/article/${articleData._id}`" class="question-title-link">{{ articleData.title }}</router-link>
                         </h2>
                     </div>
+                    <ClientOnly>
+                        <div v-if="showToc === 'hide'" class="btn-toc open-toc" @click="showToc = 'show'">
+                            <el-tooltip class="box-item" effect="dark" content="展开导航" placement="top">
+                                <i class="i-mdi-transfer-right"></i>
+                            </el-tooltip>
+                        </div>
+                    </ClientOnly>
                 </div>
                 <div class="card card-answer">
                     <div class="answer-content">
-                        <!-- eslint-disable-next-line vue/no-v-html -->
-                        <div class="markdown-body vuepress-markdown-body github-markdown-body article-content" v-html="addTarget(articleData.html)" />
+                        <div ref="preview" class="markdown-body vuepress-markdown-body github-markdown-body article-content" v-html="articleData.html" />
                     </div>
                     <item-actions :item="articleData" />
                 </div>
@@ -77,14 +100,58 @@ const { lists: comments } = $(storeToRefs(globalCommentStore))
 
 useSaveScroll()
 
-function addTarget(content: string) {
-    if (!content) {
-        return ''
-    }
-    return content.replace(/<a(.*?)href="http/g, '<a$1target="_blank" href="http')
+const showToc = ref<'none' | 'hide' | 'show'>('none')
+
+const preview = useTemplateRef('preview')
+
+interface TitleItem {
+    title: string
+    lineIndex: string | null
+    indent: number
 }
 
-onMounted(() => {})
+const titlesTree = ref<TitleItem[]>([])
+
+function getAnchors() {
+    const anchors = preview.value?.querySelectorAll('h1,h2,h3,h4,h5,h6')
+    if (!anchors) {
+        return
+    }
+    const titles = Array.from(anchors).filter(title => !!title.textContent.trim())
+
+    if (!titles.length) {
+        titlesTree.value = []
+        return
+    }
+    const hTags = Array.from(new Set(titles.map(title => title.tagName))).sort()
+
+    titlesTree.value = titles.map(el => ({
+        title: el.textContent?.trim() || '',
+        lineIndex: el.getAttribute('data-v-md-line'),
+        indent: hTags.indexOf(el.tagName),
+    }))
+
+    if (titlesTree.value.length) {
+        showToc.value = 'show'
+    }
+    else {
+        showToc.value = 'none'
+    }
+}
+
+function handleAnchorClick(anchor: TitleItem) {
+    const { lineIndex } = anchor
+
+    const heading = preview.value?.querySelector(`[data-v-md-line="${lineIndex}"]`)
+
+    if (heading) {
+        heading.scrollIntoView({ behavior: 'smooth' })
+    }
+}
+
+onMounted(() => {
+    getAnchors()
+})
 
 const headTitle = computed(() => {
     let title = 'M.M.F 小屋'

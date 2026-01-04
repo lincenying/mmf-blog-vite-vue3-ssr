@@ -39,7 +39,9 @@ export default (): PluginOption[] => ([
         dts: 'src/auto-imports.d.ts',
         dirs: ['src/components', 'src/composables', 'src/pinia'],
         resolvers: [
-            ElementPlusResolver(),
+            ElementPlusResolver({
+                importStyle: 'sass',
+            }),
         ],
         defaultExportByFilename: false,
         vueTemplate: true,
@@ -53,7 +55,9 @@ export default (): PluginOption[] => ([
         ],
         extensions: ['vue', 'tsx', 'jsx'],
         resolvers: [
-            ElementPlusResolver(),
+            ElementPlusResolver({
+                importStyle: 'sass',
+            }),
         ],
         dts: 'src/components.d.ts',
     }),
