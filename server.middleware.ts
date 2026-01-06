@@ -71,7 +71,7 @@ const mainLimiter = rateLimit({
     },
     handler: (req, res, _next, options) => {
     // 记录被限制的请求
-        console.warn(`IP ${req.ip} 被限制访问 ${req.path}`)
+        console.warn(`IP ${requestIp.getClientIp(req)} 被限制访问 ${req.path}`)
 
         res.status(200).json({
             code: 429,
