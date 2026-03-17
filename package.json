@@ -84,7 +84,7 @@
     "nodemon": "catalog:dev",
     "polyfill-library": "catalog:dev",
     "postcss": "catalog:dev",
-    "sass": "catalog:dev",
+    "sass-embedded": "catalog:dev",
     "simple-git-hooks": "catalog:dev",
     "stylelint": "catalog:lint",
     "tsup": "catalog:dev",
