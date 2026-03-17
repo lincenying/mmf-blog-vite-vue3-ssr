@@ -30,7 +30,7 @@ WORKDIR /app
 COPY --from=dependency-base /app/dist /app/dist
 COPY --from=dependency-base /app/package.json /app/package.json
 COPY --from=dependency-base /app/pnpm-lock.yaml /app/pnpm-lock.yaml
-COPY --from=dependency-base /app/.npmrc /app/.npmrc
+COPY --from=dependency-base /app/pnpm-workspace.yaml /app/pnpm-workspace.yaml
 
 RUN npm config set registry https://registry.npmmirror.com
 RUN npm install -g pnpm
