@@ -4,7 +4,7 @@
  */
 
 import type { Pinia } from 'pinia'
-import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
+import type { RouteLocationNormalized } from 'vue-router'
 
 import { isBrowser } from '@lincy/utils'
 import cookies from 'js-cookie'
@@ -34,23 +34,17 @@ const BackendAdminModify = () => import('./pages/backend-admin-modify.vue')
 const BackendUserList = () => import('./pages/backend-user-list.vue')
 const BackendUserModify = () => import('./pages/backend-user-modify.vue')
 
-function guardRoute(_to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) {
+function guardRoute(_to: RouteLocationNormalized, _from: RouteLocationNormalized) {
     const token = cookies.get('user')
     if (isBrowser && !token) {
-        next('/')
-    }
-    else {
-        next()
+        return '/'
     }
 }
 
-function guardRouteBackend(_to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) {
+function guardRouteBackend(_to: RouteLocationNormalized, _from: RouteLocationNormalized) {
     const token = cookies.get('b_user')
     if (isBrowser && !token) {
-        next('/backend/login')
-    }
-    else {
-        next()
+        return '/backend/login'
     }
 }
 
@@ -113,7 +107,7 @@ export function createRouter(store: Pinia) {
     const slideLeft = 'slide-left'
     const slideRight = 'slide-right'
 
-    router.beforeEach((to, from, next) => {
+    router.beforeEach((to, from) => {
         const appShellStore = useAppShellStore(store)
         const { needPageTransition } = storeToRefs(appShellStore)
         // 如果不需要切换动画，直接返回
@@ -136,7 +130,6 @@ export function createRouter(store: Pinia) {
 
             appShellStore.setPageTransitionName(pageTransitionName)
         }
-        next()
     })
 
     return router
