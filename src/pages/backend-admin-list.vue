@@ -60,9 +60,9 @@ async function loadMore(page = lists.page) {
     toggleLoading(false)
 }
 async function handleRecover(id: string) {
-    const { code, message } = await capi.get<'success' | 'error'>('backend/admin/recover', { id })
+    const { code } = await capi.get<'success' | 'error'>('backend/admin/recover', { id })
     if (code === 200) {
-        showMsg({ type: 'success', content: message })
+        showMsg({ type: 'success', content: '恢复成功' })
         backendAdminStore.recoverAdmin(id)
     }
 }
@@ -73,12 +73,12 @@ async function handleRecover(id: string) {
  */
 async function handleDelete(id: string) {
     // 向后端发送删除请求，并等待响应
-    const { code, message } = await capi.get<'success' | 'error'>('backend/admin/delete', { id })
+    const { code } = await capi.get<'success' | 'error'>('backend/admin/delete', { id })
 
     // 检查响应代码，如果为200，则视为删除成功
     if (code === 200) {
         // 显示成功消息，并从存储中删除该管理员
-        showMsg({ type: 'success', content: message })
+        showMsg({ type: 'success', content: '删除成功' })
         backendAdminStore.deleteAdmin(id)
     }
 }

@@ -123,10 +123,10 @@ async function handleModify() {
         const html = VueMarkdownEditor.vMdParser.themeConfig.markdownParser.render(form.content)
         form.html = html
     }
-    const { code, data, message } = await capi.post<Article>('backend/article/modify', form)
+    const { code, data } = await capi.post<Article>('backend/article/modify', form)
     toggleLoading(false)
     if (code === 200) {
-        showMsg({ type: 'success', content: message })
+        showMsg({ type: 'success', content: '修改成功!' })
         backendArticleStore.updateArticleItem(data)
         router.push('/backend/article/list')
     }

@@ -64,17 +64,17 @@ onMounted(() => {
 })
 
 async function handleRecover(id: string) {
-    const { code, message } = await capi.get<'success' | 'error'>('backend/category/recover', { id })
+    const { code } = await capi.get<'success' | 'error'>('backend/category/recover', { id })
     if (code === 200) {
-        showMsg({ type: 'success', content: message })
+        showMsg({ type: 'success', content: '恢复成功' })
         globalCategoryStore.recoverCategory(id)
     }
 }
 
 async function handleDelete(id: string) {
-    const { code, message } = await capi.get<'success' | 'error'>('backend/category/delete', { id })
+    const { code } = await capi.get<'success' | 'error'>('backend/category/delete', { id })
     if (code === 200) {
-        showMsg({ type: 'success', content: message })
+        showMsg({ type: 'success', content: '删除成功' })
         globalCategoryStore.deleteCategory(id)
     }
 }

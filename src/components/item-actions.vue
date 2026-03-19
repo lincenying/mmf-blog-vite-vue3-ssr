@@ -48,9 +48,9 @@ const handleLike = useLockFn(async () => {
     if (item.like_status) {
         url = 'frontend/unlike'
     }
-    const { code, message } = await capi.get<'success' | 'error'>(url, { id: item._id })
+    const { code } = await capi.get<'success' | 'error'>(url, { id: item._id })
     if (code === 200) {
-        showMsg({ type: 'success', content: message })
+        showMsg({ type: 'success', content: '操作成功' })
         frontendArticleStore.modifyLikeStatus({
             id: item._id,
             status: !item.like_status,

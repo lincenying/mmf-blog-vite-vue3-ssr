@@ -77,9 +77,9 @@ const handleRegister = useLockFn(async () => {
         return showMsg('两次输入的密码不一致!')
     }
 
-    const { code, message } = await capi.post<'success' | 'error'>('frontend/user/insert', form)
+    const { code } = await capi.post<'success' | 'error'>('frontend/user/insert', form)
     if (code === 200) {
-        showMsg({ type: 'success', content: message })
+        showMsg({ type: 'success', content: '注册成功，请登录！' })
         handleLogin()
     }
 })

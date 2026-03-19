@@ -16,7 +16,7 @@
     color: #ccc;
     text-align: left;
     word-break: normal;
-    word-wrap: normal;
+    overflow-wrap: normal;
     white-space: pre;
     background: none;
     word-spacing: normal;

@@ -59,16 +59,16 @@ async function loadMore(page = lists.page) {
     toggleLoading(false)
 }
 async function handleRecover(id: string) {
-    const { code, message } = await capi.get<'success' | 'error'>('frontend/comment/recover', { id })
+    const { code } = await capi.get<'success' | 'error'>('frontend/comment/recover', { id })
     if (code === 200) {
-        showMsg({ type: 'success', content: message })
+        showMsg({ type: 'success', content: '恢复成功' })
         globalCommentStore.recoverComment(id)
     }
 }
 async function handleDelete(id: string) {
-    const { code, message } = await capi.get<'success' | 'error'>('frontend/comment/delete', { id })
+    const { code } = await capi.get<'success' | 'error'>('frontend/comment/delete', { id })
     if (code === 200) {
-        showMsg({ type: 'success', content: message })
+        showMsg({ type: 'success', content: '删除成功' })
         globalCommentStore.deleteComment(id)
     }
 }

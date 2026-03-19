@@ -94,10 +94,10 @@ async function handleInsert() {
         const html = VueMarkdownEditor.vMdParser.themeConfig.markdownParser.render(form.content)
         form.html = html
     }
-    const { code, data, message } = await capi.post<Article>('backend/article/insert', form)
+    const { code, data } = await capi.post<Article>('backend/article/insert', form)
     toggleLoading(false)
     if (code === 200) {
-        showMsg({ type: 'success', content: message })
+        showMsg({ type: 'success', content: '添加成功!' })
         backendArticleStore.insertArticleItem(data)
         router.push('/backend/article/list')
     }

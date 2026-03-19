@@ -59,16 +59,16 @@ async function loadMore(page = lists.page) {
     toggleLoading(false)
 }
 async function handleRecover(id: string) {
-    const { code, message } = await capi.get<'success' | 'error'>('backend/user/recover', { id })
+    const { code } = await capi.get<'success' | 'error'>('backend/user/recover', { id })
     if (code === 200) {
-        showMsg({ type: 'success', content: message })
+        showMsg({ type: 'success', content: '恢复成功' })
         backendUserStore.recoverUser(id)
     }
 }
 async function handleDelete(id: string) {
-    const { code, message } = await capi.get<'success' | 'error'>('backend/user/delete', { id })
+    const { code } = await capi.get<'success' | 'error'>('backend/user/delete', { id })
     if (code === 200) {
-        showMsg({ type: 'success', content: message })
+        showMsg({ type: 'success', content: '删除成功' })
         backendUserStore.deleteUser(id)
     }
 }

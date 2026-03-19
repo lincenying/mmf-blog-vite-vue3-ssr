@@ -57,10 +57,10 @@ async function handleInsert() {
         return
     }
     toggleLoading(true)
-    const { code, data, message } = await capi.post<Category>('backend/category/insert', form)
+    const { code, data } = await capi.post<Category>('backend/category/insert', form)
     toggleLoading(false)
     if (code === 200) {
-        showMsg({ type: 'success', content: message })
+        showMsg({ type: 'success', content: '添加成功!' })
         globalCategoryStore.insertCategoryItem({
             ...form,
             ...data,

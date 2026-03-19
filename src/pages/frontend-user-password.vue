@@ -52,9 +52,9 @@ const handleSubmit = useLockFn(async () => {
         return showMsg('两次密码输入不一致!')
     }
 
-    const { code, message } = await capi.post<'success' | 'error'>('frontend/user/password', form)
+    const { code } = await capi.post<'success' | 'error'>('frontend/user/password', form)
     if (code === 200) {
-        showMsg({ type: 'success', content: message })
+        showMsg({ type: 'success', content: '密码修改成功，请重新登录！' })
         form.old_password = ''
         form.password = ''
         form.re_password = ''
