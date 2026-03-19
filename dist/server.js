@@ -24,9 +24,9 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
-// node_modules/.pnpm/ip-address@10.0.1/node_modules/ip-address/dist/common.js
+// node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/common.js
 var require_common = __commonJS({
-  "node_modules/.pnpm/ip-address@10.0.1/node_modules/ip-address/dist/common.js"(exports) {
+  "node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/common.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.isInSubnet = isInSubnet;
@@ -71,9 +71,9 @@ var require_common = __commonJS({
   }
 });
 
-// node_modules/.pnpm/ip-address@10.0.1/node_modules/ip-address/dist/v4/constants.js
+// node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/v4/constants.js
 var require_constants = __commonJS({
-  "node_modules/.pnpm/ip-address@10.0.1/node_modules/ip-address/dist/v4/constants.js"(exports) {
+  "node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/v4/constants.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.RE_SUBNET_STRING = exports.RE_ADDRESS = exports.GROUPS = exports.BITS = void 0;
@@ -84,9 +84,9 @@ var require_constants = __commonJS({
   }
 });
 
-// node_modules/.pnpm/ip-address@10.0.1/node_modules/ip-address/dist/address-error.js
+// node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/address-error.js
 var require_address_error = __commonJS({
-  "node_modules/.pnpm/ip-address@10.0.1/node_modules/ip-address/dist/address-error.js"(exports) {
+  "node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/address-error.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.AddressError = void 0;
@@ -101,9 +101,9 @@ var require_address_error = __commonJS({
   }
 });
 
-// node_modules/.pnpm/ip-address@10.0.1/node_modules/ip-address/dist/ipv4.js
+// node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/ipv4.js
 var require_ipv4 = __commonJS({
-  "node_modules/.pnpm/ip-address@10.0.1/node_modules/ip-address/dist/ipv4.js"(exports) {
+  "node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/ipv4.js"(exports) {
     "use strict";
     var __createBinding = exports && exports.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -342,6 +342,38 @@ var require_ipv4 = __commonJS({
         return _Address4.fromHex(bigInt.toString(16));
       }
       /**
+       * Convert a byte array to an Address4 object
+       * @memberof Address4
+       * @static
+       * @param {Array<number>} bytes - an array of 4 bytes (0-255)
+       * @returns {Address4}
+       */
+      static fromByteArray(bytes) {
+        if (bytes.length !== 4) {
+          throw new address_error_1.AddressError("IPv4 addresses require exactly 4 bytes");
+        }
+        for (let i = 0; i < bytes.length; i++) {
+          if (!Number.isInteger(bytes[i]) || bytes[i] < 0 || bytes[i] > 255) {
+            throw new address_error_1.AddressError("All bytes must be integers between 0 and 255");
+          }
+        }
+        return this.fromUnsignedByteArray(bytes);
+      }
+      /**
+       * Convert an unsigned byte array to an Address4 object
+       * @memberof Address4
+       * @static
+       * @param {Array<number>} bytes - an array of 4 unsigned bytes (0-255)
+       * @returns {Address4}
+       */
+      static fromUnsignedByteArray(bytes) {
+        if (bytes.length !== 4) {
+          throw new address_error_1.AddressError("IPv4 addresses require exactly 4 bytes");
+        }
+        const address = bytes.join(".");
+        return new _Address4(address);
+      }
+      /**
        * Returns the first n bits of the address, defaulting to the
        * subnet mask
        * @memberof Address4
@@ -412,9 +444,9 @@ var require_ipv4 = __commonJS({
   }
 });
 
-// node_modules/.pnpm/ip-address@10.0.1/node_modules/ip-address/dist/v6/constants.js
+// node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/v6/constants.js
 var require_constants2 = __commonJS({
-  "node_modules/.pnpm/ip-address@10.0.1/node_modules/ip-address/dist/v6/constants.js"(exports) {
+  "node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/v6/constants.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.RE_URL_WITH_PORT = exports.RE_URL = exports.RE_ZONE_STRING = exports.RE_SUBNET_STRING = exports.RE_BAD_ADDRESS = exports.RE_BAD_CHARACTERS = exports.TYPES = exports.SCOPES = exports.GROUPS = exports.BITS = void 0;
@@ -463,9 +495,9 @@ var require_constants2 = __commonJS({
   }
 });
 
-// node_modules/.pnpm/ip-address@10.0.1/node_modules/ip-address/dist/v6/helpers.js
+// node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/v6/helpers.js
 var require_helpers = __commonJS({
-  "node_modules/.pnpm/ip-address@10.0.1/node_modules/ip-address/dist/v6/helpers.js"(exports) {
+  "node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/v6/helpers.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.spanAllZeroes = spanAllZeroes;
@@ -498,9 +530,9 @@ var require_helpers = __commonJS({
   }
 });
 
-// node_modules/.pnpm/ip-address@10.0.1/node_modules/ip-address/dist/v6/regular-expressions.js
+// node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/v6/regular-expressions.js
 var require_regular_expressions = __commonJS({
-  "node_modules/.pnpm/ip-address@10.0.1/node_modules/ip-address/dist/v6/regular-expressions.js"(exports) {
+  "node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/v6/regular-expressions.js"(exports) {
     "use strict";
     var __createBinding = exports && exports.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -590,9 +622,9 @@ var require_regular_expressions = __commonJS({
   }
 });
 
-// node_modules/.pnpm/ip-address@10.0.1/node_modules/ip-address/dist/ipv6.js
+// node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/ipv6.js
 var require_ipv6 = __commonJS({
-  "node_modules/.pnpm/ip-address@10.0.1/node_modules/ip-address/dist/ipv6.js"(exports) {
+  "node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/ipv6.js"(exports) {
     "use strict";
     var __createBinding = exports && exports.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -1504,9 +1536,9 @@ var require_ipv6 = __commonJS({
   }
 });
 
-// node_modules/.pnpm/ip-address@10.0.1/node_modules/ip-address/dist/ip-address.js
+// node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/ip-address.js
 var require_ip_address = __commonJS({
-  "node_modules/.pnpm/ip-address@10.0.1/node_modules/ip-address/dist/ip-address.js"(exports) {
+  "node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/ip-address.js"(exports) {
     "use strict";
     var __createBinding = exports && exports.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -1567,7 +1599,7 @@ import logger from "morgan";
 import requestIp2 from "request-ip";
 import serveStatic from "serve-static";
 
-// node_modules/.pnpm/express-rate-limit@8.2.1_express@5.2.1/node_modules/express-rate-limit/dist/index.mjs
+// node_modules/.pnpm/express-rate-limit@8.3.1_express@5.2.1/node_modules/express-rate-limit/dist/index.mjs
 var import_ip_address = __toESM(require_ip_address(), 1);
 import { isIPv6 } from "net";
 import { isIPv6 as isIPv62 } from "net";
@@ -1575,8 +1607,13 @@ import { Buffer as Buffer2 } from "buffer";
 import { createHash } from "crypto";
 import { isIP } from "net";
 function ipKeyGenerator(ip, ipv6Subnet = 56) {
-  if (ipv6Subnet && isIPv6(ip)) {
-    return `${new import_ip_address.Address6(`${ip}/${ipv6Subnet}`).startAddress().correctForm()}/${ipv6Subnet}`;
+  if (isIPv6(ip)) {
+    const address = new import_ip_address.Address6(ip);
+    if (address.is4()) return address.to4().correctForm();
+    if (ipv6Subnet) {
+      const subnet = new import_ip_address.Address6(`${ip}/${ipv6Subnet}`);
+      return `${subnet.startAddress().correctForm()}/${ipv6Subnet}`;
+    }
   }
   return ip;
 }
@@ -2519,7 +2556,7 @@ var mainLimiter = rate_limit_default({
     return `${requestIp.getClientIp(req)}:${req.get("user-agent") || ""}`;
   },
   handler: (req, res, _next, options) => {
-    console.warn(`IP ${req.ip} \u88AB\u9650\u5236\u8BBF\u95EE ${req.path}`);
+    console.warn(`IP ${requestIp.getClientIp(req)} \u88AB\u9650\u5236\u8BBF\u95EE ${req.path}`);
     res.status(200).json({
       code: 429,
       error: "\u8BF7\u6C42\u8FC7\u4E8E\u9891\u7E41",
