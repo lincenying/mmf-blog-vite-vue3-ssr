@@ -104,8 +104,10 @@ export function createRouter(store: Pinia) {
         routes,
     })
 
-    const slideLeft = 'slide-left'
-    const slideRight = 'slide-right'
+    // const slideLeft = 'slide-left'
+    // const slideRight = 'slide-right'
+    const slideLeft = 'fade'
+    const slideRight = 'fade'
 
     router.beforeEach((to, from) => {
         const appShellStore = useAppShellStore(store)

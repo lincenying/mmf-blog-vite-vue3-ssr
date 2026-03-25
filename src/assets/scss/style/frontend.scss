@@ -39,12 +39,12 @@
 // app.vue ========>>>>>>>>
 .slide-left-enter-active,
 .slide-right-enter-active {
-    animation: slide-left-enter 0.3s ease;
+    animation: slide-left-enter 0.25s ease;
 }
 
 .slide-left-leave-active,
 .slide-right-leave-active {
-    animation: slide-left-leave 0.3s ease;
+    animation: slide-left-leave 0.25s ease;
 }
 
 @keyframes slide-left-enter {
@@ -90,7 +90,7 @@
     .slide-left-leave-active,
     .slide-right-enter-active,
     .slide-right-leave-active {
-        transition: all 0.3s cubic-bezier(0.55, 0, 0.1, 1);
+        transition: all 0.25s cubic-bezier(0.55, 0, 0.1, 1);
     }
 
     .slide-left-enter {
@@ -112,7 +112,7 @@
 
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.3s;
+    transition: opacity 0.25s;
 }
 
 .fade-enter,

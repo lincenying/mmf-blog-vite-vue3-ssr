@@ -19,6 +19,10 @@ export function showMsg(config: Objable | string) {
         content = config
         type = 'error'
     }
+    else if (Array.isArray(config)) {
+        content = config.join(', ')
+        type = 'error'
+    }
     else {
         content = config.content
         type = config.type
