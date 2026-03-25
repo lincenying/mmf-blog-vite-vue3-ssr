@@ -42,10 +42,16 @@ const config: { server: ServerOptions, build: BuildOptions } = {
                 manualChunks(id: string) {
                     // 处理css分块
                     if (id.includes('node_modules')) {
+                        if (id.includes('element-plus')) {
+                            return 'element-plus'
+                        }
                         return 'vendor'
                     }
                     if (id.includes('__uno.css')) {
                         return 'unocss'
+                    }
+                    if (id.includes('/assets/')) {
+                        return 'main-style'
                     }
                 },
             },
