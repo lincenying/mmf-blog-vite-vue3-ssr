@@ -40,27 +40,27 @@ packages:
 catalogs:
   dev:
     '@lincy/unocss-base-config': ^2.6.2
-    '@vitejs/plugin-vue': ^6.0.5
+    '@vitejs/plugin-vue': ^6.0.6
     '@vitejs/plugin-vue-jsx': ^5.1.5
-    '@vue/compiler-sfc': ^3.5.30
+    '@vue/compiler-sfc': ^3.5.32
     bumpp: ^11.0.1
     cross-env: ^10.1.0
-    express-rate-limit: ^8.3.1
+    express-rate-limit: ^8.3.2
     lint-staged: ^16.4.0
     mockjs: ^1.1.0
     nodemon: ^3.1.14
     polyfill-library: ^4.8.0
-    postcss: ^8.5.8
-    sass-embedded: ^1.98.0
+    postcss: ^8.5.9
+    sass-embedded: ^1.99.0
     simple-git-hooks: ^2.13.1
     tsup: ^8.5.1
     tsx: ^4.21.0
     typescript: ^5.9.3
-    unocss: ^66.6.7
+    unocss: ^66.6.8
     unplugin-auto-import: ^21.0.0
-    unplugin-vue-components: ^31.0.0
+    unplugin-vue-components: ^32.0.0
     unplugin-vue-macros: ^2.14.5
-    vite: ^7.3.1
+    vite: ^8.0.8
     vite-plugin-mock: ^3.0.2
     vite-plugin-pwa: ^1.2.0
     vue-tsc: ^3.2.6
@@ -69,19 +69,19 @@ catalogs:
     '@iconify-json/mdi': ^1.2.3
 
   lint:
-    '@lincy/eslint-config': ^6.5.2
+    '@lincy/eslint-config': ^7.0.0
     '@lincy/stylelint-config': ^2.2.2
-    '@unocss/eslint-plugin': ^66.6.7
-    eslint: ^10.0.3
+    '@unocss/eslint-plugin': ^66.6.8
+    eslint: ^10.2.0
     eslint-plugin-format: ^2.0.1
-    stylelint: ^17.4.0
+    stylelint: ^17.7.0
 
   node:
     compression: ^1.8.1
     cookie-parser: ^1.4.7
     express: ^5.2.1
     http-proxy-middleware: ^3.0.5
-    lru-cache: ^11.2.7
+    lru-cache: ^11.3.5
     morgan: ^1.10.1
     request-ip: ^3.3.0
     serve-static: ^2.2.1
@@ -89,23 +89,23 @@ catalogs:
   prod:
     '@kangc/v-md-editor': ^2.3.18
     '@lincy/utils': ^0.7.3
-    '@unhead/ssr': ^2.1.12
-    '@unhead/vue': ^2.1.12
-    '@vue/server-renderer': ^3.5.30
+    '@unhead/ssr': ^3.0.4
+    '@unhead/vue': ^3.0.4
+    '@vue/server-renderer': ^3.5.32
     '@vueuse/core': ^14.2.1
-    axios: ^1.13.6
-    element-plus: ^2.13.5
+    axios: ^1.15.0
+    element-plus: ^2.13.7
     js-cookie: ^3.0.5
-    lodash: ^4.17.23
+    lodash: ^4.18.1
     md5: ^2.3.0
     pinia: ^3.0.4
     prismjs: ^1.30.0
-    qs: ^6.15.0
+    qs: ^6.15.1
     store2: ^2.14.4
-    vue: ^3.5.30
+    vue: ^3.5.32
     vue-content-loader: ^2.0.1
     vue-loading-overlay: ^6.0.6
-    vue-router: ^5.0.3
+    vue-router: ^5.0.4
 
   types:
     '@types/compression': ^1.8.1
