@@ -53,7 +53,7 @@ const backendConfig = {
     beforeEnter: guardRouteBackend,
 }
 
-const routes = [
+export const routes = [
     { path: '/index.html', redirect: '/' },
     { name: 'index', path: '/', component: FrontendIndex, meta: { index: 1 } },
     { name: 'trending', path: '/trending/:by', component: FrontendIndex, meta: { index: 1 } },

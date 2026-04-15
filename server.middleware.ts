@@ -1,7 +1,14 @@
 import rateLimit from 'express-rate-limit'
 import requestIp from 'request-ip'
 
-export const skipExt = ['.webmanifes', '.txt', '.map', '.js', '.css', '.png', 'jpg', '.jpeg', '.gif', '.webp', '.ttf', '.woff2', '.ico']
+export const skipExt = ['.webmanifest', '.txt', '.map', '.js', '.css', '.png', 'jpg', '.jpeg', '.gif', '.webp', '.ttf', '.woff2', '.ico']
+
+const staticPaths = [
+    '/static/',
+    '/assets/',
+    '/src/',
+    '/@',
+]
 
 // 正常用户白名单（可以存储在数据库或配置文件中）
 const normalUserPatterns = [
@@ -11,12 +18,6 @@ const normalUserPatterns = [
 ]
 
 function checkSkip(path: string) {
-    const staticPaths = [
-        '/static/',
-        '/assets/',
-        '/src/',
-        '/@',
-    ]
     for (const pattern of staticPaths) {
         if (path.startsWith(pattern)) {
             return true
