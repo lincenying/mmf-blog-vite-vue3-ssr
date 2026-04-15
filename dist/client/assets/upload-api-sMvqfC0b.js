@@ -1,0 +1,1 @@
+var e=`https://php.mmxiaowu.com`;export{e as t};

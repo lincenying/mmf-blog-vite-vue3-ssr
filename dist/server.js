@@ -1599,7 +1599,7 @@ import logger from "morgan";
 import requestIp2 from "request-ip";
 import serveStatic from "serve-static";
 
-// node_modules/.pnpm/express-rate-limit@8.3.1_express@5.2.1/node_modules/express-rate-limit/dist/index.mjs
+// node_modules/.pnpm/express-rate-limit@8.3.2_express@5.2.1/node_modules/express-rate-limit/dist/index.mjs
 var import_ip_address = __toESM(require_ip_address(), 1);
 import { isIPv6 } from "net";
 import { isIPv6 as isIPv62 } from "net";
@@ -2386,6 +2386,9 @@ var rateLimit = (passedOptions) => {
   if (typeof config.store.init === "function") config.store.init(options);
   const middleware = handleAsyncErrors(
     async (request, response, next) => {
+      const closePromise = config.skipFailedRequests && new Promise((resolve) => response.once("close", resolve));
+      const finishPromise = (config.skipFailedRequests || config.skipSuccessfulRequests) && new Promise((resolve) => response.once("finish", resolve));
+      const errorPromise = config.skipFailedRequests && new Promise((resolve) => response.once("error", resolve));
       const skip = await config.skip(request, response);
       if (skip) {
         next();
@@ -2464,22 +2467,30 @@ var rateLimit = (passedOptions) => {
           }
         };
         if (config.skipFailedRequests) {
-          response.on("finish", async () => {
-            if (!await config.requestWasSuccessful(request, response))
+          if (finishPromise) {
+            void finishPromise.then(async () => {
+              if (!await config.requestWasSuccessful(request, response))
+                await decrementKey();
+            });
+          }
+          if (closePromise) {
+            void closePromise.then(async () => {
+              if (!response.writableEnded) await decrementKey();
+            });
+          }
+          if (errorPromise) {
+            void errorPromise.then(async () => {
               await decrementKey();
-          });
-          response.on("close", async () => {
-            if (!response.writableEnded) await decrementKey();
-          });
-          response.on("error", async () => {
-            await decrementKey();
-          });
+            });
+          }
         }
         if (config.skipSuccessfulRequests) {
-          response.on("finish", async () => {
-            if (await config.requestWasSuccessful(request, response))
-              await decrementKey();
-          });
+          if (finishPromise) {
+            void finishPromise.then(async () => {
+              if (await config.requestWasSuccessful(request, response))
+                await decrementKey();
+            });
+          }
         }
       }
       config.validations.disable();
@@ -2504,19 +2515,20 @@ var rate_limit_default = rateLimit;
 
 // server.middleware.ts
 import requestIp from "request-ip";
-var skipExt = [".webmanifes", ".txt", ".map", ".js", ".css", ".png", "jpg", ".jpeg", ".gif", ".webp", ".ttf", ".woff2", ".ico"];
+var skipExt = [".webmanifest", ".txt", ".map", ".js", ".css", ".png", "jpg", ".jpeg", ".gif", ".webp", ".ttf", ".woff2", ".ico"];
+var staticPaths = [
+  "/static/",
+  "/assets/",
+  "/src/",
+  "/node_modules/",
+  "/@"
+];
 var normalUserPatterns = [
   /mozilla.*firefox/i,
   /chrome.*safari/i,
   /safari/i
 ];
 function checkSkip(path2) {
-  const staticPaths = [
-    "/static/",
-    "/assets/",
-    "/src/",
-    "/@"
-  ];
   for (const pattern of staticPaths) {
     if (path2.startsWith(pattern)) {
       return true;
@@ -2585,18 +2597,12 @@ async function createServer() {
     try {
       decodeURIComponent(req.url);
       const fuckExt = [".php", ".asp", ".jsp", ".jspx", ".aspx", ".ashx"];
-      if (fuckExt.some((ext) => req.url.endsWith(ext) || req.url.includes(`${ext}?`))) {
-        throw new Error("\u304A\u524D\u306E\u6BCD\u89AA\u3092\u72AF\u3057\u3066\u3084\u308B\uFF01\u541B\u306F\u81EA\u5206\u306E\u6BCD\u89AA\u306E\u30BB\u30AD\u30E5\u30EA\u30C6\u30A3\u4E0A\u306E\u8106\u5F31\u6027\u3092\u30B9\u30AD\u30E3\u30F3\u3057\u3066\u3044\u308B\u306E\u304B\uFF1F");
-      }
-      if (req.url.startsWith("/lincenying/")) {
+      if (fuckExt.some((ext) => req.url.endsWith(ext) || req.url.includes(`${ext}?`)) || req.url.startsWith("/lincenying/")) {
         throw new Error("\u304A\u524D\u306E\u6BCD\u89AA\u3092\u72AF\u3057\u3066\u3084\u308B\uFF01\u541B\u306F\u81EA\u5206\u306E\u6BCD\u89AA\u306E\u30BB\u30AD\u30E5\u30EA\u30C6\u30A3\u4E0A\u306E\u8106\u5F31\u6027\u3092\u30B9\u30AD\u30E3\u30F3\u3057\u3066\u3044\u308B\u306E\u304B\uFF1F");
       }
       next();
     } catch (err) {
-      console.warn("URL\u89E3\u7801\u5931\u8D25:", {
-        url: req.url.substring(0, 200),
-        ip: requestIp2.getClientIp(req) || "unknown"
-      });
+      console.warn(`IP ${requestIp2.getClientIp(req)} \u88AB\u9650\u5236\u8BBF\u95EE ${req.url.substring(0, 200)}`);
       res.status(400).json({
         error: "bad_request",
         message: err.message || "\u8BF7\u6C42\u5305\u542B\u65E0\u6548\u5B57\u7B26",
