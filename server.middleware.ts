@@ -7,6 +7,7 @@ const staticPaths = [
     '/static/',
     '/assets/',
     '/src/',
+    '/node_modules/',
     '/@',
 ]
 

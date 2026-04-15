@@ -28,20 +28,17 @@ export async function createServer() {
             // 尝试规范化URL
             decodeURIComponent(req.url)
             const fuckExt = ['.php', '.asp', '.jsp', '.jspx', '.aspx', '.ashx']
-            if (fuckExt.some(ext => req.url.endsWith(ext) || req.url.includes(`${ext}?`))) {
-                throw new Error('お前の母親を犯してやる！君は自分の母親のセキュリティ上の脆弱性をスキャンしているのか？')
-            }
-            if (req.url.startsWith('/lincenying/')) {
+            if (
+                fuckExt.some(ext => req.url.endsWith(ext) || req.url.includes(`${ext}?`))
+                || req.url.startsWith('/lincenying/')
+            ) {
                 throw new Error('お前の母親を犯してやる！君は自分の母親のセキュリティ上の脆弱性をスキャンしているのか？')
             }
             next()
         }
         catch (err: any) {
             // 记录并返回友好的错误
-            console.warn('URL解码失败:', {
-                url: req.url.substring(0, 200),
-                ip: requestIp.getClientIp(req) || 'unknown',
-            })
+            console.warn(`IP ${requestIp.getClientIp(req)} 被限制访问 ${req.url.substring(0, 200)}`)
 
             res.status(400).json({
                 error: 'bad_request',
@@ -71,6 +68,7 @@ export async function createServer() {
         }),
     )
 
+    // 生产环境才启用限流中间件
     app.use(mainLimiter)
 
     // Node.js 压缩中间件
