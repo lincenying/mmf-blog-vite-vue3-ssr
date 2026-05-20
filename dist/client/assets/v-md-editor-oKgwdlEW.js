@@ -1,1 +1,0 @@
-import{a as e}from"./rolldown-runtime-COnpUsM8.js";import{a as t,c as n,o as r,s as i}from"./vendor-BpjZHzvX.js";var a=e(n(),1),o=e(i(),1),s=e(r(),1),c=e(t(),1);a.default.use(s.default,{Prism:c.default,codeHighlightExtensionMap:{vue:`html`},extend(e){e.set({breaks:!0,html:!0,linkify:!0,typographer:!0})}}).use((o.default.default||o.default)());var l=a.default;export{l as t};

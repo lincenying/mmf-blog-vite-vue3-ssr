@@ -2,6 +2,7 @@ import type { RenderType } from '~/types'
 
 import fs from 'node:fs'
 import path from 'node:path'
+import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 
 import { UTC2Date } from '@lincy/utils'
@@ -14,7 +15,11 @@ import requestIp from 'request-ip'
 import serveStatic from 'serve-static'
 
 import mainLimiter, { skipExt } from 'server.middleware'
+import { handleSsrRouteError } from './server-ssr-error'
+import { urlGuardMiddleware } from './server-url-guard'
 import apiDomain from './src/api/url'
+
+const BODY_PARSER_LIMIT = '10mb'
 
 export async function createServer() {
     const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -23,31 +28,11 @@ export async function createServer() {
     const manifest = JSON.parse(fs.readFileSync(resolve('client/.vite/ssr-manifest.json'), 'utf-8'))
     const app = express()
 
-    app.use((req, res, next) => {
-        try {
-            // 尝试规范化URL
-            decodeURIComponent(req.url)
-            const fuckExt = ['.php', '.asp', '.jsp', '.jspx', '.aspx', '.ashx']
-            if (
-                fuckExt.some(ext => req.url.endsWith(ext) || req.url.includes(`${ext}?`))
-                || req.url.startsWith('/lincenying/')
-            ) {
-                throw new Error('お前の母親を犯してやる！君は自分の母親のセキュリティ上の脆弱性をスキャンしているのか？')
-            }
-            next()
-        }
-        catch (err: any) {
-            // 记录并返回友好的错误
-            console.warn(`IP ${requestIp.getClientIp(req)} 被限制访问 ${req.url.substring(0, 200)}`)
+    if (process.env.TRUST_PROXY === '1') {
+        app.set('trust proxy', 1)
+    }
 
-            res.status(400).json({
-                error: 'bad_request',
-                message: err.message || '请求包含无效字符',
-                request_id: `${Date.now()}`, // 用于追踪
-                ip: requestIp.getClientIp(req) || 'unknown',
-            })
-        }
-    })
+    app.use(urlGuardMiddleware)
 
     logger.token('remote-addr', (req) => {
         return requestIp.getClientIp(req) || 'unknown'
@@ -97,33 +82,31 @@ export async function createServer() {
     )
 
     // 解析 application/json 中间件
-    app.use(express.json({ limit: '50mb' }))
+    app.use(express.json({ limit: BODY_PARSER_LIMIT }))
     // 解析 application/x-www-form-urlencoded 中间件
-    app.use(express.urlencoded({ limit: '50mb', extended: true }))
+    app.use(express.urlencoded({ limit: BODY_PARSER_LIMIT, extended: true }))
     // 解析 cookies 中间件
     app.use(cookieParser())
 
+    // @ts-expect-error 由 Vite SSR 产出至 dist/server/entry-server.js，tsup 打包阶段不存在该文件（已 external）
+    const { render } = await import('./server/entry-server.js')
+    const exposeSsrStack = process.env.NODE_ENV !== 'production'
+
     app.use('/{*default}', async (req, res) => {
         try {
-            // const url = req.originalUrl.replace('/test/', '/')
             const url = req.originalUrl
 
-            // @ts-expect-error 未编译, 目录不对, 该文件不存在
-            const render = (await import('./server/entry-server.js')).render
-
-            const { html: appHtml, preloadLinks, headTags } = await render(url, manifest, req) as RenderType
+            const { html: appHtml, preloadLinks, headTags, statusCode } = await render(url, manifest, req) as RenderType
 
             const html = template
                 .replace('<!--preload-links-->', preloadLinks)
                 .replace('<!--app-html-->', appHtml)
                 .replace('<!--head-tags-->', headTags)
 
-            res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
+            res.status(statusCode).set({ 'Content-Type': 'text/html' }).end(html)
         }
         catch (e: unknown) {
-            const err = e as Error
-            console.log(err.stack)
-            res.status(500).end(err.stack)
+            handleSsrRouteError(res, e, exposeSsrStack)
         }
     })
 

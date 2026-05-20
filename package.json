@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.25.1029",
   "private": true,
-  "packageManager": "pnpm@10.33.0",
+  "packageManager": "pnpm@10.33.4",
   "author": "lincenying <lincenying@qq.com>",
   "engines": {
     "node": ">=16.13.0"
@@ -13,7 +13,7 @@
     "build": "tsx polyfill.ts && npm run build:client && npm run build:server && npm run build:server:entry",
     "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:server": "cross-env VITE_APP_SSR=true vite build --ssr src/entry-server.ts --outDir dist/server",
-    "build:server:entry": "tsup --entry.server server.prod.ts --format esm --target es2020",
+    "build:server:entry": "tsup --entry.server server.prod.ts --format esm --target es2020 --external ./server/entry-server.js",
     "start": "cross-env NODE_ENV=production node ./dist/server.js",
     "generate": "vite build --ssrManifest --outDir dist/static && npm run build:server && tsx ./prerender.ts",
     "workbox": "workbox generateSW workbox-config.js",

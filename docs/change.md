@@ -1,0 +1,55 @@
+# 变更记录
+
+## 2026-05-20 15:39:58
+
+- 重写根目录 `README.md`：与当前 `package.json` 脚本、技术栈、环境变量、Docker / Compose 用法对齐；中文说明改为仓库内 `README_CN.md` 相对链接；修正 `docker-compose -f … up` 命令顺序；补充 `lint:ts` / `generate` 等脚本说明。
+- 新增 `README_CN.md`：与英文版结构对应的简体中文说明（原仓库中无该文件，旧 README 指向的 `docs/README_CN.md` 不存在）。
+
+**commit message：**
+
+```
+docs: 优化 README 并新增中文版说明
+```
+
+## 2026-05-20 15:31:50
+
+- `package.json`：`build:server:entry` 为 tsup 增加 `--external ./server/entry-server.js`，避免 esbuild 在打包时解析 Vite 才生成的 SSR 产物，修复 `Could not resolve "./server/entry-server.js"`。
+- `server.prod.ts`：同步修正 `@ts-expect-error` 注释中的产物路径说明。
+
+**commit message：**
+
+```
+build: tsup 将 SSR entry-server 标为 external 以通过构建
+```
+
+## 2026-05-20 15:23:23
+
+- `src/entry-server.ts`：将已弃用的 `renderSSRHead(head)` 改为 `head.render()`（Unhead v3 推荐用法），消除弃用告警，行为与原先 SSR head 输出一致。
+
+**commit message：**
+
+```
+fix: 使用 head.render 替代弃用的 renderSSRHead
+```
+
+## 2026-05-20 15:10:26
+
+- 抽取 `server-url-guard.ts`：与开发/生产服务共用的 URL 校验中间件，对外统一返回中性错误文案。
+- 新增 `server-ssr-error.ts`：SSR 路由异常时写回 HTML，生产环境（`NODE_ENV=production`）不输出堆栈。
+- `server.prod.ts`：`createServer` 内单次加载 `entry-server` 的 `render`；HTML 响应使用 `render` 返回的 `statusCode`；请求体限制改为 `10mb`；支持 `TRUST_PROXY=1` 设置 `trust proxy`。
+- `server.dev.ts`：复用 URL 守卫与 SSR 错误处理；Chokidar 轮询仅在 `SSR_CHOKIDAR_USEPOLLING=1` 时启用；请求体限制 `10mb`；修复 `vite` 在 catch 中可能未定义的检查（直接使用 `vite.ssrFixStacktrace`）。
+- `server.middleware.ts`：限流命中时返回 HTTP `429` 与 `Retry-After`；修正 `skipExt` 中 `.jpg` 拼写。
+- `src/entry-server.ts`：`req` 可选以兼容 `prerender`；`asyncData` 失败向上抛出；根据路由返回 `statusCode`（含 404）；修正 `ctx.modules` 与 `Set` 的兼容。
+- `src/types.ts`：`RenderType` 增加 `statusCode`；`CusRouteComponent.asyncData` 改为可选；`AsyncDataConfig.req` 使用 `express.Request` 类型。
+
+---
+
+**本次改动 commit message（`global-09-commit.mdc`）：**
+
+```
+refactor: 优化 SSR 服务安全与错误处理
+
+- 抽取 URL 守卫、统一 SSR 500 响应（生产不暴露堆栈）
+- 生产单次加载 render、404 状态码、限流返回 429
+- 收紧 body 限制、可选 chokidar 轮询、修正 skipExt 与类型
+```

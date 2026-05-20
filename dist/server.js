@@ -24,16 +24,35 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
-// node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/common.js
+// node_modules/.pnpm/ip-address@10.2.0/node_modules/ip-address/dist/address-error.js
+var require_address_error = __commonJS({
+  "node_modules/.pnpm/ip-address@10.2.0/node_modules/ip-address/dist/address-error.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.AddressError = void 0;
+    var AddressError = class extends Error {
+      constructor(message, parseMessage) {
+        super(message);
+        this.name = "AddressError";
+        this.parseMessage = parseMessage;
+      }
+    };
+    exports.AddressError = AddressError;
+  }
+});
+
+// node_modules/.pnpm/ip-address@10.2.0/node_modules/ip-address/dist/common.js
 var require_common = __commonJS({
-  "node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/common.js"(exports) {
+  "node_modules/.pnpm/ip-address@10.2.0/node_modules/ip-address/dist/common.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.isInSubnet = isInSubnet;
     exports.isCorrect = isCorrect;
+    exports.prefixLengthFromMask = prefixLengthFromMask;
     exports.numberToPaddedHex = numberToPaddedHex;
     exports.stringToPaddedHex = stringToPaddedHex;
     exports.testBit = testBit;
+    var address_error_1 = require_address_error();
     function isInSubnet(address) {
       if (this.subnetMask < address.subnetMask) {
         return false;
@@ -54,6 +73,20 @@ var require_common = __commonJS({
         return this.parsedSubnet === String(this.subnetMask);
       };
     }
+    function prefixLengthFromMask(value, totalBits) {
+      const binary = value.toString(2).padStart(totalBits, "0");
+      if (binary.length > totalBits) {
+        throw new address_error_1.AddressError("Invalid subnet mask.");
+      }
+      const firstZero = binary.indexOf("0");
+      if (firstZero === -1) {
+        return totalBits;
+      }
+      if (binary.slice(firstZero).includes("1")) {
+        throw new address_error_1.AddressError("Invalid subnet mask.");
+      }
+      return firstZero;
+    }
     function numberToPaddedHex(number) {
       return number.toString(16).padStart(2, "0");
     }
@@ -71,9 +104,9 @@ var require_common = __commonJS({
   }
 });
 
-// node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/v4/constants.js
+// node_modules/.pnpm/ip-address@10.2.0/node_modules/ip-address/dist/v4/constants.js
 var require_constants = __commonJS({
-  "node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/v4/constants.js"(exports) {
+  "node_modules/.pnpm/ip-address@10.2.0/node_modules/ip-address/dist/v4/constants.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.RE_SUBNET_STRING = exports.RE_ADDRESS = exports.GROUPS = exports.BITS = void 0;
@@ -84,26 +117,9 @@ var require_constants = __commonJS({
   }
 });
 
-// node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/address-error.js
-var require_address_error = __commonJS({
-  "node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/address-error.js"(exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.AddressError = void 0;
-    var AddressError = class extends Error {
-      constructor(message, parseMessage) {
-        super(message);
-        this.name = "AddressError";
-        this.parseMessage = parseMessage;
-      }
-    };
-    exports.AddressError = AddressError;
-  }
-});
-
-// node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/ipv4.js
+// node_modules/.pnpm/ip-address@10.2.0/node_modules/ip-address/dist/ipv4.js
 var require_ipv4 = __commonJS({
-  "node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/ipv4.js"(exports) {
+  "node_modules/.pnpm/ip-address@10.2.0/node_modules/ip-address/dist/ipv4.js"(exports) {
     "use strict";
     var __createBinding = exports && exports.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -137,6 +153,7 @@ var require_ipv4 = __commonJS({
     var common = __importStar(require_common());
     var constants = __importStar(require_constants());
     var address_error_1 = require_address_error();
+    var isCorrect4 = common.isCorrect(constants.BITS);
     var Address4 = class _Address4 {
       constructor(address) {
         this.groups = constants.GROUPS;
@@ -145,7 +162,7 @@ var require_ipv4 = __commonJS({
         this.subnet = "/32";
         this.subnetMask = 32;
         this.v4 = true;
-        this.isCorrect = common.isCorrect(constants.BITS);
+        this.isCorrect = isCorrect4;
         this.isInSubnet = common.isInSubnet;
         this.address = address;
         const subnet = constants.RE_SUBNET_STRING.exec(address);
@@ -161,6 +178,13 @@ var require_ipv4 = __commonJS({
         this.addressMinusSuffix = address;
         this.parsedAddress = this.parse(address);
       }
+      /**
+       * Returns true if the given string is a valid IPv4 address (with optional
+       * CIDR subnet), false otherwise. Host bits in the subnet portion are
+       * allowed (e.g. `192.168.1.5/24` is valid); for strict network-address
+       * validation compare `correctForm()` to `startAddress().correctForm()`,
+       * or use `networkForm()`.
+       */
       static isValid(address) {
         try {
           new _Address4(address);
@@ -169,8 +193,11 @@ var require_ipv4 = __commonJS({
           return false;
         }
       }
-      /*
-       * Parses a v4 address
+      /**
+       * Parses an IPv4 address string into its four octet groups and stores the
+       * result on `this.parsedAddress`. Called automatically by the constructor;
+       * you typically don't need to call it directly. Throws `AddressError` if
+       * the input is not a valid IPv4 address.
        */
       parse(address) {
         const groups = address.split(".");
@@ -180,45 +207,108 @@ var require_ipv4 = __commonJS({
         return groups;
       }
       /**
-       * Returns the correct form of an address
-       * @memberof Address4
-       * @instance
-       * @returns {String}
+       * Returns the address in correct form: octets joined with `.` and any
+       * leading zeros stripped (e.g. `192.168.1.1`). For IPv4 this matches the
+       * canonical dotted-decimal representation.
        */
       correctForm() {
         return this.parsedAddress.map((part) => parseInt(part, 10)).join(".");
       }
       /**
-       * Converts a hex string to an IPv4 address object
-       * @memberof Address4
-       * @static
+       * Construct an `Address4` from an address and a dotted-decimal subnet
+       * mask given as separate strings (e.g. as returned by Node's
+       * `os.networkInterfaces()`). Throws `AddressError` if the mask is
+       * non-contiguous (e.g. `255.0.255.0`).
+       * @example
+       * var address = Address4.fromAddressAndMask('192.168.1.1', '255.255.255.0');
+       * address.subnetMask; // 24
+       */
+      static fromAddressAndMask(address, mask) {
+        const bits = common.prefixLengthFromMask(new _Address4(mask).bigInt(), constants.BITS);
+        return new _Address4(`${address}/${bits}`);
+      }
+      /**
+       * Construct an `Address4` from an address and a Cisco-style wildcard mask
+       * given as separate strings (e.g. `0.0.0.255` for a `/24`). The wildcard
+       * mask is the bitwise inverse of the subnet mask. Throws `AddressError`
+       * if the mask is non-contiguous (e.g. `0.255.0.255`).
+       * @example
+       * var address = Address4.fromAddressAndWildcardMask('10.0.0.1', '0.0.0.255');
+       * address.subnetMask; // 24
+       */
+      static fromAddressAndWildcardMask(address, wildcardMask) {
+        const wildcard = new _Address4(wildcardMask).bigInt();
+        const allOnes = (BigInt(1) << BigInt(constants.BITS)) - BigInt(1);
+        const mask = wildcard ^ allOnes;
+        const bits = common.prefixLengthFromMask(mask, constants.BITS);
+        return new _Address4(`${address}/${bits}`);
+      }
+      /**
+       * Construct an `Address4` from a wildcard pattern with trailing `*`
+       * octets. The number of trailing wildcards determines the prefix
+       * length: each `*` represents 8 bits.
+       *
+       * Only trailing whole-octet wildcards are supported. Partial-octet
+       * wildcards (e.g. `192.168.0.1*`) and interior wildcards (e.g.
+       * `192.*.0.1`) throw `AddressError`.
+       * @example
+       * Address4.fromWildcard('192.168.0.*').subnet;   // '/24'
+       * Address4.fromWildcard('192.168.*.*').subnet;   // '/16'
+       * Address4.fromWildcard('*.*.*.*').subnet;       // '/0'
+       */
+      static fromWildcard(input) {
+        const groups = input.split(".");
+        if (groups.length !== constants.GROUPS) {
+          throw new address_error_1.AddressError("Wildcard pattern must have 4 octets");
+        }
+        let firstWildcard = -1;
+        for (let i = 0; i < groups.length; i++) {
+          if (groups[i] === "*") {
+            if (firstWildcard === -1) {
+              firstWildcard = i;
+            }
+          } else if (firstWildcard !== -1) {
+            throw new address_error_1.AddressError("Wildcard `*` must only appear in trailing octets (e.g. `192.168.0.*`)");
+          }
+        }
+        const trailing = firstWildcard === -1 ? 0 : groups.length - firstWildcard;
+        const replaced = groups.map((g) => g === "*" ? "0" : g);
+        const subnetBits = constants.BITS - trailing * 8;
+        return new _Address4(`${replaced.join(".")}/${subnetBits}`);
+      }
+      /**
+       * Converts a hex string to an IPv4 address object. Accepts 8 hex digits
+       * with optional `:` separators (e.g. `'7f000001'` or `'7f:00:00:01'`).
+       * Throws `AddressError` for any other length or for non-hex characters.
        * @param {string} hex - a hex string to convert
        * @returns {Address4}
        */
       static fromHex(hex) {
-        const padded = hex.replace(/:/g, "").padStart(8, "0");
+        const stripped = hex.replace(/:/g, "");
+        if (!/^[0-9a-fA-F]{8}$/.test(stripped)) {
+          throw new address_error_1.AddressError("IPv4 hex must be exactly 8 hex digits");
+        }
         const groups = [];
-        let i;
-        for (i = 0; i < 8; i += 2) {
-          const h = padded.slice(i, i + 2);
-          groups.push(parseInt(h, 16));
+        for (let i = 0; i < 8; i += 2) {
+          groups.push(parseInt(stripped.slice(i, i + 2), 16));
         }
         return new _Address4(groups.join("."));
       }
       /**
-       * Converts an integer into a IPv4 address object
-       * @memberof Address4
-       * @static
+       * Converts an integer into a IPv4 address object. The integer must be a
+       * non-negative safe integer in the range `[0, 2**32 - 1]`; otherwise
+       * `AddressError` is thrown.
        * @param {integer} integer - a number to convert
        * @returns {Address4}
        */
       static fromInteger(integer) {
-        return _Address4.fromHex(integer.toString(16));
+        if (!Number.isInteger(integer) || integer < 0 || integer > 4294967295) {
+          throw new address_error_1.AddressError("IPv4 integer must be in the range 0 to 2**32 - 1");
+        }
+        return _Address4.fromHex(integer.toString(16).padStart(8, "0"));
       }
       /**
        * Return an address from in-addr.arpa form
-       * @memberof Address4
-       * @static
        * @param {string} arpaFormAddress - an 'in-addr.arpa' form ipv4 address
        * @returns {Adress4}
        * @example
@@ -232,17 +322,15 @@ var require_ipv4 = __commonJS({
       }
       /**
        * Converts an IPv4 address object to a hex string
-       * @memberof Address4
-       * @instance
        * @returns {String}
        */
       toHex() {
         return this.parsedAddress.map((part) => common.stringToPaddedHex(part)).join(":");
       }
       /**
-       * Converts an IPv4 address object to an array of bytes
-       * @memberof Address4
-       * @instance
+       * Converts an IPv4 address object to an array of bytes.
+       *
+       * To get a Node.js `Buffer`, wrap the result: `Buffer.from(address.toArray())`.
        * @returns {Array}
        */
       toArray() {
@@ -250,8 +338,6 @@ var require_ipv4 = __commonJS({
       }
       /**
        * Converts an IPv4 address object to an IPv6 address group
-       * @memberof Address4
-       * @instance
        * @returns {String}
        */
       toGroup6() {
@@ -264,8 +350,6 @@ var require_ipv4 = __commonJS({
       }
       /**
        * Returns the address as a `bigint`
-       * @memberof Address4
-       * @instance
        * @returns {bigint}
        */
       bigInt() {
@@ -273,8 +357,6 @@ var require_ipv4 = __commonJS({
       }
       /**
        * Helper function getting start address.
-       * @memberof Address4
-       * @instance
        * @returns {bigint}
        */
       _startAddress() {
@@ -283,8 +365,6 @@ var require_ipv4 = __commonJS({
       /**
        * The first address in the range given by this address' subnet.
        * Often referred to as the Network Address.
-       * @memberof Address4
-       * @instance
        * @returns {Address4}
        */
       startAddress() {
@@ -293,8 +373,6 @@ var require_ipv4 = __commonJS({
       /**
        * The first host address in the range given by this address's subnet ie
        * the first address after the Network Address
-       * @memberof Address4
-       * @instance
        * @returns {Address4}
        */
       startAddressExclusive() {
@@ -303,8 +381,6 @@ var require_ipv4 = __commonJS({
       }
       /**
        * Helper function getting end address.
-       * @memberof Address4
-       * @instance
        * @returns {bigint}
        */
       _endAddress() {
@@ -313,8 +389,6 @@ var require_ipv4 = __commonJS({
       /**
        * The last address in the range given by this address' subnet
        * Often referred to as the Broadcast
-       * @memberof Address4
-       * @instance
        * @returns {Address4}
        */
       endAddress() {
@@ -323,8 +397,6 @@ var require_ipv4 = __commonJS({
       /**
        * The last host address in the range given by this address's subnet ie
        * the last address prior to the Broadcast Address
-       * @memberof Address4
-       * @instance
        * @returns {Address4}
        */
       endAddressExclusive() {
@@ -332,19 +404,47 @@ var require_ipv4 = __commonJS({
         return _Address4.fromBigInt(this._endAddress() - adjust);
       }
       /**
-       * Converts a BigInt to a v4 address object
-       * @memberof Address4
-       * @static
+       * The dotted-decimal form of the subnet mask, e.g. `255.255.240.0` for
+       * a `/20`. Returns an `Address4`; call `.correctForm()` for the string.
+       * @returns {Address4}
+       */
+      subnetMaskAddress() {
+        return _Address4.fromBigInt(BigInt(`0b${"1".repeat(this.subnetMask)}${"0".repeat(constants.BITS - this.subnetMask)}`));
+      }
+      /**
+       * The Cisco-style wildcard mask, e.g. `0.0.0.255` for a `/24`. This is
+       * the bitwise inverse of `subnetMaskAddress()`. Returns an `Address4`;
+       * call `.correctForm()` for the string.
+       * @returns {Address4}
+       */
+      wildcardMask() {
+        return _Address4.fromBigInt(BigInt(`0b${"0".repeat(this.subnetMask)}${"1".repeat(constants.BITS - this.subnetMask)}`));
+      }
+      /**
+       * The network address in CIDR string form, e.g. `192.168.1.0/24` for
+       * `192.168.1.5/24`. For an address with no explicit subnet the prefix is
+       * `/32`, e.g. `networkForm()` on `192.168.1.5` returns `192.168.1.5/32`.
+       * @returns {string}
+       */
+      networkForm() {
+        return `${this.startAddress().correctForm()}/${this.subnetMask}`;
+      }
+      /**
+       * Converts a BigInt to a v4 address object. The value must be in the
+       * range `[0, 2**32 - 1]`; otherwise `AddressError` is thrown.
        * @param {bigint} bigInt - a BigInt to convert
        * @returns {Address4}
        */
       static fromBigInt(bigInt) {
-        return _Address4.fromHex(bigInt.toString(16));
+        if (bigInt < 0n || bigInt > 0xffffffffn) {
+          throw new address_error_1.AddressError("IPv4 BigInt must be in the range 0 to 2**32 - 1");
+        }
+        return _Address4.fromHex(bigInt.toString(16).padStart(8, "0"));
       }
       /**
-       * Convert a byte array to an Address4 object
-       * @memberof Address4
-       * @static
+       * Convert a byte array to an Address4 object.
+       *
+       * To convert from a Node.js `Buffer`, spread it: `Address4.fromByteArray([...buf])`.
        * @param {Array<number>} bytes - an array of 4 bytes (0-255)
        * @returns {Address4}
        */
@@ -361,8 +461,6 @@ var require_ipv4 = __commonJS({
       }
       /**
        * Convert an unsigned byte array to an Address4 object
-       * @memberof Address4
-       * @static
        * @param {Array<number>} bytes - an array of 4 unsigned bytes (0-255)
        * @returns {Address4}
        */
@@ -376,8 +474,6 @@ var require_ipv4 = __commonJS({
       /**
        * Returns the first n bits of the address, defaulting to the
        * subnet mask
-       * @memberof Address4
-       * @instance
        * @returns {String}
        */
       mask(mask) {
@@ -388,8 +484,6 @@ var require_ipv4 = __commonJS({
       }
       /**
        * Returns the bits in the given range as a base-2 string
-       * @memberof Address4
-       * @instance
        * @returns {string}
        */
       getBitsBase2(start, end) {
@@ -397,10 +491,8 @@ var require_ipv4 = __commonJS({
       }
       /**
        * Return the reversed ip6.arpa form of the address
-       * @memberof Address4
        * @param {Object} options
        * @param {boolean} options.omitSuffix - omit the "in-addr.arpa" suffix
-       * @instance
        * @returns {String}
        */
       reverseForm(options) {
@@ -415,21 +507,62 @@ var require_ipv4 = __commonJS({
       }
       /**
        * Returns true if the given address is a multicast address
-       * @memberof Address4
-       * @instance
        * @returns {boolean}
        */
       isMulticast() {
-        return this.isInSubnet(new _Address4("224.0.0.0/4"));
+        return this.isInSubnet(MULTICAST_V4);
+      }
+      /**
+       * Returns true if the address is in one of the [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) private address ranges (`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`).
+       * @returns {boolean}
+       */
+      isPrivate() {
+        return PRIVATE_V4.some((subnet) => this.isInSubnet(subnet));
+      }
+      /**
+       * Returns true if the address is in the loopback range `127.0.0.0/8` ([RFC 1122](https://datatracker.ietf.org/doc/html/rfc1122)).
+       * @returns {boolean}
+       */
+      isLoopback() {
+        return this.isInSubnet(LOOPBACK_V4);
+      }
+      /**
+       * Returns true if the address is in the link-local range `169.254.0.0/16` ([RFC 3927](https://datatracker.ietf.org/doc/html/rfc3927)).
+       * @returns {boolean}
+       */
+      isLinkLocal() {
+        return this.isInSubnet(LINK_LOCAL_V4);
+      }
+      /**
+       * Returns true if the address is the unspecified address `0.0.0.0`.
+       * @returns {boolean}
+       */
+      isUnspecified() {
+        return this.isInSubnet(UNSPECIFIED_V4);
+      }
+      /**
+       * Returns true if the address is the limited broadcast address `255.255.255.255` ([RFC 919](https://datatracker.ietf.org/doc/html/rfc919)).
+       * @returns {boolean}
+       */
+      isBroadcast() {
+        return this.isInSubnet(BROADCAST_V4);
+      }
+      /**
+       * Returns true if the address is in the carrier-grade NAT range `100.64.0.0/10` ([RFC 6598](https://datatracker.ietf.org/doc/html/rfc6598)).
+       * @returns {boolean}
+       */
+      isCGNAT() {
+        return this.isInSubnet(CGNAT_V4);
       }
       /**
        * Returns a zero-padded base-2 string representation of the address
-       * @memberof Address4
-       * @instance
        * @returns {string}
        */
       binaryZeroPad() {
-        return this.bigInt().toString(2).padStart(constants.BITS, "0");
+        if (this._binaryZeroPad === void 0) {
+          this._binaryZeroPad = this.bigInt().toString(2).padStart(constants.BITS, "0");
+        }
+        return this._binaryZeroPad;
       }
       /**
        * Groups an IPv4 address for inclusion at the end of an IPv6 address
@@ -441,12 +574,23 @@ var require_ipv4 = __commonJS({
       }
     };
     exports.Address4 = Address4;
+    var MULTICAST_V4 = new Address4("224.0.0.0/4");
+    var PRIVATE_V4 = [
+      new Address4("10.0.0.0/8"),
+      new Address4("172.16.0.0/12"),
+      new Address4("192.168.0.0/16")
+    ];
+    var LOOPBACK_V4 = new Address4("127.0.0.0/8");
+    var LINK_LOCAL_V4 = new Address4("169.254.0.0/16");
+    var UNSPECIFIED_V4 = new Address4("0.0.0.0/32");
+    var BROADCAST_V4 = new Address4("255.255.255.255/32");
+    var CGNAT_V4 = new Address4("100.64.0.0/10");
   }
 });
 
-// node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/v6/constants.js
+// node_modules/.pnpm/ip-address@10.2.0/node_modules/ip-address/dist/v6/constants.js
 var require_constants2 = __commonJS({
-  "node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/v6/constants.js"(exports) {
+  "node_modules/.pnpm/ip-address@10.2.0/node_modules/ip-address/dist/v6/constants.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.RE_URL_WITH_PORT = exports.RE_URL = exports.RE_ZONE_STRING = exports.RE_SUBNET_STRING = exports.RE_BAD_ADDRESS = exports.RE_BAD_CHARACTERS = exports.TYPES = exports.SCOPES = exports.GROUPS = exports.BITS = void 0;
@@ -484,7 +628,12 @@ var require_constants2 = __commonJS({
       "::/128": "Unspecified",
       "::1/128": "Loopback",
       "ff00::/8": "Multicast",
-      "fe80::/10": "Link-local unicast"
+      "fe80::/10": "Link-local unicast",
+      "fc00::/7": "Unique local",
+      "2002::/16": "6to4",
+      "2001:db8::/32": "Documentation",
+      "64:ff9b::/96": "NAT64 (well-known)",
+      "64:ff9b:1::/48": "NAT64 (local-use)"
     };
     exports.RE_BAD_CHARACTERS = /([^0-9a-f:/%])/gi;
     exports.RE_BAD_ADDRESS = /([0-9a-f]{5,}|:{3,}|[^:]:$|^:[^:]|\/$)/gi;
@@ -495,24 +644,28 @@ var require_constants2 = __commonJS({
   }
 });
 
-// node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/v6/helpers.js
+// node_modules/.pnpm/ip-address@10.2.0/node_modules/ip-address/dist/v6/helpers.js
 var require_helpers = __commonJS({
-  "node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/v6/helpers.js"(exports) {
+  "node_modules/.pnpm/ip-address@10.2.0/node_modules/ip-address/dist/v6/helpers.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
+    exports.escapeHtml = escapeHtml2;
     exports.spanAllZeroes = spanAllZeroes;
     exports.spanAll = spanAll;
     exports.spanLeadingZeroes = spanLeadingZeroes;
     exports.simpleGroup = simpleGroup;
+    function escapeHtml2(s) {
+      return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+    }
     function spanAllZeroes(s) {
-      return s.replace(/(0+)/g, '<span class="zero">$1</span>');
+      return escapeHtml2(s).replace(/(0+)/g, '<span class="zero">$1</span>');
     }
     function spanAll(s, offset = 0) {
       const letters = s.split("");
-      return letters.map((n, i) => `<span class="digit value-${n} position-${i + offset}">${spanAllZeroes(n)}</span>`).join("");
+      return letters.map((n, i) => `<span class="digit value-${escapeHtml2(n)} position-${i + offset}">${spanAllZeroes(n)}</span>`).join("");
     }
     function spanLeadingZeroesSimple(group) {
-      return group.replace(/^(0+)/, '<span class="zero">$1</span>');
+      return escapeHtml2(group).replace(/^(0+)/, '<span class="zero">$1</span>');
     }
     function spanLeadingZeroes(address) {
       const groups = address.split(":");
@@ -530,9 +683,9 @@ var require_helpers = __commonJS({
   }
 });
 
-// node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/v6/regular-expressions.js
+// node_modules/.pnpm/ip-address@10.2.0/node_modules/ip-address/dist/v6/regular-expressions.js
 var require_regular_expressions = __commonJS({
-  "node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/v6/regular-expressions.js"(exports) {
+  "node_modules/.pnpm/ip-address@10.2.0/node_modules/ip-address/dist/v6/regular-expressions.js"(exports) {
     "use strict";
     var __createBinding = exports && exports.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -622,9 +775,9 @@ var require_regular_expressions = __commonJS({
   }
 });
 
-// node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/ipv6.js
+// node_modules/.pnpm/ip-address@10.2.0/node_modules/ip-address/dist/ipv6.js
 var require_ipv6 = __commonJS({
-  "node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/ipv6.js"(exports) {
+  "node_modules/.pnpm/ip-address@10.2.0/node_modules/ip-address/dist/ipv6.js"(exports) {
     "use strict";
     var __createBinding = exports && exports.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -663,6 +816,7 @@ var require_ipv6 = __commonJS({
     var regular_expressions_1 = require_regular_expressions();
     var address_error_1 = require_address_error();
     var common_1 = require_common();
+    var isCorrect6 = common.isCorrect(constants6.BITS);
     function assert(condition) {
       if (!condition) {
         throw new Error("Assertion failed.");
@@ -708,7 +862,7 @@ var require_ipv6 = __commonJS({
         this.v4 = false;
         this.zone = "";
         this.isInSubnet = common.isInSubnet;
-        this.isCorrect = common.isCorrect(constants6.BITS);
+        this.isCorrect = isCorrect6;
         if (optionalGroups === void 0) {
           this.groups = constants6.GROUPS;
         } else {
@@ -735,6 +889,13 @@ var require_ipv6 = __commonJS({
         this.addressMinusSuffix = address;
         this.parsedAddress = this.parse(this.addressMinusSuffix);
       }
+      /**
+       * Returns true if the given string is a valid IPv6 address (with optional
+       * CIDR subnet and zone identifier), false otherwise. Host bits in the
+       * subnet portion are allowed (e.g. `2001:db8::1/32` is valid); for strict
+       * network-address validation compare `correctForm()` to
+       * `startAddress().correctForm()`, or use `networkForm()`.
+       */
       static isValid(address) {
         try {
           new _Address6(address);
@@ -744,9 +905,8 @@ var require_ipv6 = __commonJS({
         }
       }
       /**
-       * Convert a BigInt to a v6 address object
-       * @memberof Address6
-       * @static
+       * Convert a BigInt to a v6 address object. The value must be in the
+       * range `[0, 2**128 - 1]`; otherwise `AddressError` is thrown.
        * @param {bigint} bigInt - a BigInt to convert
        * @returns {Address6}
        * @example
@@ -755,19 +915,21 @@ var require_ipv6 = __commonJS({
        * address.correctForm(); // '::e8:d4a5:1000'
        */
       static fromBigInt(bigInt) {
+        if (bigInt < 0n || bigInt > (1n << BigInt(constants6.BITS)) - 1n) {
+          throw new address_error_1.AddressError("IPv6 BigInt must be in the range 0 to 2**128 - 1");
+        }
         const hex = bigInt.toString(16).padStart(32, "0");
         const groups = [];
-        let i;
-        for (i = 0; i < constants6.GROUPS; i++) {
+        for (let i = 0; i < constants6.GROUPS; i++) {
           groups.push(hex.slice(i * 4, (i + 1) * 4));
         }
         return new _Address6(groups.join(":"));
       }
       /**
-       * Convert a URL (with optional port number) to an address object
-       * @memberof Address6
-       * @static
-       * @param {string} url - a URL with optional port number
+       * Parse a URL (with optional bracketed host and port) into an address and
+       * port. Returns either `{ address, port }` on success or
+       * `{ error, address: null, port: null }` if the URL could not be parsed.
+       * Ports are returned as numbers (or `null` if absent or out of range).
        * @example
        * var addressAndPort = Address6.fromURL('http://[ffff::]:8080/foo/');
        * addressAndPort.address.correctForm(); // 'ffff::'
@@ -816,9 +978,88 @@ var require_ipv6 = __commonJS({
         };
       }
       /**
+       * Construct an `Address6` from an address and a hex subnet mask given as
+       * separate strings (e.g. as returned by Node's `os.networkInterfaces()`).
+       * Throws `AddressError` if the mask is non-contiguous (e.g.
+       * `ffff::ffff`).
+       * @example
+       * var address = Address6.fromAddressAndMask('fe80::1', 'ffff:ffff:ffff:ffff::');
+       * address.subnetMask; // 64
+       */
+      static fromAddressAndMask(address, mask) {
+        const bits = common.prefixLengthFromMask(new _Address6(mask).bigInt(), constants6.BITS);
+        return new _Address6(`${address}/${bits}`);
+      }
+      /**
+       * Construct an `Address6` from an address and a Cisco-style wildcard mask
+       * given as separate strings (e.g. `::ffff:ffff:ffff:ffff` for a `/64`).
+       * The wildcard mask is the bitwise inverse of the subnet mask. Throws
+       * `AddressError` if the mask is non-contiguous.
+       * @example
+       * var address = Address6.fromAddressAndWildcardMask('fe80::1', '::ffff:ffff:ffff:ffff');
+       * address.subnetMask; // 64
+       */
+      static fromAddressAndWildcardMask(address, wildcardMask) {
+        const wildcard = new _Address6(wildcardMask).bigInt();
+        const allOnes = (BigInt(1) << BigInt(constants6.BITS)) - BigInt(1);
+        const mask = wildcard ^ allOnes;
+        const bits = common.prefixLengthFromMask(mask, constants6.BITS);
+        return new _Address6(`${address}/${bits}`);
+      }
+      /**
+       * Construct an `Address6` from a wildcard pattern with trailing `*`
+       * groups. The number of trailing wildcards determines the prefix
+       * length: each `*` represents 16 bits. `::` is expanded to zero groups
+       * (not wildcards) before evaluating trailing wildcards.
+       *
+       * Only trailing whole-group wildcards are supported. Partial-group
+       * wildcards (e.g. `2001:db8::0*`) and interior wildcards (e.g.
+       * `*::1`) throw `AddressError`.
+       * @example
+       * Address6.fromWildcard('2001:db8:*:*:*:*:*:*').subnet;  // '/32'
+       * Address6.fromWildcard('2001:db8::*').subnet;           // '/112'
+       * Address6.fromWildcard('*:*:*:*:*:*:*:*').subnet;       // '/0'
+       */
+      static fromWildcard(input) {
+        if (input.includes("%") || input.includes("/")) {
+          throw new address_error_1.AddressError("Wildcard pattern must not include a zone or CIDR suffix");
+        }
+        const halves = input.split("::");
+        if (halves.length > 2) {
+          throw new address_error_1.AddressError("Wildcard pattern cannot contain more than one '::'");
+        }
+        let groups;
+        if (halves.length === 2) {
+          const left = halves[0] === "" ? [] : halves[0].split(":");
+          const right = halves[1] === "" ? [] : halves[1].split(":");
+          const remaining = constants6.GROUPS - left.length - right.length;
+          if (remaining < 1) {
+            throw new address_error_1.AddressError("Wildcard pattern with '::' has too many groups");
+          }
+          groups = [...left, ...new Array(remaining).fill("0"), ...right];
+        } else {
+          groups = input.split(":");
+        }
+        if (groups.length !== constants6.GROUPS) {
+          throw new address_error_1.AddressError("Wildcard pattern must have 8 groups");
+        }
+        let firstWildcard = -1;
+        for (let i = 0; i < groups.length; i++) {
+          if (groups[i] === "*") {
+            if (firstWildcard === -1) {
+              firstWildcard = i;
+            }
+          } else if (firstWildcard !== -1) {
+            throw new address_error_1.AddressError("Wildcard `*` must only appear in trailing groups (e.g. `2001:db8:*:*:*:*:*:*`)");
+          }
+        }
+        const trailing = firstWildcard === -1 ? 0 : groups.length - firstWildcard;
+        const replaced = groups.map((g) => g === "*" ? "0" : g);
+        const subnetBits = constants6.BITS - trailing * 16;
+        return new _Address6(`${replaced.join(":")}/${subnetBits}`);
+      }
+      /**
        * Create an IPv6-mapped address given an IPv4 address
-       * @memberof Address6
-       * @static
        * @param {string} address - An IPv4 address string
        * @returns {Address6}
        * @example
@@ -833,8 +1074,6 @@ var require_ipv6 = __commonJS({
       }
       /**
        * Return an address from ip6.arpa form
-       * @memberof Address6
-       * @static
        * @param {string} arpaFormAddress - an 'ip6.arpa' form address
        * @returns {Adress6}
        * @example
@@ -857,8 +1096,6 @@ var require_ipv6 = __commonJS({
       }
       /**
        * Return the Microsoft UNC transcription of the address
-       * @memberof Address6
-       * @instance
        * @returns {String} the Microsoft UNC transcription of the address
        */
       microsoftTranscription() {
@@ -866,8 +1103,6 @@ var require_ipv6 = __commonJS({
       }
       /**
        * Return the first n bits of the address, defaulting to the subnet mask
-       * @memberof Address6
-       * @instance
        * @param {number} [mask=subnet] - the number of bits to mask
        * @returns {String} the first n bits of the address as a string
        */
@@ -876,8 +1111,6 @@ var require_ipv6 = __commonJS({
       }
       /**
        * Return the number of possible subnets of a given size in the address
-       * @memberof Address6
-       * @instance
        * @param {number} [subnetSize=128] - the subnet size
        * @returns {String}
        */
@@ -893,8 +1126,6 @@ var require_ipv6 = __commonJS({
       }
       /**
        * Helper function getting start address.
-       * @memberof Address6
-       * @instance
        * @returns {bigint}
        */
       _startAddress() {
@@ -903,8 +1134,6 @@ var require_ipv6 = __commonJS({
       /**
        * The first address in the range given by this address' subnet
        * Often referred to as the Network Address.
-       * @memberof Address6
-       * @instance
        * @returns {Address6}
        */
       startAddress() {
@@ -913,8 +1142,6 @@ var require_ipv6 = __commonJS({
       /**
        * The first host address in the range given by this address's subnet ie
        * the first address after the Network Address
-       * @memberof Address6
-       * @instance
        * @returns {Address6}
        */
       startAddressExclusive() {
@@ -923,8 +1150,6 @@ var require_ipv6 = __commonJS({
       }
       /**
        * Helper function getting end address.
-       * @memberof Address6
-       * @instance
        * @returns {bigint}
        */
       _endAddress() {
@@ -933,8 +1158,6 @@ var require_ipv6 = __commonJS({
       /**
        * The last address in the range given by this address' subnet
        * Often referred to as the Broadcast
-       * @memberof Address6
-       * @instance
        * @returns {Address6}
        */
       endAddress() {
@@ -943,8 +1166,6 @@ var require_ipv6 = __commonJS({
       /**
        * The last host address in the range given by this address's subnet ie
        * the last address prior to the Broadcast Address
-       * @memberof Address6
-       * @instance
        * @returns {Address6}
        */
       endAddressExclusive() {
@@ -952,36 +1173,69 @@ var require_ipv6 = __commonJS({
         return _Address6.fromBigInt(this._endAddress() - adjust);
       }
       /**
-       * Return the scope of the address
-       * @memberof Address6
-       * @instance
+       * The hex form of the subnet mask, e.g. `ffff:ffff:ffff:ffff::` for a
+       * `/64`. Returns an `Address6`; call `.correctForm()` for the string.
+       * @returns {Address6}
+       */
+      subnetMaskAddress() {
+        return _Address6.fromBigInt(BigInt(`0b${"1".repeat(this.subnetMask)}${"0".repeat(constants6.BITS - this.subnetMask)}`));
+      }
+      /**
+       * The Cisco-style wildcard mask, e.g. `::ffff:ffff:ffff:ffff` for a
+       * `/64`. This is the bitwise inverse of `subnetMaskAddress()`. Returns
+       * an `Address6`; call `.correctForm()` for the string.
+       * @returns {Address6}
+       */
+      wildcardMask() {
+        return _Address6.fromBigInt(BigInt(`0b${"0".repeat(this.subnetMask)}${"1".repeat(constants6.BITS - this.subnetMask)}`));
+      }
+      /**
+       * The network address in CIDR string form, e.g. `2001:db8::/32` for
+       * `2001:db8::1/32`. For an address with no explicit subnet the prefix
+       * is `/128`, e.g. `networkForm()` on `2001:db8::1` returns
+       * `2001:db8::1/128`.
+       * @returns {string}
+       */
+      networkForm() {
+        return `${this.startAddress().correctForm()}/${this.subnetMask}`;
+      }
+      /**
+       * Return the scope of the address. The 4-bit scope field
+       * ([RFC 4291 §2.7](https://datatracker.ietf.org/doc/html/rfc4291#section-2.7))
+       * is only defined for multicast addresses; for unicast addresses the scope
+       * is derived from the address type per
+       * [RFC 4007 §6](https://datatracker.ietf.org/doc/html/rfc4007#section-6).
        * @returns {String}
        */
       getScope() {
-        let scope = constants6.SCOPES[parseInt(this.getBits(12, 16).toString(10), 10)];
-        if (this.getType() === "Global unicast" && scope !== "Link local") {
-          scope = "Global";
+        const type = this.getType();
+        if (type === "Multicast" || type.startsWith("Multicast ")) {
+          const scope = constants6.SCOPES[parseInt(this.getBits(12, 16).toString(10), 10)];
+          return scope || "Unknown";
         }
-        return scope || "Unknown";
+        if (type === "Link-local unicast" || type === "Loopback") {
+          return "Link local";
+        }
+        if (type === "Unspecified") {
+          return "Unknown";
+        }
+        return "Global";
       }
       /**
        * Return the type of the address
-       * @memberof Address6
-       * @instance
        * @returns {String}
        */
       getType() {
-        for (const subnet of Object.keys(constants6.TYPES)) {
-          if (this.isInSubnet(new _Address6(subnet))) {
-            return constants6.TYPES[subnet];
+        for (let i = 0; i < TYPE_SUBNETS.length; i++) {
+          const entry = TYPE_SUBNETS[i];
+          if (this.isInSubnet(entry[0])) {
+            return entry[1];
           }
         }
         return "Global unicast";
       }
       /**
        * Return the bits in the given range as a BigInt
-       * @memberof Address6
-       * @instance
        * @returns {bigint}
        */
       getBits(start, end) {
@@ -989,8 +1243,6 @@ var require_ipv6 = __commonJS({
       }
       /**
        * Return the bits in the given range as a base-2 string
-       * @memberof Address6
-       * @instance
        * @returns {String}
        */
       getBitsBase2(start, end) {
@@ -998,8 +1250,6 @@ var require_ipv6 = __commonJS({
       }
       /**
        * Return the bits in the given range as a base-16 string
-       * @memberof Address6
-       * @instance
        * @returns {String}
        */
       getBitsBase16(start, end) {
@@ -1011,8 +1261,6 @@ var require_ipv6 = __commonJS({
       }
       /**
        * Return the bits that are set past the subnet mask length
-       * @memberof Address6
-       * @instance
        * @returns {String}
        */
       getBitsPastSubnet() {
@@ -1020,10 +1268,8 @@ var require_ipv6 = __commonJS({
       }
       /**
        * Return the reversed ip6.arpa form of the address
-       * @memberof Address6
        * @param {Object} options
        * @param {boolean} options.omitSuffix - omit the "ip6.arpa" suffix
-       * @instance
        * @returns {String}
        */
       reverseForm(options) {
@@ -1044,10 +1290,10 @@ var require_ipv6 = __commonJS({
         return "ip6.arpa.";
       }
       /**
-       * Return the correct form of the address
-       * @memberof Address6
-       * @instance
-       * @returns {String}
+       * Returns the address in correct form, per
+       * [RFC 5952](https://datatracker.ietf.org/doc/html/rfc5952): leading zeros
+       * stripped, the longest run of zero groups collapsed to `::`, and hex digits
+       * lowercased (e.g. `2001:db8::1`). This is the recommended form for display.
        */
       correctForm() {
         let i;
@@ -1089,8 +1335,6 @@ var require_ipv6 = __commonJS({
       }
       /**
        * Return a zero-padded base-2 string representation of the address
-       * @memberof Address6
-       * @instance
        * @returns {String}
        * @example
        * var address = new Address6('2001:4860:4001:803::1011');
@@ -1099,10 +1343,22 @@ var require_ipv6 = __commonJS({
        * //  0000000000000000000000000000000000000000000000000001000000010001'
        */
       binaryZeroPad() {
-        return this.bigInt().toString(2).padStart(constants6.BITS, "0");
+        if (this._binaryZeroPad === void 0) {
+          this._binaryZeroPad = this.bigInt().toString(2).padStart(constants6.BITS, "0");
+        }
+        return this._binaryZeroPad;
       }
+      /**
+       * Parses a v4-in-v6 string (e.g. `::ffff:192.168.0.1`) by extracting the
+       * trailing IPv4 address into `this.address4` / `this.parsedAddress4` and
+       * returning the address with the v4 portion converted to two v6 groups.
+       * Used internally by `parse()`.
+       */
       // TODO: Improve the semantics of this helper function
       parse4in6(address) {
+        if (address.indexOf(".") === -1) {
+          return address;
+        }
         const groups = address.split(":");
         const lastGroup = groups.slice(-1)[0];
         const address4 = lastGroup.match(constants4.RE_ADDRESS);
@@ -1111,7 +1367,10 @@ var require_ipv6 = __commonJS({
           this.address4 = new ipv4_1.Address4(this.parsedAddress4);
           for (let i = 0; i < this.address4.groups; i++) {
             if (/^0[0-9]+/.test(this.address4.parsedAddress[i])) {
-              throw new address_error_1.AddressError("IPv4 addresses can't have leading zeroes.", address.replace(constants4.RE_ADDRESS, this.address4.parsedAddress.map(spanLeadingZeroes4).join(".")));
+              const highlighted = this.address4.parsedAddress.map(spanLeadingZeroes4).join(".");
+              const prefix = groups.slice(0, -1).map(helpers.escapeHtml).join(":");
+              const separator = groups.length > 1 ? ":" : "";
+              throw new address_error_1.AddressError("IPv4 addresses can't have leading zeroes.", `${prefix}${separator}${highlighted}`);
             }
           }
           this.v4 = true;
@@ -1120,6 +1379,13 @@ var require_ipv6 = __commonJS({
         }
         return address;
       }
+      /**
+       * Parses an IPv6 address string into its 8 hexadecimal groups (expanding
+       * any `::` elision and any trailing v4-in-v6 portion) and stores the result
+       * on `this.parsedAddress`. Called automatically by the constructor; you
+       * typically don't need to call it directly. Throws `AddressError` if the
+       * input is malformed.
+       */
       // TODO: Make private?
       parse(address) {
         address = this.parse4in6(address);
@@ -1167,18 +1433,16 @@ var require_ipv6 = __commonJS({
         return groups;
       }
       /**
-       * Return the canonical form of the address
-       * @memberof Address6
-       * @instance
-       * @returns {String}
+       * Returns the canonical (fully expanded) form of the address: all 8 groups,
+       * each padded to 4 hex digits, with no `::` collapsing
+       * (e.g. `2001:0db8:0000:0000:0000:0000:0000:0001`). Useful for sorting and
+       * byte-exact comparison.
        */
       canonicalForm() {
         return this.parsedAddress.map(paddedHex).join(":");
       }
       /**
        * Return the decimal form of the address
-       * @memberof Address6
-       * @instance
        * @returns {String}
        */
       decimal() {
@@ -1186,8 +1450,6 @@ var require_ipv6 = __commonJS({
       }
       /**
        * Return the address as a BigInt
-       * @memberof Address6
-       * @instance
        * @returns {bigint}
        */
       bigInt() {
@@ -1195,8 +1457,6 @@ var require_ipv6 = __commonJS({
       }
       /**
        * Return the last two groups of this address as an IPv4 address string
-       * @memberof Address6
-       * @instance
        * @returns {Address4}
        * @example
        * var address = new Address6('2001:4860:4001::1825:bf11');
@@ -1204,12 +1464,10 @@ var require_ipv6 = __commonJS({
        */
       to4() {
         const binary = this.binaryZeroPad().split("");
-        return ipv4_1.Address4.fromHex(BigInt(`0b${binary.slice(96, 128).join("")}`).toString(16));
+        return ipv4_1.Address4.fromHex(BigInt(`0b${binary.slice(96, 128).join("")}`).toString(16).padStart(8, "0"));
       }
       /**
        * Return the v4-in-v6 form of the address
-       * @memberof Address6
-       * @instance
        * @returns {String}
        */
       to4in6() {
@@ -1223,10 +1481,10 @@ var require_ipv6 = __commonJS({
         return correct + infix + address4.address;
       }
       /**
-       * Return an object containing the Teredo properties of the address
-       * @memberof Address6
-       * @instance
-       * @returns {Object}
+       * Decodes the Teredo tunneling fields embedded in this address. Returns the
+       * Teredo prefix, server IPv4, client IPv4, raw flag bits, cone-NAT flag,
+       * UDP port, and Microsoft-format flag breakdown (reserved, universal/local,
+       * group/individual, nonce). Only meaningful for addresses in `2001::/32`.
        */
       inspectTeredo() {
         const prefix = this.getBitsBase16(0, 32);
@@ -1234,7 +1492,7 @@ var require_ipv6 = __commonJS({
         const udpPort = (bitsForUdpPort ^ BigInt("0xffff")).toString();
         const server4 = ipv4_1.Address4.fromHex(this.getBitsBase16(32, 64));
         const bitsForClient4 = this.getBits(96, 128);
-        const client4 = ipv4_1.Address4.fromHex((bitsForClient4 ^ BigInt("0xffffffff")).toString(16));
+        const client4 = ipv4_1.Address4.fromHex((bitsForClient4 ^ BigInt("0xffffffff")).toString(16).padStart(8, "0"));
         const flagsBase2 = this.getBitsBase2(64, 80);
         const coneNat = (0, common_1.testBit)(flagsBase2, 15);
         const reserved = (0, common_1.testBit)(flagsBase2, 14);
@@ -1257,10 +1515,9 @@ var require_ipv6 = __commonJS({
         };
       }
       /**
-       * Return an object containing the 6to4 properties of the address
-       * @memberof Address6
-       * @instance
-       * @returns {Object}
+       * Decodes the 6to4 tunneling fields embedded in this address. Returns the
+       * 6to4 prefix and the embedded IPv4 gateway address. Only meaningful for
+       * addresses in `2002::/16`.
        */
       inspect6to4() {
         const prefix = this.getBitsBase16(0, 16);
@@ -1272,8 +1529,6 @@ var require_ipv6 = __commonJS({
       }
       /**
        * Return a v6 6to4 address from a v6 v4inv6 address
-       * @memberof Address6
-       * @instance
        * @returns {Address6}
        */
       to6to4() {
@@ -1290,9 +1545,73 @@ var require_ipv6 = __commonJS({
         return new _Address6(addr6to4);
       }
       /**
-       * Return a byte array
-       * @memberof Address6
-       * @instance
+       * Embed an IPv4 address into a NAT64 IPv6 address using the encoding
+       * defined by [RFC 6052](https://datatracker.ietf.org/doc/html/rfc6052).
+       * The default prefix is the well-known prefix `64:ff9b::/96`. The prefix
+       * length must be one of 32, 40, 48, 56, 64, or 96; for prefixes shorter
+       * than /64 the IPv4 octets are split around the reserved bits 64–71.
+       * @example
+       * Address6.fromAddress4Nat64('192.0.2.33').correctForm(); // '64:ff9b::c000:221'
+       * Address6.fromAddress4Nat64('192.0.2.33', '2001:db8::/32').correctForm(); // '2001:db8:c000:221::'
+       */
+      static fromAddress4Nat64(address, prefix = "64:ff9b::/96") {
+        const v4 = new ipv4_1.Address4(address);
+        const prefix6 = new _Address6(prefix);
+        const pl = prefix6.subnetMask;
+        if (pl !== 32 && pl !== 40 && pl !== 48 && pl !== 56 && pl !== 64 && pl !== 96) {
+          throw new address_error_1.AddressError("NAT64 prefix length must be 32, 40, 48, 56, 64, or 96");
+        }
+        const prefixBits = prefix6.binaryZeroPad();
+        const v4Bits = v4.binaryZeroPad();
+        let bits;
+        if (pl === 96) {
+          bits = prefixBits.slice(0, 96) + v4Bits;
+        } else {
+          const beforeU = 64 - pl;
+          bits = prefixBits.slice(0, pl) + v4Bits.slice(0, beforeU) + "00000000" + v4Bits.slice(beforeU) + "0".repeat(128 - 72 - (32 - beforeU));
+        }
+        const hex = BigInt(`0b${bits}`).toString(16).padStart(32, "0");
+        const groups = [];
+        for (let i = 0; i < 8; i++) {
+          groups.push(hex.slice(i * 4, (i + 1) * 4));
+        }
+        return new _Address6(groups.join(":"));
+      }
+      /**
+       * Extract the embedded IPv4 address from a NAT64 IPv6 address using the
+       * encoding defined by [RFC 6052](https://datatracker.ietf.org/doc/html/rfc6052).
+       * The default prefix is the well-known prefix `64:ff9b::/96`. Returns
+       * `null` if this address is not contained within the given prefix.
+       * @example
+       * new Address6('64:ff9b::c000:221').toAddress4Nat64()!.correctForm(); // '192.0.2.33'
+       */
+      toAddress4Nat64(prefix = "64:ff9b::/96") {
+        const prefix6 = new _Address6(prefix);
+        const pl = prefix6.subnetMask;
+        if (pl !== 32 && pl !== 40 && pl !== 48 && pl !== 56 && pl !== 64 && pl !== 96) {
+          throw new address_error_1.AddressError("NAT64 prefix length must be 32, 40, 48, 56, 64, or 96");
+        }
+        if (!this.isInSubnet(prefix6)) {
+          return null;
+        }
+        const bits = this.binaryZeroPad();
+        let v4Bits;
+        if (pl === 96) {
+          v4Bits = bits.slice(96, 128);
+        } else {
+          const beforeU = 64 - pl;
+          v4Bits = bits.slice(pl, pl + beforeU) + bits.slice(72, 72 + (32 - beforeU));
+        }
+        const octets = [];
+        for (let i = 0; i < 4; i++) {
+          octets.push(parseInt(v4Bits.slice(i * 8, (i + 1) * 8), 2).toString());
+        }
+        return new ipv4_1.Address4(octets.join("."));
+      }
+      /**
+       * Return a byte array.
+       *
+       * To get a Node.js `Buffer`, wrap the result: `Buffer.from(address.toByteArray())`.
        * @returns {Array}
        */
       toByteArray() {
@@ -1306,27 +1625,27 @@ var require_ipv6 = __commonJS({
         return bytes;
       }
       /**
-       * Return an unsigned byte array
-       * @memberof Address6
-       * @instance
+       * Return an unsigned byte array.
+       *
+       * To get a Node.js `Buffer`, wrap the result: `Buffer.from(address.toUnsignedByteArray())`.
        * @returns {Array}
        */
       toUnsignedByteArray() {
         return this.toByteArray().map(unsignByte);
       }
       /**
-       * Convert a byte array to an Address6 object
-       * @memberof Address6
-       * @static
+       * Convert a byte array to an Address6 object.
+       *
+       * To convert from a Node.js `Buffer`, spread it: `Address6.fromByteArray([...buf])`.
        * @returns {Address6}
        */
       static fromByteArray(bytes) {
         return this.fromUnsignedByteArray(bytes.map(unsignByte));
       }
       /**
-       * Convert an unsigned byte array to an Address6 object
-       * @memberof Address6
-       * @static
+       * Convert an unsigned byte array to an Address6 object.
+       *
+       * To convert from a Node.js `Buffer`, spread it: `Address6.fromUnsignedByteArray([...buf])`.
        * @returns {Address6}
        */
       static fromUnsignedByteArray(bytes) {
@@ -1341,8 +1660,6 @@ var require_ipv6 = __commonJS({
       }
       /**
        * Returns true if the address is in the canonical form, false otherwise
-       * @memberof Address6
-       * @instance
        * @returns {boolean}
        */
       isCanonical() {
@@ -1350,8 +1667,6 @@ var require_ipv6 = __commonJS({
       }
       /**
        * Returns true if the address is a link local address, false otherwise
-       * @memberof Address6
-       * @instance
        * @returns {boolean}
        */
       isLinkLocal() {
@@ -1362,53 +1677,81 @@ var require_ipv6 = __commonJS({
       }
       /**
        * Returns true if the address is a multicast address, false otherwise
-       * @memberof Address6
-       * @instance
        * @returns {boolean}
        */
       isMulticast() {
-        return this.getType() === "Multicast";
+        const type = this.getType();
+        return type === "Multicast" || type.startsWith("Multicast ");
       }
       /**
-       * Returns true if the address is a v4-in-v6 address, false otherwise
-       * @memberof Address6
-       * @instance
+       * Returns true if the address was written in v4-in-v6 dotted-quad notation
+       * (e.g. `::ffff:127.0.0.1`), false otherwise. This is a notation-level flag
+       * and does not reflect whether the address bits lie in the IPv4-mapped
+       * (`::ffff:0:0/96`) subnet — for that, see {@link isMapped4}.
        * @returns {boolean}
        */
       is4() {
         return this.v4;
       }
       /**
+       * Returns true if the address is an IPv4-mapped IPv6 address in
+       * `::ffff:0:0/96` ([RFC 4291 §2.5.5.2](https://datatracker.ietf.org/doc/html/rfc4291#section-2.5.5.2)),
+       * false otherwise. Unlike {@link is4}, this checks the underlying address
+       * bits rather than the textual notation, so `::ffff:127.0.0.1` and
+       * `::ffff:7f00:1` both return true.
+       * @returns {boolean}
+       */
+      isMapped4() {
+        return this.isInSubnet(IPV4_MAPPED_SUBNET);
+      }
+      /**
        * Returns true if the address is a Teredo address, false otherwise
-       * @memberof Address6
-       * @instance
        * @returns {boolean}
        */
       isTeredo() {
-        return this.isInSubnet(new _Address6("2001::/32"));
+        return this.isInSubnet(TEREDO_SUBNET);
       }
       /**
        * Returns true if the address is a 6to4 address, false otherwise
-       * @memberof Address6
-       * @instance
        * @returns {boolean}
        */
       is6to4() {
-        return this.isInSubnet(new _Address6("2002::/16"));
+        return this.isInSubnet(SIX_TO_FOUR_SUBNET);
       }
       /**
        * Returns true if the address is a loopback address, false otherwise
-       * @memberof Address6
-       * @instance
        * @returns {boolean}
        */
       isLoopback() {
         return this.getType() === "Loopback";
       }
+      /**
+       * Returns true if the address is a Unique Local Address in `fc00::/7` ([RFC 4193](https://datatracker.ietf.org/doc/html/rfc4193)). ULAs are the IPv6 equivalent of IPv4 [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) private addresses.
+       * @returns {boolean}
+       */
+      isULA() {
+        return this.isInSubnet(ULA_SUBNET);
+      }
+      /**
+       * Returns true if the address is the unspecified address `::`.
+       * @returns {boolean}
+       */
+      isUnspecified() {
+        return this.getType() === "Unspecified";
+      }
+      /**
+       * Returns true if the address is in the documentation prefix `2001:db8::/32` ([RFC 3849](https://datatracker.ietf.org/doc/html/rfc3849)).
+       * @returns {boolean}
+       */
+      isDocumentation() {
+        return this.isInSubnet(DOCUMENTATION_SUBNET);
+      }
       // #endregion
       // #region HTML
       /**
-       * @returns {String} the address in link form with a default port of 80
+       * Returns the address as an HTTP URL with the host bracketed, e.g.
+       * `http://[2001:db8::1]/`. If `optionalPort` is provided it is appended,
+       * e.g. `http://[2001:db8::1]:8080/`.
        */
       href(optionalPort) {
         if (optionalPort === void 0) {
@@ -1419,7 +1762,12 @@ var require_ipv6 = __commonJS({
         return `http://[${this.correctForm()}]${optionalPort}/`;
       }
       /**
-       * @returns {String} a link suitable for conveying the address via a URL hash
+       * Returns an HTML `<a>` element whose `href` encodes the address in a URL
+       * hash fragment (default prefix `/#address=`). Useful for linking between
+       * pages of an address-inspector UI.
+       * @param options.className - CSS class for the rendered `<a>` element
+       * @param options.prefix - hash prefix prepended to the address (default `/#address=`)
+       * @param options.v4 - when true, render the address in v4-in-v6 form
        */
       link(options) {
         if (!options) {
@@ -1439,10 +1787,13 @@ var require_ipv6 = __commonJS({
           formFunction = this.to4in6;
         }
         const form = formFunction.call(this);
+        const safeHref = helpers.escapeHtml(`${options.prefix}${form}`);
+        const safeForm = helpers.escapeHtml(form);
         if (options.className) {
-          return `<a href="${options.prefix}${form}" class="${options.className}">${form}</a>`;
+          const safeClass = helpers.escapeHtml(options.className);
+          return `<a href="${safeHref}" class="${safeClass}">${safeForm}</a>`;
         }
-        return `<a href="${options.prefix}${form}">${form}</a>`;
+        return `<a href="${safeHref}">${safeForm}</a>`;
       }
       /**
        * Groups an address
@@ -1450,12 +1801,12 @@ var require_ipv6 = __commonJS({
        */
       group() {
         if (this.elidedGroups === 0) {
-          return helpers.simpleGroup(this.address).join(":");
+          return helpers.simpleGroup(this.addressMinusSuffix).join(":");
         }
         assert(typeof this.elidedGroups === "number");
         assert(typeof this.elisionBegin === "number");
         const output = [];
-        const [left, right] = this.address.split("::");
+        const [left, right] = this.addressMinusSuffix.split("::");
         if (left.length) {
           output.push(...helpers.simpleGroup(left));
         } else {
@@ -1483,8 +1834,6 @@ var require_ipv6 = __commonJS({
       /**
        * Generate a regular expression string that can be used to find or validate
        * all variations of this address
-       * @memberof Address6
-       * @instance
        * @param {boolean} substringSearch
        * @returns {string}
        */
@@ -1523,8 +1872,6 @@ var require_ipv6 = __commonJS({
       /**
        * Generate a regular expression that can be used to find or validate all
        * variations of this address.
-       * @memberof Address6
-       * @instance
        * @param {boolean} substringSearch
        * @returns {RegExp}
        */
@@ -1533,12 +1880,21 @@ var require_ipv6 = __commonJS({
       }
     };
     exports.Address6 = Address62;
+    var TYPE_SUBNETS = Object.keys(constants6.TYPES).map((subnet) => [
+      new Address62(subnet),
+      constants6.TYPES[subnet]
+    ]);
+    var TEREDO_SUBNET = new Address62("2001::/32");
+    var SIX_TO_FOUR_SUBNET = new Address62("2002::/16");
+    var ULA_SUBNET = new Address62("fc00::/7");
+    var DOCUMENTATION_SUBNET = new Address62("2001:db8::/32");
+    var IPV4_MAPPED_SUBNET = new Address62("::ffff:0:0/96");
   }
 });
 
-// node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/ip-address.js
+// node_modules/.pnpm/ip-address@10.2.0/node_modules/ip-address/dist/ip-address.js
 var require_ip_address = __commonJS({
-  "node_modules/.pnpm/ip-address@10.1.0/node_modules/ip-address/dist/ip-address.js"(exports) {
+  "node_modules/.pnpm/ip-address@10.2.0/node_modules/ip-address/dist/ip-address.js"(exports) {
     "use strict";
     var __createBinding = exports && exports.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -1589,6 +1945,7 @@ var require_ip_address = __commonJS({
 // server.prod.ts
 import fs from "fs";
 import path from "path";
+import process2 from "process";
 import { fileURLToPath } from "url";
 import { UTC2Date } from "@lincy/utils";
 import compression from "compression";
@@ -1596,10 +1953,10 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import logger from "morgan";
-import requestIp2 from "request-ip";
+import requestIp3 from "request-ip";
 import serveStatic from "serve-static";
 
-// node_modules/.pnpm/express-rate-limit@8.3.2_express@5.2.1/node_modules/express-rate-limit/dist/index.mjs
+// node_modules/.pnpm/express-rate-limit@8.5.2_express@5.2.1/node_modules/express-rate-limit/dist/index.mjs
 var import_ip_address = __toESM(require_ip_address(), 1);
 import { isIPv6 } from "net";
 import { isIPv6 as isIPv62 } from "net";
@@ -1612,7 +1969,7 @@ function ipKeyGenerator(ip, ipv6Subnet = 56) {
     if (address.is4()) return address.to4().correctForm();
     if (ipv6Subnet) {
       const subnet = new import_ip_address.Address6(`${ip}/${ipv6Subnet}`);
-      return `${subnet.startAddress().correctForm()}/${ipv6Subnet}`;
+      return subnet.networkForm();
     }
   }
   return ip;
@@ -1755,6 +2112,14 @@ var MemoryStore = class {
   clearExpired() {
     this.previous = this.current;
     this.current = /* @__PURE__ */ new Map();
+  }
+};
+var ConsoleLogger = {
+  warn(...args) {
+    console.warn(...args.reverse());
+  },
+  error(...args) {
+    console.error(...args.reverse());
   }
 };
 var SUPPORTED_DRAFT_VERSIONS = [
@@ -2096,7 +2461,8 @@ var validations = {
       validate: true,
       headers: true,
       max: true,
-      passOnStoreError: true
+      passOnStoreError: true,
+      logger: true
     };
     const validOptions = Object.keys(optionsMap).concat(
       "draft_polli_ratelimit_headers",
@@ -2209,7 +2575,15 @@ var validations = {
     }
   }
 };
-var getValidations = (_enabled) => {
+function validateLogger(logger2) {
+  if (typeof logger2 !== "object" || typeof logger2.error !== "function" || typeof logger2.warn !== "function") {
+    throw new TypeError(
+      "Provided logger does not implement the Logger interface"
+    );
+  }
+}
+var getValidations = (_enabled, logger2) => {
+  validateLogger(logger2);
   let enabled;
   if (typeof _enabled === "boolean") {
     enabled = {
@@ -2235,8 +2609,8 @@ var getValidations = (_enabled) => {
             args
           );
         } catch (error) {
-          if (error instanceof ChangeWarning) console.warn(error);
-          else console.error(error);
+          if (error instanceof ChangeWarning) logger2.warn(error);
+          else logger2.error(error);
         }
       };
   }
@@ -2287,7 +2661,11 @@ var getOptionsFromConfig = (config) => {
 };
 var parseOptions = (passedOptions) => {
   const notUndefinedOptions = omitUndefinedProperties(passedOptions);
-  const validations2 = getValidations(notUndefinedOptions?.validate ?? true);
+  const logger2 = passedOptions.logger ?? ConsoleLogger;
+  const validations2 = getValidations(
+    notUndefinedOptions?.validate ?? true,
+    logger2
+  );
   validations2.validationsConfig();
   validations2.knownOptions(passedOptions);
   validations2.draftPolliHeaders(
@@ -2362,7 +2740,8 @@ var parseOptions = (passedOptions) => {
       notUndefinedOptions.store ?? new MemoryStore(validations2)
     ),
     // Print an error to the console if a few known misconfigurations are detected.
-    validations: validations2
+    validations: validations2,
+    logger: logger2
   };
   if (typeof config.store.increment !== "function" || typeof config.store.decrement !== "function" || typeof config.store.resetKey !== "function" || config.store.resetAll !== void 0 && typeof config.store.resetAll !== "function" || config.store.init !== void 0 && typeof config.store.init !== "function") {
     throw new TypeError(
@@ -2383,7 +2762,24 @@ var rateLimit = (passedOptions) => {
   const options = getOptionsFromConfig(config);
   config.validations.creationStack(config.store);
   config.validations.unsharedStore(config.store);
-  if (typeof config.store.init === "function") config.store.init(options);
+  if (typeof config.store.init === "function") {
+    try {
+      const storeInit = config.store.init(options);
+      if (storeInit instanceof Promise) {
+        storeInit.catch(
+          (error) => config.logger.error(
+            error,
+            "express-rate-limit: async error during store initialization."
+          )
+        );
+      }
+    } catch (error) {
+      config.logger.error(
+        error,
+        "express-rate-limit: error during store initialization."
+      );
+    }
+  }
   const middleware = handleAsyncErrors(
     async (request, response, next) => {
       const closePromise = config.skipFailedRequests && new Promise((resolve) => response.once("close", resolve));
@@ -2404,9 +2800,9 @@ var rateLimit = (passedOptions) => {
         resetTime = incrementResult.resetTime;
       } catch (error) {
         if (config.passOnStoreError) {
-          console.error(
-            "express-rate-limit: error from store, allowing request without rate-limiting.",
-            error
+          config.logger.error(
+            error,
+            "express-rate-limit: error from store, allowing request without rate-limiting."
           );
           next();
           return;
@@ -2515,7 +2911,7 @@ var rate_limit_default = rateLimit;
 
 // server.middleware.ts
 import requestIp from "request-ip";
-var skipExt = [".webmanifest", ".txt", ".map", ".js", ".css", ".png", "jpg", ".jpeg", ".gif", ".webp", ".ttf", ".woff2", ".ico"];
+var skipExt = [".webmanifest", ".txt", ".map", ".js", ".css", ".png", ".jpg", ".jpeg", ".gif", ".webp", ".ttf", ".woff2", ".ico"];
 var staticPaths = [
   "/static/",
   "/assets/",
@@ -2569,16 +2965,59 @@ var mainLimiter = rate_limit_default({
   },
   handler: (req, res, _next, options) => {
     console.warn(`IP ${requestIp.getClientIp(req)} \u88AB\u9650\u5236\u8BBF\u95EE ${req.path}`);
-    res.status(200).json({
+    const retryAfterSec = Math.max(1, Math.ceil(options.windowMs / 1e3));
+    res.status(429).set("Retry-After", String(retryAfterSec)).json({
       code: 429,
       error: "\u8BF7\u6C42\u8FC7\u4E8E\u9891\u7E41",
       message: options.message,
-      retryAfter: "1\u5206\u949F",
+      retryAfterSeconds: retryAfterSec,
       currentTime: (/* @__PURE__ */ new Date()).toISOString()
     });
   }
 });
 var server_middleware_default = mainLimiter;
+
+// server-ssr-error.ts
+function escapeHtml(text) {
+  return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+function handleSsrRouteError(res, err, exposeStack) {
+  const error = err instanceof Error ? err : new Error(String(err));
+  console.error("[SSR]", error.stack || error.message);
+  res.status(500).set({ "Content-Type": "text/html; charset=utf-8" });
+  if (exposeStack) {
+    const body = escapeHtml(error.stack || error.message);
+    res.end(`<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><title>500</title></head><body><pre>${body}</pre></body></html>`);
+  } else {
+    res.end('<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><title>\u9519\u8BEF</title></head><body><p>\u670D\u52A1\u5668\u7E41\u5FD9\uFF0C\u8BF7\u7A0D\u540E\u91CD\u8BD5\u3002</p></body></html>');
+  }
+}
+
+// server-url-guard.ts
+import requestIp2 from "request-ip";
+var BLOCKED_EXTENSIONS = [".php", ".asp", ".jsp", ".jspx", ".aspx", ".ashx"];
+var SENSITIVE_PATH_PREFIX = "/lincenying/";
+function urlGuardMiddleware(req, res, next) {
+  try {
+    decodeURIComponent(req.url);
+    const hitExt = BLOCKED_EXTENSIONS.some(
+      (ext) => req.url.endsWith(ext) || req.url.includes(`${ext}?`)
+    );
+    if (hitExt || req.url.startsWith(SENSITIVE_PATH_PREFIX)) {
+      throw new Error("blocked");
+    }
+    next();
+  } catch {
+    const ip = requestIp2.getClientIp(req) || "unknown";
+    console.warn(`IP ${ip} \u88AB\u9650\u5236\u8BBF\u95EE ${req.url.substring(0, 200)}`);
+    res.status(400).json({
+      error: "bad_request",
+      message: "\u8BF7\u6C42\u4E0D\u5408\u6CD5\u6216\u5305\u542B\u65E0\u6548\u5B57\u7B26",
+      request_id: `${Date.now()}`,
+      ip
+    });
+  }
+}
 
 // src/api/url.js
 import process from "process";
@@ -2587,33 +3026,19 @@ console.log(`\u5F53\u524DAPI\u5730\u5740: ${url}`);
 var url_default = url;
 
 // server.prod.ts
+var BODY_PARSER_LIMIT = "10mb";
 async function createServer() {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const resolve = (p) => path.resolve(__dirname, p);
   const template = fs.readFileSync(resolve("client/index.html"), "utf-8");
   const manifest = JSON.parse(fs.readFileSync(resolve("client/.vite/ssr-manifest.json"), "utf-8"));
   const app = express();
-  app.use((req, res, next) => {
-    try {
-      decodeURIComponent(req.url);
-      const fuckExt = [".php", ".asp", ".jsp", ".jspx", ".aspx", ".ashx"];
-      if (fuckExt.some((ext) => req.url.endsWith(ext) || req.url.includes(`${ext}?`)) || req.url.startsWith("/lincenying/")) {
-        throw new Error("\u304A\u524D\u306E\u6BCD\u89AA\u3092\u72AF\u3057\u3066\u3084\u308B\uFF01\u541B\u306F\u81EA\u5206\u306E\u6BCD\u89AA\u306E\u30BB\u30AD\u30E5\u30EA\u30C6\u30A3\u4E0A\u306E\u8106\u5F31\u6027\u3092\u30B9\u30AD\u30E3\u30F3\u3057\u3066\u3044\u308B\u306E\u304B\uFF1F");
-      }
-      next();
-    } catch (err) {
-      console.warn(`IP ${requestIp2.getClientIp(req)} \u88AB\u9650\u5236\u8BBF\u95EE ${req.url.substring(0, 200)}`);
-      res.status(400).json({
-        error: "bad_request",
-        message: err.message || "\u8BF7\u6C42\u5305\u542B\u65E0\u6548\u5B57\u7B26",
-        request_id: `${Date.now()}`,
-        // 用于追踪
-        ip: requestIp2.getClientIp(req) || "unknown"
-      });
-    }
-  });
+  if (process2.env.TRUST_PROXY === "1") {
+    app.set("trust proxy", 1);
+  }
+  app.use(urlGuardMiddleware);
   logger.token("remote-addr", (req) => {
-    return requestIp2.getClientIp(req) || "unknown";
+    return requestIp3.getClientIp(req) || "unknown";
   });
   logger.token("date", () => {
     return UTC2Date(void 0, "yyyy-mm-dd hh:ii:ss.SSS");
@@ -2639,7 +3064,7 @@ async function createServer() {
       },
       on: {
         proxyReq(proxyReq, req) {
-          proxyReq.setHeader("x-real-ip", requestIp2.getClientIp(req) || "unknown");
+          proxyReq.setHeader("x-real-ip", requestIp3.getClientIp(req) || "unknown");
         }
       }
     })
@@ -2649,20 +3074,19 @@ async function createServer() {
       index: false
     })
   );
-  app.use(express.json({ limit: "50mb" }));
-  app.use(express.urlencoded({ limit: "50mb", extended: true }));
+  app.use(express.json({ limit: BODY_PARSER_LIMIT }));
+  app.use(express.urlencoded({ limit: BODY_PARSER_LIMIT, extended: true }));
   app.use(cookieParser());
+  const { render } = await import("./server/entry-server.js");
+  const exposeSsrStack = process2.env.NODE_ENV !== "production";
   app.use("/{*default}", async (req, res) => {
     try {
       const url2 = req.originalUrl;
-      const render = (await import("./server/entry-server.js")).render;
-      const { html: appHtml, preloadLinks, headTags } = await render(url2, manifest, req);
+      const { html: appHtml, preloadLinks, headTags, statusCode } = await render(url2, manifest, req);
       const html = template.replace("<!--preload-links-->", preloadLinks).replace("<!--app-html-->", appHtml).replace("<!--head-tags-->", headTags);
-      res.status(200).set({ "Content-Type": "text/html" }).end(html);
+      res.status(statusCode).set({ "Content-Type": "text/html" }).end(html);
     } catch (e) {
-      const err = e;
-      console.log(err.stack);
-      res.status(500).end(err.stack);
+      handleSsrRouteError(res, e, exposeSsrStack);
     }
   });
   return { app };

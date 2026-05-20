@@ -13,37 +13,18 @@ import requestIp from 'request-ip'
 import { skipExt } from 'server.middleware'
 import { createServer as viteCreateServer } from 'vite'
 
+import { handleSsrRouteError } from './server-ssr-error'
+import { urlGuardMiddleware } from './server-url-guard'
+
+const BODY_PARSER_LIMIT = '10mb'
+
 export async function createServer(root = process.cwd(), hmrPort?: number) {
     const __dirname = path.dirname(fileURLToPath(import.meta.url))
     const resolve = (p: string) => path.resolve(__dirname, p)
     const manifest = {}
     const app = express()
 
-    app.use((req, res, next) => {
-        try {
-            // 尝试规范化URL
-            decodeURIComponent(req.url)
-            const fuckExt = ['.php', '.asp', '.jsp', '.jspx', '.aspx', '.ashx']
-            if (
-                fuckExt.some(ext => req.url.endsWith(ext) || req.url.includes(`${ext}?`))
-                || req.url.startsWith('/lincenying/')
-            ) {
-                throw new Error('お前の母親を犯してやる！君は自分の母親のセキュリティ上の脆弱性をスキャンしているのか？')
-            }
-            next()
-        }
-        catch (err: any) {
-            // 记录并返回友好的错误
-            console.warn(`IP ${requestIp.getClientIp(req)} 被限制访问 ${req.url.substring(0, 200)}`)
-
-            res.status(400).json({
-                error: 'bad_request',
-                message: err.message || '请求包含无效字符',
-                request_id: `${Date.now()}`, // 用于追踪
-                ip: requestIp.getClientIp(req) || 'unknown',
-            })
-        }
-    })
+    app.use(urlGuardMiddleware)
 
     logger.token('remote-addr', (req) => {
         return requestIp.getClientIp(req) || 'unknown'
@@ -63,36 +44,43 @@ export async function createServer(root = process.cwd(), hmrPort?: number) {
         }),
     )
 
+    const useChokidarPolling = process.env.SSR_CHOKIDAR_USEPOLLING === '1'
+
+    const viteServer: NonNullable<import('vite').InlineConfig['server']> = {
+        middlewareMode: true,
+        hmr: {
+            port: hmrPort,
+        },
+    }
+    if (useChokidarPolling) {
+        viteServer.watch = {
+            // 仅在需要时开启轮询（环境变量 SSR_CHOKIDAR_USEPOLLING=1），避免默认拉高 CPU
+            usePolling: true,
+            interval: 100,
+        }
+    }
+
     const vite = await viteCreateServer({
         base: '/',
         root,
         logLevel: 'info',
-        server: {
-            middlewareMode: true,
-            watch: {
-                // 在测试期间，编辑文件的速度太快，有时会出现 chokidar 错过更改事件，因此强制执行轮询以确保一致性
-                usePolling: true,
-                interval: 100,
-            },
-            hmr: {
-                port: hmrPort,
-            },
-        },
+        server: viteServer,
         appType: 'custom',
     })
     // 使用 vite 的 connect 实例作为中间件
     app.use(vite.middlewares)
 
     // 解析 application/json 中间件
-    app.use(express.json({ limit: '50mb' }))
+    app.use(express.json({ limit: BODY_PARSER_LIMIT }))
     // 解析 application/x-www-form-urlencoded 中间件
-    app.use(express.urlencoded({ limit: '50mb', extended: true }))
+    app.use(express.urlencoded({ limit: BODY_PARSER_LIMIT, extended: true }))
     // 解析 cookies 中间件
     app.use(cookieParser())
 
+    const exposeSsrStack = process.env.NODE_ENV !== 'production'
+
     app.use('/{*default}', async (req, res) => {
         try {
-            // const url = req.originalUrl.replace('/test/', '/')
             const url = req.originalUrl
 
             // 总是在开发中读取新模板
@@ -100,21 +88,19 @@ export async function createServer(root = process.cwd(), hmrPort?: number) {
             template = await vite.transformIndexHtml(url, template)
             const render = (await vite.ssrLoadModule('/src/entry-server.ts')).render
 
-            const { html: appHtml, preloadLinks, headTags } = await render(url, manifest, req) as RenderType
+            const { html: appHtml, preloadLinks, headTags, statusCode } = await render(url, manifest, req) as RenderType
 
             const html = template
                 .replace('<!--preload-links-->', preloadLinks)
                 .replace('<!--app-html-->', appHtml)
                 .replace('<!--head-tags-->', headTags)
 
-            res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
+            res.status(statusCode).set({ 'Content-Type': 'text/html' }).end(html)
         }
         catch (e: unknown) {
             const err = e as Error
-            if (vite)
-                vite.ssrFixStacktrace(err)
-            console.log(err.stack)
-            res.status(500).end(err.stack)
+            vite.ssrFixStacktrace(err)
+            handleSsrRouteError(res, e, exposeSsrStack)
         }
     })
 

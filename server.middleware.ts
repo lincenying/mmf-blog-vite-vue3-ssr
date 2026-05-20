@@ -1,7 +1,7 @@
 import rateLimit from 'express-rate-limit'
 import requestIp from 'request-ip'
 
-export const skipExt = ['.webmanifest', '.txt', '.map', '.js', '.css', '.png', 'jpg', '.jpeg', '.gif', '.webp', '.ttf', '.woff2', '.ico']
+export const skipExt = ['.webmanifest', '.txt', '.map', '.js', '.css', '.png', '.jpg', '.jpeg', '.gif', '.webp', '.ttf', '.woff2', '.ico']
 
 const staticPaths = [
     '/static/',
@@ -72,16 +72,20 @@ const mainLimiter = rateLimit({
         return `${requestIp.getClientIp(req)}:${req.get('user-agent') || ''}`
     },
     handler: (req, res, _next, options) => {
-    // 记录被限制的请求
+        // 记录被限制的请求
         console.warn(`IP ${requestIp.getClientIp(req)} 被限制访问 ${req.path}`)
 
-        res.status(200).json({
-            code: 429,
-            error: '请求过于频繁',
-            message: options.message,
-            retryAfter: '1分钟',
-            currentTime: new Date().toISOString(),
-        })
+        const retryAfterSec = Math.max(1, Math.ceil(options.windowMs / 1000))
+        res
+            .status(429)
+            .set('Retry-After', String(retryAfterSec))
+            .json({
+                code: 429,
+                error: '请求过于频繁',
+                message: options.message,
+                retryAfterSeconds: retryAfterSec,
+                currentTime: new Date().toISOString(),
+            })
     },
 })
 

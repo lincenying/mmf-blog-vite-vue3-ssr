@@ -1,3 +1,4 @@
+import type { Request } from 'express'
 import type { Pinia } from 'pinia'
 import type { RouteComponent, RouteLocationNormalized } from 'vue-router'
 
@@ -6,9 +7,13 @@ export interface RenderType {
     preloadLinks: string
     headTags: string
     store: Pinia
+    /** SSR 响应 HTTP 状态，如 404 命中 catch-all 路由 */
+    statusCode: number
 }
 
-export type CusRouteComponent = RouteComponent & { asyncData: (payload: AsyncDataConfig) => Promise<any> }
+export type CusRouteComponent = RouteComponent & {
+    asyncData?: (payload: AsyncDataConfig) => Promise<unknown>
+}
 
 /**
  * 服务端回传参数
@@ -24,7 +29,7 @@ export interface AsyncDataConfig {
     store: Pinia
     route: RouteLocationNormalized
     api: ApiServer | ApiClient
-    req?: any
+    req?: Request
 }
 
 /**

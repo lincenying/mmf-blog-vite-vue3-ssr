@@ -4,7 +4,7 @@ import type { CusRouteComponent, RenderType } from './types'
 
 import { basename } from 'node:path'
 
-import { createHead, renderSSRHead } from '@unhead/vue/server'
+import { createHead } from '@unhead/vue/server'
 import { renderToString } from '@vue/server-renderer'
 
 import { createApp } from './main'
@@ -63,21 +63,23 @@ function replaceHtmlTag(html: string): string {
     return html.replace(/<script(.*?)>/gi, '&lt;script$1&gt;').replace(/<\/script>/g, '&lt;/script&gt;')
 }
 
-export async function render(url: string, manifest: Objable<string[]>, req: Request): Promise<RenderType> {
+export async function render(url: string, manifest: Objable<string[]>, req?: Request): Promise<RenderType> {
     const { app, router, store } = createApp()
     const head = createHead({
         disableDefaults: true,
     })
+
+    const cookies = req?.cookies ?? {}
 
     app.use(head)
         .component('ReloadPrompt', { render: () => null })
         .component('VMdEditor', { render: () => null })
 
     // 在渲染之前将路由器设置为所需的 URL
-    if (url.includes('/backend') && !url.includes('/login') && !req.cookies.b_user) {
+    if (url.includes('/backend') && !url.includes('/login') && !cookies.b_user) {
         await router.push('/backend/login')
     }
-    else if (url.includes('/user') && !req.cookies.user) {
+    else if (url.includes('/user') && !cookies.user) {
         await router.push('/')
     }
     else {
@@ -86,46 +88,44 @@ export async function render(url: string, manifest: Objable<string[]>, req: Requ
 
     await router.isReady()
 
-    if (router.currentRoute.value.matched.length === 0) {
-        // context.throw(404, "Not Found");
-    }
+    const current = router.currentRoute.value
+    const statusCode = current.matched.length === 0 || current.name === '404' ? 404 : 200
 
-    const matchedComponents = router.currentRoute.value.matched.flatMap((record) => {
+    const matchedComponents = current.matched.flatMap((record) => {
         return Object.values(record.components as Record<string, CusRouteComponent>)
     })
 
     const globalStore = useGlobalStore(store)
-    globalStore.setCookies(req.cookies)
+    globalStore.setCookies(cookies)
 
-    try {
-        await Promise.all(
-            matchedComponents.map((component) => {
-                if (component.asyncData) {
-                    return component.asyncData({
-                        store,
-                        route: router.currentRoute.value,
-                        req,
-                        api: sapi(req && req.cookies),
-                    })
-                }
+    const asyncTasks = matchedComponents
+        .map((component) => {
+            if (!component.asyncData) {
                 return null
-            }).filter(Boolean),
-        )
-    }
-    catch (error) {
-        console.log(error)
-    }
+            }
+            return component.asyncData({
+                store,
+                route: current,
+                req,
+                api: sapi(cookies),
+            })
+        })
+        .filter((task): task is Promise<unknown> => task != null)
+
+    await Promise.all(asyncTasks)
 
     // 传递可通过 useSSRContext() 使用的 SSR 上下文对象 @vitejs/plugin-vue 将代码注入到组件的 setup() 中，该组件在 ctx.modules 上注册。
     // 渲染之后，ctx.modules 将包含在此渲染调用期间已实例化的所有组件。
     const ctx: Objable = {}
     let html = await renderToString(app, ctx)
 
-    const { headTags } = await renderSSRHead(head)
+    const { headTags } = head.render()
 
     html += `<script>window.__INITIAL_STATE__ = ${replaceHtmlTag(JSON.stringify(store.state.value))}</script>`
 
     // Vite 生成的 SSR 清单包含模块 -> 块/资产映射，然后我们可以使用它来确定需要为此请求预加载哪些文件。
-    const preloadLinks = renderPreloadLinks(ctx.modules, manifest)
-    return { html, preloadLinks, headTags, store }
+    const rawModules = ctx.modules as Set<string> | undefined
+    const moduleIds = rawModules ? [...rawModules] : []
+    const preloadLinks = renderPreloadLinks(moduleIds, manifest)
+    return { html, preloadLinks, headTags, store, statusCode }
 }
