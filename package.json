@@ -3,10 +3,10 @@
   "type": "module",
   "version": "1.25.1029",
   "private": true,
-  "packageManager": "pnpm@10.33.4",
+  "packageManager": "pnpm@11.2.2",
   "author": "lincenying <lincenying@qq.com>",
   "engines": {
-    "node": ">=16.13.0"
+    "node": ">=22.0.0"
   },
   "scripts": {
     "serve": "nodemon --watch ./server.dev.ts --exec tsx ./server.dev.ts",
@@ -22,7 +22,6 @@
     "lint:fix": "eslint . --fix",
     "lint:css": "stylelint '**/*.{css,scss}' --fix --allow-empty-input",
     "release": "bumpp",
-    "prepare[-del]": "npx simple-git-hooks",
     "lint-staged": "lint-staged"
   },
   "dependencies": {
@@ -79,13 +78,11 @@
     "eslint": "catalog:lint",
     "eslint-plugin-format": "catalog:lint",
     "express-rate-limit": "catalog:dev",
-    "lint-staged": "catalog:dev",
     "mockjs": "catalog:dev",
     "nodemon": "catalog:dev",
     "polyfill-library": "catalog:dev",
     "postcss": "catalog:dev",
     "sass-embedded": "catalog:dev",
-    "simple-git-hooks": "catalog:dev",
     "stylelint": "catalog:lint",
     "tsup": "catalog:dev",
     "tsx": "catalog:dev",
