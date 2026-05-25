@@ -31,6 +31,8 @@
 </template>
 
 <script setup lang="ts">
+import type { Category } from '~/types'
+
 import { ContentLoader } from 'vue-content-loader'
 
 defineOptions({
@@ -92,7 +94,7 @@ const headTitle = computed(() => {
     let title = 'M.M.F 小屋'
     const { id, key, by } = route.params
     if (id) {
-        const obj = category.find(item => item._id === id)
+        const obj = category.find((item: Category) => item._id === id)
         if (obj) {
             title = `${obj.cate_name} - ${title}`
         }

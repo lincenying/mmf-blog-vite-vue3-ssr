@@ -13,7 +13,7 @@ export function api(cookies: UserCookies): ApiServer {
         baseURL: config.api,
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
-            'cookie': objToCookies(cookies),
+            'cookie': objToCookies(cookies as Record<string, string | number | boolean>),
         },
         timeout: config.timeout,
     })

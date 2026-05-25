@@ -37,7 +37,7 @@ Run the backend first (Express + TypeScript):
 
 **[mmf-blog-api-ts](https://github.com/lincenying/mmf-blog-api-ts)**
 
-Default API base used by Node when `API_URL` is unset: `http://127.0.0.1:4000` (see `src/api/url.js`). Vite dev proxies `/api` to the value resolved from that module / env.
+Default API base used by Node when `API_URL` is unset: `http://127.0.0.1:4000` (see `src/api/url.ts`). Vite dev proxies `/api` to the value resolved from that module / env.
 
 ## Prerequisites
 

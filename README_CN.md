@@ -37,7 +37,7 @@
 
 **[mmf-blog-api-ts](https://github.com/lincenying/mmf-blog-api-ts)**
 
-未设置 `API_URL` 时，Node 侧默认请求 `http://127.0.0.1:4000`（见 `src/api/url.js`）。开发环境下 Vite 会将 `/api` 代理到该地址（见 `vite.config.build.ts`）。
+未设置 `API_URL` 时，Node 侧默认请求 `http://127.0.0.1:4000`（见 `src/api/url.ts`）。开发环境下 Vite 会将 `/api` 代理到该地址（见 `vite.config.build.ts`）。
 
 ## 环境要求
 

@@ -1,5 +1,3 @@
-import type { AnyFn } from '@vueuse/core'
-
 import md5 from 'md5'
 
 export function useGlobal() {
@@ -33,18 +31,22 @@ export function useGlobal() {
  * <div v-on:click="Fn(123)"></div>
  * ```
  */
-export function useLockFn(fn: AnyFn, autoUnlock: boolean | 'auto' = 'auto') {
+export function useLockFn<A extends unknown[], R>(
+    fn: (...args: A) => R | Promise<R>,
+    autoUnlock: boolean | 'auto' = 'auto',
+) {
     const [lock, toggleLock] = useToggle(false)
-    return async (...args: any[]) => {
+    return async (...args: A): Promise<R | void> => {
         if (lock.value) {
             return
         }
         toggleLock(true)
         try {
-            const $return: any = await fn(...args)
-            if (autoUnlock === true || (autoUnlock === 'auto' && $return !== false)) {
+            const result = await fn(...args)
+            if (autoUnlock === true || (autoUnlock === 'auto' && result !== false)) {
                 toggleLock(false)
             }
+            return result
         }
         catch (e) {
             toggleLock(false)

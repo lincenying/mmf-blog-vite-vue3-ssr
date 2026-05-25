@@ -7,12 +7,12 @@
 export {}
 declare global {
   const EffectScope: typeof import('vue').EffectScope
-  const appShellStoreWithout: typeof import('./pinia/use-app-shell-store').appShellStoreWithout
+  const appShellStoreWithout: typeof import('./stores/use-app-shell-store').appShellStoreWithout
   const asyncComputed: typeof import('@vueuse/core').asyncComputed
   const autoResetRef: typeof import('@vueuse/core').autoResetRef
-  const backendAdminStoreWithout: typeof import('./pinia/use-backend-admin-store').backendAdminStoreWithout
-  const backendArticleStoreWithout: typeof import('./pinia/use-backend-article-store').backendArticleStoreWithout
-  const backendUserStoreWithout: typeof import('./pinia/use-backend-user-store').backendUserStoreWithout
+  const backendAdminStoreWithout: typeof import('./stores/use-backend-admin-store').backendAdminStoreWithout
+  const backendArticleStoreWithout: typeof import('./stores/use-backend-article-store').backendArticleStoreWithout
+  const backendUserStoreWithout: typeof import('./stores/use-backend-user-store').backendUserStoreWithout
   const capi: typeof import('@/api/index-client').default
   const computed: typeof import('vue').computed
   const computedAsync: typeof import('@vueuse/core').computedAsync
@@ -42,14 +42,14 @@ declare global {
   const eagerComputed: typeof import('@vueuse/core').eagerComputed
   const effectScope: typeof import('vue').effectScope
   const extendRef: typeof import('@vueuse/core').extendRef
-  const frontendArticleStoreWithout: typeof import('./pinia/use-frontend-article-store').frontendArticleStoreWithout
+  const frontendArticleStoreWithout: typeof import('./stores/use-frontend-article-store').frontendArticleStoreWithout
   const getActiveHead: typeof import('@unhead/vue')['getActiveHead']
   const getCurrentInstance: typeof import('vue').getCurrentInstance
   const getCurrentScope: typeof import('vue').getCurrentScope
   const getCurrentWatcher: typeof import('vue').getCurrentWatcher
-  const globalCategoryStoreWithout: typeof import('./pinia/use-global-category-store').globalCategoryStoreWithout
-  const globalCommentStoreWithout: typeof import('./pinia/use-global-comment-store').globalCommentStoreWithout
-  const globalStoreWithout: typeof import('./pinia/use-global-store').globalStoreWithout
+  const globalCategoryStoreWithout: typeof import('./stores/use-global-category-store').globalCategoryStoreWithout
+  const globalCommentStoreWithout: typeof import('./stores/use-global-comment-store').globalCommentStoreWithout
+  const globalStoreWithout: typeof import('./stores/use-global-store').globalStoreWithout
   const h: typeof import('vue').h
   const ignorableWatch: typeof import('@vueuse/core').ignorableWatch
   const inject: typeof import('vue').inject
@@ -87,7 +87,7 @@ declare global {
   const onUpdated: typeof import('vue').onUpdated
   const onWatcherCleanup: typeof import('vue').onWatcherCleanup
   const pausableWatch: typeof import('@vueuse/core').pausableWatch
-  const piniaInit: typeof import('./pinia/index').piniaInit
+  const piniaInit: typeof import('./stores/index').piniaInit
   const provide: typeof import('vue').provide
   const provideLocal: typeof import('@vueuse/core').provideLocal
   const reactify: typeof import('@vueuse/core').reactify
@@ -108,7 +108,7 @@ declare global {
   const resolveRef: typeof import('@vueuse/core').resolveRef
   const resolveUnref: typeof import('@vueuse/core').resolveUnref
   const sapi: typeof import('@/api/index-server').api
-  const setupPinia: typeof import('./pinia/index').setupPinia
+  const setupPinia: typeof import('./stores/index').setupPinia
   const shallowReactive: typeof import('vue').shallowReactive
   const shallowReadonly: typeof import('vue').shallowReadonly
   const shallowRef: typeof import('vue').shallowRef
@@ -136,7 +136,7 @@ declare global {
   const uploadApi: typeof import('@/api/upload-api').uploadApi
   const useActiveElement: typeof import('@vueuse/core').useActiveElement
   const useAnimate: typeof import('@vueuse/core').useAnimate
-  const useAppShellStore: typeof import('./pinia/use-app-shell-store').default
+  const useAppShellStore: typeof import('./stores/use-app-shell-store').default
   const useArrayDifference: typeof import('@vueuse/core').useArrayDifference
   const useArrayEvery: typeof import('@vueuse/core').useArrayEvery
   const useArrayFilter: typeof import('@vueuse/core').useArrayFilter
@@ -153,9 +153,9 @@ declare global {
   const useAsyncState: typeof import('@vueuse/core').useAsyncState
   const useAttrs: typeof import('vue').useAttrs
   const useAvatar: typeof import('./composables/index').useAvatar
-  const useBackendAdminStore: typeof import('./pinia/use-backend-admin-store').default
-  const useBackendArticleStore: typeof import('./pinia/use-backend-article-store').default
-  const useBackendUserStore: typeof import('./pinia/use-backend-user-store').default
+  const useBackendAdminStore: typeof import('./stores/use-backend-admin-store').default
+  const useBackendArticleStore: typeof import('./stores/use-backend-article-store').default
+  const useBackendUserStore: typeof import('./stores/use-backend-user-store').default
   const useBase64: typeof import('@vueuse/core').useBase64
   const useBattery: typeof import('@vueuse/core').useBattery
   const useBluetooth: typeof import('@vueuse/core').useBluetooth
@@ -205,14 +205,14 @@ declare global {
   const useFocus: typeof import('@vueuse/core').useFocus
   const useFocusWithin: typeof import('@vueuse/core').useFocusWithin
   const useFps: typeof import('@vueuse/core').useFps
-  const useFrontendArticleStore: typeof import('./pinia/use-frontend-article-store').default
+  const useFrontendArticleStore: typeof import('./stores/use-frontend-article-store').default
   const useFullscreen: typeof import('@vueuse/core').useFullscreen
   const useGamepad: typeof import('@vueuse/core').useGamepad
   const useGeolocation: typeof import('@vueuse/core').useGeolocation
   const useGlobal: typeof import('./composables/index').useGlobal
-  const useGlobalCategoryStore: typeof import('./pinia/use-global-category-store').default
-  const useGlobalCommentStore: typeof import('./pinia/use-global-comment-store').default
-  const useGlobalStore: typeof import('./pinia/use-global-store').default
+  const useGlobalCategoryStore: typeof import('./stores/use-global-category-store').default
+  const useGlobalCommentStore: typeof import('./stores/use-global-comment-store').default
+  const useGlobalStore: typeof import('./stores/use-global-store').default
   const useHead: typeof import('@unhead/vue').useHead
   const useHeadSafe: typeof import('@unhead/vue').useHeadSafe
   const useId: typeof import('vue').useId
@@ -351,12 +351,12 @@ declare module 'vue' {
   interface GlobalComponents {}
   interface ComponentCustomProperties {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
-    readonly appShellStoreWithout: UnwrapRef<typeof import('./pinia/use-app-shell-store')['appShellStoreWithout']>
+    readonly appShellStoreWithout: UnwrapRef<typeof import('./stores/use-app-shell-store')['appShellStoreWithout']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
-    readonly backendAdminStoreWithout: UnwrapRef<typeof import('./pinia/use-backend-admin-store')['backendAdminStoreWithout']>
-    readonly backendArticleStoreWithout: UnwrapRef<typeof import('./pinia/use-backend-article-store')['backendArticleStoreWithout']>
-    readonly backendUserStoreWithout: UnwrapRef<typeof import('./pinia/use-backend-user-store')['backendUserStoreWithout']>
+    readonly backendAdminStoreWithout: UnwrapRef<typeof import('./stores/use-backend-admin-store')['backendAdminStoreWithout']>
+    readonly backendArticleStoreWithout: UnwrapRef<typeof import('./stores/use-backend-article-store')['backendArticleStoreWithout']>
+    readonly backendUserStoreWithout: UnwrapRef<typeof import('./stores/use-backend-user-store')['backendUserStoreWithout']>
     readonly capi: UnwrapRef<typeof import('@/api/index-client')['default']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
@@ -386,13 +386,13 @@ declare module 'vue' {
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
-    readonly frontendArticleStoreWithout: UnwrapRef<typeof import('./pinia/use-frontend-article-store')['frontendArticleStoreWithout']>
+    readonly frontendArticleStoreWithout: UnwrapRef<typeof import('./stores/use-frontend-article-store')['frontendArticleStoreWithout']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly getCurrentWatcher: UnwrapRef<typeof import('vue')['getCurrentWatcher']>
-    readonly globalCategoryStoreWithout: UnwrapRef<typeof import('./pinia/use-global-category-store')['globalCategoryStoreWithout']>
-    readonly globalCommentStoreWithout: UnwrapRef<typeof import('./pinia/use-global-comment-store')['globalCommentStoreWithout']>
-    readonly globalStoreWithout: UnwrapRef<typeof import('./pinia/use-global-store')['globalStoreWithout']>
+    readonly globalCategoryStoreWithout: UnwrapRef<typeof import('./stores/use-global-category-store')['globalCategoryStoreWithout']>
+    readonly globalCommentStoreWithout: UnwrapRef<typeof import('./stores/use-global-comment-store')['globalCommentStoreWithout']>
+    readonly globalStoreWithout: UnwrapRef<typeof import('./stores/use-global-store')['globalStoreWithout']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
@@ -429,7 +429,7 @@ declare module 'vue' {
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
     readonly onWatcherCleanup: UnwrapRef<typeof import('vue')['onWatcherCleanup']>
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>
-    readonly piniaInit: UnwrapRef<typeof import('./pinia/index')['piniaInit']>
+    readonly piniaInit: UnwrapRef<typeof import('./stores/index')['piniaInit']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
     readonly provideLocal: UnwrapRef<typeof import('@vueuse/core')['provideLocal']>
     readonly reactify: UnwrapRef<typeof import('@vueuse/core')['reactify']>
@@ -448,7 +448,7 @@ declare module 'vue' {
     readonly refWithControl: UnwrapRef<typeof import('@vueuse/core')['refWithControl']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly sapi: UnwrapRef<typeof import('@/api/index-server')['api']>
-    readonly setupPinia: UnwrapRef<typeof import('./pinia/index')['setupPinia']>
+    readonly setupPinia: UnwrapRef<typeof import('./stores/index')['setupPinia']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
@@ -476,7 +476,7 @@ declare module 'vue' {
     readonly uploadApi: UnwrapRef<typeof import('@/api/upload-api')['uploadApi']>
     readonly useActiveElement: UnwrapRef<typeof import('@vueuse/core')['useActiveElement']>
     readonly useAnimate: UnwrapRef<typeof import('@vueuse/core')['useAnimate']>
-    readonly useAppShellStore: UnwrapRef<typeof import('./pinia/use-app-shell-store')['default']>
+    readonly useAppShellStore: UnwrapRef<typeof import('./stores/use-app-shell-store')['default']>
     readonly useArrayDifference: UnwrapRef<typeof import('@vueuse/core')['useArrayDifference']>
     readonly useArrayEvery: UnwrapRef<typeof import('@vueuse/core')['useArrayEvery']>
     readonly useArrayFilter: UnwrapRef<typeof import('@vueuse/core')['useArrayFilter']>
@@ -493,9 +493,9 @@ declare module 'vue' {
     readonly useAsyncState: UnwrapRef<typeof import('@vueuse/core')['useAsyncState']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
     readonly useAvatar: UnwrapRef<typeof import('./composables/index')['useAvatar']>
-    readonly useBackendAdminStore: UnwrapRef<typeof import('./pinia/use-backend-admin-store')['default']>
-    readonly useBackendArticleStore: UnwrapRef<typeof import('./pinia/use-backend-article-store')['default']>
-    readonly useBackendUserStore: UnwrapRef<typeof import('./pinia/use-backend-user-store')['default']>
+    readonly useBackendAdminStore: UnwrapRef<typeof import('./stores/use-backend-admin-store')['default']>
+    readonly useBackendArticleStore: UnwrapRef<typeof import('./stores/use-backend-article-store')['default']>
+    readonly useBackendUserStore: UnwrapRef<typeof import('./stores/use-backend-user-store')['default']>
     readonly useBase64: UnwrapRef<typeof import('@vueuse/core')['useBase64']>
     readonly useBattery: UnwrapRef<typeof import('@vueuse/core')['useBattery']>
     readonly useBluetooth: UnwrapRef<typeof import('@vueuse/core')['useBluetooth']>
@@ -545,14 +545,14 @@ declare module 'vue' {
     readonly useFocus: UnwrapRef<typeof import('@vueuse/core')['useFocus']>
     readonly useFocusWithin: UnwrapRef<typeof import('@vueuse/core')['useFocusWithin']>
     readonly useFps: UnwrapRef<typeof import('@vueuse/core')['useFps']>
-    readonly useFrontendArticleStore: UnwrapRef<typeof import('./pinia/use-frontend-article-store')['default']>
+    readonly useFrontendArticleStore: UnwrapRef<typeof import('./stores/use-frontend-article-store')['default']>
     readonly useFullscreen: UnwrapRef<typeof import('@vueuse/core')['useFullscreen']>
     readonly useGamepad: UnwrapRef<typeof import('@vueuse/core')['useGamepad']>
     readonly useGeolocation: UnwrapRef<typeof import('@vueuse/core')['useGeolocation']>
     readonly useGlobal: UnwrapRef<typeof import('./composables/index')['useGlobal']>
-    readonly useGlobalCategoryStore: UnwrapRef<typeof import('./pinia/use-global-category-store')['default']>
-    readonly useGlobalCommentStore: UnwrapRef<typeof import('./pinia/use-global-comment-store')['default']>
-    readonly useGlobalStore: UnwrapRef<typeof import('./pinia/use-global-store')['default']>
+    readonly useGlobalCategoryStore: UnwrapRef<typeof import('./stores/use-global-category-store')['default']>
+    readonly useGlobalCommentStore: UnwrapRef<typeof import('./stores/use-global-comment-store')['default']>
+    readonly useGlobalStore: UnwrapRef<typeof import('./stores/use-global-store')['default']>
     readonly useHead: UnwrapRef<typeof import('@unhead/vue')['useHead']>
     readonly useHeadSafe: UnwrapRef<typeof import('@unhead/vue')['useHeadSafe']>
     readonly useId: UnwrapRef<typeof import('vue')['useId']>

@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
 import type { AnyFn } from '@vueuse/core'
-import type { Article, Upload } from '~/types'
+import type { Article, Category, Upload } from '~/types'
 
 import VueMarkdownEditor from '@/plugin/v-md-editor'
 
@@ -82,7 +82,7 @@ const form = reactive({
 watch(
     () => form.category,
     (val) => {
-        const obj = lists.find(item => item._id === val)
+        const obj = lists.find((item: Category) => item._id === val)
         if (obj) {
             form.category_name = obj.cate_name
         }

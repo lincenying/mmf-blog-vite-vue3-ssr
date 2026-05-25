@@ -1,6 +1,6 @@
 import type { Request } from 'express'
 
-import type { CusRouteComponent, RenderType } from './types'
+import type { CusRouteComponent, IRenderType } from './types'
 
 import { basename } from 'node:path'
 
@@ -63,7 +63,7 @@ function replaceHtmlTag(html: string): string {
     return html.replace(/<script(.*?)>/gi, '&lt;script$1&gt;').replace(/<\/script>/g, '&lt;/script&gt;')
 }
 
-export async function render(url: string, manifest: Objable<string[]>, req?: Request): Promise<RenderType> {
+export async function render(url: string, manifest: Objable<string[]>, req?: Request): Promise<IRenderType> {
     const { app, router, store } = createApp()
     const head = createHead({
         disableDefaults: true,

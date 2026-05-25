@@ -1,5 +1,18 @@
 # 变更记录
 
+## 2026-05-25 17:30:13
+
+- 目录对齐规范：`src/pinia` → `src/stores`；`src/router.ts` 拆为 `router/index.ts`、`router/routes.ts`、`router/guards.ts`；`src/types.ts` 拆为 `types/api.ts`、`types/domain.ts`、`types/store.ts`、`types/ssr.ts` 并通过 `types/index.ts` 统一导出（保留 `Article`、`User` 等兼容别名）。
+- `src/app.vue` 重命名为 `App.vue`；`src/api/url.js` 改为 TypeScript `url.ts`。
+- 新增 `IApiResponse` 等 `I` 前缀类型；`composables/useLockFn` 使用泛型替代 `any`；`client-only` 改为 `<script setup>` + 模板实现。
+- 更新 `vite.config.components.ts` auto-import 目录、`auto-imports.d.ts` 路径及 README 中 API 地址说明。
+
+**commit message：**
+
+```
+refactor: 对齐项目目录规范并拆分 types/router/stores
+```
+
 ## 2026-05-20 15:39:58
 
 - 重写根目录 `README.md`：与当前 `package.json` 脚本、技术栈、环境变量、Docker / Compose 用法对齐；中文说明改为仓库内 `README_CN.md` 相对链接；修正 `docker-compose -f … up` 命令顺序；补充 `lint:ts` / `generate` 等脚本说明。

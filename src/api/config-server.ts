@@ -1,6 +1,6 @@
 import { LRUCache } from 'lru-cache'
 
-import apiDomain from './url.js'
+import apiDomain from './url'
 
 /** 是否开启`LRUCache` */
 const cached = true

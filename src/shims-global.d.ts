@@ -28,17 +28,9 @@ declare type AnyFn<T = any> = (...args: any[]) => T
 declare type Awaitable<T> = T | PromiseLike<T>
 
 /**
- * 接口返回模板
- * ```
- * {
-    data: T
-    code: number
-    message: string
-    info?: string
- * }
- * ```
+ * 接口返回模板（与 types/api.IApiResponse 字段一致）
  */
-declare interface ResponseData<T> {
+declare interface ResponseData<T = unknown> {
     data: T
     code: number
     message: string
@@ -91,7 +83,7 @@ declare interface ApiServer {
     api: import('axios').AxiosInstance
     get: <T = void>(url: string, params: Objable, headers?: Objable) => Promise<ResponseData<T>>
     post: <T = void>(url: string, data: Objable, headers?: Objable) => Promise<ResponseData<T>>
-    getCookies: () => import('./types').UserCookies
+    getCookies: () => import('./types/store').IUserCookies
 }
 
 declare type ApiType = ApiServer | ApiClient

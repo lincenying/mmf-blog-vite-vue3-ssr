@@ -1,35 +1,30 @@
-<script lang="ts">
-import { createElementBlock } from 'vue'
+<template>
+    <slot v-if="mounted" />
+    <slot
+        v-else
+        name="fallback"
+    >
+        <slot name="placeholder">
+            <component
+                :is="props.fallbackTag || props.placeholderTag || 'span'"
+            >
+                {{ props.fallback || props.placeholder || '' }}
+            </component>
+        </slot>
+    </slot>
+</template>
 
-export default defineComponent({
-    name: 'ClientOnly',
+<script setup lang="ts">
+const props = defineProps<{
+    fallback?: string
+    placeholder?: string
+    placeholderTag?: string
+    fallbackTag?: string
+}>()
 
-    props: {
-        fallback: String,
-        placeholder: String,
-        placeholderTag: String,
-        fallbackTag: String,
-    },
+const mounted = ref(false)
 
-    setup(_, { slots }) {
-        const mounted = ref(false)
-        onMounted(() => {
-            mounted.value = true
-        })
-        return (props: { fallback: string, placeholder: string, fallbackTag: string, placeholderTag: string }) => {
-            if (mounted.value) {
-                return slots.default?.()
-            }
-
-            const slot = slots.fallback || slots.placeholder
-            if (slot) {
-                return slot()
-            }
-
-            const fallbackStr = props.fallback || props.placeholder || ''
-            const fallbackTag = props.fallbackTag || props.placeholderTag || 'span'
-            return createElementBlock(fallbackTag, null, fallbackStr)
-        }
-    },
+onMounted(() => {
+    mounted.value = true
 })
 </script>

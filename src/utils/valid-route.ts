@@ -1,4 +1,4 @@
-import { routes } from '../router'
+import { routes } from '@/router/routes'
 
 // 路由配置类型定义
 interface RouteMeta {
@@ -9,12 +9,12 @@ interface RouteMeta {
 interface RouteConfig {
     path: string
     name?: string
-    component?: any
+    component?: unknown
     redirect?: string | object
     meta?: RouteMeta
     beforeEnter?: AnyFn
     children?: RouteConfig[]
-    [key: string]: any // 允许其他属性如 backendConfig
+    [key: string]: unknown
 }
 
 // 扁平化匹配结果
@@ -173,12 +173,3 @@ export function isValidRoute(url: string): boolean {
 
     return true
 }
-
-// 使用示例
-console.log(isValidRoute('/article/123')) // true
-console.log(isValidRoute('/backend/article/list')) // true
-console.log(isValidRoute('/backend/login')) // true
-console.log(isValidRoute('/nonexistent')) // false (匹配到 404)
-console.log(isValidRoute('/index.html')) // true (重定向路由)
-console.log(isValidRoute('/user/account')) // true (嵌套子路由)
-console.log(isValidRoute('/trending/weekly')) // true (动态参数)
