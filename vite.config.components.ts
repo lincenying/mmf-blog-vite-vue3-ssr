@@ -47,6 +47,7 @@ export default (): PluginOption[] => ([
         vueTemplate: true,
     }),
     Components({
+        dirs: ['src/components', 'src/layouts'],
         include: [
             /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
             /\.vue$/,

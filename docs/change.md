@@ -1,5 +1,15 @@
 # 变更记录
 
+## 2026-05-25 17:45:00
+
+- `vite.config.components.ts` 为 `unplugin-vue-components` 增加 `dirs: ['src/components', 'src/layouts']`，修复前台页 `frontend-main-layout` 无法解析及连带 Anonymous 组件告警。
+
+**commit message：**
+
+```
+fix: 将 layouts 纳入组件自动导入以解析 frontend-main-layout
+```
+
 ## 2026-05-25 17:37:39
 
 - `src/plugin` → `src/plugins`；`src/assets/scss` → `src/assets/styles`，同步更新入口与 README 引用。
