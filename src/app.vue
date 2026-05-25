@@ -21,6 +21,9 @@
 </template>
 
 <script setup lang="ts">
+import useAppShellStore from './stores/use-app-shell-store'
+import { useGlobalStore } from './stores/use-global-store'
+
 defineOptions({
     name: 'AppRoot',
 })

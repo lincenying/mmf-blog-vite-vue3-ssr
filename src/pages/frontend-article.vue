@@ -62,6 +62,10 @@
 
 <script setup lang="ts">
 import { ContentLoader } from 'vue-content-loader'
+import { useSaveScroll } from '@/composables'
+import { useFrontendArticleStore } from '@/stores/use-frontend-article-store'
+import { useGlobalCategoryStore } from '@/stores/use-global-category-store'
+import useGlobalCommentStore from '@/stores/use-global-comment-store'
 
 defineOptions({
     name: 'FrontendArticle',

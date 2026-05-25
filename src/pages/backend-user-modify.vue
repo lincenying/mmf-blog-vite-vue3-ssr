@@ -25,6 +25,7 @@
 
 <script setup lang="ts">
 import type { IUser } from '~/types'
+import useBackendUserStore from '@/stores/use-backend-user-store'
 
 defineOptions({
     name: 'BackendUserModify',

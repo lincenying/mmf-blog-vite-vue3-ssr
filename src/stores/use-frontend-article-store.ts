@@ -1,8 +1,9 @@
 import type { IApiConfig, IArticle, IFArticleStore } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import { piniaInit } from '.'
 
-const usePiniaStore = defineStore('frontendArticleStore', () => {
+export const useFrontendArticleStore = defineStore('frontendArticleStore', () => {
     const state: IFArticleStore = reactive({
         lists: {
             data: [],
@@ -149,9 +150,8 @@ const usePiniaStore = defineStore('frontendArticleStore', () => {
     }
 })
 
-export default usePiniaStore
-export const frontendArticleStoreWithout = () => usePiniaStore(piniaInit)
+export const frontendArticleStoreWithout = () => useFrontendArticleStore(piniaInit)
 
 if (import.meta.hot) {
-    import.meta.hot.accept(acceptHMRUpdate(usePiniaStore, import.meta.hot))
+    import.meta.hot.accept(acceptHMRUpdate(useFrontendArticleStore, import.meta.hot))
 }

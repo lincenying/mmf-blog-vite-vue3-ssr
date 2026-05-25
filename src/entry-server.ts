@@ -8,6 +8,7 @@ import { createHead } from '@unhead/vue/server'
 import { renderToString } from '@vue/server-renderer'
 
 import { createApp } from './main'
+import { useGlobalStore } from './stores/use-global-store'
 
 function renderPreloadLink(file: string): string {
     if (file.endsWith('.js')) {

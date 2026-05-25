@@ -22,6 +22,8 @@
 
 <script setup lang="ts">
 import type { IUser } from '~/types'
+import { useLockFn } from '@/composables'
+import { useGlobalStore } from '@/stores/use-global-store'
 
 defineOptions({
     name: 'FrontendUserAccount',

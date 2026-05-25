@@ -32,6 +32,9 @@
 import type { ICategory } from '~/types'
 
 import { ContentLoader } from 'vue-content-loader'
+import { useSaveScroll } from '@/composables'
+import { useFrontendArticleStore } from '~/stores/use-frontend-article-store'
+import { useGlobalCategoryStore } from '~/stores/use-global-category-store'
 
 defineOptions({
     name: 'FrontendIndex',

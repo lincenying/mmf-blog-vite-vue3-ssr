@@ -12,6 +12,9 @@
 </template>
 
 <script setup lang="ts">
+import { useAvatar } from '@/composables'
+import { useGlobalStore } from '@/stores/use-global-store'
+
 defineOptions({
     name: 'UserIcon',
 })

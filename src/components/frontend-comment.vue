@@ -35,6 +35,9 @@
 
 <script setup lang="ts">
 import type { IComment, ICommentStoreList } from '~/types'
+import { useAvatar, useLockFn } from '@/composables'
+import useGlobalCommentStore from '@/stores/use-global-comment-store'
+import { useGlobalStore } from '@/stores/use-global-store'
 
 defineOptions({
     name: 'FrontendComment',

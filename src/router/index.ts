@@ -7,6 +7,7 @@ import type { Pinia } from 'pinia'
 
 import { createRouter as _createRouter, createMemoryHistory, createWebHistory } from 'vue-router'
 
+import useAppShellStore from '@/stores/use-app-shell-store'
 import { routes } from './routes'
 
 export { routes } from './routes'

@@ -1,6 +1,7 @@
 import type { IApiConfig, IComment, ICommentStore } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import { piniaInit } from '.'
 
 const usePiniaStore = defineStore('globalCommentStore', () => {
     const state: ICommentStore = reactive({

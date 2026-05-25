@@ -14,6 +14,8 @@
 </template>
 
 <script setup lang="ts">
+import { useFrontendArticleStore } from '@/stores/use-frontend-article-store'
+
 defineOptions({
     name: '404Page',
     asyncData(ctx) {

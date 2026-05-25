@@ -1,8 +1,9 @@
 import type { IGlobalStore, IUserCookies } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import { piniaInit } from '.'
 
-const usePiniaStore = defineStore('globalStore', () => {
+export const useGlobalStore = defineStore('globalStore', () => {
     const state: IGlobalStore = reactive({
         loading: false,
         cookies: {},
@@ -42,9 +43,8 @@ const usePiniaStore = defineStore('globalStore', () => {
         setCookies,
     }
 })
-export default usePiniaStore
-export const globalStoreWithout = () => usePiniaStore(piniaInit)
+export const globalStoreWithout = () => useGlobalStore(piniaInit)
 
 if (import.meta.hot) {
-    import.meta.hot.accept(acceptHMRUpdate(usePiniaStore, import.meta.hot))
+    import.meta.hot.accept(acceptHMRUpdate(useGlobalStore, import.meta.hot))
 }

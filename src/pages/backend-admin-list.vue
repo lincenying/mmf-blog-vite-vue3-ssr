@@ -27,6 +27,9 @@
 
 <script setup lang="ts">
 import { UTC2Date } from '@lincy/utils'
+import { useSaveScroll } from '@/composables'
+import useAppShellStore from '@/stores/use-app-shell-store'
+import useBackendAdminStore from '@/stores/use-backend-admin-store'
 
 defineOptions({
     name: 'BackendAdminList',

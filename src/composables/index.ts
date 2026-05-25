@@ -1,4 +1,5 @@
 import md5 from 'md5'
+import useAppShellStore from '@/stores/use-app-shell-store'
 
 export function useGlobal() {
     const ins = getCurrentInstance()!

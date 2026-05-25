@@ -20,6 +20,9 @@
 
 <script setup lang="ts">
 import type { IArticle } from '~/types'
+import { useLockFn } from '@/composables'
+import { useFrontendArticleStore } from '@/stores/use-frontend-article-store'
+import { useGlobalStore } from '@/stores/use-global-store'
 
 defineOptions({
     name: 'ItemActions',

@@ -1,6 +1,7 @@
 import type { IShellStore } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import { piniaInit } from '.'
 
 interface HistoryType {
     path: string

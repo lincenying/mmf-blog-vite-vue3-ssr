@@ -34,6 +34,8 @@
 </template>
 
 <script setup lang="ts">
+import { useLockFn } from '@/composables'
+
 defineOptions({
     name: 'FrontendUserPassword',
 })

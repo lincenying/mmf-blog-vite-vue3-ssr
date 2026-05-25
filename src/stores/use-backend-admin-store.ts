@@ -1,6 +1,7 @@
 import type { IAdminStore, IApiConfig, IUser } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import { piniaInit } from '.'
 
 const usePiniaStore = defineStore('backendAdminStore', () => {
     const state: IAdminStore = reactive({

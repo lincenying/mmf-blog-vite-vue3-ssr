@@ -19,6 +19,7 @@
 
 <script setup lang="ts">
 import cookies from 'js-cookie'
+import { useGlobal, useLockFn } from '@/composables'
 
 defineOptions({
     name: 'BackendLogin',

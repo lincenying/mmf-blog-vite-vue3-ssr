@@ -24,6 +24,8 @@
 
 <script setup lang="ts">
 import type { IUserCookies } from '~/types'
+import { useLockFn } from '@/composables'
+import { useGlobalStore } from '@/stores/use-global-store'
 
 defineOptions({
     name: 'SignIn',

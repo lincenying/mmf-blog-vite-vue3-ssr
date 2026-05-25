@@ -1,6 +1,7 @@
 import type { IApiConfig, IUser, IUserStore } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import { piniaInit } from '.'
 
 const usePiniaStore = defineStore('backendUserStore', () => {
     const state: IUserStore = reactive({

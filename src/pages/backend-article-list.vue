@@ -35,6 +35,9 @@
 import type { IArticle } from '~/types'
 
 import { getDateDiff } from '@lincy/utils'
+import { useSaveScroll } from '@/composables'
+import useAppShellStore from '@/stores/use-app-shell-store'
+import useBackendArticleStore from '@/stores/use-backend-article-store'
 
 defineOptions({
     name: 'BackendArticleList',

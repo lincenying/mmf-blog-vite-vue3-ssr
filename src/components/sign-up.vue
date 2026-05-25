@@ -32,6 +32,8 @@
 
 <script setup lang="ts">
 import { strLen } from '@lincy/utils'
+import { useLockFn } from '@/composables'
+import { useGlobalStore } from '@/stores/use-global-store'
 
 defineOptions({
     name: 'SignUp',

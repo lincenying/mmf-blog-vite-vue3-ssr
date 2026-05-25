@@ -16,6 +16,7 @@
 
 <script setup lang="ts">
 import type { ICategory } from '~/types'
+import { useGlobalCategoryStore } from '@/stores/use-global-category-store'
 
 defineOptions({
     name: 'BackendCategoryInsert',

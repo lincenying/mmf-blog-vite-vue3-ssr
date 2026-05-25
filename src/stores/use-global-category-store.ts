@@ -1,8 +1,9 @@
 import type { IApiConfig, ICategory, ICategoryStore } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import { piniaInit } from '.'
 
-const usePiniaStore = defineStore('globalCategoryStore', () => {
+export const useGlobalCategoryStore = defineStore('globalCategoryStore', () => {
     const state: ICategoryStore = reactive({
         lists: [],
         item: {
@@ -94,9 +95,8 @@ const usePiniaStore = defineStore('globalCategoryStore', () => {
     }
 })
 
-export default usePiniaStore
-export const globalCategoryStoreWithout = () => usePiniaStore(piniaInit)
+export const globalCategoryStoreWithout = () => useGlobalCategoryStore(piniaInit)
 
 if (import.meta.hot) {
-    import.meta.hot.accept(acceptHMRUpdate(usePiniaStore, import.meta.hot))
+    import.meta.hot.accept(acceptHMRUpdate(useGlobalCategoryStore, import.meta.hot))
 }

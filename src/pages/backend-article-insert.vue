@@ -43,7 +43,10 @@
 import type { AnyFn } from '@vueuse/core'
 import type { IArticle, IUpload } from '~/types'
 
+import { useGlobal } from '@/composables'
 import VueMarkdownEditor from '@/plugins/v-md-editor'
+import useBackendArticleStore from '@/stores/use-backend-article-store'
+import { useGlobalCategoryStore } from '@/stores/use-global-category-store'
 
 defineOptions({
     name: 'BackendArticleInsert',

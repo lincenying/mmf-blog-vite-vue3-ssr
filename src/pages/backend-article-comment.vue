@@ -32,6 +32,8 @@
 
 <script setup lang="ts">
 import { getDateDiff } from '@lincy/utils'
+import { useAvatar } from '@/composables'
+import useGlobalCommentStore from '@/stores/use-global-comment-store'
 
 defineOptions({
     name: 'BackendArticleComment',

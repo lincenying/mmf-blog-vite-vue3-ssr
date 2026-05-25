@@ -55,6 +55,8 @@
 </template>
 
 <script setup lang="ts">
+import { useFrontendArticleStore } from '@/stores/use-frontend-article-store'
+
 defineOptions({
     name: 'FrontendAbout',
     asyncData(ctx) {

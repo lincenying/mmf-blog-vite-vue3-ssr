@@ -22,6 +22,10 @@
 </template>
 
 <script setup lang="ts">
+import { useSaveScroll } from '@/composables'
+import useAppShellStore from '@/stores/use-app-shell-store'
+import { useGlobalCategoryStore } from '@/stores/use-global-category-store'
+
 defineOptions({
     name: 'BackendCategoryList',
     asyncData(ctx) {

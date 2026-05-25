@@ -1,6 +1,7 @@
 import type { IApiConfig, IArticle, IArticleStore } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import { piniaInit } from '.'
 
 const usePiniaStore = defineStore('backendArticleStore', () => {
     const state: IArticleStore = reactive({
