@@ -1,9 +1,9 @@
-import type { ApiConfig, Article, FArticleStore } from '~/types'
+import type { IApiConfig, IArticle, IFArticleStore } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
 const usePiniaStore = defineStore('frontendArticleStore', () => {
-    const state: FArticleStore = reactive({
+    const state: IFArticleStore = reactive({
         lists: {
             data: [],
             path: '',
@@ -24,14 +24,14 @@ const usePiniaStore = defineStore('frontendArticleStore', () => {
      * @param $api 可选，API 接口实例，默认为全局 api 实例。
      * @returns 没有显式返回值，但会更新 state 中的 lists 状态。
      */
-    const getArticleList = async (config: ApiConfig, $api: ApiType = capi) => {
+    const getArticleList = async (config: IApiConfig, $api: ApiType = capi) => {
         // 如果当前已有数据且请求的路径和页码相同，则无需重复请求
         if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1) {
             return
         }
 
         // 发起 GET 请求获取文章列表数据
-        const { code, data } = await $api.get<ResDataLists<Article>>('frontend/article/list', { ...config, path: undefined, cache: true })
+        const { code, data } = await $api.get<ResDataLists<IArticle>>('frontend/article/list', { ...config, path: undefined, cache: true })
 
         // 请求成功且返回数据时，处理返回的数据
         if (code === 200 && data) {
@@ -65,9 +65,9 @@ const usePiniaStore = defineStore('frontendArticleStore', () => {
      * @param $api - 可选的 API 实例，如果未提供，则使用默认的 api 实例。
      * 该函数不直接返回值，而是通过更新 state.item 来间接地返回结果。
      */
-    const getArticleItem = async (config: ApiConfig, $api: ApiType = capi) => {
+    const getArticleItem = async (config: IApiConfig, $api: ApiType = capi) => {
         // 向 API 发起请求获取文章详情，配置中排除了 path 属性，并以 markdown 格式返回，启用缓存
-        const { code, data } = await $api.get<Article>('frontend/article/item', { ...config, path: undefined, markdown: 1, cache: true })
+        const { code, data } = await $api.get<IArticle>('frontend/article/item', { ...config, path: undefined, markdown: 1, cache: true })
         // 如果请求成功且有返回数据，则更新 state 中的 item 信息
         if (code === 200 && data) {
             state.item = {
@@ -93,7 +93,7 @@ const usePiniaStore = defineStore('frontendArticleStore', () => {
         }
 
         // 使用提供的$api实例发起GET请求获取trending数据
-        const { code, data } = await $api.get<ResDataList<Article>>('frontend/trending', { ...payload, cache: true })
+        const { code, data } = await $api.get<ResDataList<IArticle>>('frontend/trending', { ...payload, cache: true })
 
         // 请求成功且数据有效时更新trending数据
         if (code === 200 && data) {
@@ -125,10 +125,10 @@ const usePiniaStore = defineStore('frontendArticleStore', () => {
         }
 
         // 在文章列表中查找文章，更新其喜欢数和喜欢状态
-        const index = state.lists.data.findIndex((item: Article) => item._id === id)
+        const index = state.lists.data.findIndex((item: IArticle) => item._id === id)
         if (index > -1) {
             // 复制对象以避免直接修改原始数据
-            const obj: Article = Object.assign({}, state.lists.data[index])
+            const obj: IArticle = Object.assign({}, state.lists.data[index])
             if (status) {
                 obj.like++
             }

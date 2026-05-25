@@ -37,7 +37,7 @@ export default (): PluginOption[] => ([
             unheadVueComposablesImports,
         ],
         dts: 'src/auto-imports.d.ts',
-        dirs: ['src/components', 'src/composables', 'src/stores'],
+        dirs: ['src/components', 'src/composables', 'src/stores', 'src/layouts'],
         resolvers: [
             ElementPlusResolver({
                 importStyle: 'sass',

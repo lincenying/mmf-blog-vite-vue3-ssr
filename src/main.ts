@@ -1,6 +1,6 @@
 import { createPinia } from 'pinia'
 import { createSSRApp } from 'vue'
-import globalPlugin from '@/plugin/global'
+import globalPlugin from '@/plugins/global'
 
 import App from './App.vue'
 import { createRouter } from './router/index'

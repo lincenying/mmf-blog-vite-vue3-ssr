@@ -1,5 +1,18 @@
 # 变更记录
 
+## 2026-05-25 17:37:39
+
+- `src/plugin` → `src/plugins`；`src/assets/scss` → `src/assets/styles`，同步更新入口与 README 引用。
+- 新增 `layouts/backend-layout.vue`、`layouts/frontend-main-layout.vue`；删除 `pages/backend-index.vue`；前台首页/文章/关于/用户页改用主栏布局组件。
+- 类型全面迁移为 `I` 前缀（`IArticle`、`IUser`、`IApiConfig` 等），移除 deprecated 别名；`server.dev/prod` 使用 `IRenderType`。
+- `vite.config.components.ts` 增加 `src/layouts` 自动导入目录。
+
+**commit message：**
+
+```
+refactor: 完成 plugins/styles/layouts 目录对齐与 I 前缀类型迁移
+```
+
 ## 2026-05-25 17:30:13
 
 - 目录对齐规范：`src/pinia` → `src/stores`；`src/router.ts` 拆为 `router/index.ts`、`router/routes.ts`、`router/guards.ts`；`src/types.ts` 拆为 `types/api.ts`、`types/domain.ts`、`types/store.ts`、`types/ssr.ts` 并通过 `types/index.ts` 统一导出（保留 `Article`、`User` 等兼容别名）。

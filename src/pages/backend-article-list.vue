@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Article } from '~/types'
+import type { IArticle } from '~/types'
 
 import { getDateDiff } from '@lincy/utils'
 
@@ -70,14 +70,14 @@ async function loadMore(page = lists.page, key: string = searchKey.value) {
     toggleLoading(false)
 }
 async function handleRecover(id: string) {
-    const { code } = await capi.get<Nullable<Article>>('backend/article/recover', { id })
+    const { code } = await capi.get<Nullable<IArticle>>('backend/article/recover', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: '恢复成功' })
         backendArticleStore.recoverArticle(id)
     }
 }
 async function handleDelete(id: string) {
-    const { code } = await capi.get<Nullable<Article>>('backend/article/delete', { id })
+    const { code } = await capi.get<Nullable<IArticle>>('backend/article/delete', { id })
     if (code === 200) {
         showMsg({ type: 'success', content: '删除成功' })
         backendArticleStore.deleteArticle(id)

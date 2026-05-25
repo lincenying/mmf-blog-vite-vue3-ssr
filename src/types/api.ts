@@ -23,15 +23,9 @@ export interface IApiConfig {
     key?: string | string[]
 }
 
-/** @deprecated 使用 IApiConfig */
-export type ApiConfig = IApiConfig
-
 /**
  * 上传返回数据
  */
 export interface IUpload {
     filepath: string
 }
-
-/** @deprecated 使用 IUpload */
-export type Upload = IUpload

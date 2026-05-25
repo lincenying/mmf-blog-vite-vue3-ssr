@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import type { User } from '~/types'
+import type { IUser } from '~/types'
 
 defineOptions({
     name: 'BackendAdminModify',
@@ -69,7 +69,7 @@ async function handleModify() {
         return
     }
     toggleLoading(true)
-    const { code, data } = await capi.post<User>('backend/admin/modify', form)
+    const { code, data } = await capi.post<IUser>('backend/admin/modify', form)
     toggleLoading(false)
     if (code === 200) {
         showMsg({ type: 'success', content: '修改成功' })

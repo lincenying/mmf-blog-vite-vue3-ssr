@@ -1,9 +1,9 @@
-import type { GlobalStore, IUserCookies } from '~/types'
+import type { IGlobalStore, IUserCookies } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
 const usePiniaStore = defineStore('globalStore', () => {
-    const state: GlobalStore = reactive({
+    const state: IGlobalStore = reactive({
         loading: false,
         cookies: {},
         showLoginModal: false,

@@ -10,7 +10,7 @@ const FrontendAccount = () => import('@/pages/frontend-user-account.vue')
 const FrontendPassword = () => import('@/pages/frontend-user-password.vue')
 
 const BackendLogin = () => import('@/pages/backend-login.vue')
-const BackendIndex = () => import('@/pages/backend-index.vue')
+const BackendLayout = () => import('@/layouts/backend-layout.vue')
 const BackendArticleList = () => import('@/pages/backend-article-list.vue')
 const BackendArticleInsert = () => import('@/pages/backend-article-insert.vue')
 const BackendArticleModify = () => import('@/pages/backend-article-modify.vue')
@@ -51,7 +51,7 @@ export const routes = [
     {
         name: 'backend',
         path: '/backend',
-        component: BackendIndex,
+        component: BackendLayout,
         redirect: '/backend/article/list',
         children: [
             { name: 'login', path: 'login', component: BackendLogin },

@@ -1,4 +1,4 @@
-import type { ShellStore } from '~/types'
+import type { IShellStore } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
@@ -8,7 +8,7 @@ interface HistoryType {
 }
 
 const usePiniaStore = defineStore('appShellStore', () => {
-    const state: ShellStore = reactive({
+    const state: IShellStore = reactive({
         needPageTransition: true,
         isPageSwitching: false,
         pageTransitionName: '',

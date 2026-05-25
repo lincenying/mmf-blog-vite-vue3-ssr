@@ -1,37 +1,35 @@
 <template>
-    <div class="main wrap">
-        <div class="main-left">
-            <div class="cards-wrap home-feeds">
-                <!-- <topics-item-none v-if="!topics.path">加载中, 请稍等...</topics-item-none> -->
-                <div v-if="!topics.path" class="card card-content-loader">
-                    <ContentLoader :height="160" :width="660" :speed="2" primary-color="#f3f3f3" secondary-color="#ecebeb">
-                        <rect x="70" y="15" rx="4" ry="4" width="117" height="6.4" /> <rect x="70" y="35" rx="3" ry="3" width="85" height="6.4" />
-                        <rect x="0" y="80" rx="3" ry="3" width="550" height="6.4" /> <rect x="0" y="100" rx="3" ry="3" width="620" height="6.4" />
-                        <rect x="0" y="120" rx="3" ry="3" width="401" height="6.4" /> <rect x="0" y="140" rx="3" ry="3" width="501" height="6.4" />
-                        <circle cx="30" cy="30" r="30" />
-                    </ContentLoader>
-                </div>
-                <template v-else-if="topics.data.length > 0">
-                    <TopicsItem v-for="item in topics.data" :key="item._id" :item="item" />
-                    <div class="load-more-wrap">
-                        <a v-if="topics.hasNext" href="javascript:;" class="load-more" :class="loading ? 'loading' : ''" @click="loadMore()">
-                            {{ loading ? '加载中' : '更多' }} <i class="icon icon-circle-loading" />
-                        </a>
-                    </div>
-                </template>
-                <topics-item-none v-else>当前分类还没有文章...</topics-item-none>
+    <frontend-main-layout>
+        <div class="cards-wrap home-feeds">
+            <!-- <topics-item-none v-if="!topics.path">加载中, 请稍等...</topics-item-none> -->
+            <div v-if="!topics.path" class="card card-content-loader">
+                <ContentLoader :height="160" :width="660" :speed="2" primary-color="#f3f3f3" secondary-color="#ecebeb">
+                    <rect x="70" y="15" rx="4" ry="4" width="117" height="6.4" /> <rect x="70" y="35" rx="3" ry="3" width="85" height="6.4" />
+                    <rect x="0" y="80" rx="3" ry="3" width="550" height="6.4" /> <rect x="0" y="100" rx="3" ry="3" width="620" height="6.4" />
+                    <rect x="0" y="120" rx="3" ry="3" width="401" height="6.4" /> <rect x="0" y="140" rx="3" ry="3" width="501" height="6.4" />
+                    <circle cx="30" cy="30" r="30" />
+                </ContentLoader>
             </div>
+            <template v-else-if="topics.data.length > 0">
+                <TopicsItem v-for="item in topics.data" :key="item._id" :item="item" />
+                <div class="load-more-wrap">
+                    <a v-if="topics.hasNext" href="javascript:;" class="load-more" :class="loading ? 'loading' : ''" @click="loadMore()">
+                        {{ loading ? '加载中' : '更多' }} <i class="icon icon-circle-loading" />
+                    </a>
+                </div>
+            </template>
+            <topics-item-none v-else>当前分类还没有文章...</topics-item-none>
         </div>
-        <div class="main-right">
+        <template #aside>
             <aside-category :category="category" />
             <aside-trending :trending="trending" />
             <aside-other />
-        </div>
-    </div>
+        </template>
+    </frontend-main-layout>
 </template>
 
 <script setup lang="ts">
-import type { Category } from '~/types'
+import type { ICategory } from '~/types'
 
 import { ContentLoader } from 'vue-content-loader'
 
@@ -94,7 +92,7 @@ const headTitle = computed(() => {
     let title = 'M.M.F 小屋'
     const { id, key, by } = route.params
     if (id) {
-        const obj = category.find((item: Category) => item._id === id)
+        const obj = category.find((item: ICategory) => item._id === id)
         if (obj) {
             title = `${obj.cate_name} - ${title}`
         }

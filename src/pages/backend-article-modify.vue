@@ -41,9 +41,9 @@
 
 <script setup lang="ts">
 import type { AnyFn } from '@vueuse/core'
-import type { Article, Category, Upload } from '~/types'
+import type { IArticle, ICategory, IUpload } from '~/types'
 
-import VueMarkdownEditor from '@/plugin/v-md-editor'
+import VueMarkdownEditor from '@/plugins/v-md-editor'
 
 defineOptions({
     name: 'BackendArticleModify',
@@ -82,7 +82,7 @@ const form = reactive({
 watch(
     () => form.category,
     (val) => {
-        const obj = lists.find((item: Category) => item._id === val)
+        const obj = lists.find((item: ICategory) => item._id === val)
         if (obj) {
             form.category_name = obj.cate_name
         }
@@ -123,7 +123,7 @@ async function handleModify() {
         const html = VueMarkdownEditor.vMdParser.themeConfig.markdownParser.render(form.content)
         form.html = html
     }
-    const { code, data } = await capi.post<Article>('backend/article/modify', form)
+    const { code, data } = await capi.post<IArticle>('backend/article/modify', form)
     toggleLoading(false)
     if (code === 200) {
         showMsg({ type: 'success', content: '修改成功!' })
@@ -137,7 +137,7 @@ async function handleUploadImage(_event: EventTarget, insertImage: AnyFn, files:
 
     const formData = new FormData()
     formData.append('file', files[0])
-    const { data } = await capi.file<Upload>(`${uploadApi}/api/fetch/upload`, formData)
+    const { data } = await capi.file<IUpload>(`${uploadApi}/api/fetch/upload`, formData)
     if (data && data.filepath) {
         insertImage({
             url: `${uploadApi}/${data.filepath}`,

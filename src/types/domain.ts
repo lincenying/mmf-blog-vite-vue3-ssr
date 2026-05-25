@@ -20,9 +20,6 @@ export interface IArticle {
     like_status?: boolean
 }
 
-/** @deprecated 使用 IArticle */
-export type Article = IArticle
-
 /**
  * 分类详情
  */
@@ -36,9 +33,6 @@ export interface ICategory {
     is_delete?: number
     timestamp?: number
 }
-
-/** @deprecated 使用 ICategory */
-export type Category = ICategory
 
 /**
  * 评论详情
@@ -54,9 +48,6 @@ export interface IComment {
     email?: string
     username?: string
 }
-
-/** @deprecated 使用 IComment */
-export type Comment = IComment
 
 /**
  * 用户详情
@@ -74,6 +65,3 @@ export interface IUser {
     wx_signature?: string
     userid?: Objable
 }
-
-/** @deprecated 使用 IUser */
-export type User = IUser

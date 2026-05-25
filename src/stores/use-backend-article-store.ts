@@ -1,9 +1,9 @@
-import type { ApiConfig, Article, ArticleStore } from '~/types'
+import type { IApiConfig, IArticle, IArticleStore } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
 const usePiniaStore = defineStore('backendArticleStore', () => {
-    const state: ArticleStore = reactive({
+    const state: IArticleStore = reactive({
         lists: {
             data: [],
             path: '',
@@ -23,11 +23,11 @@ const usePiniaStore = defineStore('backendArticleStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getArticleList = async (config: ApiConfig, $api: ApiType = capi) => {
+    const getArticleList = async (config: IApiConfig, $api: ApiType = capi) => {
         if (state.lists.data.length > 0 && config.path === state.lists.path && config.key === state.lists.key && config.page === 1) {
             return
         }
-        const { code, data } = await $api.get<ResDataLists<Article>>('backend/article/list', { ...config, path: undefined })
+        const { code, data } = await $api.get<ResDataLists<IArticle>>('backend/article/list', { ...config, path: undefined })
         if (code === 200 && data) {
             const {
                 list = [],
@@ -56,8 +56,8 @@ const usePiniaStore = defineStore('backendArticleStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getArticleItem = async (config: ApiConfig, $api: ApiType = capi) => {
-        const { code, data } = await $api.get<Article>('backend/article/item', { ...config, path: undefined })
+    const getArticleItem = async (config: IApiConfig, $api: ApiType = capi) => {
+        const { code, data } = await $api.get<IArticle>('backend/article/item', { ...config, path: undefined })
         if (code === 200 && data) {
             state.item = {
                 data,
@@ -95,7 +95,7 @@ const usePiniaStore = defineStore('backendArticleStore', () => {
      * 发布文章成功后追加文章
      * @param payload 文章详情
      */
-    const insertArticleItem = (payload: Article) => {
+    const insertArticleItem = (payload: IArticle) => {
         if (state.lists.path) {
             state.lists.data = [payload].concat(state.lists.data)
         }
@@ -104,7 +104,7 @@ const usePiniaStore = defineStore('backendArticleStore', () => {
      * 编辑成功后更新文章
      * @param payload 文章详情
      */
-    const updateArticleItem = (payload: Article) => {
+    const updateArticleItem = (payload: IArticle) => {
         const index = state.lists.data.findIndex(ii => ii._id === payload._id)
         if (index > -1) {
             state.lists.data.splice(index, 1, payload)

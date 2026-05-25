@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import type { User } from '~/types'
+import type { IUser } from '~/types'
 
 defineOptions({
     name: 'FrontendUserAccount',
@@ -36,7 +36,7 @@ let username = $ref('')
 let email = $ref('')
 
 async function getUser() {
-    const { code, data } = await capi.get<User>('frontend/user/account', {})
+    const { code, data } = await capi.get<IUser>('frontend/user/account', {})
     if (code === 200) {
         username = data.username
         email = data.email

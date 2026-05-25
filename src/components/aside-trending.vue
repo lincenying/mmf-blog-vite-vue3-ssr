@@ -15,14 +15,14 @@
 </template>
 
 <script setup lang="ts">
-import type { Article } from '~/types'
+import type { IArticle } from '~/types'
 
 defineOptions({
     name: 'AsideTrending',
 })
 
 const props = defineProps<{
-    trending: Article[]
+    trending: IArticle[]
 }>()
 
 const { trending } = $(toRefs(props))

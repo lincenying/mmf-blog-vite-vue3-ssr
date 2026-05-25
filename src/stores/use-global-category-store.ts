@@ -1,9 +1,9 @@
-import type { ApiConfig, Category, CategoryStore } from '~/types'
+import type { IApiConfig, ICategory, ICategoryStore } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
 const usePiniaStore = defineStore('globalCategoryStore', () => {
-    const state: CategoryStore = reactive({
+    const state: ICategoryStore = reactive({
         lists: [],
         item: {
             data: null,
@@ -15,11 +15,11 @@ const usePiniaStore = defineStore('globalCategoryStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getCategoryList = async (config: ApiConfig, $api: ApiType = capi) => {
+    const getCategoryList = async (config: IApiConfig, $api: ApiType = capi) => {
         if (state.lists.length) {
             return
         }
-        const { code, data } = await $api.get<ResDataList<Category>>('backend/category/list', { ...config, path: undefined, cache: true })
+        const { code, data } = await $api.get<ResDataList<ICategory>>('backend/category/list', { ...config, path: undefined, cache: true })
         if (code === 200 && data) {
             state.lists = data.list
         }
@@ -29,8 +29,8 @@ const usePiniaStore = defineStore('globalCategoryStore', () => {
      * @param config 请求参数
      * @param $api
      */
-    const getCategoryItem = async (config: ApiConfig, $api: ApiType = capi) => {
-        const { code, data } = await $api.get<Nullable<Category>>('backend/category/item', { ...config, path: undefined })
+    const getCategoryItem = async (config: IApiConfig, $api: ApiType = capi) => {
+        const { code, data } = await $api.get<Nullable<ICategory>>('backend/category/item', { ...config, path: undefined })
         if (code === 200 && data) {
             state.item = {
                 data,
@@ -42,14 +42,14 @@ const usePiniaStore = defineStore('globalCategoryStore', () => {
      * 添加分类成功后, 插入分类
      * @param payload 分类详情
      */
-    const insertCategoryItem = (payload: Category) => {
+    const insertCategoryItem = (payload: ICategory) => {
         state.lists = [payload].concat(state.lists)
     }
     /**
      * 编辑分类成功后, 更新分类数据
      * @param payload 分类详情
      */
-    const updateCategoryItem = (payload: Category) => {
+    const updateCategoryItem = (payload: ICategory) => {
         state.item.data = payload
         const index = state.lists.findIndex(ii => ii._id === payload._id)
         if (index > -1) {

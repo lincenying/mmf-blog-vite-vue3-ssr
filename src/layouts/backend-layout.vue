@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 defineOptions({
-    name: 'BackendIndex',
+    name: 'BackendLayout',
 })
 
 const route = useRoute()

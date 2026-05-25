@@ -4,7 +4,7 @@ import { createHead } from '@unhead/vue/client'
 import { LoadingPlugin } from 'vue-loading-overlay'
 
 import { createApp } from './main'
-import VueMarkdownEditor from './plugin/v-md-editor'
+import VueMarkdownEditor from './plugins/v-md-editor'
 
 import 'uno.css'
 import './assets/css/github-markdown.css'
@@ -14,7 +14,7 @@ import './assets/css/vuepress.css'
 import 'vue-loading-overlay/dist/css/index.css'
 import 'element-plus/es/components/message/style/css'
 import 'element-plus/es/components/message-box/style/css'
-import './assets/scss/style.scss'
+import './assets/styles/style.scss'
 
 const { app, router, store } = createApp()
 const head = createHead()

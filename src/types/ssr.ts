@@ -11,9 +11,6 @@ export interface IRenderType {
     statusCode: number
 }
 
-/** @deprecated 使用 IRenderType */
-export type RenderType = IRenderType
-
 export type CusRouteComponent = RouteComponent & {
     asyncData?: (payload: IAsyncDataConfig) => Promise<unknown>
 }
@@ -24,6 +21,3 @@ export interface IAsyncDataConfig {
     api: ApiServer | ApiClient
     req?: Request
 }
-
-/** @deprecated 使用 IAsyncDataConfig */
-export type AsyncDataConfig = IAsyncDataConfig

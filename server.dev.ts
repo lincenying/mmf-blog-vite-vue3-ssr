@@ -1,4 +1,4 @@
-import type { RenderType } from '~/types'
+import type { IRenderType } from '~/types'
 
 import fs from 'node:fs'
 import path from 'node:path'
@@ -88,7 +88,7 @@ export async function createServer(root = process.cwd(), hmrPort?: number) {
             template = await vite.transformIndexHtml(url, template)
             const render = (await vite.ssrLoadModule('/src/entry-server.ts')).render
 
-            const { html: appHtml, preloadLinks, headTags, statusCode } = await render(url, manifest, req) as RenderType
+            const { html: appHtml, preloadLinks, headTags, statusCode } = await render(url, manifest, req) as IRenderType
 
             const html = template
                 .replace('<!--preload-links-->', preloadLinks)

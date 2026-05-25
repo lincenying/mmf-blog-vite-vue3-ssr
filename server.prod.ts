@@ -1,4 +1,4 @@
-import type { RenderType } from '~/types'
+import type { IRenderType } from '~/types'
 
 import fs from 'node:fs'
 import path from 'node:path'
@@ -96,7 +96,7 @@ export async function createServer() {
         try {
             const url = req.originalUrl
 
-            const { html: appHtml, preloadLinks, headTags, statusCode } = await render(url, manifest, req) as RenderType
+            const { html: appHtml, preloadLinks, headTags, statusCode } = await render(url, manifest, req) as IRenderType
 
             const html = template
                 .replace('<!--preload-links-->', preloadLinks)

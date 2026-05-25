@@ -12,14 +12,14 @@
 </template>
 
 <script setup lang="ts">
-import type { Category } from '~/types'
+import type { ICategory } from '~/types'
 
 defineOptions({
     name: 'AsideCategory',
 })
 
 const props = defineProps<{
-    category: Category[]
+    category: ICategory[]
 }>()
 
 const { category } = $(toRefs(props))

@@ -41,9 +41,9 @@
 
 <script setup lang="ts">
 import type { AnyFn } from '@vueuse/core'
-import type { Article, Upload } from '~/types'
+import type { IArticle, IUpload } from '~/types'
 
-import VueMarkdownEditor from '@/plugin/v-md-editor'
+import VueMarkdownEditor from '@/plugins/v-md-editor'
 
 defineOptions({
     name: 'BackendArticleInsert',
@@ -94,7 +94,7 @@ async function handleInsert() {
         const html = VueMarkdownEditor.vMdParser.themeConfig.markdownParser.render(form.content)
         form.html = html
     }
-    const { code, data } = await capi.post<Article>('backend/article/insert', form)
+    const { code, data } = await capi.post<IArticle>('backend/article/insert', form)
     toggleLoading(false)
     if (code === 200) {
         showMsg({ type: 'success', content: '添加成功!' })
@@ -109,7 +109,7 @@ async function handleUploadImage(_event: EventTarget, insertImage: AnyFn, files:
     const formData = new FormData()
     formData.append('file', files[0])
     try {
-        const { data } = await capi.file<Upload>(`${uploadApi}/api/fetch/upload`, formData)
+        const { data } = await capi.file<IUpload>(`${uploadApi}/api/fetch/upload`, formData)
         if (data && data.filepath) {
             insertImage({
                 url: `${uploadApi}/${data.filepath}`,

@@ -1,4 +1,4 @@
-import { ElMessage } from '@/plugin/element'
+import { ElMessage } from '@/plugins/element'
 
 /**
  * element-plus弹窗

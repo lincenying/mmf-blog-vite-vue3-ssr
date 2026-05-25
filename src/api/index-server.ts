@@ -1,4 +1,4 @@
-import type { UserCookies } from '~/types'
+import type { IUserCookies } from '~/types'
 
 import { objToCookies } from '@lincy/utils'
 import axios from 'axios'
@@ -7,7 +7,7 @@ import md5 from 'md5'
 import qs from 'qs'
 import config from './config-server'
 
-export function api(cookies: UserCookies): ApiServer {
+export function api(cookies: IUserCookies): ApiServer {
     cookies = cookies || {}
     const api = axios.create({
         baseURL: config.api,

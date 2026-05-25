@@ -34,14 +34,14 @@
 </template>
 
 <script setup lang="ts">
-import type { Comment, CommentStoreList } from '~/types'
+import type { IComment, ICommentStoreList } from '~/types'
 
 defineOptions({
     name: 'FrontendComment',
 })
 
 const props = defineProps<{
-    comments: CommentStoreList
+    comments: ICommentStoreList
 }>()
 
 const { comments } = $(toRefs(props))
@@ -80,7 +80,7 @@ const handlePostComment = useLockFn(async () => {
         showMsg('请输入评论内容!')
     }
     else {
-        const { code, data } = await capi.post<Comment>('frontend/comment/insert', form)
+        const { code, data } = await capi.post<IComment>('frontend/comment/insert', form)
         if (code === 200) {
             form.content = ''
             showMsg({ type: 'success', content: '评论发布成功!' })
@@ -88,7 +88,7 @@ const handlePostComment = useLockFn(async () => {
         }
     }
 })
-function handleReply(item: Comment) {
+function handleReply(item: IComment) {
     form.content = `回复 @${item.userid?.username}: `
     const content: HTMLTextAreaElement = document.querySelector('#content')!
     content.focus()

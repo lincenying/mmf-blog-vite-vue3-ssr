@@ -19,14 +19,14 @@
 </template>
 
 <script setup lang="ts">
-import type { Article } from '~/types'
+import type { IArticle } from '~/types'
 
 defineOptions({
     name: 'ItemActions',
 })
 
 const props = defineProps<{
-    item: Article
+    item: IArticle
 }>()
 
 const { item } = $(toRefs(props))

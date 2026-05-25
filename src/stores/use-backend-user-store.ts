@@ -1,9 +1,9 @@
-import type { ApiConfig, User, UserStore } from '~/types'
+import type { IApiConfig, IUser, IUserStore } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
 const usePiniaStore = defineStore('backendUserStore', () => {
-    const state: UserStore = reactive({
+    const state: IUserStore = reactive({
         lists: {
             hasNext: 0,
             hasPrev: 0,
@@ -18,14 +18,12 @@ const usePiniaStore = defineStore('backendUserStore', () => {
     })
     /**
      * 读取用户列表 - 后台
-     * @param config 请求参数
-     * @param $api
      */
-    const getUserList = async (config: ApiConfig, $api: ApiType = capi) => {
+    const getUserList = async (config: IApiConfig, $api: ApiType = capi) => {
         if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1) {
             return
         }
-        const { code, data } = await $api.get<ResDataLists<User>>('backend/user/list', { ...config, path: undefined })
+        const { code, data } = await $api.get<ResDataLists<IUser>>('backend/user/list', { ...config, path: undefined })
         if (code === 200 && data) {
             const {
                 list = [],
@@ -50,11 +48,9 @@ const usePiniaStore = defineStore('backendUserStore', () => {
     }
     /**
      * 读取用户详情
-     * @param config 请求参数
-     * @param $api
      */
-    const getUserItem = async (config: ApiConfig, $api: ApiType = capi) => {
-        const { code, data } = await $api.get<User>('backend/user/item', { ...config, path: undefined })
+    const getUserItem = async (config: IApiConfig, $api: ApiType = capi) => {
+        const { code, data } = await $api.get<IUser>('backend/user/item', { ...config, path: undefined })
         if (code === 200 && data) {
             state.item = {
                 data,
@@ -64,21 +60,19 @@ const usePiniaStore = defineStore('backendUserStore', () => {
     }
     /**
      * 编辑用户成功后, 更新用户数据
-     * @param payload 用户详情
      */
-    const updateUserItem = (payload: User) => {
+    const updateUserItem = (payload: IUser) => {
         state.item.data = payload
-        const index = state.lists.data.findIndex(ii => ii._id === payload._id)
+        const index = state.lists.data.findIndex(item => item._id === payload._id)
         if (index > -1) {
             state.lists.data.splice(index, 1, payload)
         }
     }
     /**
      * 删除用户成功, 更新用户数据
-     * @param id 用户ID
      */
     const deleteUser = (id: string) => {
-        const index = state.lists.data.findIndex(ii => ii._id === id)
+        const index = state.lists.data.findIndex(item => item._id === id)
         if (index > -1) {
             state.lists.data.splice(index, 1, {
                 ...state.lists.data[index],
@@ -88,10 +82,9 @@ const usePiniaStore = defineStore('backendUserStore', () => {
     }
     /**
      * 恢复用户成功, 更新用户数据
-     * @param id 用户ID
      */
     const recoverUser = (id: string) => {
-        const index = state.lists.data.findIndex(ii => ii._id === id)
+        const index = state.lists.data.findIndex(item => item._id === id)
         if (index > -1) {
             state.lists.data.splice(index, 1, {
                 ...state.lists.data[index],

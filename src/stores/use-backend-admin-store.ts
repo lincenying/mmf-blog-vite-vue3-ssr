@@ -1,9 +1,9 @@
-import type { AdminStore, ApiConfig, User } from '~/types'
+import type { IAdminStore, IApiConfig, IUser } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
 const usePiniaStore = defineStore('backendAdminStore', () => {
-    const state: AdminStore = reactive({
+    const state: IAdminStore = reactive({
         lists: {
             hasNext: 0,
             hasPrev: 0,
@@ -23,13 +23,13 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
      * @param $api 可选，ApiType类型的API实例，默认为api。
      * 该函数没有返回值，它主要用于更新状态。
      */
-    const getAdminList = async (config: Pick<ApiConfig, 'page' | 'path'>, $api: ApiType = capi) => {
+    const getAdminList = async (config: Pick<IApiConfig, 'page' | 'path'>, $api: ApiType = capi) => {
         // 如果当前列表数据已存在且路径与页码与请求配置相同，则不进行任何操作
         if (state.lists.data.length > 0 && config.path === state.lists.path && config.page === 1) {
             return
         }
         // 使用提供的API实例获取管理员列表数据
-        const { code, data } = await $api.get<ResDataLists<User>>('backend/admin/list', { ...config, path: undefined })
+        const { code, data } = await $api.get<ResDataLists<IUser>>('backend/admin/list', { ...config, path: undefined })
 
         // 请求成功且返回数据有效时，更新状态中的列表数据
         if (code === 200 && data) {
@@ -58,12 +58,12 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
     }
     /**
      * 异步获取管理员项目信息。
-     * @param config 包含`id`和`path`属性的ApiConfig部分对象，用于请求配置。
+     * @param config 包含`id`和`path`属性的IApiConfig部分对象，用于请求配置。
      * @param $api ApiType类型，默认为api，用于执行API请求。
      * 该函数没有返回值，但会更新状态（state）中的item属性。
      */
-    const getAdminItem = async (config: Pick<ApiConfig, 'id' | 'path'>, $api: ApiType = capi) => {
-        const { code, data } = await $api.get<User>('backend/admin/item', { ...config, path: undefined })
+    const getAdminItem = async (config: Pick<IApiConfig, 'id' | 'path'>, $api: ApiType = capi) => {
+        const { code, data } = await $api.get<IUser>('backend/admin/item', { ...config, path: undefined })
         if (code === 200 && data) {
             state.item = {
                 data,
@@ -75,9 +75,9 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
      * 编辑管理员
      * @param payload 请求参数
      */
-    const updateAdminItem = (payload: User) => {
+    const updateAdminItem = (payload: IUser) => {
         state.item.data = payload
-        const index = state.lists.data.findIndex(ii => ii._id === payload._id)
+        const index = state.lists.data.findIndex(item => item._id === payload._id)
         if (index > -1) {
             state.lists.data.splice(index, 1, payload)
         }
@@ -87,7 +87,7 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
      * @param id 管理员ID
      */
     const deleteAdmin = (id: string) => {
-        const index = state.lists.data.findIndex(ii => ii._id === id)
+        const index = state.lists.data.findIndex(item => item._id === id)
         if (index > -1) {
             state.lists.data.splice(index, 1, {
                 ...state.lists.data[index],
@@ -100,7 +100,7 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
      * @param id 管理员ID
      */
     const recoverAdmin = (id: string) => {
-        const index = state.lists.data.findIndex(ii => ii._id === id)
+        const index = state.lists.data.findIndex(item => item._id === id)
         if (index > -1) {
             state.lists.data.splice(index, 1, {
                 ...state.lists.data[index],
