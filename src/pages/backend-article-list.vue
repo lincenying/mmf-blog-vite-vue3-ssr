@@ -67,7 +67,6 @@ async function loadMore(page = lists.page, key: string = searchKey.value) {
     if (loading.value) {
         return
     }
-    console.log(key)
     toggleLoading(true)
     await backendArticleStore.getArticleList({ page, key, path: route.fullPath })
     toggleLoading(false)

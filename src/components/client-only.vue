@@ -1,13 +1,8 @@
 <template>
     <slot v-if="mounted" />
-    <slot
-        v-else
-        name="fallback"
-    >
+    <slot v-else name="fallback">
         <slot name="placeholder">
-            <component
-                :is="props.fallbackTag || props.placeholderTag || 'span'"
-            >
+            <component :is="props.fallbackTag || props.placeholderTag || 'span'">
                 {{ props.fallback || props.placeholder || '' }}
             </component>
         </slot>

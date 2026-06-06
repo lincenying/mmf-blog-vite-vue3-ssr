@@ -3,10 +3,7 @@
         <div class="main-left">
             <slot />
         </div>
-        <div
-            v-if="$slots.aside"
-            class="main-right"
-        >
+        <div v-if="$slots.aside" class="main-right">
             <slot name="aside" />
         </div>
     </div>
