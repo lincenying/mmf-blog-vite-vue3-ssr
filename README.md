@@ -126,14 +126,14 @@ volumes:
 Build and start:
 
 ```bash
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 ```
 
 Prod-style compose (pulls prebuilt images — adjust file names/tags to match yours):
 
 ```bash
-docker-compose -f docker-compose.prod.yml up -d
+docker compose -f docker-compose.prod.yml up -d
 ```
 
 ## License

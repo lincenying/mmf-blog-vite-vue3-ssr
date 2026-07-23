@@ -114,7 +114,7 @@ docker rmi lincenying/images-mmf-blog-vite-vue3-ssr:1.25.1029
 
 ## Docker Compose
 
-使用 `docker-compose` 时，可从 Docker Hub 拉取 `api-server` 等镜像。若你已推送自己的 API 镜像，请修改 `docker-compose.yml` 中的 `api.image`。
+使用 `docker compose`（Compose V2）时，可从 Docker Hub 拉取 `api-server` 等镜像。若你已推送自己的 API 镜像，请修改 `docker-compose.yml` 中的 `api.image`。
 
 MongoDB 数据目录映射示例：
 
@@ -126,17 +126,17 @@ volumes:
 构建并启动：
 
 ```bash
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 ```
 
 使用生产向 compose 文件（从仓库约定拉取镜像时；文件名与镜像以你实际为准）：
 
 ```bash
-docker-compose -f docker-compose.prod.yml up -d
+docker compose -f docker-compose.prod.yml up -d
 ```
 
-**说明：** `docker-compose` 的 `-f` 须紧跟在子命令 **之前**，写成 `docker-compose -f docker-compose.prod.yml up -d` 才符合 CLI 习惯。
+**说明：** Compose V2 使用 `docker compose`（空格，Docker CLI 插件），已替代旧版独立命令 `docker-compose`；`-f` 须紧跟在子命令 **之前**，写成 `docker compose -f docker-compose.prod.yml up -d`。
 
 ## 开源协议
 

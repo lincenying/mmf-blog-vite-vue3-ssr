@@ -1,5 +1,16 @@
 # 变更记录
 
+## 2026-07-23 17:24:27
+
+- 将 `README.md`、`README_CN.md` 中 Docker Compose 相关命令由 v1（`docker-compose`）升级为 v2（`docker compose`）。
+- 同步更新中文说明：标明 Compose V2 为 Docker CLI 插件，`-f` 仍须写在子命令之前。
+
+**commit message：**
+
+```
+docs: 将 docker-compose 命令升级为 Compose V2
+```
+
 ## 2026-05-25 17:45:00
 
 - `vite.config.components.ts` 为 `unplugin-vue-components` 增加 `dirs: ['src/components', 'src/layouts']`，修复前台页 `frontend-main-layout` 无法解析及连带 Anonymous 组件告警。
