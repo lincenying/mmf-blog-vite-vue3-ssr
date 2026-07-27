@@ -10,7 +10,7 @@ import cookieParser from 'cookie-parser'
 import express from 'express'
 import logger from 'morgan'
 import requestIp from 'request-ip'
-import { skipExt } from 'server.middleware'
+import { skipExt } from './server.middleware'
 import { createServer as viteCreateServer } from 'vite'
 
 import { handleSsrRouteError } from './server-ssr-error'

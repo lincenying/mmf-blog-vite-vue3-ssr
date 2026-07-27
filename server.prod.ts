@@ -14,7 +14,7 @@ import logger from 'morgan'
 import requestIp from 'request-ip'
 import serveStatic from 'serve-static'
 
-import mainLimiter, { skipExt } from 'server.middleware'
+import mainLimiter, { skipExt } from './server.middleware'
 import { handleSsrRouteError } from './server-ssr-error'
 import { urlGuardMiddleware } from './server-url-guard'
 import apiDomain from './src/api/url'
