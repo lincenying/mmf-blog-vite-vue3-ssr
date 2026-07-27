@@ -1,5 +1,28 @@
 # 变更记录
 
+## 2026-07-27 13:42:00
+
+- `.dockerignore`：允许 `.env.production` 进入构建上下文。
+- `Dockerfile`：构建阶段显式设置 `VITE_APP_ENV=production` 等变量，修复容器运行后 `当前环境: undefined`。
+
+**commit message：**
+
+```
+fix: Docker 构建时注入 VITE_APP_ENV 修复环境显示 undefined
+```
+
+## 2026-07-27 13:30:00
+
+- `Dockerfile`：多阶段构建优化——构建阶段 `pnpm prune --prod` 后裁剪 SSR 已打包依赖；运行阶段仅复制 `dist` + `node_modules`，移除 pnpm 与二次安装。
+- 新增 `scripts/docker-prune-node-modules.sh`：删除 `element-plus`、`lodash`、`store2`、`vue-loading-overlay` 等运行时无需从 node_modules 加载的包。
+- 扩充 `.dockerignore`，减少构建上下文体积；`README_CN.md` 补充镜像体积优化说明。
+
+**commit message：**
+
+```
+build: 优化 Docker 多阶段构建以减小 app 镜像体积
+```
+
 ## 2026-07-27 13:10:00
 
 - 将 `express-rate-limit` 从 `devDependencies` 移至 `dependencies`（`catalog:node`），避免 tsup 将其及 `debug` 等依赖打进 ESM 产物后触发 `Dynamic require of "tty" is not supported`。

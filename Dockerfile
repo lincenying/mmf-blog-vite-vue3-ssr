@@ -1,53 +1,45 @@
 # 使用较小的基础镜像
 ARG NODE_VERSION=node:22-alpine
 
-# 生产环境镜像
-FROM $NODE_VERSION AS dependency-base
+# ---------- 构建阶段：安装全量依赖并编译 ----------
+FROM $NODE_VERSION AS builder
 
-# 安装 pnpm
-RUN npm config set registry https://registry.npmmirror.com
-RUN npm install -g pnpm
+RUN corepack enable && corepack prepare pnpm@11.17.0 --activate
 
-# 设置工作目录
 WORKDIR /app
 
-# 复制项目文件
-COPY . .
+# 先复制依赖清单，利用 Docker 层缓存
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
-# 使用pnpm安装依赖
 RUN pnpm install --frozen-lockfile --ignore-scripts
 
-# 编译项目
-RUN pnpm build
+COPY . .
 
-# Stage 2: Production image
+# Vite 在构建时注入 import.meta.env；镜像构建上下文默认不含 .env，需显式设置
+ENV NODE_ENV=production \
+    VITE_APP_ENV=production \
+    VITE_APP_API_DOMAIN=/ \
+    VITE_APP_API=/
+
+RUN pnpm build \
+    && pnpm prune --prod \
+    && sh scripts/docker-prune-node-modules.sh /app
+
+# ---------- 运行阶段：仅 dist + 裁剪后的 node_modules ----------
 FROM $NODE_VERSION AS production
 
-# Create app directory
 WORKDIR /app
 
-# Copy built assets from previous stage
-COPY --from=dependency-base /app/dist /app/dist
-COPY --from=dependency-base /app/package.json /app/package.json
-COPY --from=dependency-base /app/pnpm-lock.yaml /app/pnpm-lock.yaml
-COPY --from=dependency-base /app/pnpm-workspace.yaml /app/pnpm-workspace.yaml
-
-RUN npm config set registry https://registry.npmmirror.com
-RUN npm install -g pnpm
-
-RUN pnpm install --only=prod
-
-RUN pnpm store prune
-
-# 设置环境变量
-## 生产环境
 ENV NODE_ENV=production
-## 4008为api容器暴露给宿主机的端口, host.docker.internal 表示宿主机
-ENV API_URL=http://host.docker.internal:4008
+
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
 
 EXPOSE 7777
 
-# 启动项目
+USER node
+
 CMD ["node", "./dist/server.js"]
 
 # 第一次执行时, 如果node镜像拉不下来, 可以执行以下命令:

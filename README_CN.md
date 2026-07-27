@@ -138,6 +138,19 @@ docker compose -f docker-compose.prod.yml up -d
 
 **说明：** Compose V2 使用 `docker compose`（空格，Docker CLI 插件），已替代旧版独立命令 `docker-compose`；`-f` 须紧跟在子命令 **之前**，写成 `docker compose -f docker-compose.prod.yml up -d`。
 
+### 镜像体积优化
+
+生产镜像采用多阶段构建：构建阶段编译后 `pnpm prune --prod`，运行阶段只复制 `dist` 与裁剪后的 `node_modules`（不再在运行镜像内安装 pnpm / 重复 `pnpm install`）。SSR 已打进 bundle 的包（如 `element-plus`）会在 `scripts/docker-prune-node-modules.sh` 中从 `node_modules` 移除。
+
+构建后查看体积：
+
+```bash
+docker compose -f docker-compose.yml build app
+docker images lincenying/app-vue3-ssr
+```
+
+若仍偏大，可进一步：将 `@kangc/v-md-editor` 改为仅客户端加载（可去掉 `mermaid` 等约数十 MB 传递依赖）、静态资源用 Nginx 托管、或使用 `node:22-alpine` 以外的更小运行时。
+
 ## 开源协议
 
 MIT
