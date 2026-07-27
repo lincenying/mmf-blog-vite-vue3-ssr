@@ -1,5 +1,26 @@
 # 变更记录
 
+## 2026-07-27 13:10:00
+
+- 将 `express-rate-limit` 从 `devDependencies` 移至 `dependencies`（`catalog:node`），避免 tsup 将其及 `debug` 等依赖打进 ESM 产物后触发 `Dynamic require of "tty" is not supported`。
+- `pnpm-workspace.yaml`：将 `express-rate-limit` 版本定义迁入 `catalog:node`。
+
+**commit message：**
+
+```
+fix: 将 express-rate-limit 标为生产依赖以修复 dist/server.js 启动失败
+```
+
+## 2026-07-27 12:58:00
+
+- `server.dev.ts`、`server.prod.ts`：将 `server.middleware` 裸模块导入改为相对路径 `./server.middleware`，修复 TypeScript 无法解析模块的问题。
+
+**commit message：**
+
+```
+fix: 修正 server.middleware 模块导入路径
+```
+
 ## 2026-07-23 17:24:27
 
 - 将 `README.md`、`README_CN.md` 中 Docker Compose 相关命令由 v1（`docker-compose`）升级为 v2（`docker compose`）。

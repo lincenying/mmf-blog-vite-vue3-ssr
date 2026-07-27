@@ -1,17 +1,17 @@
 services:
   mongo:
-    container_name: vue3-ssr-mongo-server
+    container_name: db-mongo-vue3-ssr
     image: mongo:4.0
     volumes:
-      - /Users/lincenying/web/mongodb/data:/data/db
+      - ${MONGO_DIR:-./data/mongodb}:/data/db
     ports:
       - 27017:27017
     networks:
       - webnet
 
   api:
-    container_name: vue3-ssr-api-server
-    image: lincenying/api-server:${APITAG}
+    container_name: api-express-vue3-ssr
+    image: lincenying/api-express:${API_TAG}
     environment:
       DATABASE_URL: mongodb://mongo:27017
     ports:
@@ -22,8 +22,8 @@ services:
       - webnet
 
   app:
-    container_name: vue3-ssr-app-server
-    image: lincenying/images-mmf-blog-vite-vue3-ssr:${TAG}
+    container_name: app-vue3-ssr
+    image: lincenying/app-vue3-ssr:${TAG}
     environment:
       API_URL: http://api:4000
     env_file:

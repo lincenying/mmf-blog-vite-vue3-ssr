@@ -3,12 +3,11 @@
     "target": "ESNext",
     "jsx": "preserve",
     "lib": ["DOM", "ESNext"],
-    "baseUrl": ".",
     "module": "ESNext",
     "moduleResolution": "bundler",
     "paths": {
-      "@/*": ["src/*"],
-      "~/*": ["src/*"]
+      "@/*": ["./src/*"],
+      "~/*": ["./src/*"]
     },
     "resolveJsonModule": true,
     "types": [],

@@ -1,9 +1,9 @@
 {
   "name": "mmf-blog-vite-vue3-ssr",
   "type": "module",
-  "version": "1.25.1029",
+  "version": "1.26.0727",
   "private": true,
-  "packageManager": "pnpm@11.2.2",
+  "packageManager": "pnpm@11.17.0",
   "author": "lincenying <lincenying@qq.com>",
   "engines": {
     "node": ">=22.0.0"
@@ -36,6 +36,7 @@
     "cookie-parser": "catalog:node",
     "element-plus": "catalog:prod",
     "express": "catalog:node",
+    "express-rate-limit": "catalog:node",
     "http-proxy-middleware": "catalog:node",
     "js-cookie": "catalog:prod",
     "lodash": "catalog:prod",
@@ -77,7 +78,6 @@
     "cross-env": "catalog:dev",
     "eslint": "catalog:lint",
     "eslint-plugin-format": "catalog:lint",
-    "express-rate-limit": "catalog:dev",
     "mockjs": "catalog:dev",
     "nodemon": "catalog:dev",
     "polyfill-library": "catalog:dev",

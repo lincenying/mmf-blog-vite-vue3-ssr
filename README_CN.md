@@ -99,8 +99,8 @@ docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22
 构建与运行（镜像标签请按需修改）：
 
 ```bash
-docker build -t lincenying/images-mmf-blog-vite-vue3-ssr:1.25.1029 -f ./Dockerfile .
-docker run -d -p 7777:7777 --add-host=host.docker.internal:host-gateway --name container-mmf-blog-vite-vue3-ssr lincenying/images-mmf-blog-vite-vue3-ssr:1.25.1029
+docker build -t lincenying/images-mmf-blog-vite-vue3-ssr:1.26.0727 -f ./Dockerfile .
+docker run -d -p 7777:7777 --add-host=host.docker.internal:host-gateway --name container-mmf-blog-vite-vue3-ssr lincenying/images-mmf-blog-vite-vue3-ssr:1.26.0727
 ```
 
 维护常用命令：
@@ -109,7 +109,7 @@ docker run -d -p 7777:7777 --add-host=host.docker.internal:host-gateway --name c
 docker exec -it container-mmf-blog-vite-vue3-ssr /bin/sh
 docker stop container-mmf-blog-vite-vue3-ssr
 docker rm container-mmf-blog-vite-vue3-ssr
-docker rmi lincenying/images-mmf-blog-vite-vue3-ssr:1.25.1029
+docker rmi lincenying/images-mmf-blog-vite-vue3-ssr:1.26.0727
 ```
 
 ## Docker Compose
@@ -126,8 +126,8 @@ volumes:
 构建并启动：
 
 ```bash
-docker compose build
-docker compose up -d
+docker compose -f docker-compose.yml build
+docker compose -f docker-compose.yml up -d
 ```
 
 使用生产向 compose 文件（从仓库约定拉取镜像时；文件名与镜像以你实际为准）：
