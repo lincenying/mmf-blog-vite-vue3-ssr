@@ -21,8 +21,7 @@
     "lint:ts": "vue-tsc -b --noEmit",
     "lint:fix": "eslint . --fix",
     "lint:css": "stylelint '**/*.{css,scss}' --fix --allow-empty-input",
-    "release": "bumpp",
-    "lint-staged": "lint-staged"
+    "release": "bumpp"
   },
   "dependencies": {
     "@kangc/v-md-editor": "catalog:prod",
@@ -95,12 +94,5 @@
     "vite-plugin-mock": "catalog:dev",
     "vite-plugin-pwa": "catalog:dev",
     "vue-tsc": "catalog:dev"
-  },
-  "simple-git-hooks[-del]": {
-    "pre-commit": "npm run lint-staged"
-  },
-  "lint-staged[-del]": {
-    "*.{[jt]s?(x),vue,md}": "eslint --fix",
-    "*.{css,scss}": "stylelint --fix --allow-empty-input"
   }
 }
