@@ -92,10 +92,13 @@ export interface ICommentStore {
 }
 
 export interface IUserCookies {
+    /** 登录态标记（store 中仅为 '1'，真实 token 不进 Pinia） */
     user?: string
     userid?: string
     username?: string
     useremail?: string
+    /** 后台 token，仅存在于请求 cookie，不进入 store 注水 */
+    b_user?: string
     [propName: string]: string | number | boolean | undefined
 }
 

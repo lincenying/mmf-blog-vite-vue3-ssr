@@ -13,7 +13,8 @@ const cache: Nullable<LRUCache<string, Objable>> = (cached && new LRUCache({
 const config = {
     api: `${apiDomain}/api/`,
     port: 8080,
-    timeout: 30000,
+    /** SSR 超时宜短，超时后走降级响应，避免拖垮 TTFB */
+    timeout: 8000,
     cached: cache,
 }
 

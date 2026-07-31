@@ -9,7 +9,11 @@ import { renderToString } from '@vue/server-renderer'
 
 import { createApp } from './main'
 import { useGlobalStore } from './stores/use-global-store'
+import { pickPublicCookies } from './utils/ssr-cookies'
 
+/**
+ * 生成资源 preload / modulepreload 链接标签。
+ */
 function renderPreloadLink(file: string): string {
     if (file.endsWith('.js')) {
         return `<link rel="modulepreload" crossorigin href="${file}">`
@@ -36,6 +40,9 @@ function renderPreloadLink(file: string): string {
     return ''
 }
 
+/**
+ * 根据 SSR 清单为本次渲染涉及的模块生成 preload 链接。
+ */
 function renderPreloadLinks(modules: string[], manifest: Objable<string[]>): string {
     let links = ''
     const seen = new Set<string>()
@@ -60,33 +67,74 @@ function renderPreloadLinks(modules: string[], manifest: Objable<string[]>): str
     return links
 }
 
+/**
+ * 转义 HTML 中的 script 标签，降低 __INITIAL_STATE__ 注入 XSS 风险。
+ */
 function replaceHtmlTag(html: string): string {
     return html.replace(/<script(.*?)>/gi, '&lt;script$1&gt;').replace(/<\/script>/g, '&lt;/script&gt;')
 }
 
+/**
+ * 取 URL 路径部分（不含 query）。
+ */
+function getPathname(url: string): string {
+    return url.split('?')[0] || '/'
+}
+
+/**
+ * 从 Express 请求中解析客户端 IP（兼容反向代理）。
+ */
+function getClientIpFromReq(req?: Request): string | undefined {
+    if (!req) {
+        return undefined
+    }
+    const forwarded = req.headers['x-forwarded-for']
+    if (typeof forwarded === 'string' && forwarded) {
+        return forwarded.split(',')[0]?.trim() || undefined
+    }
+    if (Array.isArray(forwarded) && forwarded[0]) {
+        return forwarded[0].split(',')[0]?.trim() || undefined
+    }
+    const realIp = req.headers['x-real-ip']
+    if (typeof realIp === 'string' && realIp) {
+        return realIp
+    }
+    return req.socket?.remoteAddress || undefined
+}
+
+/**
+ * SSR 渲染入口：鉴权、asyncData、renderToString、状态注水。
+ */
 export async function render(url: string, manifest: Objable<string[]>, req?: Request): Promise<IRenderType> {
     const { app, router, store } = createApp()
+    const cookies = req?.cookies ?? {}
+    const pathname = getPathname(url)
+
+    // 鉴权失败直接 302，避免以 200 渲染登录墙被缓存
+    const isBackendPath = pathname === '/backend' || pathname.startsWith('/backend/')
+    const isBackendLogin = pathname === '/backend/login' || pathname.startsWith('/backend/login/')
+    const isUserPath = pathname === '/user' || pathname.startsWith('/user/')
+
+    if (isBackendPath && !isBackendLogin && !cookies.b_user) {
+        return { html: '', preloadLinks: '', headTags: '', store, statusCode: 302, redirect: '/backend/login' }
+    }
+    if (isUserPath && !cookies.user) {
+        return { html: '', preloadLinks: '', headTags: '', store, statusCode: 302, redirect: '/' }
+    }
+
     const head = createHead({
         disableDefaults: true,
     })
-
-    const cookies = req?.cookies ?? {}
 
     app.use(head)
         .component('ReloadPrompt', { render: () => null })
         .component('VMdEditor', { render: () => null })
 
-    // 在渲染之前将路由器设置为所需的 URL
-    if (url.includes('/backend') && !url.includes('/login') && !cookies.b_user) {
-        await router.push('/backend/login')
-    }
-    else if (url.includes('/user') && !cookies.user) {
-        await router.push('/')
-    }
-    else {
-        await router.push(url)
-    }
+    const globalStore = useGlobalStore(store)
+    // 仅公开字段进 Pinia，token 不进入 __INITIAL_STATE__
+    globalStore.setCookies(pickPublicCookies(cookies))
 
+    await router.push(url)
     await router.isReady()
 
     const current = router.currentRoute.value
@@ -96,8 +144,16 @@ export async function render(url: string, manifest: Objable<string[]>, req?: Req
         return Object.values(record.components as Record<string, CusRouteComponent>)
     })
 
-    const globalStore = useGlobalStore(store)
-    globalStore.setCookies(cookies)
+    const clientIp = getClientIpFromReq(req)
+    const userAgent = req?.get?.('user-agent') || undefined
+    const cookieHeader = typeof req?.headers?.cookie === 'string' ? req.headers.cookie : undefined
+
+    const ssrApi = sapi({
+        cookies,
+        cookieHeader,
+        clientIp,
+        userAgent,
+    })
 
     const asyncTasks = matchedComponents
         .map((component) => {
@@ -108,7 +164,7 @@ export async function render(url: string, manifest: Objable<string[]>, req?: Req
                 store,
                 route: current,
                 req,
-                api: sapi(cookies),
+                api: ssrApi,
             })
         })
         .filter((task): task is Promise<unknown> => task != null)

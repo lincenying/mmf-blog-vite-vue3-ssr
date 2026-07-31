@@ -96,14 +96,27 @@ export async function createServer() {
         try {
             const url = req.originalUrl
 
-            const { html: appHtml, preloadLinks, headTags, statusCode } = await render(url, manifest, req) as IRenderType
+            const { html: appHtml, preloadLinks, headTags, statusCode, redirect } = await render(url, manifest, req) as IRenderType
+
+            if (redirect) {
+                res.redirect(statusCode || 302, redirect)
+                return
+            }
 
             const html = template
                 .replace('<!--preload-links-->', preloadLinks)
                 .replace('<!--app-html-->', appHtml)
                 .replace('<!--head-tags-->', headTags)
 
-            res.status(statusCode).set({ 'Content-Type': 'text/html' }).end(html)
+            const headers: Record<string, string> = {
+                'Content-Type': 'text/html; charset=utf-8',
+            }
+            // 登录态页面禁止共享缓存，避免把带用户信息的 HTML 缓存给他人
+            if (req.cookies?.user || req.cookies?.b_user) {
+                headers['Cache-Control'] = 'private, no-store'
+            }
+
+            res.status(statusCode).set(headers).end(html)
         }
         catch (e: unknown) {
             handleSsrRouteError(res, e, exposeSsrStack)

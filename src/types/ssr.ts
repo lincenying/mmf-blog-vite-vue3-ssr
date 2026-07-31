@@ -7,8 +7,10 @@ export interface IRenderType {
     preloadLinks: string
     headTags: string
     store: Pinia
-    /** SSR 响应 HTTP 状态，如 404 命中 catch-all 路由 */
+    /** SSR 响应 HTTP 状态，如 404 命中 catch-all 路由、302 鉴权跳转 */
     statusCode: number
+    /** 鉴权失败等场景的跳转地址（配合 statusCode 302） */
+    redirect?: string
 }
 
 export type CusRouteComponent = RouteComponent & {

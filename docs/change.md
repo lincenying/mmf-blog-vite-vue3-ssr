@@ -1,5 +1,18 @@
 # 变更记录
 
+## 2026-07-31 15:55:00
+
+- SSR cookies：仅将 `userid` / `username` / `useremail` 与登录标记 `user: '1'` 写入 Pinia，`user` / `b_user` token 不再进入 `__INITIAL_STATE__`。
+- SSR API：优先转发原始 `Cookie` 头，附带客户端 IP / UA；请求失败降级为业务错误响应；超时改为 8s；剥离发往后端的 `cache` 参数；缓存 key 区分登录态。
+- 鉴权：未登录访问 `/backend/*`、`/user/*` 改为 HTTP 302，开发/生产入口统一处理 redirect；登录态 HTML 增加 `Cache-Control: private, no-store`。
+- 客户端：在 `router.isReady` / `mount` 前恢复 `__INITIAL_STATE__`，并用 `js-cookie` 同步公开 cookie 字段。
+
+**commit message：**
+
+```
+perf: 优化 SSR cookies 注水与服务端 API 请求链路
+```
+
 ## 2026-07-27 13:42:00
 
 - `.dockerignore`：允许 `.env.production` 进入构建上下文。
@@ -138,9 +151,5 @@ fix: 使用 head.render 替代弃用的 renderSSRHead
 **本次改动 commit message（`global-09-commit.mdc`）：**
 
 ```
-refactor: 优化 SSR 服务安全与错误处理
-
-- 抽取 URL 守卫、统一 SSR 500 响应（生产不暴露堆栈）
-- 生产单次加载 render、404 状态码、限流返回 429
-- 收紧 body 限制、可选 chokidar 轮询、修正 skipExt 与类型
+perf: 优化 SSR cookies 注水与服务端 API 请求链路
 ```
