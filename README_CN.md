@@ -99,17 +99,20 @@ docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22
 构建与运行（镜像标签请按需修改）：
 
 ```bash
-docker build -t lincenying/images-mmf-blog-vite-vue3-ssr:1.26.0727 -f ./Dockerfile .
-docker run -d -p 7777:7777 --add-host=host.docker.internal:host-gateway --name container-mmf-blog-vite-vue3-ssr lincenying/images-mmf-blog-vite-vue3-ssr:1.26.0727
+docker build -t lincenying/app-vue3-ssr:1.26.0731 -f ./Dockerfile .
+# 或者
+docker compose -f docker-compose.yml build app
+
+docker run -d -p 7777:7777 --add-host=host.docker.internal:host-gateway --name app-vue3-ssr lincenying/app-vue3-ssr:1.26.0731
 ```
 
 维护常用命令：
 
 ```bash
-docker exec -it container-mmf-blog-vite-vue3-ssr /bin/sh
-docker stop container-mmf-blog-vite-vue3-ssr
-docker rm container-mmf-blog-vite-vue3-ssr
-docker rmi lincenying/images-mmf-blog-vite-vue3-ssr:1.26.0727
+docker exec -it app-vue3-ssr /bin/sh
+docker stop app-vue3-ssr
+docker rm app-vue3-ssr
+docker rmi lincenying/app-vue3-ssr:1.26.0731
 ```
 
 ## Docker Compose
