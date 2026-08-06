@@ -1,5 +1,19 @@
 # 变更记录
 
+## 2026-08-06 14:32:39
+
+- 详情 Store：`getArticleItem` 同 id 短路；前台注水清空 `content` 原文以减小 `__INITIAL_STATE__`。
+- 客户端 API：拦截器挂到 `axios.create` 实例；错误走 reject 再归一；GET 同 key 并发去重。
+- 装饰性能：`bg-plum` 仅首页/分类页且尊重 `prefers-reduced-motion`；`back-top` 改为 passive + 200ms 节流。
+- 服务端：限流放宽为正常浏览器 5 秒 20 次、key 仅 IP；`BODY_PARSER_LIMIT` 10mb → 1mb。
+- 清理：删除未使用的 `piniaInit` / `*StoreWithout` / `stores/index.ts`，避免 SSR 跨请求污染风险。
+
+**commit message：**
+
+```
+perf: 优化详情缓存、客户端 API 与装饰开销
+```
+
 ## 2026-08-06 14:24:22
 
 - 首屏体积：从 `entry-client` 移除全局 `@kangc/v-md-editor` 注册与 `base-editor` CSS；新增 `ensureVMdEditor`，仅后台文章新增/编辑页按需加载。

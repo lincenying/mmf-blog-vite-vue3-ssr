@@ -53,7 +53,7 @@ const mainLimiter = rateLimit({
 
         // 对正常浏览器用户给予更高限制
         if (isNormalBrowser) {
-            return 8 // 正常用户5秒8次
+            return 20 // 正常用户 5 秒 20 次（SSR + 静态 + XHR 叠加）
         }
 
         // 对API客户端或其他工具限制更严格
@@ -61,15 +61,15 @@ const mainLimiter = rateLimit({
             return 2 // 脚本工具更严格
         }
 
-        return 4 // 默认限制
+        return 6 // 默认限制
     },
     standardHeaders: true,
     skip: (req) => {
         return checkSkip(req.path)
     },
     keyGenerator: (req) => {
-        // 使用IP + User-Agent作为key，更精确识别客户端
-        return `${requestIp.getClientIp(req)}:${req.get('user-agent') || ''}`
+        // 仅用 IP，避免 UA 轻微变化导致限流 key 抖动
+        return requestIp.getClientIp(req) || 'unknown'
     },
     handler: (req, res, _next, options) => {
         // 记录被限制的请求

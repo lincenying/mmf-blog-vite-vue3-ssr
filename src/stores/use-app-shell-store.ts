@@ -1,7 +1,6 @@
 import type { IShellStore } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { piniaInit } from '.'
 
 interface HistoryType {
     path: string
@@ -62,7 +61,6 @@ const usePiniaStore = defineStore('appShellStore', () => {
 })
 
 export default usePiniaStore
-export const appShellStoreWithout = () => usePiniaStore(piniaInit)
 
 if (import.meta.hot) {
     import.meta.hot.accept(acceptHMRUpdate(usePiniaStore, import.meta.hot))

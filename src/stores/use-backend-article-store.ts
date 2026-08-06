@@ -1,7 +1,6 @@
 import type { IApiConfig, IArticle, IArticleStore } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { piniaInit } from '.'
 
 const usePiniaStore = defineStore('backendArticleStore', () => {
     const state: IArticleStore = reactive({
@@ -124,7 +123,6 @@ const usePiniaStore = defineStore('backendArticleStore', () => {
 })
 
 export default usePiniaStore
-export const backendArticleStoreWithout = () => usePiniaStore(piniaInit)
 
 if (import.meta.hot) {
     import.meta.hot.accept(acceptHMRUpdate(usePiniaStore, import.meta.hot))

@@ -1,7 +1,6 @@
 import type { IApiConfig, IComment, ICommentStore } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { piniaInit } from '.'
 
 const usePiniaStore = defineStore('globalCommentStore', () => {
     const state: ICommentStore = reactive({
@@ -85,7 +84,6 @@ const usePiniaStore = defineStore('globalCommentStore', () => {
 })
 
 export default usePiniaStore
-export const globalCommentStoreWithout = () => usePiniaStore(piniaInit)
 
 if (import.meta.hot) {
     import.meta.hot.accept(acceptHMRUpdate(usePiniaStore, import.meta.hot))

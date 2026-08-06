@@ -1,7 +1,6 @@
 import type { IAdminStore, IApiConfig, IUser } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { piniaInit } from '.'
 
 const usePiniaStore = defineStore('backendAdminStore', () => {
     const state: IAdminStore = reactive({
@@ -124,7 +123,6 @@ const usePiniaStore = defineStore('backendAdminStore', () => {
  * 后台管理员Store
  */
 export default usePiniaStore
-export const backendAdminStoreWithout = () => usePiniaStore(piniaInit)
 
 if (import.meta.hot) {
     import.meta.hot.accept(acceptHMRUpdate(usePiniaStore, import.meta.hot))

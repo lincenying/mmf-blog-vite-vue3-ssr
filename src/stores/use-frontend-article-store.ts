@@ -1,7 +1,6 @@
 import type { IApiConfig, IArticle, IFArticleStore } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { piniaInit } from '.'
 
 export const useFrontendArticleStore = defineStore('frontendArticleStore', () => {
     const state: IFArticleStore = reactive({
@@ -67,12 +66,26 @@ export const useFrontendArticleStore = defineStore('frontendArticleStore', () =>
      * 该函数不直接返回值，而是通过更新 state.item 来间接地返回结果。
      */
     const getArticleItem = async (config: IApiConfig, $api: ApiType = capi) => {
+        // 同文章且已加载则跳过，避免客户端路由复访重复请求
+        if (
+            state.item.isLoad
+            && state.item.data
+            && config.id === state.item.data._id
+            && (!config.path || config.path === state.item.path)
+        ) {
+            return
+        }
+
         // 向 API 发起请求获取文章详情，配置中排除了 path 属性，并以 markdown 格式返回，启用缓存
         const { code, data } = await $api.get<IArticle>('frontend/article/item', { ...config, path: undefined, markdown: 1, cache: true })
         // 如果请求成功且有返回数据，则更新 state 中的 item 信息
         if (code === 200 && data) {
+            // 前台只读页不需要 markdown 原文，清空 content 以缩小 SSR 注水体积
             state.item = {
-                data,
+                data: {
+                    ...data,
+                    content: '',
+                },
                 ...config,
                 isLoad: true,
             }
@@ -149,8 +162,6 @@ export const useFrontendArticleStore = defineStore('frontendArticleStore', () =>
         modifyLikeStatus,
     }
 })
-
-export const frontendArticleStoreWithout = () => useFrontendArticleStore(piniaInit)
 
 if (import.meta.hot) {
     import.meta.hot.accept(acceptHMRUpdate(useFrontendArticleStore, import.meta.hot))

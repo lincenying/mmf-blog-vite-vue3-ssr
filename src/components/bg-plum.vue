@@ -1,5 +1,6 @@
 <template>
     <div
+        v-if="enabled"
         class="pointer-events-none fixed bottom-0 left-0 right-0 top-0"
         style="z-index: -1"
         :style="`mask-image: ${mask};--webkit-mask-image: ${mask};`"
@@ -19,6 +20,24 @@ type NewCanvasRenderingContext2D = CanvasRenderingContext2D & {
     backingStorePixelRatio: number
 }
 
+defineOptions({
+    name: 'BgPlum',
+})
+
+const route = useRoute()
+
+/** 仅前台首页启用；尊重系统「减少动态效果」偏好 */
+const enabled = computed(() => {
+    if (import.meta.env.SSR) {
+        return false
+    }
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return false
+    }
+    const path = route.path
+    return path === '/' || path.startsWith('/category/')
+})
+
 const r180 = Math.PI
 const r90 = Math.PI / 2
 const r15 = Math.PI / 12
@@ -30,6 +49,10 @@ const start = ref<Fn>(() => {})
 const init = ref(4)
 const len = ref(6)
 const stopped = ref(false)
+
+/**
+ * 初始化 canvas 分辨率与缩放。
+ */
 function initCanvas(canvas: HTMLCanvasElement, width = 400, height = 400, _dpi?: number) {
     const ctx = canvas.getContext('2d') as NewCanvasRenderingContext2D
     const dpr = window.devicePixelRatio || 1
@@ -48,76 +71,94 @@ function initCanvas(canvas: HTMLCanvasElement, width = 400, height = 400, _dpi?:
     ctx.scale(dpi, dpi)
     return { ctx, dpi }
 }
+
+/**
+ * 极坐标转直角坐标。
+ */
 function polar2cart(x = 0, y = 0, r = 0, theta = 0) {
     const dx = r * Math.cos(theta)
     const dy = r * Math.sin(theta)
     return [x + dx, y + dy]
 }
-onMounted(async () => {
-    const canvas = el.value!
-    const { ctx } = initCanvas(canvas, size.width, size.height)
-    const { width, height } = canvas
-    let steps: Fn[] = []
-    let prevSteps: Fn[] = []
-    let iterations = 0
-    const step = (x: number, y: number, rad: number) => {
-        const length = random() * len.value
-        const [nx, ny] = polar2cart(x, y, length, rad)
-        ctx.beginPath()
-        ctx.moveTo(x, y)
-        ctx.lineTo(nx, ny)
-        ctx.stroke()
-        const rad1 = rad + random() * r15
-        const rad2 = rad - random() * r15
-        if (nx < -100 || nx > size.width + 100 || ny < -100 || ny > size.height + 100) {
-            return
-        }
-        if (iterations <= init.value || random() > 0.5) {
-            steps.push(() => step(nx, ny, rad1))
-        }
-        if (iterations <= init.value || random() > 0.5) {
-            steps.push(() => step(nx, ny, rad2))
-        }
-    }
-    let lastTime = performance.now()
-    const interval = 1000 / 40
 
-    let controls: ReturnType<typeof useRafFn>
-    const frame = () => {
-        if (performance.now() - lastTime < interval) {
+onMounted(() => {
+    watch(enabled, async (val) => {
+        if (!val) {
             return
         }
-        iterations += 1
-        prevSteps = steps
-        steps = []
-        lastTime = performance.now()
-        if (!prevSteps.length) {
+        await nextTick()
+        const canvas = el.value
+        if (!canvas) {
+            return
+        }
+        const { ctx } = initCanvas(canvas, size.width, size.height)
+        const { width, height } = canvas
+        let steps: Fn[] = []
+        let prevSteps: Fn[] = []
+        let iterations = 0
+        const step = (x: number, y: number, rad: number) => {
+            const length = random() * len.value
+            const [nx, ny] = polar2cart(x, y, length, rad)
+            ctx.beginPath()
+            ctx.moveTo(x, y)
+            ctx.lineTo(nx, ny)
+            ctx.stroke()
+            const rad1 = rad + random() * r15
+            const rad2 = rad - random() * r15
+            if (nx < -100 || nx > size.width + 100 || ny < -100 || ny > size.height + 100) {
+                return
+            }
+            if (iterations <= init.value || random() > 0.5) {
+                steps.push(() => step(nx, ny, rad1))
+            }
+            if (iterations <= init.value || random() > 0.5) {
+                steps.push(() => step(nx, ny, rad2))
+            }
+        }
+        let lastTime = performance.now()
+        const interval = 1000 / 40
+
+        let controls: ReturnType<typeof useRafFn>
+        const frame = () => {
+            if (document.hidden) {
+                return
+            }
+            if (performance.now() - lastTime < interval) {
+                return
+            }
+            iterations += 1
+            prevSteps = steps
+            steps = []
+            lastTime = performance.now()
+            if (!prevSteps.length) {
+                controls.pause()
+                stopped.value = true
+            }
+            prevSteps.forEach(i => i())
+        }
+        controls = useRafFn(frame, { immediate: false })
+        start.value = () => {
             controls.pause()
-            stopped.value = true
+            iterations = 0
+            ctx.clearRect(0, 0, width, height)
+            ctx.lineWidth = 1
+            ctx.strokeStyle = color
+            prevSteps = []
+            steps = [
+                () => step(random() * size.width, 0, r90),
+                () => step(random() * size.width, size.height, -r90),
+                () => step(0, random() * size.height, 0),
+                () => step(size.width, random() * size.height, r180),
+            ]
+            if (size.width < 500) {
+                steps = steps.slice(0, 2)
+            }
+            controls.resume()
+            stopped.value = false
         }
-        prevSteps.forEach(i => i())
-    }
-    controls = useRafFn(frame, { immediate: false })
-    start.value = () => {
-        controls.pause()
-        iterations = 0
-        ctx.clearRect(0, 0, width, height)
-        ctx.lineWidth = 1
-        ctx.strokeStyle = color
-        prevSteps = []
-        steps = [
-            () => step(random() * size.width, 0, r90),
-            () => step(random() * size.width, size.height, -r90),
-            () => step(0, random() * size.height, 0),
-            () => step(size.width, random() * size.height, r180),
-        ]
-        if (size.width < 500) {
-            steps = steps.slice(0, 2)
-        }
-        controls.resume()
-        stopped.value = false
-    }
-    start.value()
+        start.value()
+    }, { immediate: true })
 })
+
 const mask = computed(() => 'radial-gradient(circle, transparent, black);')
 </script>

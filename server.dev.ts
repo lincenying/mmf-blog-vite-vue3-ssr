@@ -16,7 +16,7 @@ import { createServer as viteCreateServer } from 'vite'
 import { handleSsrRouteError } from './server-ssr-error'
 import { urlGuardMiddleware } from './server-url-guard'
 
-const BODY_PARSER_LIMIT = '10mb'
+const BODY_PARSER_LIMIT = '1mb'
 
 export async function createServer(root = process.cwd(), hmrPort?: number) {
     const __dirname = path.dirname(fileURLToPath(import.meta.url))

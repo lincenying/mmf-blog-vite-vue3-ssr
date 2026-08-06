@@ -19,7 +19,7 @@ import { handleSsrRouteError } from './server-ssr-error'
 import { urlGuardMiddleware } from './server-url-guard'
 import apiDomain from './src/api/url'
 
-const BODY_PARSER_LIMIT = '10mb'
+const BODY_PARSER_LIMIT = '1mb'
 
 export async function createServer() {
     const __dirname = path.dirname(fileURLToPath(import.meta.url))

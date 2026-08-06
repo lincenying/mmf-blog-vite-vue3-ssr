@@ -1,7 +1,6 @@
 import type { IApiConfig, IUser, IUserStore } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { piniaInit } from '.'
 
 const usePiniaStore = defineStore('backendUserStore', () => {
     const state: IUserStore = reactive({
@@ -105,7 +104,6 @@ const usePiniaStore = defineStore('backendUserStore', () => {
 })
 
 export default usePiniaStore
-export const backendUserStoreWithout = () => usePiniaStore(piniaInit)
 
 if (import.meta.hot) {
     import.meta.hot.accept(acceptHMRUpdate(usePiniaStore, import.meta.hot))
