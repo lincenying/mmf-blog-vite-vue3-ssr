@@ -42,6 +42,14 @@ const config: { server: ServerOptions, build: BuildOptions } = {
                 manualChunks(id: string) {
                     // 处理css分块
                     if (id.includes('node_modules')) {
+                        // 编辑器仅后台动态 import，不归入首屏 vendor
+                        if (
+                            id.includes('@kangc/v-md-editor')
+                            || id.includes('/prismjs/')
+                            || id.includes('\\prismjs\\')
+                        ) {
+                            return
+                        }
                         if (id.includes('element-plus')) {
                             return 'element-plus'
                         }

@@ -6,8 +6,6 @@ cd "${1:-/app}"
 
 rm -rf \
     node_modules/.pnpm/element-plus@* \
-    node_modules/.pnpm/lodash@* \
-    node_modules/.pnpm/store2@* \
     node_modules/.pnpm/vue-loading-overlay@*
 
 pnpm store prune

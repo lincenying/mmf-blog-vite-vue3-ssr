@@ -17,6 +17,7 @@
                 <div id="modify-content" class="settings-item-content">
                     <client-only>
                         <v-md-editor
+                            v-if="isClient"
                             v-model="form.content"
                             :disabled-menus="[]"
                             mode="edit"
@@ -44,7 +45,7 @@ import type { AnyFn } from '@vueuse/core'
 import type { IArticle, ICategory, IUpload } from '~/types'
 
 import { useGlobal } from '@/composables'
-import VueMarkdownEditor from '@/plugins/v-md-editor'
+import { ensureVMdEditor } from '@/plugins/load-v-md-editor'
 import useBackendArticleStore from '@/stores/use-backend-article-store'
 import { useGlobalCategoryStore } from '@/stores/use-global-category-store'
 
@@ -60,6 +61,7 @@ defineOptions({
 const { ctx } = useGlobal()
 const route = useRoute()
 const router = useRouter()
+const instance = getCurrentInstance()
 
 // pinia 状态管理 ===>
 const globalCategoryStore = useGlobalCategoryStore()
@@ -69,6 +71,9 @@ const backendArticleStore = useBackendArticleStore()
 const { item } = $(storeToRefs(backendArticleStore))
 
 const [loading, toggleLoading] = useToggle(false)
+
+let isClient = $ref(false)
+let markdownEditor: Awaited<ReturnType<typeof ensureVMdEditor>> | null = null
 
 const frontHtml = ref(true)
 
@@ -108,10 +113,21 @@ watch(
     },
 )
 
+/**
+ * 客户端挂载后加载编辑器并拉取文章详情。
+ */
 onMounted(async () => {
+    if (!instance) {
+        return
+    }
+    markdownEditor = await ensureVMdEditor(instance.appContext.app)
+    isClient = true
     backendArticleStore.getArticleItem({ id: route.params.id })
 })
 
+/**
+ * 提交编辑文章表单。
+ */
 async function handleModify() {
     if (!form.title || !form.category || !form.content) {
         showMsg('请将表单填写完整!')
@@ -121,9 +137,8 @@ async function handleModify() {
         return
     }
     toggleLoading(true)
-    // form.html = this.$refs.md.d_render
-    if (frontHtml.value) {
-        const html = VueMarkdownEditor.vMdParser.themeConfig.markdownParser.render(form.content)
+    if (frontHtml.value && markdownEditor) {
+        const html = markdownEditor.vMdParser.themeConfig.markdownParser.render(form.content)
         form.html = html
     }
     const { code, data } = await capi.post<IArticle>('backend/article/modify', form)
@@ -135,6 +150,9 @@ async function handleModify() {
     }
 }
 
+/**
+ * 处理编辑器图片上传并插入 Markdown。
+ */
 async function handleUploadImage(_event: EventTarget, insertImage: AnyFn, files: FileList) {
     const loader = ctx.$loading.show()
 
@@ -145,8 +163,6 @@ async function handleUploadImage(_event: EventTarget, insertImage: AnyFn, files:
         insertImage({
             url: `${uploadApi}/${data.filepath}`,
             desc: '',
-            // width: 'auto',
-            // height: 'auto',
         })
     }
 
@@ -155,7 +171,6 @@ async function handleUploadImage(_event: EventTarget, insertImage: AnyFn, files:
 
 const headTitle = ref('编辑文章 - M.M.F 小屋')
 useHead({
-    // Can be static or computed
     title: headTitle,
     meta: [
         {

@@ -1,5 +1,18 @@
 # 变更记录
 
+## 2026-08-06 14:24:22
+
+- 首屏体积：从 `entry-client` 移除全局 `@kangc/v-md-editor` 注册与 `base-editor` CSS；新增 `ensureVMdEditor`，仅后台文章新增/编辑页按需加载。
+- 构建拆包：`manualChunks` 将 `v-md-editor` / `prismjs` 排除出首屏 `vendor`（vendor 约 494KB → 235KB）。
+- KeepAlive：`include` 改为组件 `name`（`FrontendIndex,FrontendAbout`），并去掉 KeepAlive 上的破坏性 `:key`。
+- 清理：移除未使用依赖 `lodash` / `store2`；删除无效 `generate`/`workbox` 脚本、`prerender.ts`、`valid-route.ts`；去掉入口无用 `console.log`。
+
+**commit message：**
+
+```
+perf: 懒加载 Markdown 编辑器并修复 KeepAlive 缓存
+```
+
 ## 2026-07-31 15:55:00
 
 - SSR cookies：仅将 `userid` / `username` / `useremail` 与登录标记 `user: '1'` 写入 Pinia，`user` / `b_user` token 不再进入 `__INITIAL_STATE__`。

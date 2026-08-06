@@ -3,7 +3,7 @@
         <global-navigation :is-backend="backend" />
         <router-view v-slot="{ Component }" class="app-view relative">
             <transition :name="pageTransitionName" mode="out-in" @before-enter="handleBeforeEnter" @after-enter="handleAfterEnter">
-                <keep-alive :key="key" :include="cacheFrontendComponents">
+                <keep-alive :include="cacheFrontendComponents">
                     <Suspense>
                         <component :is="Component" :key="key" />
                     </Suspense>
@@ -38,7 +38,7 @@ const { pageTransitionName } = storeToRefs(appShellStore)
 // const isSSR = ref(!!import.meta.env.SSR)
 // const isPROD = ref(!!import.meta.env.PROD)
 
-const cacheFrontendComponents = $ref('frontend-index,frontend-about')
+const cacheFrontendComponents = $ref('FrontendIndex,FrontendAbout')
 // const cacheBackendComponents = ref('backend-admin-list,backend-article-list,backend-user-list')
 
 const route = useRoute()

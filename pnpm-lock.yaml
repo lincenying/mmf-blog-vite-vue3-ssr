@@ -151,9 +151,6 @@ catalogs:
     js-cookie:
       specifier: ^3.0.8
       version: 3.0.8
-    lodash:
-      specifier: ^4.18.1
-      version: 4.18.1
     md5:
       specifier: ^2.3.0
       version: 2.3.0
@@ -166,9 +163,6 @@ catalogs:
     qs:
       specifier: ^6.15.3
       version: 6.15.3
-    store2:
-      specifier: ^2.14.4
-      version: 2.14.4
     vue:
       specifier: ^3.5.40
       version: 3.5.40
@@ -194,9 +188,6 @@ catalogs:
     '@types/js-cookie':
       specifier: ^3.0.6
       version: 3.0.6
-    '@types/lodash':
-      specifier: ^4.17.24
-      version: 4.17.24
     '@types/md5':
       specifier: ^2.3.6
       version: 2.3.6
@@ -262,9 +253,6 @@ importers:
       js-cookie:
         specifier: catalog:prod
         version: 3.0.8
-      lodash:
-        specifier: catalog:prod
-        version: 4.18.1
       lru-cache:
         specifier: catalog:node
         version: 11.5.2
@@ -289,9 +277,6 @@ importers:
       serve-static:
         specifier: catalog:node
         version: 2.2.1(supports-color@5.5.0)
-      store2:
-        specifier: catalog:prod
-        version: 2.14.4
       vue:
         specifier: catalog:prod
         version: 3.5.40(typescript@7.0.2)
@@ -329,9 +314,6 @@ importers:
       '@types/js-cookie':
         specifier: catalog:types
         version: 3.0.6
-      '@types/lodash':
-        specifier: catalog:types
-        version: 4.17.24
       '@types/md5':
         specifier: catalog:types
         version: 2.3.6
@@ -6844,9 +6826,6 @@ packages:
   stop-iteration-iterator@1.1.0:
     resolution: {integrity: sha512-eLoXW/DHyl62zxY4SCaIgnRhuMr6ri4juEYARS8E6sCEqzKpOiE521Ucofdx+KnDZl5xmvGYaaKCk5FEOxJCoQ==}
     engines: {node: '>= 0.4'}
-
-  store2@2.14.4:
-    resolution: {integrity: sha512-srTItn1GOvyvOycgxjAnPA63FZNwy0PTyUBFMHRM+hVFltAeoh0LmNBz9SZqUS9mMqGk8rfyWyXn3GH5ReJ8Zw==}
 
   stream-from-promise@1.0.0:
     resolution: {integrity: sha512-j84KLkudt+gr8KJ21RB02btPLx61uGbrLnewsWz6QKmsz8/c4ZFqXw6mJh5+G4oRN7DgDxdbjPxnpySpg1mUig==}
@@ -14852,8 +14831,6 @@ snapshots:
     dependencies:
       es-errors: 1.3.0
       internal-slot: 1.1.0
-
-  store2@2.14.4: {}
 
   stream-from-promise@1.0.0: {}
 
