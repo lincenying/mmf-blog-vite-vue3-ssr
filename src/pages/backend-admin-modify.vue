@@ -41,7 +41,7 @@ const router = useRouter()
 
 // pinia 状态管理 ===>
 const backendAdminStore = useBackendAdminStore()
-const { item } = $(storeToRefs(backendAdminStore))
+const { item } = storeToRefs(backendAdminStore)
 
 const [loading, toggleLoading] = useToggle(false)
 

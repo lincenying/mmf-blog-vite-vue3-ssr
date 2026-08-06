@@ -68,7 +68,7 @@ defineOptions({
 
 // pinia 状态管理 ===>
 const frontendArticleStore = useFrontendArticleStore()
-const { trending } = $(storeToRefs(frontendArticleStore))
+const { trending } = storeToRefs(frontendArticleStore)
 
 onMounted(() => {})
 

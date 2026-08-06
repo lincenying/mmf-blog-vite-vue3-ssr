@@ -26,7 +26,7 @@ const router = useRouter()
 
 // pinia 状态管理 ===>
 const globalCategoryStore = useGlobalCategoryStore()
-const { item } = $(storeToRefs(globalCategoryStore))
+const { item } = storeToRefs(globalCategoryStore)
 
 const [loading, toggleLoading] = useToggle(false)
 
@@ -43,9 +43,9 @@ watch(item, (val) => {
 })
 
 onMounted(() => {
-    if (item && item.data) {
-        form.cate_name = item.data.cate_name
-        form.cate_order = item.data.cate_order
+    if (item.value && item.value.data) {
+        form.cate_name = item.value.data.cate_name
+        form.cate_order = item.value.data.cate_order
     }
 })
 

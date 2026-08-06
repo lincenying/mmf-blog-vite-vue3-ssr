@@ -58,10 +58,10 @@ const route = useRoute()
 
 // pinia 状态管理 ===>
 const globalCategoryStore = useGlobalCategoryStore()
-const { lists: category } = $(storeToRefs(globalCategoryStore))
+const { lists: category } = storeToRefs(globalCategoryStore)
 
 const frontendArticleStore = useFrontendArticleStore()
-const { lists: topics, trending } = $(storeToRefs(frontendArticleStore))
+const { lists: topics, trending } = storeToRefs(frontendArticleStore)
 
 useSaveScroll()
 
@@ -71,7 +71,7 @@ const {
 } = route
 
 const [loading, toggleLoading] = useToggle(false)
-async function loadMore(page = topics.page) {
+async function loadMore(page = topics.value.page) {
     if (loading.value) {
         return
     }
@@ -82,7 +82,7 @@ async function loadMore(page = topics.page) {
 
 onActivated(() => {
     console.log(`frontend-index onActivated:${route.path}`)
-    if (topics.path !== route.path) {
+    if (topics.value.path !== route.path) {
         loadMore(1)
     }
 })
@@ -95,7 +95,7 @@ const headTitle = computed(() => {
     let title = 'M.M.F 小屋'
     const { id, key, by } = route.params
     if (id) {
-        const obj = category.find((item: ICategory) => item._id === id)
+        const obj = category.value.find((item: ICategory) => item._id === id)
         if (obj) {
             title = `${obj.cate_name} - ${title}`
         }

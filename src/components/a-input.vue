@@ -19,5 +19,5 @@ const props = defineProps<{
     classes?: string
 }>()
 
-const { title, classes } = $(toRefs(props))
+const { title, classes } = toRefs(props)
 </script>

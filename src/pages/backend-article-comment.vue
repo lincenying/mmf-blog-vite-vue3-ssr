@@ -48,11 +48,11 @@ const route = useRoute()
 
 // pinia 状态管理 ===>
 const globalCommentStore = useGlobalCommentStore()
-const { lists } = $(storeToRefs(globalCommentStore))
+const { lists } = storeToRefs(globalCommentStore)
 
 const [loading, toggleLoading] = useToggle(false)
 
-async function loadMore(page = lists.page) {
+async function loadMore(page = lists.value.page) {
     if (loading.value) {
         return
     }
@@ -76,7 +76,7 @@ async function handleDelete(id: string) {
 }
 
 onMounted(() => {
-    if (lists.path === '') {
+    if (lists.value.path === '') {
         loadMore(1)
     }
 })

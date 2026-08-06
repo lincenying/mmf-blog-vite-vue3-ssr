@@ -30,7 +30,7 @@ defineOptions({
 
 // pinia 状态管理 ===>
 const globalStore = useGlobalStore()
-const { showLoginModal, showRegisterModal, ISDEV } = toRefs(globalStore)
+const { showLoginModal, showRegisterModal, ISDEV } = storeToRefs(globalStore)
 
 const appShellStore = useAppShellStore()
 const { pageTransitionName } = storeToRefs(appShellStore)
@@ -38,15 +38,15 @@ const { pageTransitionName } = storeToRefs(appShellStore)
 // const isSSR = ref(!!import.meta.env.SSR)
 // const isPROD = ref(!!import.meta.env.PROD)
 
-const cacheFrontendComponents = $ref('FrontendIndex,FrontendAbout')
+const cacheFrontendComponents = ref('FrontendIndex,FrontendAbout')
 // const cacheBackendComponents = ref('backend-admin-list,backend-article-list,backend-user-list')
 
 const route = useRoute()
-const key = $computed(() => {
+const key = computed(() => {
     const path = (route.meta.path as string) || route.path
     return path.replace(/\//g, '_')
 })
-const backend = $computed(() => {
+const backend = computed(() => {
     return route.path.includes('backend')
 })
 

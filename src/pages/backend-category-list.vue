@@ -40,9 +40,9 @@ const appShellStore = useAppShellStore()
 
 // pinia 状态管理 ===>
 const globalCategoryStore = useGlobalCategoryStore()
-const { lists: category } = $(storeToRefs(globalCategoryStore))
+const { lists: category } = storeToRefs(globalCategoryStore)
 
-const { historyPageScrollTop } = $(storeToRefs(appShellStore))
+const { historyPageScrollTop } = storeToRefs(appShellStore)
 
 useSaveScroll()
 
@@ -58,11 +58,11 @@ async function loadMore(page: number) {
 }
 
 onMounted(() => {
-    if (category.length === 0) {
+    if (category.value.length === 0) {
         loadMore(1)
     }
     else {
-        const scrollTop = historyPageScrollTop[route.path] || 0
+        const scrollTop = historyPageScrollTop.value[route.path] || 0
         window.scrollTo(0, scrollTop)
     }
 })

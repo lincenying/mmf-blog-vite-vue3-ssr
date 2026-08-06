@@ -46,15 +46,15 @@ const appShellStore = useAppShellStore()
 
 // pinia 状态管理 ===>
 const backendAdminStore = useBackendAdminStore()
-const { lists } = $(storeToRefs(backendAdminStore))
+const { lists } = storeToRefs(backendAdminStore)
 
-const { historyPageScrollTop } = $(storeToRefs(appShellStore))
+const { historyPageScrollTop } = storeToRefs(appShellStore)
 
 useSaveScroll()
 
 const [loading, toggleLoading] = useToggle(false)
 
-async function loadMore(page = lists.page) {
+async function loadMore(page = lists.value.page) {
     if (loading.value) {
         return
     }
@@ -87,11 +87,11 @@ async function handleDelete(id: string) {
 }
 
 onMounted(() => {
-    if (lists.path === '') {
+    if (lists.value.path === '') {
         loadMore(1)
     }
     else {
-        const scrollTop = historyPageScrollTop[route.path] || 0
+        const scrollTop = historyPageScrollTop.value[route.path] || 0
         window.scrollTo(0, scrollTop)
     }
 })

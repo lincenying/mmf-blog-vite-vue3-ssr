@@ -85,7 +85,6 @@
     "unocss": "catalog:dev",
     "unplugin-auto-import": "catalog:dev",
     "unplugin-vue-components": "catalog:dev",
-    "unplugin-vue-macros": "catalog:dev",
     "vite": "catalog:dev",
     "vite-plugin-mock": "catalog:dev",
     "vite-plugin-pwa": "catalog:dev",

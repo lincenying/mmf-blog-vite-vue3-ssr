@@ -32,16 +32,20 @@ defineOptions({
 const globalStore = useGlobalStore()
 
 // pinia 状态管理 ===>
-const { cookies } = $(toRefs(globalStore))
+const { cookies } = storeToRefs(globalStore)
 
-let username = $ref('')
-let email = $ref('')
+// SSR 可用 cookies 公开字段做初值；完整账号信息在 hydration 后拉取
+const username = ref(cookies.value.username || '')
+const email = ref(cookies.value.useremail || '')
 
+/**
+ * 拉取当前登录用户账号信息。
+ */
 async function getUser() {
     const { code, data } = await capi.get<IUser>('frontend/user/account', {})
     if (code === 200) {
-        username = data.username
-        email = data.email
+        username.value = data.username
+        email.value = data.email
     }
 }
 
@@ -51,23 +55,23 @@ onMounted(() => {
 
 const handleSubmit = useLockFn(async () => {
     const reg = /^[\w\-.]+@[\w-]+\.[\w-]+$/
-    if (!email) {
+    if (!email.value) {
         showMsg('请填写邮箱地址!')
         return
     }
-    else if (!reg.test(email)) {
+    else if (!reg.test(email.value)) {
         showMsg('邮箱格式错误!')
         return
     }
     const { code } = await capi.post<'success' | 'error'>('frontend/user/account', {
-        email,
-        username,
-        id: cookies.userid,
+        email: email.value,
+        username: username.value,
+        id: cookies.value.userid,
     })
     if (code === 200) {
         globalStore.setCookies({
-            ...cookies,
-            useremail: email,
+            ...cookies.value,
+            useremail: email.value,
         })
         showMsg({ type: 'success', content: '保存成功!' })
     }

@@ -35,7 +35,7 @@ const router = useRouter()
 
 // pinia 状态管理 ===>
 const globalCategoryStore = useGlobalCategoryStore()
-const { item } = $(storeToRefs(globalCategoryStore))
+const { item } = storeToRefs(globalCategoryStore)
 
 const [loading, toggleLoading] = useToggle(false)
 

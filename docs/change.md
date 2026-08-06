@@ -1,5 +1,38 @@
 # 变更记录
 
+## 2026-08-06 14:59:00
+
+- 构建：关闭 `ReactivityTransform` / `DefineProps` / `DefinePropsRefs` 插件（`vite.config.macros.ts` 仅保留 `@vitejs/plugin-vue` 与 `vue-jsx`）。
+- 依赖：移除未再使用的 `unplugin-vue-macros`，并去掉 `shims-types.d.ts` 中的 macros-global 类型引用。
+- 验证：`pnpm build`（client/server/entry）通过。
+
+**commit message：**
+
+```
+chore: 关闭 Reactivity Transform 并移除 vue-macros 依赖
+```
+
+## 2026-08-06 14:56:57
+
+- 迁移：`src/App.vue` 与 `src/pages` 下 16 个页面移除 Reactivity Transform（`$()` / `$ref` / `$computed`），改用标准 Composition API（`storeToRefs` / `ref` / `computed`），script 内补 `.value`。
+- 帐号页：`frontend-user-account.vue` 用 Pinia cookies 公开字段作 SSR 初值，hydration 后 `onMounted` 拉取 `frontend/user/account`（无独立 account store，故不做 asyncData 注水）。
+
+**commit message：**
+
+```
+refactor: 页面移除 Reactivity Transform 改用标准 Composition API
+```
+
+## 2026-08-06 14:55:25
+
+- 迁移：`src/components` 下 10 个组件移除 Reactivity Transform（`$()` / `$computed`），改用标准 Composition API（`toRefs` / `storeToRefs` / `computed`），script 内补 `.value`。
+
+**commit message：**
+
+```
+refactor: 组件移除 Reactivity Transform 改用标准 Composition API
+```
+
 ## 2026-08-06 14:52:25
 
 - 类型：API `headers` 由 `Objable` 收紧为 `Objable<string>`，兼容 Axios `AxiosHeaderValue`。

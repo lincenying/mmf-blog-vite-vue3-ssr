@@ -47,10 +47,10 @@ const props = defineProps<{
     comments: ICommentStoreList
 }>()
 
-const { comments } = $(toRefs(props))
+const { comments } = toRefs(props)
 
 const globalStore = useGlobalStore()
-const { cookies } = $(toRefs(globalStore))
+const { cookies } = storeToRefs(globalStore)
 
 const globalCommentStore = useGlobalCommentStore()
 
@@ -62,20 +62,20 @@ const form = reactive({
     content: '',
 })
 
-const user = $computed(() => cookies.user)
-const userEmail = $computed(() => cookies.useremail)
+const user = computed(() => cookies.value.user)
+const userEmail = computed(() => cookies.value.useremail)
 
 async function handleLoadComment() {
     toggleLoading(true)
     await globalCommentStore.getCommentList({
         id: route.params.id,
-        page: comments.page + 1,
+        page: comments.value.page + 1,
         limit: 10,
     })
     toggleLoading(false)
 }
 const handlePostComment = useLockFn(async () => {
-    if (!user) {
+    if (!user.value) {
         showMsg('请先登录!')
         globalStore.setLoginModal(true)
     }

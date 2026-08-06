@@ -58,7 +58,7 @@ defineOptions({
 const router = useRouter()
 
 const globalCategoryStore = useGlobalCategoryStore()
-const { lists } = $(storeToRefs(globalCategoryStore))
+const { lists } = storeToRefs(globalCategoryStore)
 const backendArticleStore = useBackendArticleStore()
 
 const {

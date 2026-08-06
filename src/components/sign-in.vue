@@ -35,7 +35,7 @@ const props = defineProps<{
     show: boolean
 }>()
 
-const { show } = $(toRefs(props))
+const { show } = toRefs(props)
 
 const globalStore = useGlobalStore()
 

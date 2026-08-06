@@ -41,7 +41,7 @@ const router = useRouter()
 
 // pinia 状态管理 ===>
 const backendUserStore = useBackendUserStore()
-const { item } = $(storeToRefs(backendUserStore))
+const { item } = storeToRefs(backendUserStore)
 
 const [loading, toggleLoading] = useToggle(false)
 
@@ -62,9 +62,9 @@ watch(item, (val) => {
 })
 
 onMounted(async () => {
-    if (item && item.data) {
-        form.username = item.data.username
-        form.email = item.data.email
+    if (item.value && item.value.data) {
+        form.username = item.value.data.username
+        form.email = item.value.data.email
     }
 })
 

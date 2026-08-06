@@ -20,9 +20,9 @@ defineOptions({
 })
 
 const globalStore = useGlobalStore()
-const { cookies } = $(toRefs(globalStore))
+const { cookies } = storeToRefs(globalStore)
 
-const isLogin = computed(() => !!cookies.user)
+const isLogin = computed(() => !!cookies.value.user)
 
 function handleLogin() {
     globalStore.setLoginModal(true)

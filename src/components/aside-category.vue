@@ -22,5 +22,5 @@ const props = defineProps<{
     category: ICategory[]
 }>()
 
-const { category } = $(toRefs(props))
+const { category } = toRefs(props)
 </script>

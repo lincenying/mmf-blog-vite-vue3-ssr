@@ -60,10 +60,10 @@ const route = useRoute()
 const router = useRouter()
 
 const globalCategoryStore = useGlobalCategoryStore()
-const { lists } = $(storeToRefs(globalCategoryStore))
+const { lists } = storeToRefs(globalCategoryStore)
 
 const backendArticleStore = useBackendArticleStore()
-const { item } = $(storeToRefs(backendArticleStore))
+const { item } = storeToRefs(backendArticleStore)
 
 const {
     isClient,
@@ -89,7 +89,7 @@ const form = reactive({
 watch(
     () => form.category,
     (val) => {
-        const obj = lists.find((item: ICategory) => item._id === val)
+        const obj = lists.value.find((item: ICategory) => item._id === val)
         if (obj) {
             form.category_name = obj.cate_name
         }
@@ -97,7 +97,7 @@ watch(
 )
 
 watch(
-    () => item,
+    item,
     (val) => {
         if (val.data) {
             form.title = val.data.title

@@ -92,16 +92,16 @@ defineOptions({
 
 // pinia 状态管理 ===>
 const globalCategoryStore = useGlobalCategoryStore()
-const { lists: category } = $(storeToRefs(globalCategoryStore))
+const { lists: category } = storeToRefs(globalCategoryStore)
 
 const frontendArticleStore = useFrontendArticleStore()
-const { item, trending } = $(storeToRefs(frontendArticleStore))
+const { item, trending } = storeToRefs(frontendArticleStore)
 
-const isLoad = $computed(() => item.isLoad)
-const articleData = $computed(() => item.data)
+const isLoad = computed(() => item.value.isLoad)
+const articleData = computed(() => item.value.data)
 
 const globalCommentStore = useGlobalCommentStore()
-const { lists: comments } = $(storeToRefs(globalCommentStore))
+const { lists: comments } = storeToRefs(globalCommentStore)
 
 useSaveScroll()
 
@@ -160,7 +160,7 @@ onMounted(() => {
 
 const headTitle = computed(() => {
     let title = 'M.M.F 小屋'
-    title = articleData?.title ? `${articleData.title} - M.M.F 小屋` : 'M.M.F 小屋'
+    title = articleData.value?.title ? `${articleData.value.title} - M.M.F 小屋` : 'M.M.F 小屋'
     return title
 })
 useHead({

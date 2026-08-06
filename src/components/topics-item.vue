@@ -29,5 +29,5 @@ const props = defineProps<{
     item: IArticle
 }>()
 
-const { item } = $(toRefs(props))
+const { item } = toRefs(props)
 </script>

@@ -25,5 +25,5 @@ const props = defineProps<{
     trending: IArticle[]
 }>()
 
-const { trending } = $(toRefs(props))
+const { trending } = toRefs(props)
 </script>

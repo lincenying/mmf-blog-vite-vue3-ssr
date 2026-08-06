@@ -32,39 +32,39 @@ const props = defineProps<{
     item: IArticle
 }>()
 
-const { item } = $(toRefs(props))
+const { item } = toRefs(props)
 
 const globalStore = useGlobalStore()
-const { cookies } = $(toRefs(globalStore))
+const { cookies } = storeToRefs(globalStore)
 
 const frontendArticleStore = useFrontendArticleStore()
 
-const isLogin = $computed(() => !!cookies.user)
+const isLogin = computed(() => !!cookies.value.user)
 
 const handleLike = useLockFn(async () => {
-    if (!isLogin) {
+    if (!isLogin.value) {
         showMsg('请先登录!')
         globalStore.setLoginModal(true)
         return
     }
     let url = 'frontend/like'
-    if (item.like_status) {
+    if (item.value.like_status) {
         url = 'frontend/unlike'
     }
-    const { code } = await capi.get<'success' | 'error'>(url, { id: item._id })
+    const { code } = await capi.get<'success' | 'error'>(url, { id: item.value._id })
     if (code === 200) {
         showMsg({ type: 'success', content: '操作成功' })
         frontendArticleStore.modifyLikeStatus({
-            id: item._id,
-            status: !item.like_status,
+            id: item.value._id,
+            status: !item.value.like_status,
         })
     }
 })
 function handleShare() {
     const top = window.screen.height / 2 - 250
     const left = window.screen.width / 2 - 300
-    const title = `${item.title} - M.M.F 小屋`
-    const url = `https://www.mmxiaowu.com/article/${item._id}`
+    const title = `${item.value.title} - M.M.F 小屋`
+    const url = `https://www.mmxiaowu.com/article/${item.value._id}`
     window.open(
         `http://service.weibo.com/share/share.php?title=${encodeURIComponent(
             title.replace(/&nbsp;/g, ' ').replace(/<br \/>/g, ' '),

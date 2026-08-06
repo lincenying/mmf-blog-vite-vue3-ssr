@@ -53,9 +53,9 @@ const appShellStore = useAppShellStore()
 
 // pinia 状态管理 ===>
 const backendArticleStore = useBackendArticleStore()
-const { lists } = $(storeToRefs(backendArticleStore))
+const { lists } = storeToRefs(backendArticleStore)
 
-const { historyPageScrollTop } = $(storeToRefs(appShellStore))
+const { historyPageScrollTop } = storeToRefs(appShellStore)
 
 useSaveScroll()
 
@@ -63,7 +63,7 @@ const [loading, toggleLoading] = useToggle(false)
 
 const searchKey = ref('')
 
-async function loadMore(page = lists.page, key: string = searchKey.value) {
+async function loadMore(page = lists.value.page, key: string = searchKey.value) {
     if (loading.value) {
         return
     }
@@ -91,11 +91,11 @@ function onSearch() {
 }
 
 onMounted(() => {
-    if (lists.path === '') {
+    if (lists.value.path === '') {
         loadMore(1)
     }
     else {
-        const scrollTop = historyPageScrollTop[route.path] || 0
+        const scrollTop = historyPageScrollTop.value[route.path] || 0
         window.scrollTo(0, scrollTop)
     }
 })

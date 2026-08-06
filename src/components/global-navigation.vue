@@ -40,7 +40,7 @@ const props = defineProps<{
     isBackend: boolean
 }>()
 
-const { isBackend } = $(toRefs(props))
+const { isBackend } = toRefs(props)
 
 const router = useRouter()
 function onSearch(e: Event) {

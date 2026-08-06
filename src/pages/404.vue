@@ -26,7 +26,7 @@ defineOptions({
 })
 
 const frontendArticleStore = useFrontendArticleStore()
-const { trending } = $(storeToRefs(frontendArticleStore))
+const { trending } = storeToRefs(frontendArticleStore)
 
 const headTitle = ref('Page Not Found - M.M.F 小屋')
 useHead({
