@@ -41,11 +41,9 @@
 </template>
 
 <script setup lang="ts">
-import type { AnyFn } from '@vueuse/core'
-import type { IArticle, ICategory, IUpload } from '~/types'
+import type { IArticle, ICategory } from '~/types'
 
-import { useGlobal } from '@/composables'
-import { ensureVMdEditor } from '@/plugins/load-v-md-editor'
+import { useBackendArticleEditor } from '@/composables/use-backend-article-editor'
 import useBackendArticleStore from '@/stores/use-backend-article-store'
 import { useGlobalCategoryStore } from '@/stores/use-global-category-store'
 
@@ -58,24 +56,25 @@ defineOptions({
     },
 })
 
-const { ctx } = useGlobal()
 const route = useRoute()
 const router = useRouter()
-const instance = getCurrentInstance()
 
-// pinia 状态管理 ===>
 const globalCategoryStore = useGlobalCategoryStore()
 const { lists } = $(storeToRefs(globalCategoryStore))
 
 const backendArticleStore = useBackendArticleStore()
 const { item } = $(storeToRefs(backendArticleStore))
 
-const [loading, toggleLoading] = useToggle(false)
-
-let isClient = $ref(false)
-let markdownEditor: Awaited<ReturnType<typeof ensureVMdEditor>> | null = null
-
-const frontHtml = ref(true)
+const {
+    isClient,
+    frontHtml,
+    loading,
+    toggleLoading,
+    setupEditor,
+    renderHtml,
+    handleUploadImage,
+    validateArticleForm,
+} = useBackendArticleEditor()
 
 const form = reactive({
     id: route.params.id,
@@ -117,11 +116,7 @@ watch(
  * 客户端挂载后加载编辑器并拉取文章详情。
  */
 onMounted(async () => {
-    if (!instance) {
-        return
-    }
-    markdownEditor = await ensureVMdEditor(instance.appContext.app)
-    isClient = true
+    await setupEditor()
     backendArticleStore.getArticleItem({ id: route.params.id })
 })
 
@@ -129,18 +124,11 @@ onMounted(async () => {
  * 提交编辑文章表单。
  */
 async function handleModify() {
-    if (!form.title || !form.category || !form.content) {
-        showMsg('请将表单填写完整!')
-        return
-    }
-    if (loading.value) {
+    if (!validateArticleForm(form) || loading.value) {
         return
     }
     toggleLoading(true)
-    if (frontHtml.value && markdownEditor) {
-        const html = markdownEditor.vMdParser.themeConfig.markdownParser.render(form.content)
-        form.html = html
-    }
+    form.html = renderHtml(form.content)
     const { code, data } = await capi.post<IArticle>('backend/article/modify', form)
     toggleLoading(false)
     if (code === 200) {
@@ -148,25 +136,6 @@ async function handleModify() {
         backendArticleStore.updateArticleItem(data)
         router.push('/backend/article/list')
     }
-}
-
-/**
- * 处理编辑器图片上传并插入 Markdown。
- */
-async function handleUploadImage(_event: EventTarget, insertImage: AnyFn, files: FileList) {
-    const loader = ctx.$loading.show()
-
-    const formData = new FormData()
-    formData.append('file', files[0])
-    const { data } = await capi.file<IUpload>(`${uploadApi}/api/fetch/upload`, formData)
-    if (data && data.filepath) {
-        insertImage({
-            url: `${uploadApi}/${data.filepath}`,
-            desc: '',
-        })
-    }
-
-    loader.hide()
 }
 
 const headTitle = ref('编辑文章 - M.M.F 小屋')

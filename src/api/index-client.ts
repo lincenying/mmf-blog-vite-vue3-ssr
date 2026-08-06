@@ -110,7 +110,7 @@ function createInstance(): ApiClient {
     )
 
     return {
-        async get<T = void>(url: string, params: Objable, headers: Objable = {}) {
+        async get<T = void>(url: string, params: Objable, headers: Objable<string> = {}) {
             const key = createGetKey(url, params)
             const inflight = pendingGets.get(key)
             if (inflight) {
@@ -140,7 +140,7 @@ function createInstance(): ApiClient {
             pendingGets.set(key, request as Promise<ResponseData<unknown>>)
             return request
         },
-        async post<T = void>(url: string, data: Objable, headers: Objable = {}) {
+        async post<T = void>(url: string, data: Objable, headers: Objable<string> = {}) {
             try {
                 const response = await api({
                     method: 'post',
@@ -157,7 +157,7 @@ function createInstance(): ApiClient {
                 return checkCode(toErrorResponse(error as AxiosError) as ResponseData<T>)
             }
         },
-        async file<T = void>(url: string, data: Objable, headers: Objable = {}) {
+        async file<T = void>(url: string, data: FormData, headers: Objable<string> = {}) {
             try {
                 const response = await api({
                     method: 'post',

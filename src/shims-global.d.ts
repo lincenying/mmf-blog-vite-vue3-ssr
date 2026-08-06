@@ -11,9 +11,9 @@ declare type NonNullable<T> = T extends null | undefined ? never : T
  */
 declare type Arrayable<T> = T | T[]
 /**
- * 键为字符串, 值为 Any 的对象
+ * 键为字符串的对象（默认值 unknown，禁止隐式 any）
  */
-declare type Objable<T = any> = Record<string, T>
+declare type Objable<T = unknown> = Record<string, T>
 /**
  * Function
  */
@@ -21,7 +21,7 @@ declare type Fn<T = void> = () => T
 /**
  * 任意函数
  */
-declare type AnyFn<T = any> = (...args: any[]) => T
+declare type AnyFn = (...args: unknown[]) => unknown
 /**
  * Promise, or maybe not
  */
@@ -71,9 +71,9 @@ declare interface ResDataList<T> {
  * Api 浏览器端封装类型
  */
 declare interface ApiClient {
-    get: <T = void>(url: string, params: Objable, headers?: Objable) => Promise<ResponseData<T>>
-    post: <T = void>(url: string, data: Objable, headers?: Objable) => Promise<ResponseData<T>>
-    file: <T = void>(url: string, data: Objable, headers?: Objable) => Promise<ResponseData<T>>
+    get: <T = void>(url: string, params: Objable, headers?: Objable<string>) => Promise<ResponseData<T>>
+    post: <T = void>(url: string, data: Objable, headers?: Objable<string>) => Promise<ResponseData<T>>
+    file: <T = void>(url: string, data: FormData, headers?: Objable<string>) => Promise<ResponseData<T>>
 }
 
 /**
@@ -81,8 +81,8 @@ declare interface ApiClient {
  */
 declare interface ApiServer {
     api: import('axios').AxiosInstance
-    get: <T = void>(url: string, params: Objable, headers?: Objable) => Promise<ResponseData<T>>
-    post: <T = void>(url: string, data: Objable, headers?: Objable) => Promise<ResponseData<T>>
+    get: <T = void>(url: string, params: Objable, headers?: Objable<string>) => Promise<ResponseData<T>>
+    post: <T = void>(url: string, data: Objable, headers?: Objable<string>) => Promise<ResponseData<T>>
     getCookies: () => import('./types/store').IUserCookies
 }
 
@@ -90,5 +90,5 @@ declare type ApiType = ApiServer | ApiClient
 
 declare interface Window {
     $$api: Nullable<ApiClient>
-    __INITIAL_STATE__: Record<string, any>
+    __INITIAL_STATE__: Record<string, unknown>
 }

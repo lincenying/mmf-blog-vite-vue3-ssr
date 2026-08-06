@@ -1,5 +1,38 @@
 # 变更记录
 
+## 2026-08-06 14:52:25
+
+- 类型：API `headers` 由 `Objable` 收紧为 `Objable<string>`，兼容 Axios `AxiosHeaderValue`。
+
+**commit message：**
+
+```
+fix: 修正 API headers 与 Axios 类型不兼容
+```
+
+## 2026-08-06 14:47:22
+
+- 类型：`ApiClient.file` 参数由 `Objable` 改为 `FormData`，修复上传调用的类型不兼容。
+
+**commit message：**
+
+```
+fix: 修正文件上传 API 的 FormData 类型
+```
+
+## 2026-08-06 14:46:15
+
+- 可维护性：新增 `create-crud-list-helpers`，后台 article/admin/user Store 共用列表拉取、详情、软删/恢复逻辑。
+- 可维护性：新增 `useBackendArticleEditor`，后台文章新增/编辑页复用编辑器加载、上传与 HTML 渲染。
+- 类型：`Objable` 默认改为 `unknown`；收紧 `AnyFn`、`Window.__INITIAL_STATE__`；`showMsg` 使用明确配置类型。
+- 说明：暂不引入流式 SSR——与现有全量 HTML 短缓存及 unhead 头部注入不兼容，匿名页 TTFB 已由 HTML 缓存覆盖。
+
+**commit message：**
+
+```
+refactor: 抽取 CRUD Store 与文章编辑共用逻辑并收紧类型
+```
+
 ## 2026-08-06 14:38:45
 
 - SSR：新增匿名公开页 HTML 短缓存（TTL 10s，LRU 200），登录态仍 `private, no-store`；响应头带 `X-SSR-Cache`。

@@ -40,11 +40,9 @@
 </template>
 
 <script setup lang="ts">
-import type { AnyFn } from '@vueuse/core'
-import type { IArticle, IUpload } from '~/types'
+import type { IArticle } from '~/types'
 
-import { useGlobal } from '@/composables'
-import { ensureVMdEditor } from '@/plugins/load-v-md-editor'
+import { useBackendArticleEditor } from '@/composables/use-backend-article-editor'
 import useBackendArticleStore from '@/stores/use-backend-article-store'
 import { useGlobalCategoryStore } from '@/stores/use-global-category-store'
 
@@ -57,22 +55,22 @@ defineOptions({
     },
 })
 
-const { ctx } = useGlobal()
 const router = useRouter()
-const instance = getCurrentInstance()
 
-// pinia 状态管理 ===>
 const globalCategoryStore = useGlobalCategoryStore()
 const { lists } = $(storeToRefs(globalCategoryStore))
-
 const backendArticleStore = useBackendArticleStore()
 
-let isClient = $ref(false)
-let markdownEditor: Awaited<ReturnType<typeof ensureVMdEditor>> | null = null
-
-const frontHtml = ref(true)
-
-const [loading, toggleLoading] = useToggle(false)
+const {
+    isClient,
+    frontHtml,
+    loading,
+    toggleLoading,
+    setupEditor,
+    renderHtml,
+    handleUploadImage,
+    validateArticleForm,
+} = useBackendArticleEditor()
 
 const form = reactive({
     title: '',
@@ -82,32 +80,21 @@ const form = reactive({
 })
 
 /**
- * 客户端挂载后按需加载并注册 Markdown 编辑器。
+ * 客户端挂载后加载编辑器。
  */
 onMounted(async () => {
-    if (!instance) {
-        return
-    }
-    markdownEditor = await ensureVMdEditor(instance.appContext.app)
-    isClient = true
+    await setupEditor()
 })
 
 /**
  * 提交新增文章表单。
  */
 async function handleInsert() {
-    if (!form.title || !form.category || !form.content) {
-        showMsg('请将表单填写完整!')
-        return
-    }
-    if (loading.value) {
+    if (!validateArticleForm(form) || loading.value) {
         return
     }
     toggleLoading(true)
-    if (frontHtml.value && markdownEditor) {
-        const html = markdownEditor.vMdParser.themeConfig.markdownParser.render(form.content)
-        form.html = html
-    }
+    form.html = renderHtml(form.content)
     const { code, data } = await capi.post<IArticle>('backend/article/insert', form)
     toggleLoading(false)
     if (code === 200) {
@@ -115,30 +102,6 @@ async function handleInsert() {
         backendArticleStore.insertArticleItem(data)
         router.push('/backend/article/list')
     }
-}
-
-/**
- * 处理编辑器图片上传并插入 Markdown。
- */
-async function handleUploadImage(_event: EventTarget, insertImage: AnyFn, files: FileList) {
-    const loader = ctx.$loading.show()
-
-    const formData = new FormData()
-    formData.append('file', files[0])
-    try {
-        const { data } = await capi.file<IUpload>(`${uploadApi}/api/fetch/upload`, formData)
-        if (data && data.filepath) {
-            insertImage({
-                url: `${uploadApi}/${data.filepath}`,
-                desc: '',
-            })
-        }
-    }
-    catch (error) {
-        console.log(error)
-    }
-
-    loader.hide()
 }
 
 const headTitle = ref('发布文章 - M.M.F 小屋')

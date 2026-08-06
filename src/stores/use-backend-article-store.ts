@@ -1,6 +1,13 @@
 import type { IApiConfig, IArticle, IArticleStore } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import {
+    fetchCrudItem,
+    fetchCrudList,
+    prependCrudItem,
+    setCrudDeleteFlag,
+    updateCrudItem,
+} from './create-crud-list-helpers'
 
 const usePiniaStore = defineStore('backendArticleStore', () => {
     const state: IArticleStore = reactive({
@@ -20,95 +27,44 @@ const usePiniaStore = defineStore('backendArticleStore', () => {
 
     /**
      * 读取文章列表 - 后台
-     * @param config 请求参数
-     * @param $api
      */
     const getArticleList = async (config: IApiConfig, $api: ApiType = capi) => {
-        if (state.lists.data.length > 0 && config.path === state.lists.path && config.key === state.lists.key && config.page === 1) {
-            return
-        }
-        const { code, data } = await $api.get<ResDataLists<IArticle>>('backend/article/list', { ...config, path: undefined })
-        if (code === 200 && data) {
-            const {
-                list = [],
-                path,
-                hasNext = 0,
-                hasPrev = 0,
-                page,
-            } = {
-                ...data,
-                path: config.path,
-                page: config.page,
-            }
-
-            state.lists = {
-                data: page === 1 ? list : state.lists.data.concat(list),
-                hasNext,
-                hasPrev,
-                page: (page || 1) + 1,
-                path,
-                key: config.key,
-            }
-        }
+        await fetchCrudList(state, config, 'backend/article/list', $api, { matchKey: true })
     }
+
     /**
      * 读取文章详情 - 后台
-     * @param config 请求参数
-     * @param $api
      */
     const getArticleItem = async (config: IApiConfig, $api: ApiType = capi) => {
-        const { code, data } = await $api.get<IArticle>('backend/article/item', { ...config, path: undefined })
-        if (code === 200 && data) {
-            state.item = {
-                data,
-                ...config,
-            }
-        }
+        await fetchCrudItem(state, config, 'backend/article/item', $api)
     }
+
     /**
      * 删除文章
-     * @param id 文章ID
      */
     const deleteArticle = async (id: string) => {
-        const index = state.lists.data.findIndex(ii => ii._id === id)
-        if (index > -1) {
-            state.lists.data.splice(index, 1, {
-                ...state.lists.data[index],
-                is_delete: 1,
-            })
-        }
+        setCrudDeleteFlag(state, id, 1)
     }
+
     /**
      * 恢复文章
-     * @param id 文章ID
      */
     const recoverArticle = async (id: string) => {
-        const index = state.lists.data.findIndex(ii => ii._id === id)
-        if (index > -1) {
-            state.lists.data.splice(index, 1, {
-                ...state.lists.data[index],
-                is_delete: 0,
-            })
-        }
+        setCrudDeleteFlag(state, id, 0)
     }
+
     /**
      * 发布文章成功后追加文章
-     * @param payload 文章详情
      */
     const insertArticleItem = (payload: IArticle) => {
-        if (state.lists.path) {
-            state.lists.data = [payload].concat(state.lists.data)
-        }
+        prependCrudItem(state, payload)
     }
+
     /**
      * 编辑成功后更新文章
-     * @param payload 文章详情
      */
     const updateArticleItem = (payload: IArticle) => {
-        const index = state.lists.data.findIndex(ii => ii._id === payload._id)
-        if (index > -1) {
-            state.lists.data.splice(index, 1, payload)
-        }
+        updateCrudItem(state, payload)
     }
 
     return {
