@@ -99,8 +99,8 @@ docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22
 Build and run (replace image tag as needed):
 
 ```bash
-docker build -t lincenying/app-vue3-ssr:1.26.0731 -f ./Dockerfile .
-docker run -d -p 7777:7777 --add-host=host.docker.internal:host-gateway --name app-vue3-ssr lincenying/app-vue3-ssr:1.26.0731
+docker build -t lincenying/app-vue3-ssr:1.26.0806 -f ./Dockerfile .
+docker run -d -p 7777:7777 --add-host=host.docker.internal:host-gateway --name app-vue3-ssr lincenying/app-vue3-ssr:1.26.0806
 ```
 
 Useful maintenance commands:
@@ -109,7 +109,7 @@ Useful maintenance commands:
 docker exec -it app-vue3-ssr /bin/sh
 docker stop app-vue3-ssr
 docker rm app-vue3-ssr
-docker rmi lincenying/app-vue3-ssr:1.26.0731
+docker rmi lincenying/app-vue3-ssr:1.26.0806
 ```
 
 ## Docker Compose
