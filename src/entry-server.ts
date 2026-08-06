@@ -13,30 +13,23 @@ import { pickPublicCookies } from './utils/ssr-cookies'
 
 /**
  * 生成资源 preload / modulepreload 链接标签。
+ * 仅预加载 JS / CSS / 字体；不预加载图片——CSS background-image 的 preload
+ * 在 Chrome 中常被判定为「未使用」（尤其是隐藏节点、或 1x/2x 媒体查询切换时）。
  */
 function renderPreloadLink(file: string): string {
     if (file.endsWith('.js')) {
         return `<link rel="modulepreload" crossorigin href="${file}">`
     }
-    else if (file.endsWith('.css')) {
+    if (file.endsWith('.css')) {
         return `<link rel="stylesheet" href="${file}">`
     }
-    else if (file.endsWith('.woff')) {
-        return ` <link rel="preload" href="${file}" as="font" type="font/woff" crossorigin>`
+    if (file.endsWith('.woff')) {
+        return `<link rel="preload" href="${file}" as="font" type="font/woff" crossorigin>`
     }
-    else if (file.endsWith('.woff2')) {
-        return ` <link rel="preload" href="${file}" as="font" type="font/woff2" crossorigin>`
+    if (file.endsWith('.woff2')) {
+        return `<link rel="preload" href="${file}" as="font" type="font/woff2" crossorigin>`
     }
-    else if (file.endsWith('.gif')) {
-        return ` <link rel="preload" href="${file}" as="image" type="image/gif">`
-    }
-    else if (file.endsWith('.jpg') || file.endsWith('.jpeg')) {
-        return ` <link rel="preload" href="${file}" as="image" type="image/jpeg">`
-    }
-    else if (file.endsWith('.png')) {
-        return ` <link rel="preload" href="${file}" as="image" type="image/png">`
-    }
-
+    // png/jpg/gif/webp 等：交给 CSS / <img> 自然发现，避免无效 preload 警告
     return ''
 }
 

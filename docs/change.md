@@ -1,5 +1,15 @@
 # 变更记录
 
+## 2026-08-06 15:34:52
+
+- SSR：`renderPreloadLink` 不再为 png/jpg/gif 等图片生成 `rel="preload"`。`nav-logo`、`back-top` 等作为 CSS `background-image` 使用（且 back-top 初始隐藏），Chrome 会报「preloaded but not used」；图片改由样式表自然加载。
+
+**commit message：**
+
+```
+fix: 停止预加载 CSS 背景图以避免无效 preload 警告
+```
+
 ## 2026-08-06 15:07:18
 
 - 类型：`ICrudEntity.is_delete` 改为可选，兼容 `ICategory` 等字段可选的实体。
