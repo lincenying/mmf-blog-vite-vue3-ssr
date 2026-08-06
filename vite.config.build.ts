@@ -64,6 +64,7 @@ const config: { server: ServerOptions, build: BuildOptions } = {
                         || id.includes('/assets/css/vuepress')
                         || id.includes('/assets/css/hljs/')
                         || id.includes('base-editor')
+                        || id.includes('/assets/styles/style/markdown')
                     ) {
                         return
                     }

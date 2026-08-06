@@ -32,11 +32,8 @@
 </template>
 
 <script setup lang="ts">
-import type { IArticle } from '~/types'
-
 import { getDateDiff } from '@lincy/utils'
-import { useSaveScroll } from '@/composables'
-import useAppShellStore from '@/stores/use-app-shell-store'
+import { useBackendSoftDeleteList } from '@/composables/use-backend-soft-delete-list'
 import useBackendArticleStore from '@/stores/use-backend-article-store'
 
 defineOptions({
@@ -49,66 +46,26 @@ defineOptions({
 })
 
 const route = useRoute()
-const appShellStore = useAppShellStore()
-
-// pinia 状态管理 ===>
 const backendArticleStore = useBackendArticleStore()
 const { lists } = storeToRefs(backendArticleStore)
 
-const { historyPageScrollTop } = storeToRefs(appShellStore)
-
-useSaveScroll()
-
-const [loading, toggleLoading] = useToggle(false)
-
 const searchKey = ref('')
 
-async function loadMore(page = lists.value.page, key: string = searchKey.value) {
-    if (loading.value) {
-        return
-    }
-    toggleLoading(true)
-    await backendArticleStore.getArticleList({ page, key, path: route.fullPath })
-    toggleLoading(false)
-}
-async function handleRecover(id: string) {
-    const { code } = await capi.get<Nullable<IArticle>>('backend/article/recover', { id })
-    if (code === 200) {
-        showMsg({ type: 'success', content: '恢复成功' })
-        backendArticleStore.recoverArticle(id)
-    }
-}
-async function handleDelete(id: string) {
-    const { code } = await capi.get<Nullable<IArticle>>('backend/article/delete', { id })
-    if (code === 200) {
-        showMsg({ type: 'success', content: '删除成功' })
-        backendArticleStore.deleteArticle(id)
-    }
-}
+const { loading, loadMore, handleRecover, handleDelete } = useBackendSoftDeleteList({
+    isEmpty: () => lists.value.path === '',
+    getPage: () => lists.value.page,
+    fetchPage: page => backendArticleStore.getArticleList({ page, key: searchKey.value, path: route.fullPath }),
+    deleteUrl: 'backend/article/delete',
+    recoverUrl: 'backend/article/recover',
+    onDeleted: id => backendArticleStore.deleteArticle(id),
+    onRecovered: id => backendArticleStore.recoverArticle(id),
+    headTitle: '文章列表 - M.M.F 小屋',
+})
 
+/**
+ * 按标题关键词重新搜索（从第 1 页开始）。
+ */
 function onSearch() {
     loadMore(1)
 }
-
-onMounted(() => {
-    if (lists.value.path === '') {
-        loadMore(1)
-    }
-    else {
-        const scrollTop = historyPageScrollTop.value[route.path] || 0
-        window.scrollTo(0, scrollTop)
-    }
-})
-
-const headTitle = ref('文章列表 - M.M.F 小屋')
-useHead({
-    // Can be static or computed
-    title: headTitle,
-    meta: [
-        {
-            name: 'description',
-            content: headTitle,
-        },
-    ],
-})
 </script>

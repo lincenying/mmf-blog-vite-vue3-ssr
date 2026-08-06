@@ -3,7 +3,7 @@ import type { IApiConfig, IListStore } from '~/types'
 /** 支持软删除标记的 CRUD 实体 */
 export interface ICrudEntity {
     _id: string
-    is_delete: number
+    is_delete?: number
 }
 
 /** 列表 + 详情 结构 */
@@ -76,14 +76,34 @@ export async function fetchCrudItem<T extends ICrudEntity>(
 }
 
 /**
+ * 在数组中按 id 替换实体。
+ */
+export function updateListItem<T extends ICrudEntity>(list: T[], payload: T): void {
+    const index = list.findIndex(item => item._id === payload._id)
+    if (index > -1) {
+        list.splice(index, 1, payload)
+    }
+}
+
+/**
+ * 在数组中按 id 设置软删除标记。
+ */
+export function setListDeleteFlag<T extends ICrudEntity>(list: T[], id: string, isDelete: 0 | 1): void {
+    const index = list.findIndex(item => item._id === id)
+    if (index > -1) {
+        list.splice(index, 1, {
+            ...list[index],
+            is_delete: isDelete,
+        })
+    }
+}
+
+/**
  * 更新列表与详情中的同一条记录。
  */
 export function updateCrudItem<T extends ICrudEntity>(state: ICrudListState<T>, payload: T): void {
     state.item.data = payload
-    const index = state.lists.data.findIndex(item => item._id === payload._id)
-    if (index > -1) {
-        state.lists.data.splice(index, 1, payload)
-    }
+    updateListItem(state.lists.data, payload)
 }
 
 /**
@@ -94,13 +114,7 @@ export function setCrudDeleteFlag<T extends ICrudEntity>(
     id: string,
     isDelete: 0 | 1,
 ): void {
-    const index = state.lists.data.findIndex(item => item._id === id)
-    if (index > -1) {
-        state.lists.data.splice(index, 1, {
-            ...state.lists.data[index],
-            is_delete: isDelete,
-        })
-    }
+    setListDeleteFlag(state.lists.data, id, isDelete)
 }
 
 /**

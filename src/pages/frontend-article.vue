@@ -69,6 +69,7 @@ import useGlobalCommentStore from '@/stores/use-global-comment-store'
 
 import '@/assets/css/hljs/googlecode.css'
 import '@/assets/css/vuepress.css'
+import '@/assets/styles/style/markdown.scss'
 
 defineOptions({
     name: 'FrontendArticle',

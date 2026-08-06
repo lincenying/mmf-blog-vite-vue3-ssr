@@ -4,7 +4,6 @@
   ],
   "\u0000vite/modulepreload-polyfill.js": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -12,7 +11,6 @@
   ],
   "\u0000vite/preload-helper.js": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -20,17 +18,16 @@
   ],
   "../../../../../@vite-plugin-pwa/virtual:pwa-register/vue": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
     "/assets/back-top-CCX9PjSA.png"
   ],
   "../../../../../static/images/error_1.jpg": [
-    "/assets/404-2ZugbpN0.js"
+    "/assets/404-DWoMPCkk.js"
   ],
   "../../../../../static/images/topic-1.png": [
-    "/assets/item-actions-YozCAO6g.js"
+    "/assets/item-actions-w7vYqTOF.js"
   ],
   "__vite-browser-external": [
     "/assets/vendor-DKi3SfiT.js",
@@ -38,7 +35,6 @@
   ],
   "index.html": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -1655,7 +1651,6 @@
   ],
   "src/App.vue": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -1663,7 +1658,6 @@
   ],
   "src/App.vue?vue&type=script&setup=true&lang.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -1671,7 +1665,6 @@
   ],
   "src/api/config-client.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -1679,26 +1672,32 @@
   ],
   "src/api/index-client.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
     "/assets/back-top-CCX9PjSA.png"
   ],
   "src/api/upload-api.ts": [
-    "/assets/use-backend-article-editor-Cfo2hWk2.js"
+    "/assets/use-backend-article-editor-Chz7GcyG.js"
   ],
   "src/assets/css/hljs/googlecode.css": [
-    "/assets/frontend-article-Dq6fjBTh.js",
-    "/assets/frontend-article-y_B3r9ga.css"
+    "/assets/frontend-article-6Q6yGnuW.js",
+    "/assets/frontend-article-Do1JPsit.css",
+    "/assets/consola-Di-1AEAY.ttf"
   ],
   "src/assets/css/vuepress.css": [
-    "/assets/frontend-article-Dq6fjBTh.js",
-    "/assets/frontend-article-y_B3r9ga.css"
+    "/assets/frontend-article-6Q6yGnuW.js",
+    "/assets/frontend-article-Do1JPsit.css",
+    "/assets/consola-Di-1AEAY.ttf"
   ],
   "src/assets/styles/style/backend-settings.scss": [
     "/assets/backend-layout-Ds4VZ5uA.js",
     "/assets/backend-layout-CSMOePhq.css"
+  ],
+  "src/assets/styles/style/markdown.scss": [
+    "/assets/frontend-article-6Q6yGnuW.js",
+    "/assets/frontend-article-Do1JPsit.css",
+    "/assets/consola-Di-1AEAY.ttf"
   ],
   "src/components/a-input.vue": [
     "/assets/a-input-BApx3iHa.js"
@@ -1707,32 +1706,31 @@
     "/assets/a-input-BApx3iHa.js"
   ],
   "src/components/aside-account.vue": [
-    "/assets/frontend-user-BnTZt4Ve.js"
+    "/assets/frontend-user-BzRFGMDO.js"
   ],
   "src/components/aside-account.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/frontend-user-BnTZt4Ve.js"
+    "/assets/frontend-user-BzRFGMDO.js"
   ],
   "src/components/aside-category.vue": [
-    "/assets/item-actions-YozCAO6g.js"
+    "/assets/item-actions-w7vYqTOF.js"
   ],
   "src/components/aside-category.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/item-actions-YozCAO6g.js"
+    "/assets/item-actions-w7vYqTOF.js"
   ],
   "src/components/aside-other.vue": [
-    "/assets/item-actions-YozCAO6g.js"
+    "/assets/item-actions-w7vYqTOF.js"
   ],
   "src/components/aside-other.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/item-actions-YozCAO6g.js"
+    "/assets/item-actions-w7vYqTOF.js"
   ],
   "src/components/aside-trending.vue": [
-    "/assets/use-frontend-article-store-CYJX8Z1V.js"
+    "/assets/use-frontend-article-store-BPHZ4UWG.js"
   ],
   "src/components/aside-trending.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/use-frontend-article-store-CYJX8Z1V.js"
+    "/assets/use-frontend-article-store-BPHZ4UWG.js"
   ],
   "src/components/back-top.vue": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -1740,7 +1738,6 @@
   ],
   "src/components/back-top.vue?vue&type=script&setup=true&lang.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -1756,7 +1753,6 @@
   ],
   "src/components/bg-plum.vue": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -1764,7 +1760,6 @@
   ],
   "src/components/bg-plum.vue?vue&type=script&setup=true&lang.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -1772,7 +1767,6 @@
   ],
   "src/components/client-only.vue": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -1780,23 +1774,23 @@
   ],
   "src/components/client-only.vue?vue&type=script&setup=true&lang.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
     "/assets/back-top-CCX9PjSA.png"
   ],
   "src/components/frontend-comment.vue": [
-    "/assets/frontend-article-Dq6fjBTh.js",
-    "/assets/frontend-article-y_B3r9ga.css"
+    "/assets/frontend-article-6Q6yGnuW.js",
+    "/assets/frontend-article-Do1JPsit.css",
+    "/assets/consola-Di-1AEAY.ttf"
   ],
   "src/components/frontend-comment.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/frontend-article-Dq6fjBTh.js",
-    "/assets/frontend-article-y_B3r9ga.css"
+    "/assets/frontend-article-6Q6yGnuW.js",
+    "/assets/frontend-article-Do1JPsit.css",
+    "/assets/consola-Di-1AEAY.ttf"
   ],
   "src/components/global-navigation.vue": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -1804,21 +1798,19 @@
   ],
   "src/components/global-navigation.vue?vue&type=script&setup=true&lang.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
     "/assets/back-top-CCX9PjSA.png"
   ],
   "src/components/item-actions.vue": [
-    "/assets/item-actions-YozCAO6g.js"
+    "/assets/item-actions-w7vYqTOF.js"
   ],
   "src/components/item-actions.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/item-actions-YozCAO6g.js"
+    "/assets/item-actions-w7vYqTOF.js"
   ],
   "src/components/reload-prompt.vue": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -1826,7 +1818,6 @@
   ],
   "src/components/reload-prompt.vue?vue&type=script&setup=true&lang.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -1834,7 +1825,6 @@
   ],
   "src/components/sign-in.vue": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -1842,7 +1832,6 @@
   ],
   "src/components/sign-in.vue?vue&type=script&setup=true&lang.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -1850,7 +1839,6 @@
   ],
   "src/components/sign-up.vue": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -1858,27 +1846,25 @@
   ],
   "src/components/sign-up.vue?vue&type=script&setup=true&lang.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
     "/assets/back-top-CCX9PjSA.png"
   ],
   "src/components/topics-item-none.vue": [
-    "/assets/frontend-index-CvjjR2m6.js"
+    "/assets/frontend-index-CUYXYTVf.js"
   ],
   "src/components/topics-item-none.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/frontend-index-CvjjR2m6.js"
+    "/assets/frontend-index-CUYXYTVf.js"
   ],
   "src/components/topics-item.vue": [
-    "/assets/frontend-index-CvjjR2m6.js"
+    "/assets/frontend-index-CUYXYTVf.js"
   ],
   "src/components/topics-item.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/frontend-index-CvjjR2m6.js"
+    "/assets/frontend-index-CUYXYTVf.js"
   ],
   "src/components/user-avatar.vue": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -1886,7 +1872,6 @@
   ],
   "src/components/user-avatar.vue?vue&type=script&setup=true&lang.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -1894,18 +1879,19 @@
   ],
   "src/composables/index.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
     "/assets/back-top-CCX9PjSA.png"
   ],
   "src/composables/use-backend-article-editor.ts": [
-    "/assets/use-backend-article-editor-Cfo2hWk2.js"
+    "/assets/use-backend-article-editor-Chz7GcyG.js"
+  ],
+  "src/composables/use-backend-soft-delete-list.ts": [
+    "/assets/use-backend-soft-delete-list-Cy0Jz59_.js"
   ],
   "src/entry-client.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -1927,131 +1913,131 @@
   ],
   "src/main.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
     "/assets/back-top-CCX9PjSA.png"
   ],
   "src/pages/404.vue": [
-    "/assets/404-2ZugbpN0.js"
+    "/assets/404-DWoMPCkk.js"
   ],
   "src/pages/404.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/404-2ZugbpN0.js"
+    "/assets/404-DWoMPCkk.js"
   ],
   "src/pages/backend-admin-list.vue": [
-    "/assets/backend-admin-list-Cdd6xlUS.js"
+    "/assets/backend-admin-list-DS_Tica0.js"
   ],
   "src/pages/backend-admin-list.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/backend-admin-list-Cdd6xlUS.js"
+    "/assets/backend-admin-list-DS_Tica0.js"
   ],
   "src/pages/backend-admin-modify.vue": [
-    "/assets/backend-admin-modify-Crt5ob4v.js"
+    "/assets/backend-admin-modify-DUppJlYy.js"
   ],
   "src/pages/backend-admin-modify.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/backend-admin-modify-Crt5ob4v.js"
+    "/assets/backend-admin-modify-DUppJlYy.js"
   ],
   "src/pages/backend-article-comment.vue": [
-    "/assets/backend-article-comment-C7mL-mf_.js"
+    "/assets/backend-article-comment-Bqnnfb-J.js"
   ],
   "src/pages/backend-article-comment.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/backend-article-comment-C7mL-mf_.js"
+    "/assets/backend-article-comment-Bqnnfb-J.js"
   ],
   "src/pages/backend-article-insert.vue": [
-    "/assets/backend-article-insert-B1QkXnbY.js"
+    "/assets/backend-article-insert-DZsyVgug.js"
   ],
   "src/pages/backend-article-insert.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/backend-article-insert-B1QkXnbY.js"
+    "/assets/backend-article-insert-DZsyVgug.js"
   ],
   "src/pages/backend-article-list.vue": [
-    "/assets/backend-article-list-BTTWIHrc.js"
+    "/assets/backend-article-list-BKo-BueW.js"
   ],
   "src/pages/backend-article-list.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/backend-article-list-BTTWIHrc.js"
+    "/assets/backend-article-list-BKo-BueW.js"
   ],
   "src/pages/backend-article-modify.vue": [
-    "/assets/backend-article-modify-xfNo5GxI.js"
+    "/assets/backend-article-modify-Ib89mEOR.js"
   ],
   "src/pages/backend-article-modify.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/backend-article-modify-xfNo5GxI.js"
+    "/assets/backend-article-modify-Ib89mEOR.js"
   ],
   "src/pages/backend-category-insert.vue": [
-    "/assets/backend-category-insert-mQU2bLoz.js"
+    "/assets/backend-category-insert-lRFq7-CE.js"
   ],
   "src/pages/backend-category-insert.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/backend-category-insert-mQU2bLoz.js"
+    "/assets/backend-category-insert-lRFq7-CE.js"
   ],
   "src/pages/backend-category-list.vue": [
-    "/assets/backend-category-list-rVjKziPq.js"
+    "/assets/backend-category-list-DXce4Q_3.js"
   ],
   "src/pages/backend-category-list.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/backend-category-list-rVjKziPq.js"
+    "/assets/backend-category-list-DXce4Q_3.js"
   ],
   "src/pages/backend-category-modify.vue": [
-    "/assets/backend-category-modify-BLkcTA6R.js"
+    "/assets/backend-category-modify-CDZxIbAC.js"
   ],
   "src/pages/backend-category-modify.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/backend-category-modify-BLkcTA6R.js"
+    "/assets/backend-category-modify-CDZxIbAC.js"
   ],
   "src/pages/backend-login.vue": [
-    "/assets/backend-login-Bt3d-tB_.js"
+    "/assets/backend-login-D9H7w9vy.js"
   ],
   "src/pages/backend-login.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/backend-login-Bt3d-tB_.js"
+    "/assets/backend-login-D9H7w9vy.js"
   ],
   "src/pages/backend-user-list.vue": [
-    "/assets/backend-user-list-OnF46yWN.js"
+    "/assets/backend-user-list-D9CvSNHa.js"
   ],
   "src/pages/backend-user-list.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/backend-user-list-OnF46yWN.js"
+    "/assets/backend-user-list-D9CvSNHa.js"
   ],
   "src/pages/backend-user-modify.vue": [
-    "/assets/backend-user-modify-0Fj9o1wG.js"
+    "/assets/backend-user-modify-DVlEDOn_.js"
   ],
   "src/pages/backend-user-modify.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/backend-user-modify-0Fj9o1wG.js"
+    "/assets/backend-user-modify-DVlEDOn_.js"
   ],
   "src/pages/frontend-about.vue": [
-    "/assets/frontend-about-Dy9VzeKD.js"
+    "/assets/frontend-about-DzzCI7_R.js"
   ],
   "src/pages/frontend-about.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/frontend-about-Dy9VzeKD.js"
+    "/assets/frontend-about-DzzCI7_R.js"
   ],
   "src/pages/frontend-article.vue": [
-    "/assets/frontend-article-Dq6fjBTh.js",
-    "/assets/frontend-article-y_B3r9ga.css"
+    "/assets/frontend-article-6Q6yGnuW.js",
+    "/assets/frontend-article-Do1JPsit.css",
+    "/assets/consola-Di-1AEAY.ttf"
   ],
   "src/pages/frontend-article.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/frontend-article-Dq6fjBTh.js",
-    "/assets/frontend-article-y_B3r9ga.css"
+    "/assets/frontend-article-6Q6yGnuW.js",
+    "/assets/frontend-article-Do1JPsit.css",
+    "/assets/consola-Di-1AEAY.ttf"
   ],
   "src/pages/frontend-index.vue": [
-    "/assets/frontend-index-CvjjR2m6.js"
+    "/assets/frontend-index-CUYXYTVf.js"
   ],
   "src/pages/frontend-index.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/frontend-index-CvjjR2m6.js"
+    "/assets/frontend-index-CUYXYTVf.js"
   ],
   "src/pages/frontend-user-account.vue": [
-    "/assets/frontend-user-account-CIbnJ-nO.js"
+    "/assets/frontend-user-account-tVdws60F.js"
   ],
   "src/pages/frontend-user-account.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/frontend-user-account-CIbnJ-nO.js"
+    "/assets/frontend-user-account-tVdws60F.js"
   ],
   "src/pages/frontend-user-password.vue": [
-    "/assets/frontend-user-password-BuhIhysB.js"
+    "/assets/frontend-user-password-BQTuZ4DM.js"
   ],
   "src/pages/frontend-user-password.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/frontend-user-password-BuhIhysB.js"
+    "/assets/frontend-user-password-BQTuZ4DM.js"
   ],
   "src/pages/frontend-user.vue": [
-    "/assets/frontend-user-BnTZt4Ve.js"
+    "/assets/frontend-user-BzRFGMDO.js"
   ],
   "src/pages/frontend-user.vue?vue&type=script&setup=true&lang.ts": [
-    "/assets/frontend-user-BnTZt4Ve.js"
+    "/assets/frontend-user-BzRFGMDO.js"
   ],
   "src/plugins/element.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -2059,21 +2045,19 @@
   ],
   "src/plugins/global.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
     "/assets/back-top-CCX9PjSA.png"
   ],
   "src/plugins/load-v-md-editor.ts": [
-    "/assets/use-backend-article-editor-Cfo2hWk2.js"
+    "/assets/use-backend-article-editor-Chz7GcyG.js"
   ],
   "src/plugins/v-md-editor.ts": [
     "/assets/v-md-editor-PvhdT9qe.js"
   ],
   "src/router/guards.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -2081,7 +2065,6 @@
   ],
   "src/router/index.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -2089,44 +2072,41 @@
   ],
   "src/router/routes.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
     "/assets/back-top-CCX9PjSA.png"
   ],
   "src/stores/create-crud-list-helpers.ts": [
-    "/assets/create-crud-list-helpers-LI9dIREc.js"
+    "/assets/create-crud-list-helpers-DHGtjdVo.js"
   ],
   "src/stores/use-app-shell-store.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
     "/assets/back-top-CCX9PjSA.png"
   ],
   "src/stores/use-backend-admin-store.ts": [
-    "/assets/use-backend-admin-store-D8SXWBlK.js"
+    "/assets/use-backend-admin-store-Y8fOHVHX.js"
   ],
   "src/stores/use-backend-article-store.ts": [
-    "/assets/use-backend-article-store-D4ujEZif.js"
+    "/assets/use-backend-article-store-eBsFuxua.js"
   ],
   "src/stores/use-backend-user-store.ts": [
-    "/assets/use-backend-user-store-ku2oyp4y.js"
+    "/assets/use-backend-user-store-Db65zYsa.js"
   ],
   "src/stores/use-frontend-article-store.ts": [
-    "/assets/use-frontend-article-store-CYJX8Z1V.js"
+    "/assets/use-frontend-article-store-BPHZ4UWG.js"
   ],
   "src/stores/use-global-category-store.ts": [
-    "/assets/use-global-category-store-BabJqky3.js"
+    "/assets/use-global-category-store-8OTLLqpn.js"
   ],
   "src/stores/use-global-comment-store.ts": [
-    "/assets/use-global-comment-store-VcllNqGe.js"
+    "/assets/use-global-comment-store-CJ4_unWa.js"
   ],
   "src/stores/use-global-store.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -2134,7 +2114,6 @@
   ],
   "src/utils/index.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",
@@ -2142,7 +2121,6 @@
   ],
   "src/utils/ssr-cookies.ts": [
     "/assets/Play-DpzPSRuS.woff2",
-    "/assets/consola-Di-1AEAY.ttf",
     "/assets/nav-logo-Cqt_j--w.png",
     "/assets/nav-logo-PqxD-t7E.png",
     "/assets/circle-loading-eEF3_9-q.png",

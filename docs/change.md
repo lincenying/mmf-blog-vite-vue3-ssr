@@ -1,5 +1,27 @@
 # 变更记录
 
+## 2026-08-06 15:07:18
+
+- 类型：`ICrudEntity.is_delete` 改为可选，兼容 `ICategory` 等字段可选的实体。
+
+**commit message：**
+
+```
+fix: 放宽 ICrudEntity.is_delete 以兼容分类类型
+```
+
+## 2026-08-06 15:03:39
+
+- 可维护性：新增 `useBackendSoftDeleteList`，后台 article/admin/user/category 列表页共用加载更多、软删/恢复、滚动恢复与标题。
+- Store：抽出 `updateListItem` / `setListDeleteFlag`，category 与 comment store 复用。
+- 首屏体积：`consola` 字体与 `markdown.scss` 从全局样式移出，仅文章详情页按需加载；`manualChunks` 排除 markdown 样式，避免再并入 `main-style`。
+
+**commit message：**
+
+```
+refactor: 抽取后台列表共用逻辑并按需加载 markdown 字体
+```
+
 ## 2026-08-06 14:59:00
 
 - 构建：关闭 `ReactivityTransform` / `DefineProps` / `DefinePropsRefs` 插件（`vite.config.macros.ts` 仅保留 `@vitejs/plugin-vue` 与 `vue-jsx`）。

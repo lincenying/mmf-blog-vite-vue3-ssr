@@ -27,8 +27,7 @@
 
 <script setup lang="ts">
 import { UTC2Date } from '@lincy/utils'
-import { useSaveScroll } from '@/composables'
-import useAppShellStore from '@/stores/use-app-shell-store'
+import { useBackendSoftDeleteList } from '@/composables/use-backend-soft-delete-list'
 import useBackendAdminStore from '@/stores/use-backend-admin-store'
 
 defineOptions({
@@ -41,70 +40,17 @@ defineOptions({
 })
 
 const route = useRoute()
-
-const appShellStore = useAppShellStore()
-
-// pinia 状态管理 ===>
 const backendAdminStore = useBackendAdminStore()
 const { lists } = storeToRefs(backendAdminStore)
 
-const { historyPageScrollTop } = storeToRefs(appShellStore)
-
-useSaveScroll()
-
-const [loading, toggleLoading] = useToggle(false)
-
-async function loadMore(page = lists.value.page) {
-    if (loading.value) {
-        return
-    }
-    toggleLoading(true)
-    await backendAdminStore.getAdminList({ page, path: route.fullPath })
-    toggleLoading(false)
-}
-async function handleRecover(id: string) {
-    const { code } = await capi.get<'success' | 'error'>('backend/admin/recover', { id })
-    if (code === 200) {
-        showMsg({ type: 'success', content: '恢复成功' })
-        backendAdminStore.recoverAdmin(id)
-    }
-}
-/**
- * 处理删除操作的异步函数。
- * @param id 要删除的条目的唯一标识符，类型为字符串。
- * @returns 不返回任何内容，但会在删除操作成功或失败时触发相应的操作，如显示消息和更新存储。
- */
-async function handleDelete(id: string) {
-    // 向后端发送删除请求，并等待响应
-    const { code } = await capi.get<'success' | 'error'>('backend/admin/delete', { id })
-
-    // 检查响应代码，如果为200，则视为删除成功
-    if (code === 200) {
-        // 显示成功消息，并从存储中删除该管理员
-        showMsg({ type: 'success', content: '删除成功' })
-        backendAdminStore.deleteAdmin(id)
-    }
-}
-
-onMounted(() => {
-    if (lists.value.path === '') {
-        loadMore(1)
-    }
-    else {
-        const scrollTop = historyPageScrollTop.value[route.path] || 0
-        window.scrollTo(0, scrollTop)
-    }
-})
-
-const headTitle = ref('管理员列表 - M.M.F 小屋')
-useHead({
-    // Can be static or computed
-    title: headTitle,
-    meta: [
-        {
-            name: 'description',
-            content: headTitle,
-        },
-    ],
+const { loading, loadMore, handleRecover, handleDelete } = useBackendSoftDeleteList({
+    isEmpty: () => lists.value.path === '',
+    getPage: () => lists.value.page,
+    fetchPage: page => backendAdminStore.getAdminList({ page, path: route.fullPath }),
+    deleteUrl: 'backend/admin/delete',
+    recoverUrl: 'backend/admin/recover',
+    onDeleted: id => backendAdminStore.deleteAdmin(id),
+    onRecovered: id => backendAdminStore.recoverAdmin(id),
+    headTitle: '管理员列表 - M.M.F 小屋',
 })
 </script>

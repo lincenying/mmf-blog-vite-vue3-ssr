@@ -1,6 +1,7 @@
 import type { IApiConfig, ICategory, ICategoryStore } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import { setListDeleteFlag, updateListItem } from './create-crud-list-helpers'
 
 export const useGlobalCategoryStore = defineStore('globalCategoryStore', () => {
     const state: ICategoryStore = reactive({
@@ -51,36 +52,21 @@ export const useGlobalCategoryStore = defineStore('globalCategoryStore', () => {
      */
     const updateCategoryItem = (payload: ICategory) => {
         state.item.data = payload
-        const index = state.lists.findIndex(ii => ii._id === payload._id)
-        if (index > -1) {
-            state.lists.splice(index, 1, payload)
-        }
+        updateListItem(state.lists, payload)
     }
     /**
      * 删除分类成功后, 更新分类数据
      * @param id 分类ID
      */
     const deleteCategory = (id: string) => {
-        const index = state.lists.findIndex(ii => ii._id === id)
-        if (index > -1) {
-            state.lists.splice(index, 1, {
-                ...state.lists[index],
-                is_delete: 1,
-            })
-        }
+        setListDeleteFlag(state.lists, id, 1)
     }
     /**
      * 恢复分类成功后, 更新分类数据
      * @param id 分类ID
      */
     const recoverCategory = (id: string) => {
-        const index = state.lists.findIndex(ii => ii._id === id)
-        if (index > -1) {
-            state.lists.splice(index, 1, {
-                ...state.lists[index],
-                is_delete: 0,
-            })
-        }
+        setListDeleteFlag(state.lists, id, 0)
     }
 
     return {

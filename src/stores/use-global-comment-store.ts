@@ -1,6 +1,7 @@
 import type { IApiConfig, IComment, ICommentStore } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import { setListDeleteFlag } from './create-crud-list-helpers'
 
 const usePiniaStore = defineStore('globalCommentStore', () => {
     const state: ICommentStore = reactive({
@@ -52,26 +53,14 @@ const usePiniaStore = defineStore('globalCommentStore', () => {
      * 删除评论成功后, 更新评论数据
      */
     const deleteComment = (id: string) => {
-        const index = state.lists.data.findIndex(item => item._id === id)
-        if (index > -1) {
-            state.lists.data.splice(index, 1, {
-                ...state.lists.data[index],
-                is_delete: 1,
-            })
-        }
+        setListDeleteFlag(state.lists.data, id, 1)
     }
 
     /**
      * 恢复评论成功后, 更新评论数据
      */
     const recoverComment = (id: string) => {
-        const index = state.lists.data.findIndex(item => item._id === id)
-        if (index > -1) {
-            state.lists.data.splice(index, 1, {
-                ...state.lists.data[index],
-                is_delete: 0,
-            })
-        }
+        setListDeleteFlag(state.lists.data, id, 0)
     }
 
     return {

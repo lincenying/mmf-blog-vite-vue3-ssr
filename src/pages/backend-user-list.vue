@@ -27,8 +27,7 @@
 
 <script setup lang="ts">
 import { UTC2Date } from '@lincy/utils'
-import { useSaveScroll } from '@/composables'
-import useAppShellStore from '@/stores/use-app-shell-store'
+import { useBackendSoftDeleteList } from '@/composables/use-backend-soft-delete-list'
 import useBackendUserStore from '@/stores/use-backend-user-store'
 
 defineOptions({
@@ -41,60 +40,17 @@ defineOptions({
 })
 
 const route = useRoute()
-const appShellStore = useAppShellStore()
-
-// pinia 状态管理 ===>
 const backendUserStore = useBackendUserStore()
 const { lists } = storeToRefs(backendUserStore)
 
-const { historyPageScrollTop } = storeToRefs(appShellStore)
-
-useSaveScroll()
-
-const [loading, toggleLoading] = useToggle(false)
-
-async function loadMore(page = lists.value.page) {
-    if (loading.value) {
-        return
-    }
-    toggleLoading(true)
-    await backendUserStore.getUserList({ page, path: route.fullPath })
-    toggleLoading(false)
-}
-async function handleRecover(id: string) {
-    const { code } = await capi.get<'success' | 'error'>('backend/user/recover', { id })
-    if (code === 200) {
-        showMsg({ type: 'success', content: '恢复成功' })
-        backendUserStore.recoverUser(id)
-    }
-}
-async function handleDelete(id: string) {
-    const { code } = await capi.get<'success' | 'error'>('backend/user/delete', { id })
-    if (code === 200) {
-        showMsg({ type: 'success', content: '删除成功' })
-        backendUserStore.deleteUser(id)
-    }
-}
-
-onMounted(() => {
-    if (lists.value.path === '') {
-        loadMore(1)
-    }
-    else {
-        const scrollTop = historyPageScrollTop.value[route.path] || 0
-        window.scrollTo(0, scrollTop)
-    }
-})
-
-const headTitle = ref('用户列表 - M.M.F 小屋')
-useHead({
-    // Can be static or computed
-    title: headTitle,
-    meta: [
-        {
-            name: 'description',
-            content: headTitle,
-        },
-    ],
+const { loading, loadMore, handleRecover, handleDelete } = useBackendSoftDeleteList({
+    isEmpty: () => lists.value.path === '',
+    getPage: () => lists.value.page,
+    fetchPage: page => backendUserStore.getUserList({ page, path: route.fullPath }),
+    deleteUrl: 'backend/user/delete',
+    recoverUrl: 'backend/user/recover',
+    onDeleted: id => backendUserStore.deleteUser(id),
+    onRecovered: id => backendUserStore.recoverUser(id),
+    headTitle: '用户列表 - M.M.F 小屋',
 })
 </script>

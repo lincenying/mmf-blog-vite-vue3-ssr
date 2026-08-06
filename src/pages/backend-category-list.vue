@@ -22,8 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { useSaveScroll } from '@/composables'
-import useAppShellStore from '@/stores/use-app-shell-store'
+import { useBackendSoftDeleteList } from '@/composables/use-backend-soft-delete-list'
 import { useGlobalCategoryStore } from '@/stores/use-global-category-store'
 
 defineOptions({
@@ -36,62 +35,16 @@ defineOptions({
 })
 
 const route = useRoute()
-const appShellStore = useAppShellStore()
-
-// pinia 状态管理 ===>
 const globalCategoryStore = useGlobalCategoryStore()
 const { lists: category } = storeToRefs(globalCategoryStore)
 
-const { historyPageScrollTop } = storeToRefs(appShellStore)
-
-useSaveScroll()
-
-const [loading, toggleLoading] = useToggle(false)
-
-async function loadMore(page: number) {
-    if (loading.value) {
-        return
-    }
-    toggleLoading(true)
-    await globalCategoryStore.getCategoryList({ page, limit: 99, path: route.fullPath }, capi)
-    toggleLoading(false)
-}
-
-onMounted(() => {
-    if (category.value.length === 0) {
-        loadMore(1)
-    }
-    else {
-        const scrollTop = historyPageScrollTop.value[route.path] || 0
-        window.scrollTo(0, scrollTop)
-    }
-})
-
-async function handleRecover(id: string) {
-    const { code } = await capi.get<'success' | 'error'>('backend/category/recover', { id })
-    if (code === 200) {
-        showMsg({ type: 'success', content: '恢复成功' })
-        globalCategoryStore.recoverCategory(id)
-    }
-}
-
-async function handleDelete(id: string) {
-    const { code } = await capi.get<'success' | 'error'>('backend/category/delete', { id })
-    if (code === 200) {
-        showMsg({ type: 'success', content: '删除成功' })
-        globalCategoryStore.deleteCategory(id)
-    }
-}
-
-const headTitle = ref('分类列表 - M.M.F 小屋')
-useHead({
-    // Can be static or computed
-    title: headTitle,
-    meta: [
-        {
-            name: 'description',
-            content: headTitle,
-        },
-    ],
+const { handleRecover, handleDelete } = useBackendSoftDeleteList({
+    isEmpty: () => category.value.length === 0,
+    fetchPage: page => globalCategoryStore.getCategoryList({ page, limit: 99, path: route.fullPath }),
+    deleteUrl: 'backend/category/delete',
+    recoverUrl: 'backend/category/recover',
+    onDeleted: id => globalCategoryStore.deleteCategory(id),
+    onRecovered: id => globalCategoryStore.recoverCategory(id),
+    headTitle: '分类列表 - M.M.F 小屋',
 })
 </script>
