@@ -67,6 +67,9 @@ import { useFrontendArticleStore } from '@/stores/use-frontend-article-store'
 import { useGlobalCategoryStore } from '@/stores/use-global-category-store'
 import useGlobalCommentStore from '@/stores/use-global-comment-store'
 
+import '@/assets/css/hljs/googlecode.css'
+import '@/assets/css/vuepress.css'
+
 defineOptions({
     name: 'FrontendArticle',
     asyncData(ctx) {

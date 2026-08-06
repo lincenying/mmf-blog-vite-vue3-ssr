@@ -10,8 +10,6 @@ import { pickPublicCookies } from './utils/ssr-cookies'
 
 import 'uno.css'
 import './assets/css/github-markdown.css'
-import './assets/css/hljs/googlecode.css'
-import './assets/css/vuepress.css'
 import 'vue-loading-overlay/dist/css/index.css'
 import 'element-plus/es/components/message/style/css'
 import 'element-plus/es/components/message-box/style/css'

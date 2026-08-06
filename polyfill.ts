@@ -1,18 +1,15 @@
+/**
+ * 可选：为极旧浏览器生成 polyfill 包。
+ * 当前构建目标为 es2022，默认不再注入 polyfill；需要时执行 `pnpm build:polyfill`。
+ */
 import fs from 'node:fs'
 
 import polyfillLibrary from 'polyfill-library'
 
 polyfillLibrary.getPolyfillString({
-    uaString: 'Chrome/63',
+    uaString: 'Mozilla/5.0 (compatible; modern)',
     minify: true,
     features: {
-        es2015: { flags: ['gated'] },
-        es2016: { flags: ['gated'] },
-        es2017: { flags: ['gated'] },
-        es2018: { flags: ['gated'] },
-        es2019: { flags: ['gated'] },
-        es2020: { flags: ['gated'] },
-        es2021: { flags: ['gated'] },
         es2022: { flags: ['gated'] },
         fetch: { flags: ['gated'] },
     },

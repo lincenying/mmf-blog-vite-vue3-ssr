@@ -28,8 +28,8 @@ const config: { server: ServerOptions, build: BuildOptions } = {
         },
     },
     build: {
-        target: 'es2018',
-        cssTarget: 'chrome79',
+        target: 'es2022',
+        cssTarget: 'chrome90',
         minify: true,
         assetsInlineLimit: 4096,
         chunkSizeWarningLimit: 1000,
@@ -57,6 +57,15 @@ const config: { server: ServerOptions, build: BuildOptions } = {
                     }
                     if (id.includes('__uno.css')) {
                         return 'unocss'
+                    }
+                    // 按路由引入的样式保持独立，避免打进首屏 main-style
+                    if (
+                        id.includes('backend-settings')
+                        || id.includes('/assets/css/vuepress')
+                        || id.includes('/assets/css/hljs/')
+                        || id.includes('base-editor')
+                    ) {
+                        return
                     }
                     if (id.includes('/assets/')) {
                         return 'main-style'

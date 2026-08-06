@@ -1,5 +1,17 @@
 # 变更记录
 
+## 2026-08-06 14:38:45
+
+- SSR：新增匿名公开页 HTML 短缓存（TTL 10s，LRU 200），登录态仍 `private, no-store`；响应头带 `X-SSR-Cache`。
+- 构建：`target` 提升至 `es2022` / `cssTarget chrome90`；默认不再注入 polyfill（可选 `pnpm build:polyfill`）。
+- 样式：后台 settings 抽至 `backend-settings.scss` 随 `backend-layout` 加载；文章页按需加载 vuepress/hljs；首屏 `main-style` 约 94KB → 78KB。
+
+**commit message：**
+
+```
+perf: 增加公开页 HTML 缓存并拆分按需样式
+```
+
 ## 2026-08-06 14:32:39
 
 - 详情 Store：`getArticleItem` 同 id 短路；前台注水清空 `content` 原文以减小 `__INITIAL_STATE__`。

@@ -14,6 +14,8 @@
 </template>
 
 <script setup lang="ts">
+import '@/assets/styles/style/backend-settings.scss'
+
 defineOptions({
     name: 'BackendLayout',
 })

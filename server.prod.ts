@@ -15,6 +15,7 @@ import requestIp from 'request-ip'
 import serveStatic from 'serve-static'
 
 import mainLimiter, { skipExt } from './server.middleware'
+import { canUseHtmlCache, createHtmlCacheKey, getCachedHtml, setCachedHtml } from './server-html-cache'
 import { handleSsrRouteError } from './server-ssr-error'
 import { urlGuardMiddleware } from './server-url-guard'
 import apiDomain from './src/api/url'
@@ -95,6 +96,20 @@ export async function createServer() {
     app.use('/{*default}', async (req, res) => {
         try {
             const url = req.originalUrl
+            const useHtmlCache = canUseHtmlCache(req)
+            const cacheKey = useHtmlCache ? createHtmlCacheKey(url) : ''
+
+            if (useHtmlCache) {
+                const cached = getCachedHtml(cacheKey)
+                if (cached) {
+                    res.status(cached.statusCode).set({
+                        'Content-Type': 'text/html; charset=utf-8',
+                        'Cache-Control': 'public, max-age=10, s-maxage=10',
+                        'X-SSR-Cache': 'HIT',
+                    }).end(cached.html)
+                    return
+                }
+            }
 
             const { html: appHtml, preloadLinks, headTags, statusCode, redirect } = await render(url, manifest, req) as IRenderType
 
@@ -114,6 +129,11 @@ export async function createServer() {
             // 登录态页面禁止共享缓存，避免把带用户信息的 HTML 缓存给他人
             if (req.cookies?.user || req.cookies?.b_user) {
                 headers['Cache-Control'] = 'private, no-store'
+            }
+            else if (useHtmlCache && statusCode === 200) {
+                setCachedHtml(cacheKey, html, statusCode)
+                headers['Cache-Control'] = 'public, max-age=10, s-maxage=10'
+                headers['X-SSR-Cache'] = 'MISS'
             }
 
             res.status(statusCode).set(headers).end(html)

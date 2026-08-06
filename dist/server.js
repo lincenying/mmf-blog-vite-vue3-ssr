@@ -53,19 +53,19 @@ var mainLimiter = rateLimit({
       (pattern) => pattern.test(userAgent)
     );
     if (isNormalBrowser) {
-      return 8;
+      return 20;
     }
     if (checkUserAgent(userAgent)) {
       return 2;
     }
-    return 4;
+    return 6;
   },
   standardHeaders: true,
   skip: (req) => {
     return checkSkip(req.path);
   },
   keyGenerator: (req) => {
-    return `${requestIp.getClientIp(req)}:${req.get("user-agent") || ""}`;
+    return requestIp.getClientIp(req) || "unknown";
   },
   handler: (req, res, _next, options) => {
     console.warn(`IP ${requestIp.getClientIp(req)} \u88AB\u9650\u5236\u8BBF\u95EE ${req.path}`);
@@ -80,6 +80,49 @@ var mainLimiter = rateLimit({
   }
 });
 var server_middleware_default = mainLimiter;
+
+// server-html-cache.ts
+import { LRUCache } from "lru-cache";
+var HTML_CACHE_TTL_MS = 1e4;
+var htmlCache = new LRUCache({
+  max: 200,
+  ttl: HTML_CACHE_TTL_MS
+});
+function isPublicCacheablePath(pathname) {
+  if (!pathname || pathname === "") {
+    return false;
+  }
+  if (pathname.startsWith("/backend") || pathname.startsWith("/user")) {
+    return false;
+  }
+  if (/\.\w+$/.test(pathname)) {
+    return false;
+  }
+  return true;
+}
+function createHtmlCacheKey(url) {
+  return url.split("#")[0] || "/";
+}
+function canUseHtmlCache(req) {
+  const method = req.method?.toUpperCase();
+  if (method !== "GET" && method !== "HEAD") {
+    return false;
+  }
+  if (req.cookies?.user || req.cookies?.b_user) {
+    return false;
+  }
+  const pathname = (req.path || req.originalUrl.split("?")[0] || "/").split("#")[0];
+  return isPublicCacheablePath(pathname);
+}
+function getCachedHtml(key) {
+  return htmlCache.get(key);
+}
+function setCachedHtml(key, html, statusCode) {
+  if (statusCode !== 200) {
+    return;
+  }
+  htmlCache.set(key, { html, statusCode });
+}
 
 // server-ssr-error.ts
 function escapeHtml(text) {
@@ -130,7 +173,7 @@ console.log(`\u5F53\u524DAPI\u5730\u5740: ${API_BASE_URL}`);
 var url_default = API_BASE_URL;
 
 // server.prod.ts
-var BODY_PARSER_LIMIT = "10mb";
+var BODY_PARSER_LIMIT = "1mb";
 async function createServer() {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const resolve = (p) => path.resolve(__dirname, p);
@@ -186,9 +229,36 @@ async function createServer() {
   app.use("/{*default}", async (req, res) => {
     try {
       const url = req.originalUrl;
-      const { html: appHtml, preloadLinks, headTags, statusCode } = await render(url, manifest, req);
+      const useHtmlCache = canUseHtmlCache(req);
+      const cacheKey = useHtmlCache ? createHtmlCacheKey(url) : "";
+      if (useHtmlCache) {
+        const cached = getCachedHtml(cacheKey);
+        if (cached) {
+          res.status(cached.statusCode).set({
+            "Content-Type": "text/html; charset=utf-8",
+            "Cache-Control": "public, max-age=10, s-maxage=10",
+            "X-SSR-Cache": "HIT"
+          }).end(cached.html);
+          return;
+        }
+      }
+      const { html: appHtml, preloadLinks, headTags, statusCode, redirect } = await render(url, manifest, req);
+      if (redirect) {
+        res.redirect(statusCode || 302, redirect);
+        return;
+      }
       const html = template.replace("<!--preload-links-->", preloadLinks).replace("<!--app-html-->", appHtml).replace("<!--head-tags-->", headTags);
-      res.status(statusCode).set({ "Content-Type": "text/html" }).end(html);
+      const headers = {
+        "Content-Type": "text/html; charset=utf-8"
+      };
+      if (req.cookies?.user || req.cookies?.b_user) {
+        headers["Cache-Control"] = "private, no-store";
+      } else if (useHtmlCache && statusCode === 200) {
+        setCachedHtml(cacheKey, html, statusCode);
+        headers["Cache-Control"] = "public, max-age=10, s-maxage=10";
+        headers["X-SSR-Cache"] = "MISS";
+      }
+      res.status(statusCode).set(headers).end(html);
     } catch (e) {
       handleSsrRouteError(res, e, exposeSsrStack);
     }
