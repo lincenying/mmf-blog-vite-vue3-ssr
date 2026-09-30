@@ -1,5 +1,25 @@
 # 变更记录
 
+## 2026-09-30 21:22:17
+
+- 类型：为 `allowImportingTsExtensions` 补上 `noEmit`。该选项只在不由 `tsc` 输出 JS（或仅输出声明、或重写导入扩展名）时可用；本项目由 Vite / tsup 构建，类型检查本来就是 `vue-tsc --noEmit`。
+
+**commit message：**
+
+```
+fix: 开启 allowImportingTsExtensions 时补上 noEmit
+```
+
+## 2026-09-30 21:20:02
+
+- 类型：去掉 Vite 配置里的 `.ts` 相对导入后缀。`tsconfig.json` 未开启 `allowImportingTsExtensions`，带 `.ts` 的导入会触发 TS5097；`moduleResolution` 为 `bundler`，不写扩展名即可解析。
+
+**commit message：**
+
+```
+fix: 去掉 Vite 配置中的 .ts 导入后缀
+```
+
 ## 2026-09-30 16:50:01
 
 - Docker：构建阶段不再用 Corepack 激活 `pnpm@11.17.0`。`node:22-alpine` 自带 Corepack 仍查找 `bin/pnpm.cjs`，而 `package.json` 的 `packageManager` 为 `pnpm@12.8.1`（可执行文件在包根目录），`pnpm install` 会报 `Cannot find module .../pnpm.cjs`。改为按 `packageManager` 用 npm 安装对应 pnpm。

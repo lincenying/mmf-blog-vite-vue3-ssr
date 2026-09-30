@@ -14,10 +14,10 @@ import logger from 'morgan'
 import requestIp from 'request-ip'
 import serveStatic from 'serve-static'
 
-import mainLimiter, { skipExt } from './server.middleware'
 import { canUseHtmlCache, createHtmlCacheKey, getCachedHtml, setCachedHtml } from './server-html-cache'
 import { handleSsrRouteError } from './server-ssr-error'
 import { urlGuardMiddleware } from './server-url-guard'
+import mainLimiter, { skipExt } from './server.middleware'
 import apiDomain from './src/api/url'
 
 const BODY_PARSER_LIMIT = '1mb'
@@ -93,10 +93,10 @@ export async function createServer() {
     const { render } = await import('./server/entry-server.js')
     const exposeSsrStack = process.env.NODE_ENV !== 'production'
 
-    app.get('/health', (req, res) => {
+    app.get('/health', (_req, res) => {
         // 这里可以检查数据库连接、Redis 等
-        res.status(200).send('OK');
-    });
+        res.status(200).send('OK')
+    })
 
     app.use('/{*default}', async (req, res) => {
         try {
