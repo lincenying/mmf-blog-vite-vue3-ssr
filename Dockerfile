@@ -4,12 +4,16 @@ ARG NODE_VERSION=node:22-alpine
 # ---------- 构建阶段：安装全量依赖并编译 ----------
 FROM $NODE_VERSION AS builder
 
-RUN corepack enable && corepack prepare pnpm@11.17.0 --activate
-
 WORKDIR /app
 
 # 先复制依赖清单，利用 Docker 层缓存
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+
+# node:22-alpine 自带的 Corepack 仍按 bin/pnpm.cjs 加载 pnpm。
+# pnpm 12 的可执行文件在包根目录，Corepack 会报 Cannot find module .../bin/pnpm.cjs。
+# 按 package.json 的 packageManager 用 npm 安装独立二进制，避免 Corepack 二次下载。
+RUN PNPM_VERSION="$(node -p "require('./package.json').packageManager.match(/^pnpm@([^\s+]+)/)[1]")" \
+    && npm install -g "pnpm@${PNPM_VERSION}"
 
 RUN pnpm install --frozen-lockfile --ignore-scripts
 
@@ -46,9 +50,9 @@ CMD ["node", "./dist/server.js"]
 # docker pull swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22
 # docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22 node:22-alpine
 # 构建镜像
-# docker build -t lincenying/app-vue3-ssr:1.26.0806 -f ./Dockerfile .
+# docker build -t lincenying/app-vue3-ssr:1.26.0930 -f ./Dockerfile .
 # 运行容器
-# docker run -d -p 7777:7777 --name app-vue3-ssr lincenying/app-vue3-ssr:1.26.0806
+# docker run -d -p 7777:7777 --name app-vue3-ssr lincenying/app-vue3-ssr:1.26.0930
 # 进入容器
 # docker exec -it app-vue3-ssr /bin/sh
 # 停止容器

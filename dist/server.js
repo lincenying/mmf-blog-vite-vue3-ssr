@@ -226,6 +226,9 @@ async function createServer() {
   app.use(cookieParser());
   const { render } = await import("./server/entry-server.js");
   const exposeSsrStack = process2.env.NODE_ENV !== "production";
+  app.get("/health", (req, res) => {
+    res.status(200).send("OK");
+  });
   app.use("/{*default}", async (req, res) => {
     try {
       const url = req.originalUrl;

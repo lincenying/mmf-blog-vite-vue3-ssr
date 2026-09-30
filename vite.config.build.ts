@@ -3,7 +3,7 @@ import type { BuildOptions, ServerOptions } from 'vite'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import apiDomain from './src/api/url'
+import apiDomain from './src/api/url.ts'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 

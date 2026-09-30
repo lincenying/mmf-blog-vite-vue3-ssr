@@ -93,6 +93,11 @@ export async function createServer() {
     const { render } = await import('./server/entry-server.js')
     const exposeSsrStack = process.env.NODE_ENV !== 'production'
 
+    app.get('/health', (req, res) => {
+        // 这里可以检查数据库连接、Redis 等
+        res.status(200).send('OK');
+    });
+
     app.use('/{*default}', async (req, res) => {
         try {
             const url = req.originalUrl

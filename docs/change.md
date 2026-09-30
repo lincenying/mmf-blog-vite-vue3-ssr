@@ -1,5 +1,15 @@
 # 变更记录
 
+## 2026-09-30 16:50:01
+
+- Docker：构建阶段不再用 Corepack 激活 `pnpm@11.17.0`。`node:22-alpine` 自带 Corepack 仍查找 `bin/pnpm.cjs`，而 `package.json` 的 `packageManager` 为 `pnpm@12.8.1`（可执行文件在包根目录），`pnpm install` 会报 `Cannot find module .../pnpm.cjs`。改为按 `packageManager` 用 npm 安装对应 pnpm。
+
+**commit message：**
+
+```
+fix: 镜像构建改为按 packageManager 安装 pnpm
+```
+
 ## 2026-08-06 15:34:52
 
 - SSR：`renderPreloadLink` 不再为 png/jpg/gif 等图片生成 `rel="preload"`。`nav-logo`、`back-top` 等作为 CSS `background-image` 使用（且 back-top 初始隐藏），Chrome 会报「preloaded but not used」；图片改由样式表自然加载。

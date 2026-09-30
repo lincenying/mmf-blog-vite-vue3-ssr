@@ -77,6 +77,11 @@ export async function createServer(root = process.cwd(), hmrPort?: number) {
     // 解析 cookies 中间件
     app.use(cookieParser())
 
+    app.get('/health', (req, res) => {
+        // 这里可以检查数据库连接、Redis 等
+        res.status(200).send('OK');
+    });
+
     const exposeSsrStack = process.env.NODE_ENV !== 'production'
 
     app.use('/{*default}', async (req, res) => {

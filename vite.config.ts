@@ -8,11 +8,11 @@ import UnoCSS from 'unocss/vite'
 import { defineConfig, loadEnv } from 'vite'
 import { viteMockServe } from 'vite-plugin-mock'
 
-import Build from './vite.config.build'
-import Components from './vite.config.components'
-import Css from './vite.config.css'
-import Macros from './vite.config.macros'
-import PWA from './vite.config.pwa'
+import Build from './vite.config.build.ts'
+import Components from './vite.config.components.ts'
+import Css from './vite.config.css.ts'
+import Macros from './vite.config.macros.ts'
+import PWA from './vite.config.pwa.ts'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, command }) => {
