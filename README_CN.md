@@ -89,11 +89,12 @@ npx simple-git-hooks
 
 ### 2. 构建 Web 镜像
 
-若拉取 `node:22-alpine` 较慢，可先镜像加速再打标签（与 `Dockerfile` 注释一致）：
+若拉取 `node:24-alpine` 较慢，可先镜像加速再打标签（与 `Dockerfile` 注释一致）：
 
 ```bash
-docker pull swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22
-docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22 node:22-alpine
+docker pull swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:24.22.2-alpine3.24
+docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:24.22.2-alpine3.24 node:24-alpine
+docker rmi swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:24.22.2-alpine3.24
 ```
 
 构建与运行（镜像标签请按需修改）：
@@ -152,7 +153,7 @@ docker compose -f docker-compose.yml build app
 docker images lincenying/app-vue3-ssr
 ```
 
-若仍偏大，可进一步：将 `@kangc/v-md-editor` 改为仅客户端加载（可去掉 `mermaid` 等约数十 MB 传递依赖）、静态资源用 Nginx 托管、或使用 `node:22-alpine` 以外的更小运行时。
+若仍偏大，可进一步：将 `@kangc/v-md-editor` 改为仅客户端加载（可去掉 `mermaid` 等约数十 MB 传递依赖）、静态资源用 Nginx 托管、或使用 `node:24-alpine` 以外的更小运行时。
 
 ## 开源协议
 

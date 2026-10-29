@@ -89,11 +89,12 @@ Clone [mmf-blog-api-ts](https://github.com/lincenying/mmf-blog-api-ts), build an
 
 ### 2. Web image
 
-If pulling `node:22-alpine` is slow, you can mirror and retag (example from comments in `Dockerfile`):
+If pulling `node:24-alpine` is slow, you can mirror and retag (example from comments in `Dockerfile`):
 
 ```bash
-docker pull swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22
-docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22 node:22-alpine
+docker pull swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:24.22.2-alpine3.24
+docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:24.22.2-alpine3.24 node:24-alpine
+docker rmi swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:24.22.2-alpine3.24
 ```
 
 Build and run (replace image tag as needed):

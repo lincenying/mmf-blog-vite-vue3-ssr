@@ -1,5 +1,5 @@
 # 使用较小的基础镜像
-ARG NODE_VERSION=node:22-alpine
+ARG NODE_VERSION=node:24-alpine
 
 # ---------- 构建阶段：安装全量依赖并编译 ----------
 FROM $NODE_VERSION AS builder
@@ -9,7 +9,7 @@ WORKDIR /app
 # 先复制依赖清单，利用 Docker 层缓存
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
-# node:22-alpine 自带的 Corepack 仍按 bin/pnpm.cjs 加载 pnpm。
+# node:24-alpine 自带的 Corepack 仍按 bin/pnpm.cjs 加载 pnpm。
 # pnpm 12 的可执行文件在包根目录，Corepack 会报 Cannot find module .../bin/pnpm.cjs。
 # 按 package.json 的 packageManager 用 npm 安装独立二进制，避免 Corepack 二次下载。
 RUN PNPM_VERSION="$(node -p "require('./package.json').packageManager.match(/^pnpm@([^\s+]+)/)[1]")" \
@@ -47,8 +47,9 @@ USER node
 CMD ["node", "./dist/server.js"]
 
 # 第一次执行时, 如果node镜像拉不下来, 可以执行以下命令:
-# docker pull swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22
-# docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:22-alpine3.22 node:22-alpine
+# docker pull swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:24.22.2-alpine3.24
+# docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:24.22.2-alpine3.24 node:24-alpine
+# docker rmi swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:24.22.2-alpine3.24
 # 构建镜像
 # docker build -t lincenying/app-vue3-ssr:1.26.0930 -f ./Dockerfile .
 # 运行容器
