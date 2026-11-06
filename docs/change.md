@@ -1,5 +1,15 @@
 # 变更记录
 
+## 2026-11-06 22:02:00
+
+- SSR：公开 Cookie 的昵称、邮箱在写入 Pinia 前再 `decodeURIComponent` 一次。后端写入时多编码了一层，`cookie-parser` / `js-cookie` 只解一层，帐号页首屏输入框会显示 `%E6%9E%97...`，接口返回后才变成汉字。
+
+**commit message：**
+
+```
+fix: 解码 Cookie 中的昵称避免帐号页 SSR 乱码
+```
+
 ## 2026-11-06 21:54:00
 
 - 样式：帐号页、密码页根节点改为与添加分类页一致的 `settings-main card`，外层 `cards-wrap` 上收到用户布局。

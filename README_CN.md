@@ -100,11 +100,11 @@ docker rmi swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:24.22.2-alpin
 构建与运行（镜像标签请按需修改）：
 
 ```bash
-docker build -t lincenying/app-vue3-ssr:1.26.0930 -f ./Dockerfile .
+docker build -t lincenying/app-vue3-ssr:1.26.1106 -f ./Dockerfile .
 # 或者
 docker compose -f docker-compose.yml build app
 
-docker run -d -p 7777:7777 --add-host=host.docker.internal:host-gateway --name app-vue3-ssr lincenying/app-vue3-ssr:1.26.0930
+docker run -d -p 7777:7777 --add-host=host.docker.internal:host-gateway --name app-vue3-ssr lincenying/app-vue3-ssr:1.26.1106
 ```
 
 维护常用命令：
@@ -113,7 +113,7 @@ docker run -d -p 7777:7777 --add-host=host.docker.internal:host-gateway --name a
 docker exec -it app-vue3-ssr /bin/sh
 docker stop app-vue3-ssr
 docker rm app-vue3-ssr
-docker rmi lincenying/app-vue3-ssr:1.26.0930
+docker rmi lincenying/app-vue3-ssr:1.26.1106
 ```
 
 ## Docker Compose
