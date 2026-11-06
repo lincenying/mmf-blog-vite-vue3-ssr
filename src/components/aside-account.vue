@@ -18,7 +18,7 @@ defineOptions({
 })
 
 async function handleLogout() {
-    await capi.post<string>('frontend/user/logout', {})
+    await capi.get<string>('frontend/user/logout', {})
     window.location.href = '/'
 }
 </script>

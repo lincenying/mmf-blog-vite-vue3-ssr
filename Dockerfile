@@ -51,9 +51,9 @@ CMD ["node", "./dist/server.js"]
 # docker tag swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:24.22.2-alpine3.24 node:24-alpine
 # docker rmi swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/node:24.22.2-alpine3.24
 # 构建镜像
-# docker build -t lincenying/app-vue3-ssr:1.26.1106 -f ./Dockerfile .
+# docker build -t lincenying/app-vue3-ssr:1.26.1107 -f ./Dockerfile .
 # 运行容器
-# docker run -d -p 7777:7777 --name app-vue3-ssr lincenying/app-vue3-ssr:1.26.1106
+# docker run -d -p 7777:7777 --name app-vue3-ssr lincenying/app-vue3-ssr:1.26.1107
 # 进入容器
 # docker exec -it app-vue3-ssr /bin/sh
 # 停止容器
