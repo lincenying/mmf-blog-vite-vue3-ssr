@@ -1,21 +1,19 @@
 <template>
-    <div class="cards-wrap home-feeds">
-        <div class="card settings-main">
-            <div class="settings-main-content">
-                <form>
-                    <a-input title="昵称">
-                        <input type="text" :value="username" placeholder="昵称" class="base-input" name="username" readonly>
-                        <span class="input-info error">请输入昵称</span>
-                    </a-input>
-                    <a-input title="邮箱">
-                        <input v-model="email" type="text" placeholder="邮箱" class="base-input" name="email">
-                        <span class="input-info error">请输入邮箱</span>
-                    </a-input>
-                </form>
-            </div>
-            <div class="settings-footer">
-                <a href="javascript:;" class="btn btn-yellow" @click="handleSubmit">保存设置</a>
-            </div>
+    <div class="settings-main card">
+        <div class="settings-main-content">
+            <form>
+                <a-input title="昵称">
+                    <input type="text" :value="username" placeholder="昵称" class="base-input" name="username" readonly>
+                    <span class="input-info error">请输入昵称</span>
+                </a-input>
+                <a-input title="邮箱">
+                    <input v-model="email" type="text" placeholder="邮箱" class="base-input" name="email">
+                    <span class="input-info error">请输入邮箱</span>
+                </a-input>
+            </form>
+        </div>
+        <div class="settings-footer">
+            <a href="javascript:;" class="btn btn-yellow" @click="handleSubmit">保存设置</a>
         </div>
     </div>
 </template>

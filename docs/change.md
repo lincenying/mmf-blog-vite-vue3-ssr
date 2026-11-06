@@ -1,5 +1,16 @@
 # 变更记录
 
+## 2026-11-06 21:54:00
+
+- 样式：帐号页、密码页根节点改为与添加分类页一致的 `settings-main card`，外层 `cards-wrap` 上收到用户布局。
+- 样式：用户中心布局引入 `backend-settings.scss`，补回设置表单的间距、输入框和底部按钮样式。
+
+**commit message：**
+
+```
+fix: 恢复用户帐号与密码页设置表单样式
+```
+
 ## 2026-09-30 21:22:17
 
 - 类型：为 `allowImportingTsExtensions` 补上 `noEmit`。该选项只在不由 `tsc` 输出 JS（或仅输出声明、或重写导入扩展名）时可用；本项目由 Vite / tsup 构建，类型检查本来就是 `vue-tsc --noEmit`。
