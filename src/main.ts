@@ -2,7 +2,7 @@ import { createPinia } from 'pinia'
 import { createSSRApp } from 'vue'
 import globalPlugin from '@/plugins/global'
 
-import App from './App.vue'
+import App from './app.vue'
 import { createRouter } from './router/index'
 
 console.log(`当前环境: ${import.meta.env.VITE_APP_ENV}`)
