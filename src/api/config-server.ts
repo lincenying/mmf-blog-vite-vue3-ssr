@@ -5,7 +5,12 @@ import apiDomain from './url'
 /** 是否开启`LRUCache` */
 const cached = true
 
-const cache: Nullable<LRUCache<string, Objable>> = (cached && new LRUCache({
+/** SSR 接口缓存项。只约定读取时用到的 data，AxiosResponse 可以写入 */
+export interface ISsrApiCacheEntry {
+    data: ResponseData<unknown>
+}
+
+const cache: Nullable<LRUCache<string, ISsrApiCacheEntry>> = (cached && new LRUCache({
     max: 1000,
     ttl: 1000 * 10,
 })) || null

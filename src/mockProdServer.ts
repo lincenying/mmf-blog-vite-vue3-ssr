@@ -2,7 +2,7 @@ import type { MockMethod } from 'vite-plugin-mock'
 
 import { createProdMockServer } from 'vite-plugin-mock/client'
 
-const modules: Objable = import.meta.glob('../mock/*.ts', { eager: true })
+const modules = import.meta.glob<{ default: MockMethod[] }>('../mock/*.ts', { eager: true })
 
 const _mockModules: Array<MockMethod> = []
 Object.keys(modules).forEach((key) => {

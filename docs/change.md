@@ -1,5 +1,35 @@
 # 变更记录
 
+## 2026-11-16 11:39:30
+
+- 类型：生产环境 mock 的 `import.meta.glob` 改为 `{ default: MockMethod[] }`，不再标成 `Objable`，`.default` 不再是 `unknown`。
+
+**commit message：**
+
+```
+fix: 为生产环境 mock 的 glob 模块补上 default 类型
+```
+
+## 2026-11-16 11:37:40
+
+- 类型：SSR 接口 LRU 缓存值从 `Objable` 改为 `{ data: ResponseData }`，`AxiosResponse` 可以写入，命中时仍读取 `data`。
+
+**commit message：**
+
+```
+fix: 修正 SSR 接口缓存值类型以接受 Axios 响应
+```
+
+## 2026-11-16 11:34:30
+
+- 类型：`Window.__INITIAL_STATE__` 改为 Pinia 根状态 `Record<string, StateTree>`，客户端注水赋值不再和 `store.state.value` 冲突。
+
+**commit message：**
+
+```
+fix: 将初始状态类型对齐 Pinia StateTree
+```
+
 ## 2026-11-16 11:29:22
 
 - 路由：前台 / 后台守卫不再用 `js-cookie` 读取 HttpOnly 的 `user`、`b_user`，改为判断 Pinia 中的登录标记 `'1'`。

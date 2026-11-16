@@ -5,8 +5,8 @@ import axios from 'axios'
 import md5 from 'md5'
 
 import qs from 'qs'
-import config from './config-server'
 import { splitCacheFlag } from '@/utils/ssr-cookies'
+import config from './config-server'
 
 /** SSR 端 API 请求上下文 */
 export interface ISsrApiContext {

@@ -1,7 +1,7 @@
 import type { CusRouteComponent } from './types'
 
-import cookies from 'js-cookie'
 import { createHead } from '@unhead/vue/client'
+import cookies from 'js-cookie'
 import { LoadingPlugin } from 'vue-loading-overlay'
 
 import { createApp } from './main'

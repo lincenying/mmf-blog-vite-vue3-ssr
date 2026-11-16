@@ -90,5 +90,6 @@ declare type ApiType = ApiServer | ApiClient
 
 declare interface Window {
     $$api: Nullable<ApiClient>
-    __INITIAL_STATE__: Record<string, unknown>
+    /** SSR 注入的 Pinia 根状态，与 store.state.value 同构 */
+    __INITIAL_STATE__: Record<string, import('pinia').StateTree>
 }
