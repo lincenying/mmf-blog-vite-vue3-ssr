@@ -20,7 +20,7 @@ function decodePublicCookieValue(value: string): string {
 
 /**
  * 从请求 cookies 提取可安全注水到前端的公开字段。
- * `user` / `b_user` 等 token 不进入 HTML，仅保留登录态标记 `user: '1'`。
+ * `user` / `b_user` 为 HttpOnly token，不进入 HTML，只保留登录态标记 `'1'`。
  */
 export function pickPublicCookies(cookies: IUserCookies = {}): IUserCookies {
     const result: IUserCookies = {}
@@ -32,6 +32,9 @@ export function pickPublicCookies(cookies: IUserCookies = {}): IUserCookies {
     }
     if (cookies.user) {
         result.user = '1'
+    }
+    if (cookies.b_user) {
+        result.b_user = '1'
     }
     return result
 }

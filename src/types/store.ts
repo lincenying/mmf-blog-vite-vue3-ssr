@@ -97,7 +97,7 @@ export interface IUserCookies {
     userid?: string
     username?: string
     useremail?: string
-    /** 后台 token，仅存在于请求 cookie，不进入 store 注水 */
+    /** 后台登录态标记（store 中仅为 '1'，真实 token 不进 Pinia） */
     b_user?: string
     [propName: string]: string | number | boolean | undefined
 }

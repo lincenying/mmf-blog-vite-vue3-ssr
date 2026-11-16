@@ -18,8 +18,8 @@
 </template>
 
 <script setup lang="ts">
-import cookies from 'js-cookie'
 import { useGlobal, useLockFn } from '@/composables'
+import { useGlobalStore } from '@/stores/use-global-store'
 
 defineOptions({
     name: 'BackendLogin',
@@ -27,6 +27,8 @@ defineOptions({
 
 const { ctx } = useGlobal()
 const router = useRouter()
+const globalStore = useGlobalStore()
+const { cookies } = storeToRefs(globalStore)
 
 const form = reactive({
     username: '',
@@ -42,12 +44,16 @@ const handleLogin = useLockFn(async () => {
     const { code, data } = await capi.post<Nullable<string>>('backend/admin/login', form)
     loader.hide()
     if (code === 200 && data) {
+        globalStore.setCookies({
+            ...cookies.value,
+            b_user: '1',
+        })
         router.push('/backend/article/list')
     }
 })
 
 onMounted(() => {
-    if (cookies.get('b_user')) {
+    if (cookies.value.b_user) {
         router.push('/backend/article/list')
     }
 })

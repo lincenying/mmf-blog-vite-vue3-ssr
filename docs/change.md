@@ -1,5 +1,17 @@
 # 变更记录
 
+## 2026-11-16 11:29:22
+
+- 路由：前台 / 后台守卫不再用 `js-cookie` 读取 HttpOnly 的 `user`、`b_user`，改为判断 Pinia 中的登录标记 `'1'`。
+- SSR：`b_user` 与 `user` 一样只注水登录标记，token 不进 HTML。客户端注水时保留该标记，避免 HttpOnly 读不到把 `'1'` 冲掉。
+- 后台登录：成功后写入 `b_user: '1'` 再跳转；已登录时用同一标记离开登录页。
+
+**commit message：**
+
+```
+fix: 路由守卫改为读取登录标记以兼容 HttpOnly Cookie
+```
+
 ## 2026-11-06 22:02:00
 
 - SSR：公开 Cookie 的昵称、邮箱在写入 Pinia 前再 `decodeURIComponent` 一次。后端写入时多编码了一层，`cookie-parser` / `js-cookie` 只解一层，帐号页首屏输入框会显示 `%E6%9E%97...`，接口返回后才变成汉字。

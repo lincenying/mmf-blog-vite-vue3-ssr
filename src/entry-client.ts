@@ -23,11 +23,12 @@ if (window.__INITIAL_STATE__) {
     store.state.value = window.__INITIAL_STATE__
 }
 
-// 用浏览器真实 cookie 同步公开字段与登录标记（token 仍不进 store）
+// HttpOnly 的 user / b_user 脚本读不到，保留 SSR 写入的登录标记；非 HttpOnly 时仍由 js-cookie 覆盖
 const globalStore = useGlobalStore(store)
 globalStore.setCookies(pickPublicCookies({
     ...globalStore.cookies,
-    user: cookies.get('user') || undefined,
+    user: cookies.get('user') || globalStore.cookies.user,
+    b_user: cookies.get('b_user') || globalStore.cookies.b_user,
     userid: cookies.get('userid') || globalStore.cookies.userid,
     username: cookies.get('username') || globalStore.cookies.username,
     useremail: cookies.get('useremail') || globalStore.cookies.useremail,
