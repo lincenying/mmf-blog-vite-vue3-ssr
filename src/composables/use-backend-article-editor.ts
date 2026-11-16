@@ -46,22 +46,32 @@ export function useBackendArticleEditor() {
      * 处理编辑器图片上传并插入 Markdown。
      */
     async function handleUploadImage(_event: EventTarget, insertImage: AnyFn, files: FileList) {
+        const file = files.item(0)
+        if (!file) {
+            showMsg('请选择图片')
+            return
+        }
         const loader = ctx.$loading.show()
         const formData = new FormData()
-        formData.append('file', files[0])
+        formData.append('file', file)
         try {
             const { data } = await capi.file<IUpload>(`${uploadApi}/api/fetch/upload`, formData)
-            if (data?.filepath) {
-                insertImage({
-                    url: `${uploadApi}/${data.filepath}`,
-                    desc: '',
-                })
+            if (!data?.filepath) {
+                showMsg('上传失败')
+                return
             }
+            insertImage({
+                url: `${uploadApi}/${data.filepath}`,
+                desc: '',
+            })
         }
         catch (error) {
-            console.log(error)
+            console.error('[upload]', error)
+            showMsg('上传失败')
         }
-        loader.hide()
+        finally {
+            loader.hide()
+        }
     }
 
     /**

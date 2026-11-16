@@ -1,3 +1,4 @@
+import type { ISharedHtmlPage } from './server-html-cache'
 import type { IRenderType } from '~/types'
 
 import fs from 'node:fs'
@@ -5,20 +6,20 @@ import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 
-import { UTC2Date } from '@lincy/utils'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
 import express from 'express'
 import { createProxyMiddleware } from 'http-proxy-middleware'
-import logger from 'morgan'
-import requestIp from 'request-ip'
 import serveStatic from 'serve-static'
 
-import { canUseHtmlCache, createHtmlCacheKey, getCachedHtml, setCachedHtml } from './server-html-cache'
+import { installAccessLogger } from './server-access-log'
+import { canUseHtmlCache, coalescePublicHtml, createHtmlCacheKey } from './server-html-cache'
 import { handleSsrRouteError } from './server-ssr-error'
+import { buildHtmlHeaders, isLocalRedirect, renderHtmlDocument, sendHtml } from './server-ssr-response'
 import { urlGuardMiddleware } from './server-url-guard'
-import mainLimiter, { skipExt } from './server.middleware'
+import mainLimiter from './server.middleware'
 import apiDomain from './src/api/url'
+import { getClientIp } from './src/utils/client-ip'
 
 const BODY_PARSER_LIMIT = '1mb'
 
@@ -34,27 +35,13 @@ export async function createServer() {
     }
 
     app.use(urlGuardMiddleware)
+    installAccessLogger(app)
 
-    logger.token('remote-addr', (req) => {
-        return requestIp.getClientIp(req) || 'unknown'
+    app.get('/health', (_req, res) => {
+        res.status(200).set('Cache-Control', 'no-store').send('OK')
     })
 
-    logger.token('date', () => {
-        return UTC2Date(undefined, 'yyyy-mm-dd hh:ii:ss.SSS')
-    })
-
-    // Node.js 日志中间件
-    app.use(
-        logger('[:remote-addr] [:date] ":method :url" :status :res[content-length] ":referrer"', {
-            skip(req) {
-                return [...skipExt, '.php'].some((ext) => {
-                    return req.url.endsWith(ext)
-                })
-            },
-        }),
-    )
-
-    // 生产环境才启用限流中间件
+    // 生产环境才启用限流中间件。健康检查已在前面注册，且限流本身也会跳过 /health
     app.use(mainLimiter)
 
     // Node.js 压缩中间件
@@ -65,12 +52,12 @@ export async function createServer() {
             target: apiDomain,
             changeOrigin: true,
             pathFilter: ['/api/**'],
-            pathRewrite: {
-                '^/api': '/api',
-            },
             on: {
                 proxyReq(proxyReq, req) {
-                    proxyReq.setHeader('x-real-ip', requestIp.getClientIp(req) || 'unknown')
+                    const clientIp = getClientIp(req)
+                    if (clientIp) {
+                        proxyReq.setHeader('x-real-ip', clientIp)
+                    }
                 },
             },
         }),
@@ -93,55 +80,50 @@ export async function createServer() {
     const { render } = await import('./server/entry-server.js')
     const exposeSsrStack = process.env.NODE_ENV !== 'production'
 
-    app.get('/health', (_req, res) => {
-        // 这里可以检查数据库连接、Redis 等
-        res.status(200).send('OK')
-    })
-
-    app.use('/{*default}', async (req, res) => {
+    app.get('/{*default}', async (req, res) => {
         try {
             const url = req.originalUrl
             const useHtmlCache = canUseHtmlCache(req)
-            const cacheKey = useHtmlCache ? createHtmlCacheKey(url) : ''
 
-            if (useHtmlCache) {
-                const cached = getCachedHtml(cacheKey)
-                if (cached) {
-                    res.status(cached.statusCode).set({
-                        'Content-Type': 'text/html; charset=utf-8',
-                        'Cache-Control': 'public, max-age=10, s-maxage=10',
-                        'X-SSR-Cache': 'HIT',
-                    }).end(cached.html)
-                    return
+            /**
+             * 渲染当前请求。缓存合并时只有第一个请求会执行。
+             */
+            const produce = async (): Promise<ISharedHtmlPage> => {
+                const rendered = await render(url, manifest, req) as IRenderType
+                if (rendered.redirect) {
+                    return {
+                        html: '',
+                        statusCode: rendered.statusCode || 302,
+                        redirect: rendered.redirect,
+                    }
+                }
+                return {
+                    html: renderHtmlDocument(template, rendered),
+                    statusCode: rendered.statusCode,
                 }
             }
 
-            const { html: appHtml, preloadLinks, headTags, statusCode, redirect } = await render(url, manifest, req) as IRenderType
+            let page: ISharedHtmlPage
+            let cache: 'HIT' | 'MISS' | undefined
+            if (useHtmlCache) {
+                const shared = await coalescePublicHtml(createHtmlCacheKey(url), produce)
+                page = shared
+                cache = shared.cache
+            }
+            else {
+                page = await produce()
+            }
 
-            if (redirect) {
-                res.redirect(statusCode || 302, redirect)
+            if (page.redirect) {
+                if (!isLocalRedirect(page.redirect)) {
+                    handleSsrRouteError(res, new Error('非法跳转地址'), exposeSsrStack)
+                    return
+                }
+                res.redirect(page.statusCode || 302, page.redirect)
                 return
             }
 
-            const html = template
-                .replace('<!--preload-links-->', preloadLinks)
-                .replace('<!--app-html-->', appHtml)
-                .replace('<!--head-tags-->', headTags)
-
-            const headers: Record<string, string> = {
-                'Content-Type': 'text/html; charset=utf-8',
-            }
-            // 登录态页面禁止共享缓存，避免把带用户信息的 HTML 缓存给他人
-            if (req.cookies?.user || req.cookies?.b_user) {
-                headers['Cache-Control'] = 'private, no-store'
-            }
-            else if (useHtmlCache && statusCode === 200) {
-                setCachedHtml(cacheKey, html, statusCode)
-                headers['Cache-Control'] = 'public, max-age=10, s-maxage=10'
-                headers['X-SSR-Cache'] = 'MISS'
-            }
-
-            res.status(statusCode).set(headers).end(html)
+            sendHtml(req, res, page.statusCode, page.html, buildHtmlHeaders(req, page.statusCode, cache))
         }
         catch (e: unknown) {
             handleSsrRouteError(res, e, exposeSsrStack)

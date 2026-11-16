@@ -9,7 +9,18 @@ import { renderToString } from '@vue/server-renderer'
 
 import { createApp } from './main'
 import { useGlobalStore } from './stores/use-global-store'
+import { getClientIp } from './utils/client-ip'
 import { pickPublicCookies } from './utils/ssr-cookies'
+
+/**
+ * 转义写入 HTML 属性的资源路径。
+ */
+function escapeAttr(value: string): string {
+    return value
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+}
 
 /**
  * 生成资源 preload / modulepreload 链接标签。
@@ -17,17 +28,18 @@ import { pickPublicCookies } from './utils/ssr-cookies'
  * 在 Chrome 中常被判定为「未使用」（尤其是隐藏节点、或 1x/2x 媒体查询切换时）。
  */
 function renderPreloadLink(file: string): string {
+    const href = escapeAttr(file)
     if (file.endsWith('.js')) {
-        return `<link rel="modulepreload" crossorigin href="${file}">`
+        return `<link rel="modulepreload" crossorigin href="${href}">`
     }
     if (file.endsWith('.css')) {
-        return `<link rel="stylesheet" href="${file}">`
+        return `<link rel="stylesheet" href="${href}">`
     }
     if (file.endsWith('.woff')) {
-        return `<link rel="preload" href="${file}" as="font" type="font/woff" crossorigin>`
+        return `<link rel="preload" href="${href}" as="font" type="font/woff" crossorigin>`
     }
     if (file.endsWith('.woff2')) {
-        return `<link rel="preload" href="${file}" as="font" type="font/woff2" crossorigin>`
+        return `<link rel="preload" href="${href}" as="font" type="font/woff2" crossorigin>`
     }
     // png/jpg/gif/webp 等：交给 CSS / <img> 自然发现，避免无效 preload 警告
     return ''
@@ -48,8 +60,10 @@ function renderPreloadLinks(modules: string[], manifest: Objable<string[]>): str
                     const filename = basename(file)
                     if (manifest[filename]) {
                         for (const depFile of manifest[filename]) {
-                            links += renderPreloadLink(depFile)
-                            seen.add(depFile)
+                            if (!seen.has(depFile)) {
+                                seen.add(depFile)
+                                links += renderPreloadLink(depFile)
+                            }
                         }
                     }
                     links += renderPreloadLink(file)
@@ -61,10 +75,14 @@ function renderPreloadLinks(modules: string[], manifest: Objable<string[]>): str
 }
 
 /**
- * 转义 HTML 中的 script 标签，降低 __INITIAL_STATE__ 注入 XSS 风险。
+ * 把注水状态写成可内嵌脚本的 JSON。
+ * 转义 `<` 与行分隔符，避免字符串里的 `</script>` 提前结束脚本，同时保持 JSON.parse 结果不变。
  */
-function replaceHtmlTag(html: string): string {
-    return html.replace(/<script(.*?)>/gi, '&lt;script$1&gt;').replace(/<\/script>/g, '&lt;/script&gt;')
+function serializeInlineScriptJson(state: unknown): string {
+    return JSON.stringify(state)
+        .replace(/</g, '\\u003c')
+        .replace(/\u2028/g, '\\u2028')
+        .replace(/\u2029/g, '\\u2029')
 }
 
 /**
@@ -72,27 +90,6 @@ function replaceHtmlTag(html: string): string {
  */
 function getPathname(url: string): string {
     return url.split('?')[0] || '/'
-}
-
-/**
- * 从 Express 请求中解析客户端 IP（兼容反向代理）。
- */
-function getClientIpFromReq(req?: Request): string | undefined {
-    if (!req) {
-        return undefined
-    }
-    const forwarded = req.headers['x-forwarded-for']
-    if (typeof forwarded === 'string' && forwarded) {
-        return forwarded.split(',')[0]?.trim() || undefined
-    }
-    if (Array.isArray(forwarded) && forwarded[0]) {
-        return forwarded[0].split(',')[0]?.trim() || undefined
-    }
-    const realIp = req.headers['x-real-ip']
-    if (typeof realIp === 'string' && realIp) {
-        return realIp
-    }
-    return req.socket?.remoteAddress || undefined
 }
 
 /**
@@ -137,7 +134,7 @@ export async function render(url: string, manifest: Objable<string[]>, req?: Req
         return Object.values(record.components as Record<string, CusRouteComponent>)
     })
 
-    const clientIp = getClientIpFromReq(req)
+    const clientIp = req ? getClientIp(req) : undefined
     const userAgent = req?.get?.('user-agent') || undefined
     const cookieHeader = typeof req?.headers?.cookie === 'string' ? req.headers.cookie : undefined
 
@@ -162,7 +159,12 @@ export async function render(url: string, manifest: Objable<string[]>, req?: Req
         })
         .filter((task): task is Promise<unknown> => task != null)
 
-    await Promise.all(asyncTasks)
+    const asyncResults = await Promise.allSettled(asyncTasks)
+    for (const result of asyncResults) {
+        if (result.status === 'rejected') {
+            console.error('[SSR asyncData]', result.reason)
+        }
+    }
 
     // 传递可通过 useSSRContext() 使用的 SSR 上下文对象 @vitejs/plugin-vue 将代码注入到组件的 setup() 中，该组件在 ctx.modules 上注册。
     // 渲染之后，ctx.modules 将包含在此渲染调用期间已实例化的所有组件。
@@ -171,7 +173,7 @@ export async function render(url: string, manifest: Objable<string[]>, req?: Req
 
     const { headTags } = head.render()
 
-    html += `<script>window.__INITIAL_STATE__ = ${replaceHtmlTag(JSON.stringify(store.state.value))}</script>`
+    html += `<script>window.__INITIAL_STATE__ = ${serializeInlineScriptJson(store.state.value)}</script>`
 
     // Vite 生成的 SSR 清单包含模块 -> 块/资产映射，然后我们可以使用它来确定需要为此请求预加载哪些文件。
     const rawModules = ctx.modules as Set<string> | undefined

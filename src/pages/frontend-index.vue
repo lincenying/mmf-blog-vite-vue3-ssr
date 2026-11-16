@@ -65,24 +65,29 @@ const { lists: topics, trending } = storeToRefs(frontendArticleStore)
 
 useSaveScroll()
 
-const {
-    params: { id, key, by },
-    path,
-} = route
-
 const [loading, toggleLoading] = useToggle(false)
 async function loadMore(page = topics.value.page) {
     if (loading.value) {
         return
     }
     toggleLoading(true)
-    await frontendArticleStore.getArticleList({ page, limit: 10, id, path, key, by })
-    toggleLoading(false)
+    try {
+        await frontendArticleStore.getArticleList({
+            page,
+            limit: 10,
+            id: route.params.id,
+            path: route.fullPath,
+            key: route.params.key,
+            by: route.params.by,
+        })
+    }
+    finally {
+        toggleLoading(false)
+    }
 }
 
 onActivated(() => {
-    console.log(`frontend-index onActivated:${route.path}`)
-    if (topics.value.path !== route.path) {
+    if (topics.value.path !== route.fullPath) {
         loadMore(1)
     }
 })

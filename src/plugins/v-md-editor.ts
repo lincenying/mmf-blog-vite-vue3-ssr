@@ -17,13 +17,22 @@ import 'prismjs/components/prism-sass'
 import 'prismjs/components/prism-less'
 import 'prismjs/components/prism-bash'
 
+interface IMarkdownIt {
+    set: (options: {
+        breaks?: boolean
+        html?: boolean
+        linkify?: boolean
+        typographer?: boolean
+    }) => void
+}
+
 VueMarkdownEditor
     .use(vuePressTheme, {
         Prism,
         codeHighlightExtensionMap: {
             vue: 'html',
         },
-        extend(md: any) {
+        extend(md: IMarkdownIt) {
             md.set({
                 breaks: true, // 启用换行符转换
                 html: true, // 允许 HTML 标签

@@ -41,7 +41,7 @@ const email = ref(cookies.value.useremail || '')
  */
 async function getUser() {
     const { code, data } = await capi.get<IUser>('frontend/user/account', {})
-    if (code === 200) {
+    if (code === 200 && data) {
         username.value = data.username
         email.value = data.email
     }

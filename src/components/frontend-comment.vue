@@ -4,18 +4,18 @@
             <div class="comment-post-wrap">
                 <img :src="useAvatar(userEmail)" alt="" class="avatar-img">
                 <div class="comment-post-input-wrap base-textarea-wrap">
-                    <textarea id="content" v-model="form.content" class="base-input textarea-input" cols="30" rows="4" />
+                    <textarea id="content" ref="contentRef" v-model="form.content" class="base-input textarea-input" cols="30" rows="4" />
                 </div>
                 <div class="comment-post-actions"><a href="javascript:;" class="btn btn-blue" @click="handlePostComment">发表评论</a></div>
             </div>
             <div class="comment-items-wrap">
                 <div v-for="item in comments.data" :key="item._id" class="comment-item">
                     <a href="javascript:;" class="comment-author-avatar-link">
-                        <img :src="useAvatar(item.userid.email)" alt="" class="avatar-img">
+                        <img :src="useAvatar(item.userid?.email)" alt="" class="avatar-img">
                     </a>
                     <div class="comment-content-wrap">
                         <span class="comment-author-wrap">
-                            <a href="javascript:;" class="comment-author">{{ item.userid.username }}</a>
+                            <a href="javascript:;" class="comment-author">{{ item.userid?.username }}</a>
                         </span>
                         <div class="comment-content">{{ item.content }}</div>
                         <div class="comment-footer">
@@ -57,6 +57,7 @@ const globalCommentStore = useGlobalCommentStore()
 const [loading, toggleLoading] = useToggle(false)
 
 const route = useRoute()
+const contentRef = useTemplateRef<HTMLTextAreaElement>('contentRef')
 const form = reactive({
     id: route.params.id,
     content: '',
@@ -67,12 +68,17 @@ const userEmail = computed(() => cookies.value.useremail)
 
 async function handleLoadComment() {
     toggleLoading(true)
-    await globalCommentStore.getCommentList({
-        id: route.params.id,
-        page: comments.value.page + 1,
-        limit: 10,
-    })
-    toggleLoading(false)
+    try {
+        await globalCommentStore.getCommentList({
+            id: route.params.id,
+            page: comments.value.page,
+            limit: 10,
+            path: route.fullPath,
+        })
+    }
+    finally {
+        toggleLoading(false)
+    }
 }
 const handlePostComment = useLockFn(async () => {
     if (!user.value) {
@@ -84,7 +90,7 @@ const handlePostComment = useLockFn(async () => {
     }
     else {
         const { code, data } = await capi.post<IComment>('frontend/comment/insert', form)
-        if (code === 200) {
+        if (code === 200 && data) {
             form.content = ''
             showMsg({ type: 'success', content: '评论发布成功!' })
             globalCommentStore.insertCommentItem(data)
@@ -92,8 +98,8 @@ const handlePostComment = useLockFn(async () => {
     }
 })
 function handleReply(item: IComment) {
-    form.content = `回复 @${item.userid?.username}: `
-    const content: HTMLTextAreaElement = document.querySelector('#content')!
-    content.focus()
+    const name = item.userid?.username || item.username || ''
+    form.content = `回复 @${name}: `
+    contentRef.value?.focus()
 }
 </script>

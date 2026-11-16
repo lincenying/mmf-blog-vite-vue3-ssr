@@ -70,8 +70,6 @@ defineOptions({
 const frontendArticleStore = useFrontendArticleStore()
 const { trending } = storeToRefs(frontendArticleStore)
 
-onMounted(() => {})
-
 const headTitle = ref('关于 - M.M.F 小屋')
 useHead({
     // Can be static or computed

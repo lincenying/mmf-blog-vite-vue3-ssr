@@ -43,12 +43,11 @@ const props = defineProps<{
 const { isBackend } = toRefs(props)
 
 const router = useRouter()
-function onSearch(e: Event) {
-    const qs = (e.target as HTMLInputElement).value
-    if (qs === '') {
-        return false
+function onSearch(event: Event) {
+    const keyword = (event.target as HTMLInputElement).value.trim()
+    if (!keyword) {
+        return
     }
-
-    router.replace(`/search/${qs}`)
+    router.replace(`/search/${encodeURIComponent(keyword)}`)
 }
 </script>

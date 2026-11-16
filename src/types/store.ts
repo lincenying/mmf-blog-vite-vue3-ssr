@@ -61,6 +61,10 @@ export interface IFArticleStore {
         [propName: string]: unknown
     }
     trending: IArticle[]
+    /** 当前热门数据对应的文章 id，空字符串表示不按文章过滤 */
+    trendingId: string
+    /** 当前 trendingId 是否已经请求过，空列表也算已加载 */
+    trendingLoaded: boolean
 }
 
 interface IUserStoreList extends IListConfig {
@@ -81,6 +85,8 @@ export interface ICategoryStore {
     item: {
         data: Nullable<ICategory>
     }
+    /** 最近一次拉到列表时的 limit 与 page */
+    loadedKey: string
 }
 
 export interface ICommentStoreList extends IListConfig {

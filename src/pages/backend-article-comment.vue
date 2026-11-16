@@ -57,8 +57,12 @@ async function loadMore(page = lists.value.page) {
         return
     }
     toggleLoading(true)
-    await globalCommentStore.getCommentList({ page, path: route.fullPath, all: 1, id: route.params.id }, capi)
-    toggleLoading(false)
+    try {
+        await globalCommentStore.getCommentList({ page, path: route.fullPath, all: 1, id: route.params.id }, capi)
+    }
+    finally {
+        toggleLoading(false)
+    }
 }
 async function handleRecover(id: string) {
     const { code } = await capi.get<'success' | 'error'>('frontend/comment/recover', { id })

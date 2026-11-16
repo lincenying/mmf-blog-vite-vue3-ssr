@@ -146,14 +146,18 @@ function getAnchors() {
 }
 
 function handleAnchorClick(anchor: TitleItem) {
-    const { lineIndex } = anchor
-
-    const heading = preview.value?.querySelector(`[data-v-md-line="${lineIndex}"]`)
-
+    if (!anchor.lineIndex) {
+        return
+    }
+    const heading = preview.value?.querySelector(`[data-v-md-line="${CSS.escape(anchor.lineIndex)}"]`)
     if (heading) {
         heading.scrollIntoView({ behavior: 'smooth' })
     }
 }
+
+watch(articleData, () => {
+    nextTick(getAnchors)
+})
 
 onMounted(() => {
     getAnchors()

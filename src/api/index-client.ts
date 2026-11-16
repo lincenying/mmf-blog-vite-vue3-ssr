@@ -1,8 +1,9 @@
-import type { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
+import type { AxiosError, AxiosResponse } from 'axios'
 
 import axios from 'axios'
 import qs from 'qs'
 
+import { splitCacheFlag } from '@/utils/ssr-cookies'
 import config from './config-client'
 
 /** 进行中的 GET 请求，用于同 key 并发去重 */
@@ -12,7 +13,9 @@ const pendingGets = new Map<string, Promise<ResponseData<unknown>>>()
  * 生成 GET 请求去重 key。
  */
 function createGetKey(url: string, params: Objable): string {
-    return `${url}?${qs.stringify(params)}`
+    return `${url}?${qs.stringify(params, {
+        sort: (left, right) => left.localeCompare(right),
+    })}`
 }
 
 /**
@@ -22,15 +25,18 @@ function toErrorResponse(error: AxiosError | Error): ResponseData<null> {
     const axiosError = error as AxiosError
     const status = axiosError.response?.status
     const message = axiosError.message || '网络请求失败'
+    let text = `接口返回数据错误, 错误代码: ${status || '未知'}`
+    if (status === 401) {
+        text = '您还没有登录, 或者登录超时!'
+    }
+    else if (status === 429) {
+        text = '请求过于频繁!'
+    }
     return {
         code: typeof status === 'number' ? status : -404,
         info: message,
         data: null,
-        message: status === 401
-            ? '您还没有登录, 或者登录超时!'
-            : status === 429
-                ? '请求过于频繁!'
-                : `接口返回数据错误, 错误代码: ${status || '未知'}`,
+        message: text,
     }
 }
 
@@ -69,14 +75,23 @@ function checkStatus(response: AxiosResponse): ResponseData<unknown> {
  * 检查响应码并根据不同的响应码执行相应的操作。
  */
 function checkCode<T>(data: ResponseData<T>): ResponseData<T> {
+    if (import.meta.env.SSR || typeof window === 'undefined') {
+        return data
+    }
     if (data.code === -500) {
         if (!window.location.pathname.startsWith('/backend')) {
             window.location.href = '/backend'
+        }
+        else {
+            showMsg(data.message || '请先登录后台')
         }
     }
     else if (data.code === -400) {
         if (window.location.pathname !== '/') {
             window.location.href = '/'
+        }
+        else {
+            showMsg(data.message || '请先登录')
         }
     }
     else if (data.code !== 200) {
@@ -99,19 +114,10 @@ function createInstance(): ApiClient {
         timeout: config.timeout,
     })
 
-    api.interceptors.request.use(
-        (reqConfig: InternalAxiosRequestConfig) => reqConfig,
-        (error: AxiosError) => Promise.reject(error),
-    )
-
-    api.interceptors.response.use(
-        response => response,
-        (error: AxiosError) => Promise.reject(error),
-    )
-
     return {
         async get<T = void>(url: string, params: Objable, headers: Objable<string> = {}) {
-            const key = createGetKey(url, params)
+            const { payload } = splitCacheFlag(params)
+            const key = createGetKey(url, payload)
             const inflight = pendingGets.get(key)
             if (inflight) {
                 return inflight as Promise<ResponseData<T>>
@@ -122,7 +128,7 @@ function createInstance(): ApiClient {
                     const response = await api({
                         method: 'get',
                         url,
-                        params,
+                        params: payload,
                         headers: {
                             ...headers,
                         },
@@ -141,11 +147,12 @@ function createInstance(): ApiClient {
             return request
         },
         async post<T = void>(url: string, data: Objable, headers: Objable<string> = {}) {
+            const { payload } = splitCacheFlag(data)
             try {
                 const response = await api({
                     method: 'post',
                     url,
-                    data: qs.stringify(data),
+                    data: qs.stringify(payload),
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
                         ...headers,

@@ -2,6 +2,14 @@ import type { IApiConfig, IArticle, IFArticleStore } from '~/types'
 
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
+/**
+ * 点赞数加减，结果不小于 0。
+ */
+function nextLikeCount(current: number, liked: boolean): number {
+    const next = liked ? current + 1 : current - 1
+    return next > 0 ? next : 0
+}
+
 export const useFrontendArticleStore = defineStore('frontendArticleStore', () => {
     const state: IFArticleStore = reactive({
         lists: {
@@ -16,6 +24,8 @@ export const useFrontendArticleStore = defineStore('frontendArticleStore', () =>
             path: '',
         },
         trending: [],
+        trendingId: '',
+        trendingLoaded: false,
     })
 
     /**
@@ -89,6 +99,16 @@ export const useFrontendArticleStore = defineStore('frontendArticleStore', () =>
                 ...config,
                 isLoad: true,
             }
+            return
+        }
+
+        const requestId = Array.isArray(config.id) ? config.id[0] : config.id
+        if (requestId && requestId !== state.item.data?._id) {
+            state.item = {
+                data: null,
+                path: config.path || '',
+                isLoad: true,
+            }
         }
     }
 
@@ -101,17 +121,17 @@ export const useFrontendArticleStore = defineStore('frontendArticleStore', () =>
      * @returns 无返回值。但会更新全局状态中的trending数据。
      */
     const getTrending = async (payload: { id?: string } = {}, $api: ApiType = capi) => {
-        // 检查已有trending数据，若有则不再请求
-        if (state.trending.length) {
+        const requestId = payload.id || ''
+        if (state.trendingLoaded && state.trendingId === requestId) {
             return
         }
 
-        // 使用提供的$api实例发起GET请求获取trending数据
         const { code, data } = await $api.get<ResDataList<IArticle>>('frontend/trending', { ...payload, cache: true })
 
-        // 请求成功且数据有效时更新trending数据
         if (code === 200 && data) {
             state.trending = data.list
+            state.trendingId = requestId
+            state.trendingLoaded = true
         }
     }
     /**
@@ -129,28 +149,18 @@ export const useFrontendArticleStore = defineStore('frontendArticleStore', () =>
 
         // 更新状态对象中特定文章的喜欢数和喜欢状态
         if (state.item.data && state.item.data._id === id) {
-            if (status) {
-                state.item.data.like++
-            }
-            else {
-                state.item.data.like--
-            }
+            state.item.data.like = nextLikeCount(state.item.data.like, status)
             state.item.data.like_status = status
         }
 
-        // 在文章列表中查找文章，更新其喜欢数和喜欢状态
         const index = state.lists.data.findIndex((item: IArticle) => item._id === id)
         if (index > -1) {
-            // 复制对象以避免直接修改原始数据
-            const obj: IArticle = Object.assign({}, state.lists.data[index])
-            if (status) {
-                obj.like++
-            }
-            else {
-                obj.like--
-            }
-            obj.like_status = status
-            state.lists.data.splice(index, 1, obj)
+            const current = state.lists.data[index]
+            state.lists.data.splice(index, 1, {
+                ...current,
+                like: nextLikeCount(current.like, status),
+                like_status: status,
+            })
         }
     }
 

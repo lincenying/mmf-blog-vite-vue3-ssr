@@ -1,5 +1,5 @@
 <template>
-    <div :class="backend ? 'backend' : 'frontend'" :style="ISDEV ? 'display: none;' : ''">
+    <div :class="backend ? 'backend' : 'frontend'">
         <global-navigation :is-backend="backend" />
         <router-view v-slot="{ Component }" class="app-view relative">
             <transition :name="pageTransitionName" mode="out-in" @before-enter="handleBeforeEnter" @after-enter="handleAfterEnter">
@@ -30,7 +30,7 @@ defineOptions({
 
 // pinia 状态管理 ===>
 const globalStore = useGlobalStore()
-const { showLoginModal, showRegisterModal, ISDEV } = storeToRefs(globalStore)
+const { showLoginModal, showRegisterModal } = storeToRefs(globalStore)
 
 const appShellStore = useAppShellStore()
 const { pageTransitionName } = storeToRefs(appShellStore)
@@ -38,7 +38,7 @@ const { pageTransitionName } = storeToRefs(appShellStore)
 // const isSSR = ref(!!import.meta.env.SSR)
 // const isPROD = ref(!!import.meta.env.PROD)
 
-const cacheFrontendComponents = ref('FrontendIndex,FrontendAbout')
+const cacheFrontendComponents = 'FrontendIndex,FrontendAbout'
 // const cacheBackendComponents = ref('backend-admin-list,backend-article-list,backend-user-list')
 
 const route = useRoute()
@@ -47,7 +47,7 @@ const key = computed(() => {
     return path.replace(/\//g, '_')
 })
 const backend = computed(() => {
-    return route.path.includes('backend')
+    return route.path === '/backend' || route.path.startsWith('/backend/')
 })
 
 function handleBeforeEnter() {

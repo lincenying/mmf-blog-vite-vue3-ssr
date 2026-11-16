@@ -9,6 +9,7 @@ export const useGlobalCategoryStore = defineStore('globalCategoryStore', () => {
         item: {
             data: null,
         },
+        loadedKey: '',
     })
 
     /**
@@ -17,12 +18,14 @@ export const useGlobalCategoryStore = defineStore('globalCategoryStore', () => {
      * @param $api
      */
     const getCategoryList = async (config: IApiConfig, $api: ApiType = capi) => {
-        if (state.lists.length) {
+        const requestKey = `${config.limit || ''}:${config.page || 1}`
+        if (state.lists.length && state.loadedKey === requestKey) {
             return
         }
         const { code, data } = await $api.get<ResDataList<ICategory>>('backend/category/list', { ...config, path: undefined, cache: true })
         if (code === 200 && data) {
             state.lists = data.list
+            state.loadedKey = requestKey
         }
     }
     /**

@@ -37,27 +37,29 @@ globalStore.setCookies(pickPublicCookies({
 router.isReady().then(() => {
     router.beforeResolve(async (to, from) => {
         let diffed = false
-        const activated = to.matched.filter((c, i) => {
-            return diffed || (diffed = from.matched[i] !== c) || from.path !== to.path
+        const locationChanged = from.fullPath !== to.fullPath
+        const activated = to.matched.filter((record, index) => {
+            const changed = from.matched[index] !== record
+            return diffed || (diffed = changed) || locationChanged
         })
 
-        if (!activated.length) {
-            return false
-        }
+        const tasks = activated.flatMap((record) => {
+            const routeComponent = record.components?.default as CusRouteComponent | undefined
+            if (!routeComponent?.asyncData) {
+                return []
+            }
+            return [
+                routeComponent.asyncData({
+                    store,
+                    route: to,
+                    api: capi,
+                }),
+            ]
+        })
 
-        await Promise.all(
-            activated.map((c) => {
-                const routeComponent = c.components?.default as CusRouteComponent
-                if (routeComponent.asyncData) {
-                    return routeComponent.asyncData({
-                        store,
-                        route: to,
-                        api: capi,
-                    })
-                }
-                return true
-            }),
-        )
+        if (tasks.length > 0) {
+            await Promise.all(tasks)
+        }
     })
     app.use(head)
         .use(LoadingPlugin, {

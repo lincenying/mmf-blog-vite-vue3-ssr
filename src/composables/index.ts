@@ -64,30 +64,27 @@ export function useSaveScroll() {
     const appShellStore = useAppShellStore()
 
     const { historyPageScrollTop } = storeToRefs(appShellStore)
+    let timer: ReturnType<typeof setTimeout> | undefined
 
-    // watch(
-    //     () => route.fullPath,
-    //     async (currPath) => {
-    //         console.log(currPath)
-    //         const scrollTop = historyPageScrollTop.value[currPath] || 0
-    //         setTimeout(() => {
-    //             window.scrollTo(0, scrollTop)
-    //         }, 350)
-    //     },
-    // )
-
-    onActivated(() => {
+    /**
+     * 恢复离开页面前记下的滚动位置。组件卸载时取消尚未执行的定时器。
+     */
+    function restoreScroll() {
         const scrollTop = historyPageScrollTop.value[route.fullPath] || 0
-        setTimeout(() => {
+        if (timer) {
+            clearTimeout(timer)
+        }
+        timer = setTimeout(() => {
             window.scrollTo(0, scrollTop)
         }, 300)
-    })
+    }
 
-    onMounted(() => {
-        const scrollTop = historyPageScrollTop.value[route.fullPath] || 0
-        setTimeout(() => {
-            window.scrollTo(0, scrollTop)
-        }, 300)
+    onActivated(restoreScroll)
+    onMounted(restoreScroll)
+    onBeforeUnmount(() => {
+        if (timer) {
+            clearTimeout(timer)
+        }
     })
 
     onBeforeRouteLeave((_to, from) => {

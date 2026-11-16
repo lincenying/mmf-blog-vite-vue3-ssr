@@ -5,15 +5,13 @@ import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 
-import { UTC2Date } from '@lincy/utils'
 import cookieParser from 'cookie-parser'
 import express from 'express'
-import logger from 'morgan'
-import requestIp from 'request-ip'
-import { skipExt } from './server.middleware'
 import { createServer as viteCreateServer } from 'vite'
 
+import { installAccessLogger } from './server-access-log'
 import { handleSsrRouteError } from './server-ssr-error'
+import { buildHtmlHeaders, isLocalRedirect, renderHtmlDocument, sendHtml } from './server-ssr-response'
 import { urlGuardMiddleware } from './server-url-guard'
 
 const BODY_PARSER_LIMIT = '1mb'
@@ -25,24 +23,7 @@ export async function createServer(root = process.cwd(), hmrPort?: number) {
     const app = express()
 
     app.use(urlGuardMiddleware)
-
-    logger.token('remote-addr', (req) => {
-        return requestIp.getClientIp(req) || 'unknown'
-    })
-    logger.token('date', () => {
-        return UTC2Date(undefined, 'yyyy-mm-dd hh:ii:ss.SSS')
-    })
-
-    // Node.js 日志中间件
-    app.use(
-        logger('[:remote-addr] [:date] ":method :url" :status :res[content-length] ":referrer"', {
-            skip(req) {
-                return [...skipExt, '.php'].some((ext) => {
-                    return req.url.endsWith(ext)
-                })
-            },
-        }),
-    )
+    installAccessLogger(app)
 
     const useChokidarPolling = process.env.SSR_CHOKIDAR_USEPOLLING === '1'
 
@@ -77,14 +58,13 @@ export async function createServer(root = process.cwd(), hmrPort?: number) {
     // 解析 cookies 中间件
     app.use(cookieParser())
 
-    app.get('/health', (req, res) => {
-        // 这里可以检查数据库连接、Redis 等
-        res.status(200).send('OK');
-    });
+    app.get('/health', (_req, res) => {
+        res.status(200).set('Cache-Control', 'no-store').send('OK')
+    })
 
     const exposeSsrStack = process.env.NODE_ENV !== 'production'
 
-    app.use('/{*default}', async (req, res) => {
+    app.get('/{*default}', async (req, res) => {
         try {
             const url = req.originalUrl
 
@@ -93,31 +73,24 @@ export async function createServer(root = process.cwd(), hmrPort?: number) {
             template = await vite.transformIndexHtml(url, template)
             const render = (await vite.ssrLoadModule('/src/entry-server.ts')).render
 
-            const { html: appHtml, preloadLinks, headTags, statusCode, redirect } = await render(url, manifest, req) as IRenderType
+            const rendered = await render(url, manifest, req) as IRenderType
 
-            if (redirect) {
-                res.redirect(statusCode || 302, redirect)
+            if (rendered.redirect) {
+                if (!isLocalRedirect(rendered.redirect)) {
+                    handleSsrRouteError(res, new Error('非法跳转地址'), exposeSsrStack)
+                    return
+                }
+                res.redirect(rendered.statusCode || 302, rendered.redirect)
                 return
             }
 
-            const html = template
-                .replace('<!--preload-links-->', preloadLinks)
-                .replace('<!--app-html-->', appHtml)
-                .replace('<!--head-tags-->', headTags)
-
-            const headers: Record<string, string> = {
-                'Content-Type': 'text/html; charset=utf-8',
-            }
-            if (req.cookies?.user || req.cookies?.b_user) {
-                headers['Cache-Control'] = 'private, no-store'
-            }
-
-            res.status(statusCode).set(headers).end(html)
+            const html = renderHtmlDocument(template, rendered)
+            sendHtml(req, res, rendered.statusCode, html, buildHtmlHeaders(req, rendered.statusCode))
         }
         catch (e: unknown) {
-            const err = e as Error
-            vite.ssrFixStacktrace(err)
-            handleSsrRouteError(res, e, exposeSsrStack)
+            const error = e instanceof Error ? e : new Error(String(e))
+            vite.ssrFixStacktrace(error)
+            handleSsrRouteError(res, error, exposeSsrStack)
         }
     })
 

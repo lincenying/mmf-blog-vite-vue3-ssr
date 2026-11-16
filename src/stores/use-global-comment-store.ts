@@ -18,28 +18,18 @@ const usePiniaStore = defineStore('globalCommentStore', () => {
      * 读取评论列表
      */
     const getCommentList = async (config: IApiConfig, $api: ApiType = capi) => {
-        if (config.path === state.lists.path && config.page === 1) {
+        const requestedPage = config.page || 1
+        if (config.path && config.path === state.lists.path && requestedPage === 1) {
             return
         }
         const { code, data } = await $api.get<ResDataLists<IComment>>('frontend/comment/list', { ...config, path: undefined, cache: true })
         if (code === 200 && data) {
-            const {
-                list = [],
-                path = '',
-                hasNext = 0,
-                hasPrev = 0,
-                page = 1,
-            } = {
-                ...config,
-                ...data,
-            }
-
             state.lists = {
-                data: page === 1 ? list : state.lists.data.concat(list),
-                hasNext,
-                hasPrev,
-                page,
-                path,
+                data: requestedPage === 1 ? data.list || [] : state.lists.data.concat(data.list || []),
+                hasNext: data.hasNext ?? 0,
+                hasPrev: data.hasPrev ?? 0,
+                page: requestedPage + 1,
+                path: config.path ?? state.lists.path,
             }
         }
     }
